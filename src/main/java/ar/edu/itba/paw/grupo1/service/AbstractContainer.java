@@ -12,6 +12,23 @@ import java.util.Map;
  * Acts as both an abstract factory and a container.
  * It contains and serves instances of objects that have factory methods defined.
  * 
+ * 
+ * Say you want an instance of TestInterface, first you should add a method to your container:
+ * 
+ *  <pre>
+ *  protected TestInterface buildTest(...) {
+ * 	    return instanteOfTestInterface;
+ *  }</pre>
+ * Any parameters that the <code>buildTest</code> takes, will be resolved by the container as long as it knows how to.
+ *  
+ * <br/>
+ * <br/>
+ * Once you have that, where you need the instance you do:
+ * 
+ *  <pre>
+ *  TestInterface obj = myContainer.get(TestInterface.class);
+ *  </'re>
+ * 
  * @author jpcivile
  */
 public abstract class AbstractContainer {
