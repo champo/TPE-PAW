@@ -48,6 +48,10 @@ public abstract class AbstractContainer {
 	 * @return The instance, if possible
 	 */
 	public <E> E getObject(Class<E> cls) {
+		
+		if (!cls.isInterface()) {
+			return null;
+		}
 
 		E instance = (E) instances.get(cls);
 		if (instance != null) {
