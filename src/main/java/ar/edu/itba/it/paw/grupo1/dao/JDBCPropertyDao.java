@@ -1,8 +1,7 @@
-package ar.edu.itba.it.paw.grupo1.dao.JDBCImpl;
+package ar.edu.itba.it.paw.grupo1.dao;
 
 import java.sql.Connection;
 
-import ar.edu.itba.it.paw.grupo1.dao.interfaces.PropertyDao;
 
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 
