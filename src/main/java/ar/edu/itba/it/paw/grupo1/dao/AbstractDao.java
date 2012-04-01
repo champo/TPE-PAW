@@ -1,4 +1,4 @@
-package ar.edu.itba.it.paw.grupo1.dao.JDBCImpl;
+package ar.edu.itba.it.paw.grupo1.dao;
 
 import java.sql.Connection;
 
