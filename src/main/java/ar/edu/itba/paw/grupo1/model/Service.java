@@ -1,20 +1,22 @@
 package ar.edu.itba.paw.grupo1.model;
 
-public class PropService {
+public class Service {
 
 	private int id;
 	private String service;
+	private int propId;
 	
-	public PropService() {
+	public Service() {
 	
 	}
 	
-	public PropService(int id, String service) {
+	public Service(int id, int propId, String service) {
 		this.id = id;
+		this.propId = propId;
 		this.service = service;
 	}
 	
-	public PropService(String service) {
+	public Service(String service) {
 		this.service = service;
 	}
 	
@@ -25,12 +27,8 @@ public class PropService {
 	public String getService() {
 		return service;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public void setService(String service) {
-		this.service = service;
+
+	public int getPropId() {
+		return propId;
 	}
 }

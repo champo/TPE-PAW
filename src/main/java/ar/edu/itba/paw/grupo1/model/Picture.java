@@ -3,6 +3,7 @@ package ar.edu.itba.paw.grupo1.model;
 public class Picture {
 
 	private int id;
+	private int propId;
 	private String name;
 	private String source;
 	
@@ -10,8 +11,9 @@ public class Picture {
 	
 	}
 	
-	public Picture(int id, String name, String source) {
+	public Picture(int id, int propId, String name, String source) {
 		this.id = id;
+		this.propId = propId;
 		this.name = name;
 		this.source = source;
 	}
@@ -33,16 +35,9 @@ public class Picture {
 		return source;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public int getPropId() {
+		return propId;
 	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public void setSource(String source) {
-		this.source = source;
-	}
+
 }
 
