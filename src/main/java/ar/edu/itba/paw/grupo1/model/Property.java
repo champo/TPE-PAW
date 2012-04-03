@@ -1,10 +1,9 @@
 package ar.edu.itba.paw.grupo1.model;
 
-import java.util.List;
 
 public class Property {
 
-	private int id;
+	private Integer id;
 	private int propertyType; //0 is house, 1 is flat
 	private int operationType; //0 is for selling, 1 is for leasing
 	private String neighbourhood;
@@ -19,7 +18,6 @@ public class Property {
 	private boolean lounge;
 	private boolean paddle;
 	private boolean barbecue;
-	List<Picture> pictures;
 	private boolean sold;
 	private int userId;
 	
@@ -32,8 +30,7 @@ public class Property {
 			double indoorSpace, double outdoorSpace, 
 			String description, boolean cable, boolean phone,
 			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, List<Picture> pictures, 
-			boolean sold, int userId) {
+			boolean barbecue, boolean sold, int userId) {
 		
 		this.id = id;
 		this.propertyType = propertyType;
@@ -50,7 +47,6 @@ public class Property {
 		this.phone = phone;
 		this.cable = cable;
 		this.lounge = lounge;
-		this.pictures = pictures;
 		this.sold = sold;
 		this.userId = userId;
 	}
@@ -60,8 +56,7 @@ public class Property {
 			double indoorSpace, double outdoorSpace, 
 			String description, boolean cable, boolean phone,
 			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, List<Picture> pictures, 
-			boolean sold, int userId) {
+			boolean barbecue, boolean sold, int userId) {
 		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
@@ -77,7 +72,6 @@ public class Property {
 		this.phone = phone;
 		this.cable = cable;
 		this.lounge = lounge;
-		this.pictures = pictures;
 		this.sold = sold;
 		this.userId = userId;
 	}
@@ -87,7 +81,7 @@ public class Property {
 		return description;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -105,14 +99,6 @@ public class Property {
 	
 	public double getOutdoorSpace() {
 		return outdoorSpace;
-	}
-	
-	public List<Picture> getPictures() {
-		return pictures;
-	}
-	
-	public Picture getPicture(int number) {
-		return pictures.get(number);
 	}
 	
 	public double getPrice() {
@@ -157,6 +143,10 @@ public class Property {
 	
 	public int getUserId() {
 		return userId;
+	}
+
+	public boolean isNew() {
+		return id == null;
 	}
 		
 }
