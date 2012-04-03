@@ -11,4 +11,5 @@ public interface PictureDao {
 	public Picture get(int id);
 	
 	public void save(Picture picture);
+
 }

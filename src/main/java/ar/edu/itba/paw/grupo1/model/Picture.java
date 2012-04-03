@@ -2,7 +2,7 @@ package ar.edu.itba.paw.grupo1.model;
 
 public class Picture {
 
-	private int id;
+	private Integer id;
 	private int propId;
 	private String name;
 	private String source;
@@ -23,7 +23,7 @@ public class Picture {
 		this.source = source;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	

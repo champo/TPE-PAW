@@ -2,7 +2,7 @@ package ar.edu.itba.paw.grupo1.model;
 
 public class User {
 
-	private int id;
+	private Integer id;
 	private String name;
 	private String surname;
 	private String email;
@@ -42,7 +42,7 @@ public class User {
 		return email;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
