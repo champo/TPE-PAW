@@ -13,7 +13,12 @@ public class Property {
 	private double indoorSpace;
 	private double outdoorSpace;
 	private String description; //Optional
-	List<Service> services;
+	private boolean cable;
+	private boolean phone;
+	private boolean pool;
+	private boolean lounge;
+	private boolean paddle;
+	private boolean barbecue;
 	List<Picture> pictures;
 	private boolean sold;
 	private int userId;
@@ -25,8 +30,10 @@ public class Property {
 	public Property(int id, int propertyType, int operationType,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, List<Service> services,
-			List<Picture> pictures, boolean sold, int userId) {
+			String description, boolean cable, boolean phone,
+			boolean pool, boolean lounge, boolean paddle, 
+			boolean barbecue, List<Picture> pictures, 
+			boolean sold, int userId) {
 		
 		this.id = id;
 		this.propertyType = propertyType;
@@ -37,7 +44,12 @@ public class Property {
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
-		this.services = services;
+		this.barbecue = barbecue;
+		this.paddle = paddle;
+		this.pool = pool;
+		this.phone = phone;
+		this.cable = cable;
+		this.lounge = lounge;
 		this.pictures = pictures;
 		this.sold = sold;
 		this.userId = userId;
@@ -46,8 +58,10 @@ public class Property {
 	public Property(int propertyType, int operationType,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, List<Service> services,
-			List<Picture> pictures, boolean sold, int userId) {
+			String description, boolean cable, boolean phone,
+			boolean pool, boolean lounge, boolean paddle, 
+			boolean barbecue, List<Picture> pictures, 
+			boolean sold, int userId) {
 		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
@@ -57,11 +71,17 @@ public class Property {
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
-		this.services = services;
+		this.barbecue = barbecue;
+		this.paddle = paddle;
+		this.pool = pool;
+		this.phone = phone;
+		this.cable = cable;
+		this.lounge = lounge;
 		this.pictures = pictures;
 		this.sold = sold;
 		this.userId = userId;
 	}
+	
 	
 	public String getDescription() {
 		return description;
@@ -107,12 +127,32 @@ public class Property {
 		return rooms;
 	}
 	
-	public List<Service> getServices() {
-		return services;
+	public boolean isBarbecue() {
+		return barbecue;
 	}
 	
-	public Service getService(int number) {
-		return services.get(number);
+	public boolean isCable() {
+		return cable;
+	}
+	
+	public boolean isLounge() {
+		return lounge;
+	}
+	
+	public boolean isPaddle() {
+		return paddle;
+	}
+	
+	public boolean isPhone() {
+		return phone;
+	}
+	
+	public boolean isPool() {
+		return pool;
+	}
+	
+	public boolean isSold() {
+		return sold;
 	}
 	
 	public int getUserId() {
