@@ -14,8 +14,15 @@ public class PropertyServiceImpl implements PropertyService {
 	}
 
 	public List<Property> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Property>) propertyDao.getAll();
+	}
+	
+	public Property getById(int id) {
+		return propertyDao.get(id);
+	}
+	
+	public void save(Property property) {
+		propertyDao.save(property);
 	}
 
 }
