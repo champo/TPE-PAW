@@ -2,10 +2,13 @@ package ar.edu.itba.paw.grupo1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
+
+import ar.edu.itba.paw.grupo1.model.User;
 
 
 public class JDBCUserDao extends AbstractDao implements UserDao {
@@ -49,4 +52,37 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 		}
 	}
 
+	@Override
+	public User login(String username, String hash) {
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM users WHERE username = ? AND password = ?"
+			);
+			
+			stmt.setString(1, username);
+			stmt.setString(2, hash);
+			
+			if (stmt.execute()) {
+				
+				ResultSet result = stmt.getResultSet();
+				if (result.next()) {
+					return new User(
+						result.getInt("id"), 
+						result.getString("name"), 
+						result.getString("surname"), 
+						result.getString("email"), 
+						result.getString("phone"), 
+						result.getString("username"),
+						hash
+					);
+				}
+			}
+			
+		} catch (SQLException e) {
+			logger.warn("Caught SQLException when trying login with user " + username + " pass " + hash, e);
+		}
+		
+		return null;
+	}
 }

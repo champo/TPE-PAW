@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
+import ar.edu.itba.paw.grupo1.model.User;
 
 public class UserServiceImpl implements UserService {
 	
@@ -45,6 +46,13 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return new String(hash);
+	}
+
+	@Override
+	public User login(String username, String password) {
+		
+		String hash = hashPassword(password);
+		return userDao.login(username, hash);
 	}
 
 }
