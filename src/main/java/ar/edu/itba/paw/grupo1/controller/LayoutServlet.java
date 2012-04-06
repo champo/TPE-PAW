@@ -15,9 +15,9 @@ public abstract class LayoutServlet extends HttpServlet {
 
 	protected void render(HttpServletRequest req, HttpServletResponse resp, String file, String title)
 			throws ServletException, IOException {
-				req.setAttribute("documentTitle", title);
-				req.setAttribute("documentBodyFile", file);
-				req.getRequestDispatcher("WEB-INF/layout.jsp").forward(req, resp);
-			}
-
+		req.setAttribute("documentTitle", title);
+		req.setAttribute("documentBodyFile", file);
+		req.getRequestDispatcher("WEB-INF/layout.jsp").forward(req, resp);
+	}
+	
 }
