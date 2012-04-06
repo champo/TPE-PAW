@@ -3,7 +3,17 @@
  */
 package ar.edu.itba.paw.grupo1;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
+
+import ar.edu.itba.paw.grupo1.dao.JDBCUserDao;
+import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.service.AbstractContainer;
+import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.service.UserServiceImpl;
 
 /**
  * Container implementation.
@@ -42,5 +52,24 @@ public class ApplicationContainer extends AbstractContainer {
 	 */
 	public static <E> E get(Class<E> cls) {
 		return getInstance().getObject(cls);
+	}
+	
+	protected UserService buildUserService(UserDao userDao) {
+		return new UserServiceImpl(userDao);
+	}
+	
+	protected UserDao buildUserDao(Connection conn) {
+		return new JDBCUserDao(conn);
+	}
+	
+	protected Connection buildConnection() {
+		
+		try {
+			return DriverManager.getConnection("jdbc:postgresql://localhost/paw1", "paw1", "paw1");
+		} catch (SQLException e) {
+			Logger.getLogger(ApplicationContainer.class).fatal("Failed to build a connection.", e);
+		}
+		
+		return null;
 	}
 }

@@ -55,6 +55,9 @@
 		<c:if test="${usernameBadLength }">
 			<p class="error">The field 'username' has to be shorter than 50 characters.</p>
 		</c:if>
+		<c:if test="${usernameDuplicate }">
+			<p class="error">A user with this username already exists. Choose another one.</p>
+		</c:if>
 
 		<label for="password">Password: </label>
 		<input type="password" name="password" value="${fn:escapeXml(param.password) }"/><br />

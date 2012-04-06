@@ -6,6 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
+import ar.edu.itba.paw.grupo1.service.UserService;
+
 public class RegisterServlet extends LayoutServlet {
 
 	@Override
@@ -31,8 +35,23 @@ public class RegisterServlet extends LayoutServlet {
 		
 		if (error) {
 			render(req, resp, "register.jsp", "Register");
-		} else {
-			//TODO: Register the user
+			return;
+		}
+		
+		try {
+			ApplicationContainer.get(UserService.class).register(
+				req.getParameter("name"),
+				req.getParameter("surname"),
+				req.getParameter("email"),
+				req.getParameter("phone"),
+				req.getParameter("username"),
+				req.getParameter("password")
+			);
+			
+			render(req, resp, "registerSuccess.jsp", "Register");
+		} catch (UserAlreadyExistsException e) {
+			req.setAttribute("usernameDuplicate", true);
+			render(req, resp, "register.jsp", "Register");
 		}
 	}
 	

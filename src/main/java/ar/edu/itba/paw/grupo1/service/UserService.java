@@ -1,10 +1,9 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.service;
 
-public interface UserDao {
+import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
+
+public interface UserService {
 
 	public void register(String name, String surname, String email, String phone, String username, String password) throws UserAlreadyExistsException;
 	
-	public class UserAlreadyExistsException extends Exception {
-		
-	}
 }
