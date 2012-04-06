@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 
@@ -19,9 +19,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 	}
 
 
-	public Iterable<Property> getAll() {
+	public List<Property> getAll() {
 
-		Collection<Property> properties = new ArrayList<Property>();
+		List<Property> properties = new ArrayList<Property>();
 		PreparedStatement statement;
 
 		try {

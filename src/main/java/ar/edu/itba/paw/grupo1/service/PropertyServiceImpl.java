@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.grupo1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
@@ -11,10 +12,6 @@ public class PropertyServiceImpl implements PropertyService {
 
 	public PropertyServiceImpl(PropertyDao propertyDao) {
 		this.propertyDao = propertyDao;
-	}
-
-	public List<Property> getAll() {
-		return (List<Property>) propertyDao.getAll();
 	}
 	
 	public Property getById(int id) {
