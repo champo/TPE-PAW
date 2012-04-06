@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 
@@ -19,9 +19,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 	}
 
 
-	public Iterable<Property> getAll() {
+	public List<Property> getAll() {
 
-		Collection<Property> properties = new ArrayList<Property>();
+		List<Property> properties = new ArrayList<Property>();
 		PreparedStatement statement;
 
 		try {
@@ -30,7 +30,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				ResultSet myCursor = statement.getResultSet();
 
 				while (myCursor.next()) {
-
 					Property property = createProperty(myCursor);  				
 					properties.add(property);
 				}
@@ -43,7 +42,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		return properties;
 	}
 
-
 	public Property get(int id) {
 
 		PreparedStatement statement;
@@ -54,7 +52,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 			statement.setInt(1, id);
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
-
 				if (myCursor.next()) {
 
 					property = createProperty(myCursor);
@@ -68,8 +65,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 
 		return property;
 	}
-
-
 	public void save(Property property) {
 
 		try {
@@ -83,7 +78,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				statement = conn.prepareStatement("UPDATE properties SET propertyType = ?, operationType = ?, neighbourhood = ?, price = ?," +
 						"rooms = ?, indoorSpace = ?, outdoorSpace = ?, description = ?, cable = ?, phone = ?, pool = ?, lounge = ?, paddle = ?," +
 						"barbecue = ?, sold = ?, userId = ? WHERE id = ?");
-
 				setPlaceHolders(statement, property);
 				statement.setInt(17, property.getId());
 
@@ -94,7 +88,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 			e.printStackTrace();
 		}
 	}
-
 
 	private void setPlaceHolders(PreparedStatement stmt, Property property) throws SQLException {
 		stmt.setInt(1, property.getPropertyType());
@@ -117,7 +110,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 
 
 	private Property createProperty(ResultSet cursor) throws SQLException {
-
 		int id = cursor.getInt("id");
 		int propertyType = cursor.getInt("propertyType");
 		int operationType = cursor.getInt("operationType");
@@ -140,7 +132,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		return new Property(id, propertyType, operationType, neighbourhood, price,
 				rooms, indoorSpace, outdoorSpace, description, cable, phone,
 				pool, lounge, paddle, barbecue, sold, userId);
-
+		
 	}
-
+	
 }
+
+
