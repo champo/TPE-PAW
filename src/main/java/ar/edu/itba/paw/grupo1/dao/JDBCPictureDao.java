@@ -16,7 +16,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		super(conn);
 	}
 
-	
+
 	public List<Picture> getPictures(int propertyId) {
 
 		List<Picture> pictures = new ArrayList<Picture>();
@@ -24,7 +24,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 
 		try {
 			statement = conn.prepareStatement("select * from pictures where propertyId = ?");
-			
+
 			statement.setInt(1, propertyId);
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
@@ -33,7 +33,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 					int id = myCursor.getInt("id");
 					String name = myCursor.getString("name");
 					String source = myCursor.getString("source");
-					
+
 					pictures.add(new Picture(id, propertyId, name, source));
 				}
 			}
@@ -45,14 +45,14 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		}
 		return pictures;
 	}
-	
+
 	public Picture get(int id) {
 		Picture response = null;
 		PreparedStatement statement = null;
 
 		try {
 			statement = conn.prepareStatement("select * from pictures where id = ?");
-			
+
 			statement.setInt(1, id);
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
@@ -61,7 +61,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 					int propertyId = myCursor.getInt("propertyId");
 					String name = myCursor.getString("name");
 					String source = myCursor.getString("source");
-					
+
 					response = new Picture(id, propertyId, name, source);
 				}
 			}
@@ -73,7 +73,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		}
 		return response;
 	}
-	
+
 	public void save(Picture picture) {
 		if (picture.getId() == null) {
 			insert(picture);
@@ -81,19 +81,19 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			update(picture);
 		}
 	}
-		
+
 
 	private void update(Picture picture) {
 		PreparedStatement statement = null;
 
 		try {
 			statement = conn.prepareStatement("update pictures set name = ?, source = ?, propertyId = ? where id = ?)");
-			
+
 			statement.setString(1, picture.getName());
 			statement.setString(2, picture.getSource());
 			statement.setInt(3, picture.getPropId());
 			statement.setInt(4, picture.getId());
-			
+
 			statement.execute();
 			statement.close();
 //			conn.close();
@@ -109,11 +109,11 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 
 		try {
 			statement = conn.prepareStatement("insert (name, source, propertyId) into pictures values(?,?,?)");
-			
+
 			statement.setString(1, picture.getName());
 			statement.setString(2, picture.getSource());
 			statement.setInt(3, picture.getPropId());
-			
+
 			statement.execute();
 			statement.close();
 //			conn.close();
@@ -121,7 +121,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 
