@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.servlet;
+package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
 
