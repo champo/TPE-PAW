@@ -6,4 +6,30 @@
 	version="2.5">
   <display-name>Archetype Created Web Application</display-name>
   
+  
+  	<servlet>
+		<servlet-name>ListProperties</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.ListPropertiesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListProperties</servlet-name>
+		<url-pattern>/listProperties</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>EditProperty</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.EditPropertyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditProperty</servlet-name>
+		<url-pattern>/editProperty</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AddProperty</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.web.AddPropertyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddProperty</servlet-name>
+		<url-pattern>/addProperty</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
