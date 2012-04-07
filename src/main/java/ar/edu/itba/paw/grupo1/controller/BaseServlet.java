@@ -29,4 +29,8 @@ public abstract class BaseServlet extends HttpServlet {
 	protected boolean isLoggedIn(HttpServletRequest req) {
 		return req.getSession().getAttribute("userId") != null;
 	}
+	
+	protected void logout(HttpServletRequest req) {
+		req.getSession().invalidate();
+	}
 }
