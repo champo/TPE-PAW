@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class LayoutServlet extends HttpServlet {
+import ar.edu.itba.paw.grupo1.model.User;
 
-	public LayoutServlet() {
+public abstract class BaseServlet extends HttpServlet {
+
+	public BaseServlet() {
 		super();
 	}
 
@@ -19,5 +21,12 @@ public abstract class LayoutServlet extends HttpServlet {
 		req.setAttribute("documentBodyFile", file);
 		req.getRequestDispatcher("WEB-INF/layout.jsp").forward(req, resp);
 	}
+
+	protected void setLoggedInUser(HttpServletRequest req, User user) {
+		req.getSession().setAttribute("userId", user.getId());
+	}
 	
+	protected boolean isLoggedIn(HttpServletRequest req) {
+		return req.getSession().getAttribute("userId") != null;
+	}
 }

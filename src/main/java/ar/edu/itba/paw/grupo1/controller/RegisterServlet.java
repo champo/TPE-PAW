@@ -10,11 +10,16 @@ import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
-public class RegisterServlet extends LayoutServlet {
+public class RegisterServlet extends BaseServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		if (isLoggedIn(req)) {
+			resp.sendRedirect("/");
+			return;
+		}
 		
 		render(req, resp, "register.jsp", "Register");
 	}
@@ -22,6 +27,11 @@ public class RegisterServlet extends LayoutServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		if (isLoggedIn(req)) {
+			resp.sendRedirect("/");
+			return;
+		}
 		
 		boolean error = false;
 		

@@ -11,11 +11,16 @@ import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
-public class LoginServlet extends LayoutServlet {
+public class LoginServlet extends BaseServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		if (isLoggedIn(req)) {
+			resp.sendRedirect("/");
+			return;
+		}
 		
 		render(req, resp, "login.jsp", "Login");
 	}
@@ -24,22 +29,27 @@ public class LoginServlet extends LayoutServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		if (isLoggedIn(req)) {
+			resp.sendRedirect("/");
+			return;
+		}
+		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
-		boolean failed = false;
-		if (username == null || password == null) {
-			failed = true;
-		} else {
+		if (username != null && password != null) {
 			UserService userService = ApplicationContainer.get(UserService.class);
 			User user = userService.login(username, password);
 			
 			if (user != null) {
 				// We can log in now!
-			} else {
-				req.setAttribute("invalidCredentials", true);
-				render(req, resp, "login.jsp", "Login");
+				setLoggedInUser(req, user);
+				resp.sendRedirect("/");
+				return;
 			}
 		}
+		
+		req.setAttribute("invalidCredentials", true);
+		render(req, resp, "login.jsp", "Login");
 	}
 }
