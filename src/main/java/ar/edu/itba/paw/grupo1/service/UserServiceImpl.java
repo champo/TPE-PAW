@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.apache.log4j.Logger;
 
 import ar.edu.itba.paw.grupo1.dao.UserDao;
@@ -45,19 +47,22 @@ public class UserServiceImpl implements UserService {
 			throw new RuntimeException(e);
 		}
 		
-		return new String(hash);
+		return DatatypeConverter.printHexBinary(hash);
 	}
 
 	@Override
 	public User login(String username, String password) {
-		
-		String hash = hashPassword(password);
-		return userDao.login(username, hash);
+		return loginWithHash(username, hashPassword(password));
 	}
 
 	@Override
 	public User get(int userId) {
 		return userDao.get(userId);
+	}
+
+	@Override
+	public User loginWithHash(String username, String hash) {
+		return userDao.login(username, hash);
 	}
 
 }

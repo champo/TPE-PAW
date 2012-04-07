@@ -10,5 +10,7 @@ public interface UserService {
 	public User login(String username, String password);
 
 	public User get(int userId);
+
+	public User loginWithHash(String username, String hash);
 	
 }
