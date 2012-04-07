@@ -98,6 +98,7 @@ public abstract class AbstractContainer {
 				}
 				
 				try {
+					method.setAccessible(true);
 					Object instance = method.invoke(this, params);
 					if (instance != null) {
 						instances.put(cls, instance);
