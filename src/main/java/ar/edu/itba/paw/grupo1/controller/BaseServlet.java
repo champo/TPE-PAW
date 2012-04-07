@@ -33,6 +33,10 @@ public abstract class BaseServlet extends HttpServlet {
 		return req.getSession().getAttribute("userId") != null;
 	}
 	
+	protected User getLoggedInUser(HttpServletRequest req) {
+		return (User) req.getAttribute("user");
+	}
+	
 	protected void logout(HttpServletRequest req, HttpServletResponse resp) {
 		req.getSession().invalidate();
 		req.removeAttribute("user");
