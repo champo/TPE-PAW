@@ -32,5 +32,6 @@ public abstract class BaseServlet extends HttpServlet {
 	
 	protected void logout(HttpServletRequest req) {
 		req.getSession().invalidate();
+		req.removeAttribute("user");
 	}
 }

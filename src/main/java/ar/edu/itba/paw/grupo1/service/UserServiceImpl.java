@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.login(username, hash);
 	}
 
+	@Override
+	public User get(int userId) {
+		return userDao.get(userId);
+	}
+
 }

@@ -67,20 +67,48 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 				
 				ResultSet result = stmt.getResultSet();
 				if (result.next()) {
-					return new User(
-						result.getInt("id"), 
-						result.getString("name"), 
-						result.getString("surname"), 
-						result.getString("email"), 
-						result.getString("phone"), 
-						result.getString("username"),
-						hash
-					);
+					return userFromResult(result);
 				}
 			}
 			
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying login with user " + username + " pass " + hash, e);
+		}
+		
+		return null;
+	}
+
+	private User userFromResult(ResultSet result) throws SQLException {
+		return new User(
+			result.getInt("id"), 
+			result.getString("name"), 
+			result.getString("surname"), 
+			result.getString("email"), 
+			result.getString("phone"), 
+			result.getString("username"),
+			result.getString("password")
+		);
+	}
+
+	@Override
+	public User get(int userId) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(
+				"SELECT * FROM users WHERE id = ?"
+			);
+			
+			stmt.setInt(1, userId);
+			
+			if (stmt.execute()) {
+				
+				ResultSet result = stmt.getResultSet();
+				if (result.next()) {
+					return userFromResult(result);
+				}
+			}
+			
+		} catch (SQLException e) {
+			logger.warn("Caught SQLException when trying to get user with id " + userId, e);
 		}
 		
 		return null;

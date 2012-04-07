@@ -8,8 +8,9 @@ public interface UserDao {
 	
 	public User login(String username, String hash);
 	
+	public User get(int userId);
+	
 	public class UserAlreadyExistsException extends Exception {
 		
 	}
-
 }
