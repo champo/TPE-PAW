@@ -3,9 +3,11 @@ package ar.edu.itba.paw.grupo1.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.RespectBinding;
 
 import ar.edu.itba.paw.grupo1.model.User;
 
@@ -30,8 +32,54 @@ public abstract class BaseServlet extends HttpServlet {
 		return req.getSession().getAttribute("userId") != null;
 	}
 	
-	protected void logout(HttpServletRequest req) {
+	protected void logout(HttpServletRequest req, HttpServletResponse resp) {
 		req.getSession().invalidate();
 		req.removeAttribute("user");
+		
+		expireCookie(req, resp, "username");
+		expireCookie(req, resp, "hash");
 	}
+	
+	protected void rememberUsername(HttpServletResponse resp, User user) {
+		Cookie cookie = new Cookie("username", user.getUsername());
+		cookie.setMaxAge(Integer.MAX_VALUE);
+		resp.addCookie(cookie);
+	}
+	
+	protected String getRememberedName(HttpServletRequest req) {
+		
+		Cookie cookie = getCookie(req, "username");
+		if (cookie != null) {
+			return cookie.getValue();
+		}
+		
+		return null;
+	}
+
+	protected void expireCookie(HttpServletRequest req, HttpServletResponse resp, String name) {
+		
+		Cookie cookie = getCookie(req, name);
+		if (cookie != null) {
+			cookie.setMaxAge(0);
+			resp.addCookie(cookie);
+		}
+	}
+
+	protected Cookie getCookie(HttpServletRequest req, String name) {
+		
+		Cookie[] cookies = req.getCookies();
+		if (cookies == null) {
+			return null;
+		}
+		
+		for (Cookie cookie : cookies) {
+			if (name.equals(cookie.getName())) {
+				return cookie;
+			}
+		}
+		
+		return null;
+	}
+	
+	
 }

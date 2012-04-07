@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
@@ -20,6 +22,12 @@ public class LoginServlet extends BaseServlet {
 		if (isLoggedIn(req)) {
 			resp.sendRedirect("/");
 			return;
+		}
+
+		if (req.getParameter("username") == null) {
+			req.setAttribute("username", getRememberedName(req));
+		} else {
+			req.setAttribute("username", req.getParameter("username"));
 		}
 		
 		render(req, resp, "login.jsp", "Login");
@@ -44,9 +52,20 @@ public class LoginServlet extends BaseServlet {
 			if (user != null) {
 				// We can log in now!
 				setLoggedInUser(req, user);
+				
+				if (req.getParameter("rememberName") != null) {
+					rememberUsername(resp, user);
+				}
+				
 				resp.sendRedirect("/");
 				return;
 			}
+		}
+		
+		if (username == null) {
+			req.setAttribute("username", getRememberedName(req));
+		} else {
+			req.setAttribute("username", username);
 		}
 		
 		req.setAttribute("invalidCredentials", true);
