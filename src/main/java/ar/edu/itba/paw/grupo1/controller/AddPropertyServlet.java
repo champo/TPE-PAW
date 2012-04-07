@@ -17,19 +17,19 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		render(req, resp, "addProperty.jsp", "Add Property");
+		req.setAttribute("property", new Property());
+		render(req, resp, "editProperty.jsp", "Add Property");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		ApplicationContainer.getInstance();
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = getProperty(req, resp);
 
 		propertyService.save(property);
-		req.getRequestDispatcher("ListPropertiesServlet").forward(req, resp);
+		req.getRequestDispatcher("listProperties").forward(req, resp);
 
 	}
 }
