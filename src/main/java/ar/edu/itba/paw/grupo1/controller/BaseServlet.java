@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.ws.RespectBinding;
 
 import ar.edu.itba.paw.grupo1.model.User;
@@ -41,9 +42,19 @@ public abstract class BaseServlet extends HttpServlet {
 	}
 	
 	protected void rememberUsername(HttpServletResponse resp, User user) {
-		Cookie cookie = new Cookie("username", user.getUsername());
+		setInfiniteCookie(resp, "username", user.getUsername());
+	}
+
+	private void setInfiniteCookie(HttpServletResponse resp, String name,
+			String value) {
+		Cookie cookie = new Cookie(name, value);
 		cookie.setMaxAge(Integer.MAX_VALUE);
 		resp.addCookie(cookie);
+	}
+	
+	protected void rememberUser(HttpServletResponse resp, User user) {
+		rememberUsername(resp, user);
+		setInfiniteCookie(resp, "hash", user.getPassword());
 	}
 	
 	protected String getRememberedName(HttpServletRequest req) {

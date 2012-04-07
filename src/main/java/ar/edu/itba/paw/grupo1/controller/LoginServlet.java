@@ -24,10 +24,11 @@ public class LoginServlet extends BaseServlet {
 			return;
 		}
 
-		if (req.getParameter("username") == null) {
+		String username = req.getParameter("username");
+		if (username == null || username.isEmpty()) {
 			req.setAttribute("username", getRememberedName(req));
 		} else {
-			req.setAttribute("username", req.getParameter("username"));
+			req.setAttribute("username", username);
 		}
 		
 		render(req, resp, "login.jsp", "Login");
@@ -57,16 +58,16 @@ public class LoginServlet extends BaseServlet {
 					rememberUsername(resp, user);
 				}
 				
+				if (req.getParameter("rememberMe") != null) {
+					rememberUser(resp, user);
+				}
+				
 				resp.sendRedirect("/");
 				return;
 			}
 		}
 		
-		if (username == null) {
-			req.setAttribute("username", getRememberedName(req));
-		} else {
-			req.setAttribute("username", username);
-		}
+		req.setAttribute("username", username);
 		
 		req.setAttribute("invalidCredentials", true);
 		render(req, resp, "login.jsp", "Login");
