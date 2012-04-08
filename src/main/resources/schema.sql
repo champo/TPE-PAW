@@ -6,7 +6,7 @@ CREATE TABLE users
     email varchar(50),
     phone varchar(20),
     username varchar(50),
-    password char(40),
+    password char(64),
 
     PRIMARY KEY(id)
 );
