@@ -18,8 +18,8 @@ public class AbstractPictureServlet extends LayoutServlet {
 		Integer id = Integer.parseInt(req.getParameter("id"));
 		int propId = Integer.parseInt(req.getParameter("propId"));
 		String name = req.getParameter("name");
-		String source = req.getParameter("source");
+		String extension = req.getParameter("extension");
 		
-		return new Picture(id, propId, name, source);
+		return new Picture(id, propId, name, extension);
 	}
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 				while (myCursor.next()) {
 					int id = myCursor.getInt("id");
 					String name = myCursor.getString("name");
-					String source = myCursor.getString("source");
-					pictures.add(new Picture(id, propertyId, name, source));
+					String extension = myCursor.getString("extension");
+					pictures.add(new Picture(id, propertyId, name, extension));
 				}
 			}
 			statement.close();
@@ -57,9 +58,9 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 				if (myCursor.next()) {
 					int propertyId = myCursor.getInt("propertyId");
 					String name = myCursor.getString("name");
-					String source = myCursor.getString("source");
+					String extension = myCursor.getString("extension");
 
-					response = new Picture(id, propertyId, name, source);
+					response = new Picture(id, propertyId, name, extension);
 				}
 			}
 			statement.close();
@@ -83,10 +84,10 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		PreparedStatement statement = null;
 
 		try {
-			statement = conn.prepareStatement("update pictures set name = ?, source = ?, propertyId = ? where id = ?)");
+			statement = conn.prepareStatement("update pictures set name = ?, propertyId = ?, extension = ? where id = ?)");
 			statement.setString(1, picture.getName());
-			statement.setString(2, picture.getSource());
-			statement.setInt(3, picture.getPropId());
+			statement.setInt(2, picture.getPropId());
+			statement.setString(3, picture.getExtension());
 			statement.setInt(4, picture.getId());
 			statement.execute();
 			statement.close();
@@ -102,12 +103,17 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		PreparedStatement statement = null;
 
 		try {
-			statement = conn.prepareStatement("insert (name, source, propertyId) into pictures values(?,?,?)");
+			statement = conn.prepareStatement("insert (name, propertyId, extension) into pictures values(?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, picture.getName());
-			statement.setString(2, picture.getSource());
-			statement.setInt(3, picture.getPropId());
-
+			statement.setInt(2, picture.getPropId());
+			statement.setString(3, picture.getExtension());
+			
 			statement.execute();
+			
+			ResultSet result = statement.getGeneratedKeys();
+			result.next();
+			picture.setId(result.getInt("id"));
+			
 			statement.close();
 //			conn.close();
 

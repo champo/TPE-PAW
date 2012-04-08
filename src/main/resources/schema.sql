@@ -49,9 +49,9 @@ CREATE TABLE pictures
 (
     id serial,
     name varchar(50),
-    source varchar(150),
     propertyId Integer,
-
+    extension varchar(10),
+    
     PRIMARY KEY(id),
     FOREIGN KEY(propertyId) REFERENCES properties(id)
 );
