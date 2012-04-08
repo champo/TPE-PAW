@@ -3,9 +3,11 @@
  */
 package ar.edu.itba.paw.grupo1;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -24,8 +26,20 @@ public class ApplicationContainer extends AbstractContainer {
 
 	private static ApplicationContainer self;
 	
+	private static Logger logger = Logger.getLogger(ApplicationContainer.class);
+	
+	private Properties config;
+	
 	private ApplicationContainer() {
 		super();
+		
+		config = new Properties();
+		try {
+			config.load(getClass().getResourceAsStream("/config.properties"));
+		} catch (IOException e) {
+			logger.warn("The configuration for ApplicationContainer couldn't be loaded.", e);
+			//We just leave config empty, and let the builders deal with it
+		}
 	}
 	
 	/**
@@ -64,8 +78,13 @@ public class ApplicationContainer extends AbstractContainer {
 	
 	protected Connection buildConnection() {
 		
+		if (!config.containsKey("db.url") || !config.containsKey("db.user") || !config.containsKey("db.pass")) {
+			logger.error("Database configuration missing. Bailing on the build.");
+			return null;
+		}
+		
 		try {
-			return DriverManager.getConnection("jdbc:postgresql://localhost/paw1", "paw1", "paw1");
+			return DriverManager.getConnection(config.getProperty("db.url"), config.getProperty("db.user"), config.getProperty("db.pass"));
 		} catch (SQLException e) {
 			Logger.getLogger(ApplicationContainer.class).fatal("Failed to build a connection.", e);
 		}
