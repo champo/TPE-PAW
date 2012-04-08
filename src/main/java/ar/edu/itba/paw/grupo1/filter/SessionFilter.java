@@ -11,9 +11,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.bind.DatatypeConverter;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
@@ -42,8 +42,8 @@ public class SessionFilter implements Filter {
 			user = userService.get((int) userIdObj);
 		} else {
 
-			Cookie username = getCookie(httpReq, "username");
-			Cookie hash = getCookie(httpReq, "hash");
+			Cookie username = CookiesHelper.getCookie(httpReq, "username");
+			Cookie hash = CookiesHelper.getCookie(httpReq, "hash");
 			
 			if (username != null && hash != null) {
 				user = userService.loginWithHash(username.getValue(), hash.getValue());
@@ -64,22 +64,6 @@ public class SessionFilter implements Filter {
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		userService = ApplicationContainer.get(UserService.class);
-	}
-
-	protected Cookie getCookie(HttpServletRequest req, String name) {
-		
-		Cookie[] cookies = req.getCookies();
-		if (cookies == null) {
-			return null;
-		}
-		
-		for (Cookie cookie : cookies) {
-			if (name.equals(cookie.getName())) {
-				return cookie;
-			}
-		}
-		
-		return null;
 	}
 	
 }
