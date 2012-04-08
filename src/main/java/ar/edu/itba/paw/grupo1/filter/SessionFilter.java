@@ -39,7 +39,8 @@ public class SessionFilter implements Filter {
 		User user = null;
 		
 		if (userIdObj instanceof Integer) {
-			user = userService.get((int) userIdObj);
+			Integer userId = (Integer) userIdObj;
+			user = (User) userService.get(userId);
 		} else {
 
 			Cookie username = CookiesHelper.getCookie(httpReq, "username");
