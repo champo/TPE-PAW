@@ -123,5 +123,19 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 		
 	}
 
+	public void delete(int id) {
+		PreparedStatement statement = null;
 
+		try {
+			statement = conn.prepareStatement("delete from pictures where id = ?)");
+			statement.setInt(1, id);
+			statement.execute();
+			statement.close();
+//			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

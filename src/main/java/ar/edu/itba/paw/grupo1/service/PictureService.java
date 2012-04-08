@@ -11,4 +11,6 @@ public interface PictureService {
 	public void save(Picture picture);
 
 	public List<Picture> getByPropId(int propertyId);
+
+	public void delete(int id);
 }

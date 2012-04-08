@@ -24,5 +24,9 @@ public class PictureServiceImpl implements PictureService {
 	public List<Picture> getByPropId(int propertyId) {
 		return pictureDao.getPictures(propertyId);
 	}
+	
+	public void delete(int id) {
+		pictureDao.delete(id);	
+	}
 
 }

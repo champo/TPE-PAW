@@ -27,7 +27,9 @@ public class PropertyDetailServlet extends LayoutServlet {
 			Property property = propertyService.getById(id);
 			List<Picture> pictures = pictureService.getByPropId(id);
 			req.setAttribute("property", property);
-			req.setAttribute("pictures", pictures);
+			if (pictures.size() > 0) {
+				req.setAttribute("pictures", pictures);
+			}
 		} else {
 			//TODO show error
 		}

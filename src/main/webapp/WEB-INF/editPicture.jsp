@@ -36,3 +36,10 @@
 	</div>	
 	
 </form>
+
+<c:if test="${not empty edit}">
+	<form action="deletePicture" method="post">
+		<input type="hidden" value=<c:out value="${picture.id}" />" />
+		<input type="submit" name"delete" value="Delete" />
+	</form>
+</c:if>

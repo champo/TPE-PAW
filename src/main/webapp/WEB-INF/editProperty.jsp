@@ -82,3 +82,18 @@
 	</div>	
 	
 </form>
+
+<c:if test="${not empty edit}">
+		Pictures of this property:
+		<br />
+		<a href="addPicture?propId=<c:out value="${property.id}" />"> Add new </a>
+		<br />
+		<c:forEach var="picture" items="${pictures}">
+			<c:out value="${picture.name}"></c:out>
+			<br />
+			<img class="propPicture" alt="Image of the property" src="img/<c:out value="${picture.id}"></c:out>.<c:out value="${picture.extension}"></c:out>" />
+			<br />
+			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit </a>  
+			<br />
+		</c:forEach>
+</c:if>
