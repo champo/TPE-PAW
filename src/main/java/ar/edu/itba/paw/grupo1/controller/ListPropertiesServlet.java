@@ -20,7 +20,7 @@ public class ListPropertiesServlet extends BaseServlet {
 
 		PropertyService propService = ApplicationContainer.get(PropertyService.class);
 		
-		User user = new User(1,"a", "b", "c", "1", "a", "d"); // TODO replace this
+		User user = getLoggedInUser(req);
 		
 		req.setAttribute("properties", propService.getProperties(user.getId()));
 		render(req, resp, "listProperties.jsp", "List Properties");
