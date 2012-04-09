@@ -10,7 +10,7 @@ import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 
 @SuppressWarnings("serial")
-public class DeletePictureServlet extends LayoutServlet {
+public class DeletePictureServlet extends BaseServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

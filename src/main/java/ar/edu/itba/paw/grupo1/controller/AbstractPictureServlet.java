@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.paw.grupo1.model.Picture;
 
 @SuppressWarnings("serial")
-public class AbstractPictureServlet extends LayoutServlet {
+public class AbstractPictureServlet extends BaseServlet {
 
 	public AbstractPictureServlet() {
 		super();

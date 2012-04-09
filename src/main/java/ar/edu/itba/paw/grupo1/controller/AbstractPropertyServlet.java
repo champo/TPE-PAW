@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.paw.grupo1.model.Property;
 
 @SuppressWarnings("serial")
-public class AbstractPropertyServlet extends LayoutServlet {
+public class AbstractPropertyServlet extends BaseServlet {
 
 	public AbstractPropertyServlet() {
 		super();
