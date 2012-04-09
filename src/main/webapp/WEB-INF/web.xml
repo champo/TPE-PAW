@@ -48,32 +48,52 @@
   
   	<servlet>
 		<servlet-name>ListProperties</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.ListPropertiesServlet</servlet-class>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.ListPropertiesServlet</servlet-class>
 	</servlet>
-  
-	<servlet-mapping>
+    
+    <servlet-mapping>
 		<servlet-name>ListProperties</servlet-name>
 		<url-pattern>/listProperties</url-pattern>
 	</servlet-mapping>
   
 	<servlet>
 		<servlet-name>EditProperty</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.EditPropertyServlet</servlet-class>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.EditPropertyServlet</servlet-class>
 	</servlet>
-  
-	<servlet-mapping>
+    
+    <servlet-mapping>
 		<servlet-name>EditProperty</servlet-name>
 		<url-pattern>/editProperty</url-pattern>
 	</servlet-mapping>
   
 	<servlet>
 		<servlet-name>AddProperty</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.AddPropertyServlet</servlet-class>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.AddPropertyServlet</servlet-class>
 	</servlet>
-  
-	<servlet-mapping>
+    
+    <servlet-mapping>
 		<servlet-name>AddProperty</servlet-name>
 		<url-pattern>/addProperty</url-pattern>
 	</servlet-mapping>
-  
+    
+    <servlet>
+		<servlet-name>AddPicture</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.AddPictureServlet</servlet-class>
+	</servlet>
+    
+    <servlet-mapping>
+		<servlet-name>AddPicture</servlet-name>
+		<url-pattern>/addPicture</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+		<servlet-name>EditPicture</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.EditPictureServlet</servlet-class>
+	</servlet>
+    
+    <servlet-mapping>
+		<servlet-name>EditPicture</servlet-name>
+		<url-pattern>/editPicture</url-pattern>
+	</servlet-mapping>
+			
 </web-app>

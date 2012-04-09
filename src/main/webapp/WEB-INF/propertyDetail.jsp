@@ -63,3 +63,19 @@
 <div class="barbecue">
 	Barbecue: <c:if test="${property.barbecue}">Yes</c:if>
 </div>
+
+<c:if test="${not empty pictures}">
+	<div class="pictures">
+		Pictures of this property: <br />
+		<c:forEach var="picture" items="${pictures}">
+			<c:out value="${picture.name}"></c:out>
+			<br />
+			<img class="propPicture" alt="Image of the property" src="img/<c:out value="${picture.id}"></c:out>.<c:out value="${picture.extension}"></c:out>" />
+			<br />
+		</c:forEach>
+	</div>
+</c:if>
+
+<c:if test="${empty pictures}">
+	This property has no pictures.
+</c:if>

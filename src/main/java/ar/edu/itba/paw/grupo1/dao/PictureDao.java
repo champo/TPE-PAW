@@ -12,4 +12,6 @@ public interface PictureDao {
 	
 	public void save(Picture picture);
 
+	public void delete(int id);
+
 }

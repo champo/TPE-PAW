@@ -10,19 +10,21 @@
 	</c:if>
 </h2>
 
-<form action="<c:if test=${"empty edit"}>addProperty</c:if><c:if test=${"not empty edit"}>addProperty</c:if>" method="post">
+<form action="<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
 	<input type="hidden" name="id" value="<c:out value="${property.id}" />" />
 	<div class="form-field">
 		<label for="propertyType">Property type:</label>
-		<select name="propertyType"></select>
-		<option value="0" <c:if test=${property.propertyType == 0}>selected="selected"</c:if>>House</option>
-		<option value="1" <c:if test=${property.propertyType == 1}>selected="selected"</c:if>>Flat</option>
+		<select name="propertyType">
+		<option value="0" <c:if test="${property.propertyType == 0}">selected="selected"</c:if>>House</option>
+		<option value="1" <c:if test="${property.propertyType == 1}">selected="selected"</c:if>>Flat</option>
+		</select>
 	</div>
 	<div class="form-field">
 		<label for="operationoype">Operation type:</label>
-		<select name="operationType"></select>
-		<option value="0" <c:if test=${property.operationType == 0}>selected="selected"</c:if>>Selling</option>
-		<option value="1" <c:if test=${property.operationType == 1}>selected="selected"</c:if>>Leasing</option>
+		<select name="operationType">
+		<option value="0" <c:if test="${property.operationType == 0}">selected="selected"</c:if>>Selling</option>
+		<option value="1" <c:if test="${property.operationType == 1}">selected="selected"</c:if>>Leasing</option>
+		</select>
 	</div>
 	<div class="form-field">
 		<label for="neighbourhood">Neighbourhood:</label>
@@ -42,15 +44,11 @@
 	</div>
 	<div class="form-field">
 		<label for="indoorSpace">OutDoor Space:</label>
-		<input type="text" name="indoorSpace" value="<c:out value="${property.outdoorSpace}" />" />
+		<input type="text" name="outdoorSpace" value="<c:out value="${property.outdoorSpace}" />" />
 	</div>
 	<div class="form-field">
 		<label for="description">Description:</label>
 		<textarea name="description" cols="40" rows="5"><c:out value="${property.description}" /></textarea>
-	</div>
-	<div class="form-field">
-		<label for="indoorSpace">OutDoor Space:</label>
-		<input type="text" name="indoorSpace" value="<c:out value="${property.outdoorSpace}" />" />
 	</div>
 	<div class="form-field">
 		<label for="cable">Cable:</label>
@@ -74,7 +72,7 @@
 	</div>
 	<div class="form-field">
 		<label for="barbecue">Barbecue:</label>
-		<input type="checkbox" name=barbecue value="true" <c:if test=${property.barbecue == 0}>selected="selected"</c:if>/>
+		<input type="checkbox" name=barbecue value="true" />
 	</div>
 	
 	<div class="form-buttons">
@@ -82,3 +80,18 @@
 	</div>	
 	
 </form>
+
+<c:if test="${not empty edit}">
+		Pictures of this property:
+		<br />
+		<a href="addPicture?propId=<c:out value="${property.id}" />"> Add new </a>
+		<br />
+		<c:forEach var="picture" items="${pictures}">
+			<c:out value="${picture.name}"></c:out>
+			<br />
+			<img class="propPicture" alt="Image of the property" src="img/<c:out value="${picture.id}"></c:out>.<c:out value="${picture.extension}"></c:out>" />
+			<br />
+			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit </a>  
+			<br />
+		</c:forEach>
+</c:if>
