@@ -11,9 +11,17 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import ar.edu.itba.paw.grupo1.dao.JDBCPictureDao;
+import ar.edu.itba.paw.grupo1.dao.JDBCPropertyDao;
 import ar.edu.itba.paw.grupo1.dao.JDBCUserDao;
+import ar.edu.itba.paw.grupo1.dao.PictureDao;
+import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.service.AbstractContainer;
+import ar.edu.itba.paw.grupo1.service.PictureService;
+import ar.edu.itba.paw.grupo1.service.PictureServiceImpl;
+import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.service.PropertyServiceImpl;
 import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.service.UserServiceImpl;
 
@@ -74,6 +82,22 @@ public class ApplicationContainer extends AbstractContainer {
 	
 	protected UserDao buildUserDao(Connection conn) {
 		return new JDBCUserDao(conn);
+	}
+	
+	protected PropertyService buildPropertyService(PropertyDao propertyDao) {
+		return new PropertyServiceImpl(propertyDao);
+	}
+	
+	protected PropertyDao buildPropertyDao(Connection conn) {
+		return new JDBCPropertyDao(conn);
+	}
+	
+	protected PictureService buildPictureService(PictureDao pictureDao) {
+		return new PictureServiceImpl(pictureDao);
+	}
+	
+	protected PictureDao buildPictureDao(Connection conn) {
+		return new JDBCPictureDao(conn);
 	}
 	
 	protected Connection buildConnection() {
