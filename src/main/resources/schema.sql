@@ -6,7 +6,7 @@ CREATE TABLE users
     email varchar(50),
     phone varchar(20),
     username varchar(50),
-    password char(40),
+    password char(64),
 
     PRIMARY KEY(id)
 );
@@ -59,3 +59,19 @@ CREATE TABLE pictures
 CREATE INDEX indexPicturesId on pictures(id);
 
 CREATE INDEX indexPicturesPropertyId on pictures(propertyId);
+
+GRANT ALL PRIVILEGES ON DATABASE paw1 to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE users to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE properties to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE pictures to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE pictures_id_seq to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE properties_id_seq to paw1;
+
+GRANT ALL PRIVILEGES ON TABLE users_id_seq to paw1;
+
+
