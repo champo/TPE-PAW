@@ -48,6 +48,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 				throw new UserAlreadyExistsException();
 			} else {
 				logger.warn("Caught SQLException while trying to register user.", e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -73,6 +74,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 			
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying login with user " + username + " pass " + hash, e);
+			throw new RuntimeException(e);
 		}
 		
 		return null;
@@ -109,6 +111,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 			
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to get user with id " + userId, e);
+			throw new RuntimeException(e);
 		}
 		
 		return null;
