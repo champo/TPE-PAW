@@ -116,20 +116,5 @@ public class RegisterServlet extends BaseServlet {
 		}
 		
 		return true;
-	}
-	
-	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max) {
-		
-		String value = req.getParameter(param);
-		if (value == null || value.length() == 0) {
-			req.setAttribute(param + "Empty", true);
-			return false;
-		} else if (value.length() < min || value.length() > max) {
-			req.setAttribute(param + "BadLength", true);
-			return false;
-		}
-		
-		return true;
-	}
-	
+	}	
 }
