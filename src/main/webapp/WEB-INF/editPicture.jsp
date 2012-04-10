@@ -10,7 +10,7 @@
 	</c:if>
 </h2>
 
-<form action="<c:if test="${empty edit}">addPicture</c:if><c:if test="${not empty edit}">editPicture</c:if>" <c:if test=${"empty edit"}>enctype="multipart/form-data2</c:if> method="post">
+<form action="<c:if test="${empty edit}">addPicture</c:if><c:if test="${not empty edit}">editPicture</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data2</c:if> method="post">
 	<input type="hidden" name="propId" value="<c:out value="${picture.propId}" />" />
 	<input type="hidden" name="id" value="<c:out value="${picture.id}" />" />
 	<input type="hidden" name="extension" value="<c:out value="${picture.extension}" />" />
@@ -40,6 +40,6 @@
 <c:if test="${not empty edit}">
 	<form action="deletePicture" method="post">
 		<input type="hidden" value=<c:out value="${picture.id}" />" />
-		<input type="submit" name"delete" value="Delete" />
+		<input type="submit" name="delete" value="Delete" />
 	</form>
 </c:if>
