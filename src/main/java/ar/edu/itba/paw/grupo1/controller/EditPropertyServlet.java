@@ -28,7 +28,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			property = propertyService.getById(Integer.parseInt(req.getParameter("id")));
 			pictures = pictureService.getByPropId(Integer.parseInt(req.getParameter("id")));
 			req.setAttribute("edit", 1);
-			req.setAttribute("property", property);
+			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
 		} else {
 			//TODO show error.
@@ -44,6 +44,8 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 		Property property = getProperty(req, resp);
 
 		if (property == null) {
+			setPropertyAttributes(req);
+			req.setAttribute("edit", 1);
 			render(req, resp, "editProperty.jsp", "Edit Property");
 			return;
 		}
