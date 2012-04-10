@@ -12,7 +12,6 @@
 
 <form action="<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
 	<input type="hidden" name="id" value="<c:out value="${property.id}" />" />
-	<input type="hidden" name="userId" value="<c:out value="${userId}" />" />
 	
 	<div class="form-field">
 		<label for="propertyType">Property type:</label>
