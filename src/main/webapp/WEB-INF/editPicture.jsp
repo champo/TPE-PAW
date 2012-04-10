@@ -12,6 +12,7 @@
 
 <form action="<c:if test="${empty edit}">addPicture</c:if><c:if test="${not empty edit}">editPicture</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data2</c:if> method="post">
 	<input type="hidden" name="propId" value="<c:out value="${picture.propId}" />" />
+	<input type="hidden" name="id" value="<c:out value="${picture.id}" />" />
 	<input type="hidden" name="extension" value="<c:out value="${picture.extension}" />" />
 	<div class="form-field">
 		<label for="name">Name:</label>
