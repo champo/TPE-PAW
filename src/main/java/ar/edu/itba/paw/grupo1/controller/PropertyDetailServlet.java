@@ -33,7 +33,7 @@ public class PropertyDetailServlet extends BaseServlet {
 		} else {
 			//TODO show error
 		}
-		render(req, resp, "propertyDetail", "Property Detail");
+		render(req, resp, "propertyDetail.jsp", "Property Detail");
 	}
 	
 	@Override

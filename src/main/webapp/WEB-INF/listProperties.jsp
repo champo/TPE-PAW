@@ -10,7 +10,7 @@
 	<c:set var="row" value="0" />
 	<c:forEach items="${properties}" var="property">
 		<li class="<c:if test="${row % 2 == 0}">odd</c:if><c:if test="${row % 2 != 0}">even</c:if><c:set var="row" value="${row + 1}" />" >
-			<a href="<c:url value="viewProperty"><c:param name="id" value="${property.id}" /></c:url>">
+			<a href="<c:url value="propertyDetail"><c:param name="id" value="${property.id}" /></c:url>">
 				<c:out value="${property.id}" />
 			</a>
 			<br />
