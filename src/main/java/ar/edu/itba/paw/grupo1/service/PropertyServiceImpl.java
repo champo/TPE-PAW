@@ -5,6 +5,7 @@ import java.util.List;
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 
 public class PropertyServiceImpl implements PropertyService {
 
