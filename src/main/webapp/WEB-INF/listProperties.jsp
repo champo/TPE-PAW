@@ -17,8 +17,10 @@
 			<span style="font-size: 15px;">
 				<c:out value="${property.description}" />
 			</span>
-			<a style="float: right;" href="<c:url value="editProperty"><c:param name="id" value="${property.id}" />
-				</c:url>"> edit </a>
+			<a style="float: right;margin:0px 10px;" href="<c:url value="editProperty"><c:param name="id" value="${property.id}" /></c:url>"> edit </a>
+
+			<c:if test="${property.sold}"><a style="float: right;margin:0px 10px;" href="<c:url value="publishProperty"><c:param name="id" value="${property.id}" /></c:url>">publish</a></c:if>
+			<c:if test="${!property.sold}"><a style="float: right;margin:0px 10px;" href="<c:url value="unpublishProperty"><c:param name="id" value="${property.id}" /></c:url>">unpublish</a></c:if>
 		</li>
 	</c:forEach>
 </ul>

@@ -104,5 +104,23 @@
 		<url-pattern>/propertyDetail</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>PublishProperty</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.PublishPropertyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PublishProperty</servlet-name>
+		<url-pattern>/publishProperty</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>UnpublishProperty</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.UnpublishPropertyServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UnpublishProperty</servlet-name>
+		<url-pattern>/unpublishProperty</url-pattern>
+	</servlet-mapping>
 </web-app>

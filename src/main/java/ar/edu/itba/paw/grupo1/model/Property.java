@@ -148,5 +148,15 @@ public class Property {
 	public boolean isNew() {
 		return id == null;
 	}
+
+	public void publish() {
+		sold = false;
+		return;
+	}
+	
+	public void unpublish() {
+		sold = true;
+		return;
+	}
 		
 }
