@@ -11,4 +11,6 @@ public interface PropertyDao {
 	public Property get(int id);
 
 	public void save(Property property);
+
+	public boolean checkOwnership(Integer userId, Integer propertyId);
 }

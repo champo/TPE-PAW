@@ -72,7 +72,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 			PreparedStatement statement;
 			if (property.isNew()) {
 
-				statement = conn.prepareStatement("INSERT INTO properties values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				statement = conn.prepareStatement("INSERT INTO properties (propertytype, operationtype," +
+						" neighbourhood, price, rooms, indoorspace, outdoorspace, description," +
+						" cable, phone, pool, lounge, paddle, barbecue, sold, userid) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				setPlaceHolders(statement, property);
 
 			} else {
@@ -135,7 +137,35 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				pool, lounge, paddle, barbecue, sold, userId);
 		
 	}
-	
+
+
+	@Override
+	public boolean checkOwnership(Integer userId, Integer propertyId) {
+		
+		PreparedStatement statement;
+
+		try {
+			statement = conn.prepareStatement("select * from properties where userId = ? and id = ?");
+			statement.setInt(1, userId);
+			statement.setInt(2, propertyId);
+
+			if (statement.execute()) {
+				ResultSet myCursor = statement.getResultSet();
+
+				if (myCursor.next()) {
+					return true;
+				}
+			}
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+
 }
 
 

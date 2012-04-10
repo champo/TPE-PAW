@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.User;
 
 public class PropertyServiceImpl implements PropertyService {
 
@@ -17,8 +18,13 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDao.get(id);
 	}
 	
-	public void save(Property property) {
-		propertyDao.save(property);
+	public void save(Property property, User user) {
+		
+		if (property.getId() == null || propertyDao.checkOwnership(user.getId(), property.getId())) {
+			propertyDao.save(property);
+		} else {
+			throw new PermissionDeniedException();
+		}
 	}
 
 	public List<Property> getProperties(int userId) {
