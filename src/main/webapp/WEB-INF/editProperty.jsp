@@ -101,9 +101,6 @@
 		<label for="description">Description:</label>
 		<textarea name="description" cols="40" rows="5"><c:out value="${property.description}" /></textarea>
 	</div>
-	<c:if test="${descriptionEmpty }">
-		<p class="error">The field 'description' cannot be empty.</p>
-	</c:if>
 	<c:if test="${descriptionLength }">
 		<p class="error">The field 'description' has to be shorter than 1000 characters.</p>
 	</c:if>
