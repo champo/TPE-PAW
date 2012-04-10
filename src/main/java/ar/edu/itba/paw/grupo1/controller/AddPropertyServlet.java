@@ -18,6 +18,7 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 			throws ServletException, IOException {
 
 		req.setAttribute("property", new Property());
+		req.setAttribute("userId", getLoggedInUser(req).getId());
 		render(req, resp, "editProperty.jsp", "Add Property");
 	}
 
@@ -28,7 +29,7 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = getProperty(req, resp);
 
-		propertyService.save(property);
+		propertyService.save(property, getLoggedInUser(req));
 		req.getRequestDispatcher("listProperties").forward(req, resp);
 
 	}

@@ -12,6 +12,7 @@
 
 <form action="<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
 	<input type="hidden" name="id" value="<c:out value="${property.id}" />" />
+	<input type="hidden" name="userId" value="<c:out value="${userId}" />" />
 	<div class="form-field">
 		<label for="propertyType">Property type:</label>
 		<select name="propertyType">
@@ -20,7 +21,7 @@
 		</select>
 	</div>
 	<div class="form-field">
-		<label for="operationoype">Operation type:</label>
+		<label for="operationType">Operation type:</label>
 		<select name="operationType">
 		<option value="0" <c:if test="${property.operationType == 0}">selected="selected"</c:if>>Selling</option>
 		<option value="1" <c:if test="${property.operationType == 1}">selected="selected"</c:if>>Leasing</option>
@@ -43,7 +44,7 @@
 		<input type="text" name="indoorSpace" value="<c:out value="${property.indoorSpace}" />" />
 	</div>
 	<div class="form-field">
-		<label for="indoorSpace">OutDoor Space:</label>
+		<label for="outdoorSpace">OutDoor Space:</label>
 		<input type="text" name="outdoorSpace" value="<c:out value="${property.outdoorSpace}" />" />
 	</div>
 	<div class="form-field">
@@ -52,27 +53,27 @@
 	</div>
 	<div class="form-field">
 		<label for="cable">Cable:</label>
-		<input type="checkbox" name="cable" value="true"/>
+		<input type="checkbox" name="cable" value="true" <c:if test="${property.cable == true}">checked</c:if>/>
 	</div>
 	<div class="form-field">
 		<label for="phone">Phone:</label>
-		<input type="checkbox" name=phone value="true"/>
+		<input type="checkbox" name="phone" value="true" <c:if test="${property.phone == true}">checked</c:if>/>
 	</div>
 	<div class="form-field">
 		<label for="pool">Pool:</label>
-		<input type="checkbox" name=pool value="true"/>
+		<input type="checkbox" name="pool" value="true" <c:if test="${property.pool == true}">checked</c:if>/>
 	</div>
 	<div class="form-field">
 		<label for="lounge">Lounge:</label>
-		<input type="checkbox" name=lounge value="true"/>
+		<input type="checkbox" name="lounge" value="true" <c:if test="${property.lounge == true}">checked</c:if>/>
 	</div>
 	<div class="form-field">
 		<label for="paddle">Paddle:</label>
-		<input type="checkbox" name=paddle value="true"/>
+		<input type="checkbox" name="paddle" value="true" <c:if test="${property.paddle == true}">checked</c:if>/>
 	</div>
 	<div class="form-field">
 		<label for="barbecue">Barbecue:</label>
-		<input type="checkbox" name=barbecue value="true" />
+		<input type="checkbox" name="barbecue" value="true" <c:if test="${property.barbecue == true}">checked</c:if>/>
 	</div>
 	
 	<div class="form-buttons">

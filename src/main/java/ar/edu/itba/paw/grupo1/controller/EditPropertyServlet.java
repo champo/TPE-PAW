@@ -43,7 +43,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = getProperty(req, resp);
 
-		propertyService.save(property);
+		propertyService.save(property, getLoggedInUser(req));
 		req.getRequestDispatcher("listProperties").forward(req, resp);
 
 	}
