@@ -25,7 +25,7 @@ public class Property {
 	
 	}
 	
-	public Property(int id, int propertyType, int operationType,
+	public Property(Integer id, int propertyType, int operationType,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, boolean cable, boolean phone,
