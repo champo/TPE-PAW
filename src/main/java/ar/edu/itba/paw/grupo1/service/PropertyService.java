@@ -12,4 +12,6 @@ public interface PropertyService {
 	public Property getById(int id);
 
 	public void save(Property property, User user);
+	
+	public int getOwner(int id);
 }

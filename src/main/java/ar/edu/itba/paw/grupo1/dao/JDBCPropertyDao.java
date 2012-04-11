@@ -164,7 +164,29 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		return false;
 	}
 
+	public int getUser(int id) {
+		int userId = 0;
 
+		PreparedStatement statement;
+
+		try {
+			statement = conn.prepareStatement("select userId from properties where id = ?");
+			statement.setInt(1, id);
+
+			if (statement.execute()) {
+				ResultSet myCursor = statement.getResultSet();
+
+				if (myCursor.next()) {
+					return myCursor.getInt("userId");
+				}
+			}
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userId;
+	}
 
 }
 

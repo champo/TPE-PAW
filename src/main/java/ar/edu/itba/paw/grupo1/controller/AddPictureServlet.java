@@ -17,7 +17,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
+import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @SuppressWarnings("serial")
 public class AddPictureServlet extends AbstractPictureServlet {
@@ -26,10 +28,21 @@ public class AddPictureServlet extends AbstractPictureServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		Picture picture = new Picture();
-		picture.setPropId(Integer.parseInt(req.getParameter("propId")));
-		req.setAttribute("picture", picture);
+		User user = getLoggedInUser(req);
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+		
+		if(	req.getParameter("propId") != null && user != null &&
+				user.getId() == propertyService.getOwner(Integer.parseInt(req.getParameter("propId")))) {
+			Picture picture = new Picture();
+			picture.setPropId(Integer.parseInt(req.getParameter("propId")));
+			req.setAttribute("picture", picture);
+		} else {
+			req.setAttribute("noPermissions", 1);
+		}
+		
 		render(req, resp, "editPicture.jsp", "Add Picture");
+		
+		
 	}
 
 	@Override
@@ -69,7 +82,36 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		    }
 		}		
 		
-		picture.setExtension(file.getName().substring(file.getName().lastIndexOf('.')));
+		boolean error = false;
+		
+		if (picture.getName().equals("")) {
+			error = true;
+			req.setAttribute("nameError", 1);
+		}
+		
+		String extension = null;
+		
+		if (file.getName().equals("")) {
+			error = true;
+			req.setAttribute("fileError", 1);
+		} else if (!file.getName().contains(".")) {
+			req.setAttribute("extensionError", 1);
+			error = true;
+		} else {
+			extension = file.getName().substring(file.getName().lastIndexOf('.'));
+			if (!extension.equals(".jpg") && !extension.equals(".png") && !extension.equals(".jpeg") && !extension.equals(".gif")) {
+				req.setAttribute("extensionError", 1);
+				error = true;
+			}
+		}
+		
+		if (error) {
+			req.setAttribute("picture", picture);
+			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
+		}
+		
+		picture.setExtension(extension);
 		
 		pictureService.save(picture);
 		

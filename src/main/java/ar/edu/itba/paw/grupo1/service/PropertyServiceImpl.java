@@ -31,5 +31,9 @@ public class PropertyServiceImpl implements PropertyService {
 	public List<Property> getProperties(int userId) {
 		return propertyDao.getProperties(userId);
 	}
+	
+	public int getOwner(int id) {
+		return propertyDao.getUser(id);
+	}
 
 }
