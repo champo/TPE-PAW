@@ -65,8 +65,13 @@ public abstract class BaseServlet extends HttpServlet {
 	
 	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max) {
 		
+		return checkParameter(req, param, min, max, false); 
+	}
+	
+	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max, boolean optional) {
+		
 		String value = req.getParameter(param);
-		if (value == null || value.length() == 0) {
+		if ((value == null || value.length() == 0) && !optional) {
 			req.setAttribute(param + "Empty", true);
 			return false;
 		} else if (value.length() < min || value.length() > max) {

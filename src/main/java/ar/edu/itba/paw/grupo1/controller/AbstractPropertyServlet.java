@@ -27,7 +27,7 @@ public class AbstractPropertyServlet extends BaseServlet {
 		error |= !checkIntegerParameter(req, "rooms", 1, Integer.MAX_VALUE);
 		error |= !checkDoubleParameter(req, "indoorSpace", 0, Double.MAX_VALUE);
 		error |= !checkDoubleParameter(req, "outdoorSpace", 0, Double.MAX_VALUE);
-		error |= !checkParameter(req, "description", 0, 1000);
+		error |= !checkParameter(req, "description", 0, 1000, true); //This is an optional field.
 		error |= !checkIntegerParameter(req, "antiquity", 0, 2000);
 
 		if (error) {
