@@ -1,7 +1,6 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.model.User;
 
+@SuppressWarnings("serial")
 public abstract class BaseServlet extends HttpServlet {
 
 	public BaseServlet() {

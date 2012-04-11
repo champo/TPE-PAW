@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
-import ar.edu.itba.paw.grupo1.service.UserServiceImpl;
 
 @SuppressWarnings("serial")
 public class ListPropertiesServlet extends BaseServlet {

@@ -3,8 +3,6 @@ package ar.edu.itba.paw.grupo1.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
 import ar.edu.itba.paw.grupo1.model.Property;
 
 @SuppressWarnings("serial")

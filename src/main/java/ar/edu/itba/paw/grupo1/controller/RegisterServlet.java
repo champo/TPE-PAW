@@ -10,6 +10,7 @@ import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
+@SuppressWarnings("serial")
 public class RegisterServlet extends BaseServlet {
 
 	@Override
