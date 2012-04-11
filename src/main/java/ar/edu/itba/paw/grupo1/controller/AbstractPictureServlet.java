@@ -19,7 +19,7 @@ public class AbstractPictureServlet extends BaseServlet {
 		
 		try {
 			propId = Integer.parseInt(req.getParameter("propId"));
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			return null;
 		}
 		

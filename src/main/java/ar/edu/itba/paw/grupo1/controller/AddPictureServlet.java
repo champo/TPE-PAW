@@ -36,11 +36,11 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		
 		try {
 			propId = Integer.parseInt(req.getParameter("propId"));
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			throw new InvalidParameterException();
 		}
 		
-		if(	user != null &&	user.getId() == propertyService.getOwner(propId)) {
+		if(	propertyService.checkOwner(propId, user) ) {
 			Picture picture = new Picture();
 			picture.setPropId(Integer.parseInt(req.getParameter("propId")));
 			req.setAttribute("picture", picture);
@@ -58,6 +58,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 		
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		
 		// Create a factory for disk-based file items
 		FileItemFactory factory = new DiskFileItemFactory();
@@ -117,6 +118,12 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		if (error) {
 			req.setAttribute("picture", picture);
 			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
+		}
+		
+		if (!propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
+			req.setAttribute("noPermissions", 1);
+			render(req, resp, "editPicture.jsp", "Edit Picture");
 			return;
 		}
 		

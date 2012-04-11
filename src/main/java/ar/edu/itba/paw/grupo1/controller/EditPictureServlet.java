@@ -27,12 +27,12 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			
 			try {
 				picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				throw new InvalidParameterException();
 			}
 			
 			
-			if (user != null && user.getId() == propertyService.getOwner(picture.getPropId())) {
+			if ( propertyService.checkOwner(picture.getPropId(), user) ) {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 			} else {
@@ -49,9 +49,23 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+		
+		Picture picture = buildPicture(req, resp);
+		
+		if (picture == null) {
+			req.setAttribute("fatal", 1);
+			render(req, resp, "editPicture.jsp", "Edit Picture");
+			return;
+		}
+		
+		if (!propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
+			req.setAttribute("noPermissions", 1);
+			render(req, resp, "editPicture.jsp", "Edit Picture");
+			return;
+		}
+		
 		if (req.getParameter("submit") != null) {
-			Picture picture = buildPicture(req, resp);
 			if (picture.getName() == "") {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);

@@ -13,5 +13,5 @@ public interface PropertyService {
 
 	public void save(Property property, User user);
 	
-	public int getOwner(int id);
+	public boolean checkOwner(int propId, User user);
 }
