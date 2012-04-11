@@ -53,8 +53,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			return;
 		}
 		propertyService.save(property, getLoggedInUser(req));
-		req.getRequestDispatcher("listProperties").forward(req, resp);
-
+		resp.sendRedirect("/listProperties");
 	}
 
 }

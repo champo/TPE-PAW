@@ -35,7 +35,6 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 		}
 		property.publish();
 		propertyService.save(property, getLoggedInUser(req));
-		req.getRequestDispatcher("listProperties").forward(req, resp);
-
+		resp.sendRedirect("/listProperties");
 	}
 }
