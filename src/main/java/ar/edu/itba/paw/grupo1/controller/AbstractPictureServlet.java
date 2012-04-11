@@ -15,8 +15,15 @@ public class AbstractPictureServlet extends BaseServlet {
 	protected Picture buildPicture(HttpServletRequest req,
 			HttpServletResponse resp) {
 
+		int propId = -1;
+		
+		try {
+			propId = Integer.parseInt(req.getParameter("propId"));
+		} catch (Exception e) {
+			return null;
+		}
+		
 		Integer id = Integer.parseInt(req.getParameter("id"));
-		int propId = Integer.parseInt(req.getParameter("propId"));
 		String name = req.getParameter("name");
 		String extension = req.getParameter("extension");
 		

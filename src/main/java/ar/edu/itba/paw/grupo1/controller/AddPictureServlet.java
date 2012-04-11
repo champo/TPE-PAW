@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -31,8 +32,15 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		User user = getLoggedInUser(req);
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		
-		if(	req.getParameter("propId") != null && user != null &&
-				user.getId() == propertyService.getOwner(Integer.parseInt(req.getParameter("propId")))) {
+		int propId = -1;
+		
+		try {
+			propId = Integer.parseInt(req.getParameter("propId"));
+		} catch (Exception e) {
+			throw new InvalidParameterException();
+		}
+		
+		if(	user != null &&	user.getId() == propertyService.getOwner(propId)) {
 			Picture picture = new Picture();
 			picture.setPropId(Integer.parseInt(req.getParameter("propId")));
 			req.setAttribute("picture", picture);
@@ -62,8 +70,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		try {
 			items = upload.parseRequest(req);
 		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		
 		Picture picture = new Picture();		
@@ -124,18 +131,6 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		
 		resp.sendRedirect("editProperty?id=" + picture.getPropId());
 
-	}
-
-	private void processFormField(FileItem item, Picture picture) {
-		 picture.setPropId(2);
-		 
-		 String name = item.getFieldName();
-		 String value = item.getString();
-		 if (name == "name") {
-			 picture.setName(value);
-		 } else if (name == "propId") {
-			picture.setPropId(Integer.parseInt(value));
-		 }
 	}
 
 }

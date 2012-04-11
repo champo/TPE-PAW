@@ -24,8 +24,13 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			User user = getLoggedInUser(req);
 			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 			PictureService pictureService = ApplicationContainer.get(PictureService.class);
-
-			picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
+			
+			try {
+				picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
+			} catch (Exception e) {
+				throw new InvalidParameterException();
+			}
+			
 			
 			if (user != null && user.getId() == propertyService.getOwner(picture.getPropId())) {
 				req.setAttribute("edit", 1);
