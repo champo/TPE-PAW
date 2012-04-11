@@ -34,11 +34,16 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-		Picture picture = getPicture(req, resp);
-
-		pictureService.save(picture);
 		
-		resp.sendRedirect("propertyDetail?id=" + picture.getPropId());
+		if (req.getParameter("submit") != null) {
+			Picture picture = getPicture(req, resp);
+			pictureService.save(picture);
+		}
+		
+		if (req.getParameter("delete") != null) {
+			pictureService.delete(Integer.parseInt(req.getParameter("id")));
+		}
+		resp.sendRedirect("editProperty?id=" + Integer.parseInt(req.getParameter("propId")));
 
 	}
 }

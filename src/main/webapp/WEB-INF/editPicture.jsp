@@ -10,7 +10,7 @@
 	</c:if>
 </h2>
 
-<form action="<c:if test="${empty edit}">addPicture</c:if><c:if test="${not empty edit}">editPicture</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data2</c:if> method="post">
+<form action="<c:if test="${empty edit}">addPicture</c:if><c:if test="${not empty edit}">editPicture</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data"</c:if> method="post">
 	<input type="hidden" name="propId" value="<c:out value="${picture.propId}" />" />
 	<input type="hidden" name="id" value="<c:out value="${picture.id}" />" />
 	<input type="hidden" name="extension" value="<c:out value="${picture.extension}" />" />
@@ -27,8 +27,8 @@
 	</c:if>
 	
 	<c:if test="${not empty edit}">
-		
-		Preview: <img class="preview" src="img/<c:out value="${picture.id}" />" alt="Picture #<c:out value="${picture.id}" />" />
+		Preview: <br />
+		<img class="preview" name="picture" src="images/<c:out value="${picture.id}" /><c:out value="${picture.extension}" />" alt="Picture #<c:out value="${picture.id}" />" />
 	</c:if>
 	
 	<div class="form-buttons">
@@ -38,8 +38,9 @@
 </form>
 
 <c:if test="${not empty edit}">
-	<form action="deletePicture" method="post">
-		<input type="hidden" value=<c:out value="${picture.id}" />" />
+	<form action="editPicture" method="post">
+		<input type="hidden" name="id" value="<c:out value="${picture.id}" />" />
+		<input type="hidden" name="propId" value="<c:out value="${picture.propId}" />" />
 		<input type="submit" name="delete" value="Delete" />
 	</form>
 </c:if>

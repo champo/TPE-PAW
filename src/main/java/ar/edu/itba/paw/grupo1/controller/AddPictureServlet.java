@@ -28,14 +28,14 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		
 		Picture picture = new Picture();
 		picture.setPropId(Integer.parseInt(req.getParameter("propId")));
-		req.setAttribute("picture", new Picture());
+		req.setAttribute("picture", picture);
 		render(req, resp, "editPicture.jsp", "Add Picture");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
+		
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
 		
 		// Create a factory for disk-based file items
@@ -53,18 +53,19 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			e.printStackTrace();
 		}
 		
-		Picture picture = new Picture();
+		Picture picture = new Picture();		
 		
 		FileItem file = null;
 		
 		Iterator iter = items.iterator();
 		while (iter.hasNext()) {
 		    FileItem item = (FileItem) iter.next();
-
-		    if (item.isFormField()) {
-		        processFormField(item, picture);
-		    } else {
-		        file = item;
+		    if (item.getFieldName().equals("name")) {
+		    	picture.setName(item.getString());
+		    } else if (item.getFieldName().equals("propId")) {
+		    	picture.setPropId(Integer.parseInt(item.getString()));
+		    } else if (item.getFieldName().equals("file")) {
+		    	file = item;
 		    }
 		}		
 		
@@ -73,17 +74,19 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		pictureService.save(picture);
 		
 		try {
-			file.write(new File("img/" + picture.getId() + "." + picture.getExtension()));
+			file.write(new File("src/main/webapp/images/" + picture.getId() + picture.getExtension()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		resp.sendRedirect("propertyDetail?id=" + picture.getPropId());
+		resp.sendRedirect("editProperty?id=" + picture.getPropId());
 
 	}
 
 	private void processFormField(FileItem item, Picture picture) {
+		 picture.setPropId(2);
+		 
 		 String name = item.getFieldName();
 		 String value = item.getString();
 		 if (name == "name") {

@@ -149,9 +149,9 @@
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${picture.name}"></c:out>
 			<br />
-			<img class="propPicture" alt="Image of the property" src="img/<c:out value="${picture.id}"></c:out>.<c:out value="${picture.extension}"></c:out>" />
+			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${picture.id}"></c:out><c:out value="${picture.extension}"></c:out>" />
 			<br />
-			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit </a>  
+			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit or delete </a>  
 			<br />
 		</c:forEach>
 </c:if>
