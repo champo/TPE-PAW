@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -33,7 +34,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 				req.setAttribute("noPermissions", 1);
 			}
 		} else {
-			req.setAttribute("noPermissions", 1);
+			throw new InvalidParameterException();
 		}
 		render(req, resp, "editPicture.jsp", "Edit Picture");
 	}
@@ -43,9 +44,9 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-		
+
 		if (req.getParameter("submit") != null) {
-			Picture picture = getPicture(req, resp);
+			Picture picture = buildPicture(req, resp);
 			if (picture.getName() == "") {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);

@@ -1,7 +1,6 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.model.User;
 
+@SuppressWarnings("serial")
 public abstract class BaseServlet extends HttpServlet {
 
 	public BaseServlet() {
@@ -65,8 +65,13 @@ public abstract class BaseServlet extends HttpServlet {
 	
 	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max) {
 		
+		return checkParameter(req, param, min, max, false); 
+	}
+	
+	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max, boolean optional) {
+		
 		String value = req.getParameter(param);
-		if (value == null || value.length() == 0) {
+		if ((value == null || value.length() == 0) && !optional) {
 			req.setAttribute(param + "Empty", true);
 			return false;
 		} else if (value.length() < min || value.length() > max) {
@@ -100,7 +105,7 @@ public abstract class BaseServlet extends HttpServlet {
 		return true;
 	}
 
-protected boolean checkDoubleParameter(HttpServletRequest req, String param, int min, double max) {
+	protected boolean checkDoubleParameter(HttpServletRequest req, String param, int min, double max) {
 		
 		String value = req.getParameter(param);
 		Double num;
@@ -116,7 +121,7 @@ protected boolean checkDoubleParameter(HttpServletRequest req, String param, int
 			return false;
 		}
 		
-		if (num < min || num > max) {
+		if (num <= min || num >= max) {
 			req.setAttribute(param + "OutOfRange", true);
 			return false;
 		}

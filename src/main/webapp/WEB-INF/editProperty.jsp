@@ -11,7 +11,7 @@
 </h2>
 
 <form action="<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
-	<input type="hidden" name="id" value="<c:out value="${id}" />" />
+	<input type="hidden" name="id" value="<c:out value="${id}" />" />	
 	
 	<div class="form-field">
 		<label for="propertyType">Property type:</label>
@@ -28,6 +28,17 @@
 		<option value="1" <c:if test="${operationType == 1}">selected="selected"</c:if>>Leasing</option>
 		</select>
 	</div>
+	
+	<div class="form-field">
+		<label for="address">Address:</label>
+		<input type="text" name="address" value="<c:out value="${address}" />" />
+	</div>
+	<c:if test="${addressEmpty }">
+		<p class="error">The field 'address' cannot be empty.</p>
+	</c:if>
+	<c:if test="${addressBadLength }">
+		<p class="error">The field 'address' has to be shorter than 50 characters.</p>
+	</c:if>
 	
 	<div class="form-field">
 		<label for="neighbourhood">Neighbourhood:</label>
@@ -100,8 +111,22 @@
 		<label for="description">Description:</label>
 		<textarea name="description" cols="40" rows="5"><c:out value="${description}" /></textarea>
 	</div>
-	<c:if test="${descriptionBadLength }">
+	<c:if test="${descriptionBadLength}">
 		<p class="error">The field 'description' has to be shorter than 1000 characters.</p>
+	</c:if>
+		
+	<div class="form-field">
+		<label for="antiquity">Antiquity:</label>
+		<input type="text" name="antiquity" value="<c:out value="${antiquity}" />" />
+	</div>
+	<c:if test="${antiquityEmpty}">
+		<p class="error">The field 'antiquity' cannot be empty.</p>
+	</c:if>
+	<c:if test="${antiquityInvalidFormat}">
+		<p class="error">The field 'antiquity' must be numeric.</p>
+	</c:if>
+	<c:if test="${antiquityOutOfRange}">
+		<p class="error">The field 'antiquity' has to be a positive number under MAX_VALUE.</p>
 	</c:if>
 		
 	<div class="form-field">
@@ -148,7 +173,7 @@
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${picture.name}"></c:out>
 			<br />
-			<img height="200" width="400" class="propPicture" alt="Image of the property" src="images/<c:out value="${picture.id}"></c:out><c:out value="${picture.extension}"></c:out>" />
+			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${picture.id}"></c:out><c:out value="${picture.extension}"></c:out>" />
 			<br />
 			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit or delete </a>  
 			<br />

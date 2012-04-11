@@ -12,7 +12,7 @@ public class AbstractPictureServlet extends BaseServlet {
 		super();
 	}
 
-	protected Picture getPicture(HttpServletRequest req,
+	protected Picture buildPicture(HttpServletRequest req,
 			HttpServletResponse resp) {
 
 		Integer id = Integer.parseInt(req.getParameter("id"));

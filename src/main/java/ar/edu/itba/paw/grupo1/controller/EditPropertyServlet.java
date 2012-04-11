@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -19,6 +20,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		Property property = null;
 		List<Picture> pictures = null;
 		if (req.getParameter("id") != null) {
@@ -31,7 +33,8 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
 		} else {
-			//TODO show error.
+			
+			throw new InvalidParameterException();
 		}
 		render(req, resp, "editProperty.jsp", "Edit Property");
 	}
@@ -41,7 +44,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			throws ServletException, IOException {
 
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-		Property property = getProperty(req, resp);
+		Property property = buildProperty(req, resp);
 
 		if (property == null) {
 			setPropertyAttributes(req);
@@ -50,8 +53,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			return;
 		}
 		propertyService.save(property, getLoggedInUser(req));
-		req.getRequestDispatcher("listProperties").forward(req, resp);
-
+		resp.sendRedirect("/listProperties");
 	}
 
 }

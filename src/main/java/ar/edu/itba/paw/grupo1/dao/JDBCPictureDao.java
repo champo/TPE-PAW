@@ -37,8 +37,6 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 				}
 			}
 			statement.close();
-//			conn.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -64,8 +62,6 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 				}
 			}
 			statement.close();
-//			conn.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -91,8 +87,6 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.setInt(4, picture.getId());
 			statement.execute();
 			statement.close();
-//			conn.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -115,8 +109,6 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			picture.setId(result.getInt("id"));
 			
 			statement.close();
-//			conn.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -131,8 +123,6 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.setInt(1, id);
 			statement.execute();
 			statement.close();
-//			conn.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

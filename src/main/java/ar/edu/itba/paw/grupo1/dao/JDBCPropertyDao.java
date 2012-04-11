@@ -12,12 +12,10 @@ import ar.edu.itba.paw.grupo1.model.Property;
 
 
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
-
-
+	
 	public JDBCPropertyDao(Connection conn) {
 		super(conn);
 	}
-
 
 	public List<Property> getProperties(int userId) {
 
@@ -31,7 +29,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				ResultSet myCursor = statement.getResultSet();
 
 				while (myCursor.next()) {
-					Property property = createProperty(myCursor);  				
+					Property property = buildProperty(myCursor);  				
 					properties.add(property);
 				}
 			}
@@ -55,7 +53,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				ResultSet myCursor = statement.getResultSet();
 				if (myCursor.next()) {
 
-					property = createProperty(myCursor);
+					property = buildProperty(myCursor);
 				}
 			}
 			statement.close();
@@ -72,17 +70,19 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 			PreparedStatement statement;
 			if (property.isNew()) {
 
-				statement = conn.prepareStatement("INSERT INTO properties (propertytype, operationtype," +
-						" neighbourhood, price, rooms, indoorspace, outdoorspace, description," +
-						" cable, phone, pool, lounge, paddle, barbecue, sold, userid) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				statement = conn.prepareStatement("INSERT INTO properties (propertytype, operationtype, address," +
+						" neighbourhood, price, rooms, indoorspace, outdoorspace, description, antiquity," +
+						" cable, phone, pool, lounge, paddle, barbecue, published, userid) " + 
+						"values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				setPlaceHolders(statement, property);
 
 			} else {
-				statement = conn.prepareStatement("UPDATE properties SET propertyType = ?, operationType = ?, neighbourhood = ?, price = ?," +
-						"rooms = ?, indoorSpace = ?, outdoorSpace = ?, description = ?, cable = ?, phone = ?, pool = ?, lounge = ?, paddle = ?," +
-						"barbecue = ?, sold = ?, userId = ? WHERE id = ?");
+				statement = conn.prepareStatement("UPDATE properties SET propertyType = ?, operationType = ?, address = ?, " + 
+						"neighbourhood = ?, price = ?, rooms = ?, indoorSpace = ?, outdoorSpace = ?, description = ?, " + 
+						"antiquity = ?, cable = ?, phone = ?, pool = ?, lounge = ?, paddle = ?, barbecue = ?, published = ?, " +
+						"userId = ? WHERE id = ?");
 				setPlaceHolders(statement, property);
-				statement.setInt(17, property.getId());
+				statement.setInt(19, property.getId());
 
 			}
 			statement.execute();
@@ -93,38 +93,43 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 	}
 
 	private void setPlaceHolders(PreparedStatement stmt, Property property) throws SQLException {
+		
 		stmt.setInt(1, property.getPropertyType());
 		stmt.setInt(2, property.getOperationType());
-		stmt.setString(3, property.getNeighbourhood());
-		stmt.setDouble(4, property.getPrice());
-		stmt.setInt(5, property.getRooms());
-		stmt.setDouble(6, property.getIndoorSpace());
-		stmt.setDouble(7, property.getOutdoorSpace());
-		stmt.setString(8, property.getDescription());
-		stmt.setBoolean(9, property.isCable());
-		stmt.setBoolean(10, property.isPhone());
-		stmt.setBoolean(11, property.isPool());
-		stmt.setBoolean(12, property.isLounge());
-		stmt.setBoolean(13, property.isPaddle());
-		stmt.setBoolean(14, property.isBarbecue());
-		stmt.setBoolean(15, property.isSold());
-		stmt.setInt(16, property.getUserId());
+		stmt.setString(3, property.getAddress());
+		stmt.setString(4, property.getNeighbourhood());
+		stmt.setDouble(5, property.getPrice());
+		stmt.setInt(6, property.getRooms());
+		stmt.setDouble(7, property.getIndoorSpace());
+		stmt.setDouble(8, property.getOutdoorSpace());
+		stmt.setString(9, property.getDescription());
+		stmt.setInt(10, property.getAntiquity());
+		stmt.setBoolean(11, property.isCable());
+		stmt.setBoolean(12, property.isPhone());
+		stmt.setBoolean(13, property.isPool());
+		stmt.setBoolean(14, property.isLounge());
+		stmt.setBoolean(15, property.isPaddle());
+		stmt.setBoolean(16, property.isBarbecue());
+		stmt.setBoolean(17, property.isPublished());
+		stmt.setInt(18, property.getUserId());
 	}
 
 
-	private Property createProperty(ResultSet cursor) throws SQLException {
+	private Property buildProperty(ResultSet cursor) throws SQLException {
+		
 		int id = cursor.getInt("id");
 		int propertyType = cursor.getInt("propertyType");
 		int operationType = cursor.getInt("operationType");
+		String address = cursor.getString("address");
 		String neighbourhood = cursor.getString("neighbourhood");
 		double price = cursor.getDouble("price");
 		int rooms = cursor.getInt("rooms");
 		double indoorSpace = cursor.getDouble("indoorSpace");
 		double outdoorSpace = cursor.getDouble("outdoorSpace");
 		String description = cursor.getString("description");
-		boolean sold = cursor.getBoolean("sold");
+		int antiquity = cursor.getInt("antiquity");
+		boolean published = cursor.getBoolean("published");
 		int userId = cursor.getInt("userId");
-
 		boolean cable = cursor.getBoolean("cable");
 		boolean phone = cursor.getBoolean("phone");
 		boolean pool = cursor.getBoolean("pool");
@@ -132,9 +137,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		boolean paddle = cursor.getBoolean("paddle");
 		boolean barbecue = cursor.getBoolean("barbecue");
 
-		return new Property(id, propertyType, operationType, neighbourhood, price,
-				rooms, indoorSpace, outdoorSpace, description, cable, phone,
-				pool, lounge, paddle, barbecue, sold, userId);
+		return new Property(id, propertyType, operationType, address, neighbourhood, price,
+				rooms, indoorSpace, outdoorSpace, description, antiquity, cable, phone,
+				pool, lounge, paddle, barbecue, published, userId);
 		
 	}
 
