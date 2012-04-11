@@ -79,6 +79,28 @@
           <downloadJavadocs>true</downloadJavadocs>
         </configuration>
       </plugin>
+      <plugin>
+      	<artifactId>maven-resources-plugin</artifactId>
+      	<version>2.5</version>
+      	<executions>
+      		<execution>
+      			<id>copy-resources</id>
+      			<phase>validate</phase>
+      			<goals>
+      				<goal>copy-resources</goal>
+      			</goals>
+      			<configuration>
+      				<outputDirectory>./src/main/webapp/images</outputDirectory>
+      				<resources>
+      					<resource>
+      						<directory>src/main/resources/images</directory>
+      						<filtering>true</filtering>
+      					</resource>
+      				</resources>
+      			</configuration>
+      		</execution>
+      	</executions>
+      </plugin>
     </plugins>
 
   </build>
