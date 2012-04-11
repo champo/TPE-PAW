@@ -21,7 +21,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 	}
 
 	@Override
-	public void register(String name, String surname, String email,
+	public User register(String name, String surname, String email,
 			String phone, String username, String password)
 			throws UserAlreadyExistsException {
 		
@@ -42,6 +42,12 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 			
 			stmt.execute();
 			
+			ResultSet keys = stmt.getGeneratedKeys();
+			if (keys != null && keys.next()) {
+				int id = keys.getInt("id");
+				return new User(id, name, surname, email, phone, username, password); 
+			}
+			
 		} catch (SQLException e) {
 			
 			if (UNIQUE_VIOLATION_STATE.equals(e.getSQLState())) {
@@ -51,6 +57,8 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 				throw new RuntimeException(e);
 			}
 		}
+		
+		return null;
 	}
 
 	@Override
