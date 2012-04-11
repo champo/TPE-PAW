@@ -49,7 +49,7 @@
 	
 	<c:if test="${not empty edit}">
 		Preview: <br />
-		<img class="preview" name="picture" src="images/<c:out value="${picture.id}" /><c:out value="${picture.extension}" />" alt="Picture #<c:out value="${picture.id}" />" />
+		<img height="200" width="400" class="preview" name="picture" src="images/<c:out value="${picture.id}" /><c:out value="${picture.extension}" />" alt="Picture #<c:out value="${picture.id}" />" />
 	</c:if>
 	
 	<div class="form-buttons">
