@@ -9,6 +9,12 @@
 		<link rel="stylesheet" type="text/css" href="/css/main.css" />
 	</head>
 	<body>
+	<div style="overflow: auto;">
+			<h1 style="float: left; margin-top: 0;">Arqvengers Property Administration System</h1>
+			<c:if test="${not empty user}">
+				<span style="float: right;"><c:out value="${user.username}" /> [<a href="logout">logout]</a></span>
+			</c:if>
+		</div>
 		<c:import url="/WEB-INF/${documentBodyFile }" />
 	</body>
 </html>
