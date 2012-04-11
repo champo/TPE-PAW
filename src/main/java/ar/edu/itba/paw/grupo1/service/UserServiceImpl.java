@@ -8,6 +8,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.log4j.Logger;
 
+import ar.edu.itba.paw.grupo1.ValidationUtils;
 import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -20,14 +21,26 @@ public class UserServiceImpl implements UserService {
 		super();
 		this.userDao = userDao;
 	}
-
+	
 	@Override
-	public void register(String name, String surname, String email,
+	public User register(String name, String surname, String email,
 			String phone, String username, String password)
 			throws UserAlreadyExistsException {
 
 		String hash = hashPassword(password);
-		userDao.register(name, surname, email, phone, username, hash);
+		
+		boolean isValid = true;
+		isValid &= ValidationUtils.isEmail(email) && ValidationUtils.isWithinLength(email, 0, 50);
+		isValid &= ValidationUtils.isWithinLength(name, 0, 50);
+		isValid &= ValidationUtils.isWithinLength(surname, 0, 50);
+		isValid &= ValidationUtils.isPhoneNumber(phone) && ValidationUtils.isWithinLength(phone, 0, 20);
+		isValid &= ValidationUtils.isWithinLength(username, 0, 50);
+		
+		if (!isValid) {
+			return null;
+		}
+		
+		return userDao.register(name, surname, email, phone, username, hash);
 	}
 
 	private String hashPassword(String password) {
