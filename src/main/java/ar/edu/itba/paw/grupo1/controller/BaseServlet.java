@@ -121,7 +121,7 @@ public abstract class BaseServlet extends HttpServlet {
 			return false;
 		}
 		
-		if (num < min || num > max) {
+		if (num <= min || num >= max) {
 			req.setAttribute(param + "OutOfRange", true);
 			return false;
 		}
