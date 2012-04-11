@@ -81,23 +81,34 @@ public abstract class BaseServlet extends HttpServlet {
 		
 		return true;
 	}
-	
-	protected boolean checkIntegerParameter(HttpServletRequest req, String param, int min, int max) {
+
+	protected boolean checkIntegerParameter(HttpServletRequest req, String param) {
 		
 		String value = req.getParameter(param);
-		Integer num;
 		if (value == null || value.length() == 0) {
 			req.setAttribute(param + "Empty", true);
 			return false;
 		}
 		
 		try {
-			num = Integer.parseInt(value);
+			Integer.parseInt(value);
 		} catch (Exception e) {
 			req.setAttribute(param + "InvalidFormat", true);
 			return false;
 		}
+		return true;
+	}
+	
+	protected boolean checkIntegerParameter(HttpServletRequest req, String param, int min, int max) {
 		
+
+		if (!checkIntegerParameter(req, param)) {
+			return false;
+		}
+		
+		String value = req.getParameter(param);
+		Integer num = Integer.parseInt(value);
+
 		if (num < min || num > max) {
 			req.setAttribute(param + "OutOfRange", true);
 			return false;
