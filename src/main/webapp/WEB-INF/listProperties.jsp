@@ -6,6 +6,8 @@
 
 <a href="addProperty">[Add new property]</a>
 
+<c:if test="${empty properties}"><p>You have no properties loaded in our system.<p></c:if>
+
 <ul style="padding:0;">
 	<c:set var="row" value="0" />
 	<c:forEach items="${properties}" var="property">
