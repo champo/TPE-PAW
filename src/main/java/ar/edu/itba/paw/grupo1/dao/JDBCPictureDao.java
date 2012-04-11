@@ -8,11 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.model.Picture;
 
 
 public class JDBCPictureDao extends AbstractDao implements PictureDao {
 
+	private static Logger logger = Logger.getLogger(JDBCPictureDao.class);
+	
 	public JDBCPictureDao(Connection conn) {
 		super(conn);
 	}
@@ -38,7 +42,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			}
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("Caught SQLException when trying to get all pictures");
+			throw new RuntimeException(e);
 		}
 		return pictures;
 	}
@@ -63,7 +68,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			}
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("Caught SQLException when trying to get the picture with id" + id);
+			throw new RuntimeException(e);
 		}
 		return response;
 	}
@@ -88,7 +94,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.execute();
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("Caught SQLException when trying to update picture with id = " + picture.getId() + " to propertyId = " + picture.getPropId() + ", name = " + picture.getName() + " and extension = " + picture.getExtension());
+			throw new RuntimeException(e);
 		}
 
 	}
@@ -110,7 +117,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("Caught SQLException when trying to insert picture with propertyId = " + picture.getPropId() + ", name = " + picture.getName() + " and extension = " + picture.getExtension());
+			throw new RuntimeException(e);
 		}
 		
 	}
@@ -124,7 +132,8 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.execute();
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("Caught SQLException when trying to delete picture with id = " + id);
+			throw new RuntimeException(e);
 		}
 		
 	}

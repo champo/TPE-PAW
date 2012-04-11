@@ -16,6 +16,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -31,8 +32,15 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		User user = getLoggedInUser(req);
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		
-		if(	req.getParameter("propId") != null && user != null &&
-				user.getId() == propertyService.getOwner(Integer.parseInt(req.getParameter("propId")))) {
+		int propId = -1;
+		
+		try {
+			propId = Integer.parseInt(req.getParameter("propId"));
+		} catch (NumberFormatException e) {
+			throw new InvalidParameterException();
+		}
+		
+		if(	propertyService.checkOwner(propId, user) ) {
 			Picture picture = new Picture();
 			picture.setPropId(Integer.parseInt(req.getParameter("propId")));
 			req.setAttribute("picture", picture);
@@ -50,6 +58,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 		
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		
 		// Create a factory for disk-based file items
 		FileItemFactory factory = new DiskFileItemFactory();
@@ -62,8 +71,9 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		try {
 			items = upload.parseRequest(req);
 		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("fatal", 1);
+			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
 		}
 		
 		Picture picture = new Picture();		
@@ -111,6 +121,12 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			return;
 		}
 		
+		if (!propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
+			req.setAttribute("noPermissions", 1);
+			render(req, resp, "editPicture.jsp", "Edit Picture");
+			return;
+		}
+		
 		picture.setExtension(extension);
 		
 		pictureService.save(picture);
@@ -118,24 +134,14 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		try {
 			file.write(new File("src/main/webapp/images/" + picture.getId() + picture.getExtension()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("picture", picture);
+			req.setAttribute("writeError", 1);
+			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
 		}
 		
 		resp.sendRedirect("editProperty?id=" + picture.getPropId());
 
-	}
-
-	private void processFormField(FileItem item, Picture picture) {
-		 picture.setPropId(2);
-		 
-		 String name = item.getFieldName();
-		 String value = item.getString();
-		 if (name == "name") {
-			 picture.setName(value);
-		 } else if (name == "propId") {
-			picture.setPropId(Integer.parseInt(value));
-		 }
 	}
 
 }

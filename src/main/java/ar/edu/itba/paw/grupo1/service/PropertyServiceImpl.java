@@ -32,8 +32,8 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDao.getProperties(userId);
 	}
 	
-	public int getOwner(int id) {
-		return propertyDao.getUser(id);
+	public boolean checkOwner(int propId, User user) {
+		return propertyDao.checkOwnership(user.getId(), propId);
 	}
 
 }
