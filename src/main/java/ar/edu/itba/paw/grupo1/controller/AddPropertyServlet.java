@@ -26,7 +26,7 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 			throws ServletException, IOException {
 
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-		Property property = getProperty(req, resp);
+		Property property = buildProperty(req, resp);
 		
 		if (property == null) {
 			setPropertyAttributes(req);

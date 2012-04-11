@@ -35,7 +35,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			throws ServletException, IOException {
 
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-		Picture picture = getPicture(req, resp);
+		Picture picture = buildPicture(req, resp);
 
 		pictureService.save(picture);
 		

@@ -12,7 +12,7 @@ public class AbstractPropertyServlet extends BaseServlet {
 		super();
 	}
 
-	protected Property getProperty(HttpServletRequest req,
+	protected Property buildProperty(HttpServletRequest req,
 			HttpServletResponse resp) {
 				
 		boolean error = false;
