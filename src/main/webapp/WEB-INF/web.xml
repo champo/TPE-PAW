@@ -98,7 +98,7 @@
 		<servlet-name>PropertyDetail</servlet-name>
 		<servlet-class>ar.edu.itba.paw.grupo1.controller.PropertyDetailServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>PropertyDetail</servlet-name>
 		<url-pattern>/propertyDetail</url-pattern>
@@ -108,19 +108,29 @@
 		<servlet-name>PublishProperty</servlet-name>
 		<servlet-class>ar.edu.itba.paw.grupo1.controller.PublishPropertyServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>PublishProperty</servlet-name>
 		<url-pattern>/publishProperty</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>git pull --rebase champo master
 
 	<servlet>
 		<servlet-name>UnpublishProperty</servlet-name>
 		<servlet-class>ar.edu.itba.paw.grupo1.controller.UnpublishPropertyServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>UnpublishProperty</servlet-name>
 		<url-pattern>/unpublishProperty</url-pattern>
 	</servlet-mapping>
+
+  <servlet>
+  	<servlet-name>query</servlet-name>
+  	<servlet-class></servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+  	<servlet-name>query</servlet-name>
+  	<url-pattern>/query</url-pattern>
+  </servlet-mapping>
 </web-app>
