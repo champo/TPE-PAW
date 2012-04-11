@@ -12,6 +12,10 @@
 	Operation type:<c:if test="${property.operationType == 0}">selling</c:if><c:if test="${property.operationType == 1}">leasing</c:if>
 </div>
 
+<div class="address">
+	Address: <c:out value="${property.address}"></c:out>
+</div>
+
 <div class="neighbourhood">
 	Neighbourhood: <c:out value="${property.neighbourhood}"></c:out>
 </div>
@@ -34,6 +38,10 @@
 
 <div class="description">
 	Description: <c:out value="${property.description}"></c:out>
+</div>
+
+<div class="antiquity">
+	Antiquity: <c:out value="${property.antiquity}"></c:out>
 </div>
 
 <div class="services">

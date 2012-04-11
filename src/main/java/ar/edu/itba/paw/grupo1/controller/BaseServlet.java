@@ -100,7 +100,7 @@ public abstract class BaseServlet extends HttpServlet {
 		return true;
 	}
 
-protected boolean checkDoubleParameter(HttpServletRequest req, String param, int min, double max) {
+	protected boolean checkDoubleParameter(HttpServletRequest req, String param, int min, double max) {
 		
 		String value = req.getParameter(param);
 		Double num;

@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
@@ -29,6 +31,7 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 		Property property = getProperty(req, resp);
 		
 		
+		Logger.getLogger(AddPropertyServlet.class).warn("servlet");
 		if (property == null) {
 			setPropertyAttributes(req);
 			render(req, resp, "editProperty.jsp", "Edit Property");
