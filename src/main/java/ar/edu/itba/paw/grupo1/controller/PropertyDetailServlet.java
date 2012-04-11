@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -31,7 +32,7 @@ public class PropertyDetailServlet extends BaseServlet {
 				req.setAttribute("pictures", pictures);
 			}
 		} else {
-			//TODO show error
+			throw new InvalidParameterException();
 		}
 		render(req, resp, "propertyDetail.jsp", "Property Detail");
 	}
