@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.ValidationUtils;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
+import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
 public class RegisterServlet extends BaseServlet {
@@ -49,7 +51,7 @@ public class RegisterServlet extends BaseServlet {
 		}
 		
 		try {
-			ApplicationContainer.get(UserService.class).register(
+			User user = ApplicationContainer.get(UserService.class).register(
 				req.getParameter("name"),
 				req.getParameter("surname"),
 				req.getParameter("email"),
@@ -58,11 +60,16 @@ public class RegisterServlet extends BaseServlet {
 				req.getParameter("password")
 			);
 			
-			render(req, resp, "registerSuccess.jsp", "Register");
+			if (user != null) {
+				render(req, resp, "registerSuccess.jsp", "Register");
+				return;
+			}
+			
 		} catch (UserAlreadyExistsException e) {
 			req.setAttribute("usernameDuplicate", true);
-			render(req, resp, "register.jsp", "Register");
 		}
+		
+		render(req, resp, "register.jsp", "Register");
 	}
 	
 	protected boolean checkPhone(HttpServletRequest req, String param, int min, int max) {
@@ -70,10 +77,10 @@ public class RegisterServlet extends BaseServlet {
 		if (!checkParameter(req, param, min, max)) {
 			return false;
 		} else {
-			try {
-				Integer.valueOf(req.getParameter(param));
+			
+			if (ValidationUtils.isPhoneNumber(req.getParameter(param))) {
 				return true;
-			} catch (NumberFormatException e) {
+			} else {
 				req.setAttribute(param + "InvalidFormat", true);
 				return false;
 			}
@@ -84,7 +91,7 @@ public class RegisterServlet extends BaseServlet {
 		
 		if (!checkParameter(req, param, min, max)) {
 			return false;
-		} else if (req.getParameter(param).matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+		} else if (ValidationUtils.isEmail(req.getParameter(param))) {
 			return true;
 		} else {
 			req.setAttribute(param + "InvalidFormat", true);
@@ -124,7 +131,7 @@ public class RegisterServlet extends BaseServlet {
 		if (value == null || value.length() == 0) {
 			req.setAttribute(param + "Empty", true);
 			return false;
-		} else if (value.length() < min || value.length() > max) {
+		} else if (!ValidationUtils.isWithinLength(value, min, max)) {
 			req.setAttribute(param + "BadLength", true);
 			return false;
 		}
