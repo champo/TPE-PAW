@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 <body>
-	<h1 style="float: left; margin-top: 0;">Arqvengers Property
+	<h1>Arqvengers Property
 		Administration System</h1>
 	<c:if test="${not empty user}">
 		<span style="float: right;"><c:out value="${user.username}" />
