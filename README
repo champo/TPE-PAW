@@ -1,0 +1,3 @@
+In order to create a .war that contains test data suitable to use with the .sql files under src/test/resources, just use the test profile.
+For example:
+    mvn -P test package

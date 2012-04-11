@@ -37,10 +37,10 @@
       <version>8.4-701.jdbc3</version>
     </dependency>
     <dependency>
-		<groupId>commons-fileupload</groupId>
-		<artifactId>commons-fileupload</artifactId>
-		<version>1.2.2</version>
-	</dependency>    
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.2.2</version>
+    </dependency>    
   </dependencies>
 
   <build>
@@ -79,31 +79,51 @@
           <downloadJavadocs>true</downloadJavadocs>
         </configuration>
       </plugin>
-      <plugin>
-      	<artifactId>maven-resources-plugin</artifactId>
-      	<version>2.5</version>
-      	<executions>
-      		<execution>
-      			<id>copy-resources</id>
-      			<phase>validate</phase>
-      			<goals>
-      				<goal>copy-resources</goal>
-      			</goals>
-      			<configuration>
-      				<outputDirectory>./src/main/webapp/images</outputDirectory>
-      				<resources>
-      					<resource>
-      						<directory>src/main/resources/images</directory>
-      						<filtering>true</filtering>
-      					</resource>
-      				</resources>
-      			</configuration>
-      		</execution>
-      	</executions>
-      </plugin>
     </plugins>
 
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>**/*.sql</exclude>
+        </excludes>
+      </resource>
+    </resources>
   </build>
 
+  <profiles>
+    <profile>
+      <id>test</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+              <encoding>UTF-8</encoding>
+            </configuration>
+
+            <executions>
+              <execution>
+                <id>copy-resources</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/images</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>src/test/resources/images</directory>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
