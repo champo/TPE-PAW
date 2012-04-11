@@ -18,17 +18,9 @@ public class ListPropertiesServlet extends BaseServlet {
 			throws ServletException, IOException {
 
 		PropertyService propService = ApplicationContainer.get(PropertyService.class);
-		
 		User user = getLoggedInUser(req);
 		
 		req.setAttribute("properties", propService.getProperties(user.getId()));
 		render(req, resp, "listProperties.jsp", "List Properties");
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
-	}
-	
-	
+	}	
 }

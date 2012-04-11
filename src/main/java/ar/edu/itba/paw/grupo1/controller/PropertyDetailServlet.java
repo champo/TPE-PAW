@@ -35,11 +35,5 @@ public class PropertyDetailServlet extends BaseServlet {
 			throw new InvalidParameterException();
 		}
 		render(req, resp, "propertyDetail.jsp", "Property Detail");
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
-	}
-	
+	}	
 }
