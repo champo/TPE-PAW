@@ -70,7 +70,9 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		try {
 			items = upload.parseRequest(req);
 		} catch (FileUploadException e) {
-			
+			req.setAttribute("fatal", 1);
+			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
 		}
 		
 		Picture picture = new Picture();		
@@ -125,8 +127,10 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		try {
 			file.write(new File("src/main/webapp/images/" + picture.getId() + picture.getExtension()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("picture", picture);
+			req.setAttribute("writeError", 1);
+			render(req, resp, "editPicture.jsp", "Add Picture");
+			return;
 		}
 		
 		resp.sendRedirect("editProperty?id=" + picture.getPropId());

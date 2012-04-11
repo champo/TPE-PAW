@@ -5,7 +5,16 @@
 	You don't have permissions to view this page
 </c:if>
 
+<c:if test="${not empty noPermissions}">
+	Unexpected error processing the file. Please contact an administrator.
+</c:if>
+
+<c:if test="${not empty writeError}">
+	Error while writing the file. Please try again.
+</c:if>
+
 <c:if test="${empty noPermissions}">
+<c:if test="${empty fatal}">
 <h2>
 	<c:if test="${empty edit}">
 		Add New Picture
@@ -66,4 +75,5 @@
 	</form>
 </c:if>
 
+</c:if>
 </c:if>
