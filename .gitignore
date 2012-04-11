@@ -4,3 +4,4 @@ target
 .settings
 *~
 .*.swp
+src/main/webapp/images

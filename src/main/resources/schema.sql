@@ -20,19 +20,21 @@ CREATE TABLE properties
     id serial,
     propertyType smallint,
     operationType smallint,
+    address varchar(50),
     neighbourhood varchar(50),
     price double precision,
     rooms smallint,
     indoorSpace double precision,
     outDoorSpace double precision,
     description varchar(1000),
+    antiquity smallint,
     cable boolean,
     phone boolean,
     pool boolean,
     lounge boolean,
     paddle boolean,
     barbecue boolean,
-    sold boolean,
+    published boolean,
     userId Integer,
 
     PRIMARY KEY(id),
@@ -49,9 +51,9 @@ CREATE TABLE pictures
 (
     id serial,
     name varchar(50),
-    source varchar(150),
     propertyId Integer,
-
+    extension varchar(10),
+    
     PRIMARY KEY(id),
     FOREIGN KEY(propertyId) REFERENCES properties(id)
 );

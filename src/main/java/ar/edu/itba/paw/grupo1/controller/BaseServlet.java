@@ -7,11 +7,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
-import javax.xml.ws.RespectBinding;
 
 import ar.edu.itba.paw.grupo1.model.User;
 
+@SuppressWarnings("serial")
 public abstract class BaseServlet extends HttpServlet {
 
 	public BaseServlet() {
@@ -64,5 +63,69 @@ public abstract class BaseServlet extends HttpServlet {
 		return null;
 	}
 	
+	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max) {
+		
+		return checkParameter(req, param, min, max, false); 
+	}
+	
+	protected boolean checkParameter(HttpServletRequest req, String param, int min, int max, boolean optional) {
+		
+		String value = req.getParameter(param);
+		if ((value == null || value.length() == 0) && !optional) {
+			req.setAttribute(param + "Empty", true);
+			return false;
+		} else if (value.length() < min || value.length() > max) {
+			req.setAttribute(param + "BadLength", true);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	protected boolean checkIntegerParameter(HttpServletRequest req, String param, int min, int max) {
+		
+		String value = req.getParameter(param);
+		Integer num;
+		if (value == null || value.length() == 0) {
+			req.setAttribute(param + "Empty", true);
+			return false;
+		}
+		
+		try {
+			num = Integer.parseInt(value);
+		} catch (Exception e) {
+			req.setAttribute(param + "InvalidFormat", true);
+			return false;
+		}
+		
+		if (num < min || num > max) {
+			req.setAttribute(param + "OutOfRange", true);
+			return false;
+		}
+		return true;
+	}
+
+	protected boolean checkDoubleParameter(HttpServletRequest req, String param, int min, double max) {
+		
+		String value = req.getParameter(param);
+		Double num;
+		if (value == null || value.length() == 0) {
+			req.setAttribute(param + "Empty", true);
+			return false;
+		}
+		
+		try {
+			num = Double.parseDouble(value);
+		} catch (Exception e) {
+			req.setAttribute(param + "InvalidFormat", true);
+			return false;
+		}
+		
+		if (num <= min || num >= max) {
+			req.setAttribute(param + "OutOfRange", true);
+			return false;
+		}
+		return true;
+	}
 	
 }

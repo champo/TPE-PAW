@@ -1,84 +1,84 @@
 package ar.edu.itba.paw.grupo1.model;
 
-import java.util.List;
 
 public class Property {
 
-	private int id;
+	private Integer id;
 	private int propertyType; //0 is house, 1 is flat
 	private int operationType; //0 is for selling, 1 is for leasing
+	private String address;
 	private String neighbourhood;
 	private double price;
 	private int rooms;
 	private double indoorSpace;
 	private double outdoorSpace;
 	private String description; //Optional
+	private int antiquity;
 	private boolean cable;
 	private boolean phone;
 	private boolean pool;
 	private boolean lounge;
 	private boolean paddle;
 	private boolean barbecue;
-	List<Picture> pictures;
-	private boolean sold;
+	private boolean published;
 	private int userId;
 	
 	public Property() {
 	
 	}
 	
-	public Property(int id, int propertyType, int operationType,
+	public Property(Integer id, int propertyType, int operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, boolean cable, boolean phone,
+			String description, int antiquity, boolean cable, boolean phone,
 			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, List<Picture> pictures, 
-			boolean sold, int userId) {
+			boolean barbecue, boolean published, int userId) {
 		
 		this.id = id;
 		this.propertyType = propertyType;
 		this.operationType = operationType;
+		this.address = address;
 		this.neighbourhood = neighbourhood;
 		this.price = price;
 		this.rooms = rooms;
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
+		this.antiquity = antiquity;
 		this.barbecue = barbecue;
 		this.paddle = paddle;
 		this.pool = pool;
 		this.phone = phone;
 		this.cable = cable;
 		this.lounge = lounge;
-		this.pictures = pictures;
-		this.sold = sold;
+		this.published = published;
 		this.userId = userId;
 	}
 	
-	public Property(int propertyType, int operationType,
+	public Property(int propertyType, int operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, boolean cable, boolean phone,
+			String description, int antiquity, boolean cable, boolean phone,
 			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, List<Picture> pictures, 
-			boolean sold, int userId) {
+			boolean barbecue, boolean published, int userId) {
 		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
+		this.address = address;
 		this.neighbourhood = neighbourhood;
 		this.price = price;
 		this.rooms = rooms;
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
+		this.antiquity = antiquity;
 		this.barbecue = barbecue;
 		this.paddle = paddle;
 		this.pool = pool;
 		this.phone = phone;
 		this.cable = cable;
 		this.lounge = lounge;
-		this.pictures = pictures;
-		this.sold = sold;
+		this.published = published;
 		this.userId = userId;
 	}
 	
@@ -87,7 +87,7 @@ public class Property {
 		return description;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -105,14 +105,6 @@ public class Property {
 	
 	public double getOutdoorSpace() {
 		return outdoorSpace;
-	}
-	
-	public List<Picture> getPictures() {
-		return pictures;
-	}
-	
-	public Picture getPicture(int number) {
-		return pictures.get(number);
 	}
 	
 	public double getPrice() {
@@ -151,12 +143,33 @@ public class Property {
 		return pool;
 	}
 	
-	public boolean isSold() {
-		return sold;
+	public boolean isPublished() {
+		return published;
 	}
 	
 	public int getUserId() {
 		return userId;
 	}
-		
+
+	public String getAddress() {
+		return address;
+	}	
+	
+	public int getAntiquity() {
+		return antiquity;
+	}	
+	
+	public boolean isNew() {
+		return id == null;
+	}
+
+	public void publish() {
+		published = true;
+		return;
+	}
+	
+	public void unpublish() {
+		published = false;
+		return;
+	}	
 }

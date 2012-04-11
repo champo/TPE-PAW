@@ -2,28 +2,29 @@ package ar.edu.itba.paw.grupo1.model;
 
 public class Picture {
 
-	private int id;
+	private Integer id;
 	private int propId;
 	private String name;
-	private String source;
+	private String extension;
 	
 	public Picture() {
 	
 	}
 	
-	public Picture(int id, int propId, String name, String source) {
+	public Picture(int id, int propId, String name, String extension) {
 		this.id = id;
 		this.propId = propId;
 		this.name = name;
-		this.source = source;
+		this.extension = extension;
 	}
 	
-	public Picture(String name, String source) {
+	public Picture(String name, int propId, String extension) {
 		this.name = name;
-		this.source = source;
+		this.propId = propId;
+		this.extension = extension;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
@@ -31,13 +32,30 @@ public class Picture {
 		return name;
 	}
 	
-	public String getSource() {
-		return source;
-	}
-	
 	public int getPropId() {
 		return propId;
 	}
 
+	public void setPropId(int propId) {
+		this.propId = propId;
+		
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+	
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+	
 }
 
