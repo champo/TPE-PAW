@@ -13,6 +13,7 @@ import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 
 @SuppressWarnings("serial")
 public class EditPropertyServlet extends AbstractPropertyServlet {
@@ -23,17 +24,23 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 		
 		Property property = null;
 		List<Picture> pictures = null;
-		if (req.getParameter("id") != null) {
+		if (checkIntegerParameter(req, "id")) {
 			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 			PictureService pictureService = ApplicationContainer.get(PictureService.class);
 			
 			property = propertyService.getById(Integer.parseInt(req.getParameter("id")));
 			pictures = pictureService.getByPropId(Integer.parseInt(req.getParameter("id")));
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+				throw new PermissionDeniedException();
+			}
+			
 			req.setAttribute("edit", 1);
 			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
-		} else {
-			
+		} else {			
 			throw new InvalidParameterException();
 		}
 		render(req, resp, "editProperty.jsp", "Edit Property");
