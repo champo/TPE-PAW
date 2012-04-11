@@ -45,7 +45,8 @@ public class AbstractPropertyServlet extends BaseServlet {
 		boolean paddle = req.getParameter("paddle") != null;
 		boolean barbecue = req.getParameter("barbecue") != null;
 		boolean sold = req.getParameter("sold") != null;
-		int userId = Integer.parseInt(req.getParameter("userId"));
+		
+		int userId = getLoggedInUser(req).getId();
 			
 		Integer id = null;
 		if (!req.getParameter("id").equals("")) {
@@ -55,5 +56,45 @@ public class AbstractPropertyServlet extends BaseServlet {
 		return new Property(id, propertyType, operationType, neighbourhood, price, rooms, 
 					indoorSpace, outdoorSpace, description, cable, phone, pool, lounge, paddle, 
 					barbecue, sold, userId);
+	}
+	
+	
+	protected void setPropertyAttributes(HttpServletRequest req, Property property) {
+		
+		req.setAttribute("id", property.getId());
+		req.setAttribute("propertyType", property.getPropertyType());
+		req.setAttribute("operationType", property.getOperationType());
+		req.setAttribute("neighbourhood", property.getNeighbourhood());
+		req.setAttribute("price", property.getPrice());
+		req.setAttribute("rooms", property.getRooms());
+		req.setAttribute("indoorSpace", property.getIndoorSpace());
+		req.setAttribute("outdoorSpace", property.getOutdoorSpace());
+		req.setAttribute("description", property.getDescription());
+		req.setAttribute("cable", property.isCable());
+		req.setAttribute("phone", property.isPhone());
+		req.setAttribute("pool", property.isPool());
+		req.setAttribute("lounge", property.isLounge());
+		req.setAttribute("paddle", property.isPaddle());
+		req.setAttribute("barbecue", property.isBarbecue());
+	}
+	
+	
+	protected void setPropertyAttributes(HttpServletRequest req) {
+		
+		req.setAttribute("id", req.getParameter("id"));
+		req.setAttribute("propertyType", req.getParameter("propertyType"));
+		req.setAttribute("operationType", req.getParameter("operationType"));
+		req.setAttribute("neighbourhood", req.getParameter("neighbourhood"));
+		req.setAttribute("price", req.getParameter("price"));
+		req.setAttribute("rooms", req.getParameter("rooms"));
+		req.setAttribute("indoorSpace", req.getParameter("indoorSpace"));
+		req.setAttribute("outdoorSpace", req.getParameter("outdoorSpace"));
+		req.setAttribute("description", req.getParameter("description"));
+		req.setAttribute("cable", req.getParameter("cable"));
+		req.setAttribute("phone", req.getParameter("phone"));
+		req.setAttribute("pool", req.getParameter("pool"));
+		req.setAttribute("lounge", req.getParameter("lounge"));
+		req.setAttribute("paddle", req.getParameter("paddle"));
+		req.setAttribute("barbecue", req.getParameter("barbecue"));
 	}
 }
