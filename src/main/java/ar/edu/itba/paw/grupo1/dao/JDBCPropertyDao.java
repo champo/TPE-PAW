@@ -144,7 +144,6 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 	}
 
 
-	@Override
 	public boolean checkOwnership(Integer userId, Integer propertyId) {
 		
 		PreparedStatement statement;
