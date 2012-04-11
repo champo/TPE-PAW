@@ -29,7 +29,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				ResultSet myCursor = statement.getResultSet();
 
 				while (myCursor.next()) {
-					Property property = createProperty(myCursor);  				
+					Property property = buildProperty(myCursor);  				
 					properties.add(property);
 				}
 			}
@@ -53,7 +53,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 				ResultSet myCursor = statement.getResultSet();
 				if (myCursor.next()) {
 
-					property = createProperty(myCursor);
+					property = buildProperty(myCursor);
 				}
 			}
 			statement.close();
@@ -115,7 +115,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 	}
 
 
-	private Property createProperty(ResultSet cursor) throws SQLException {
+	private Property buildProperty(ResultSet cursor) throws SQLException {
 		
 		int id = cursor.getInt("id");
 		int propertyType = cursor.getInt("propertyType");
