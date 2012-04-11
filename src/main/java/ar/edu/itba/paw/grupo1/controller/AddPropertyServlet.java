@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
@@ -33,6 +35,7 @@ public class AddPropertyServlet extends AbstractPropertyServlet {
 			render(req, resp, "editProperty.jsp", "Edit Property");
 			return;
 		}
+		property.publish();
 		propertyService.save(property, getLoggedInUser(req));
 		req.getRequestDispatcher("listProperties").forward(req, resp);
 
