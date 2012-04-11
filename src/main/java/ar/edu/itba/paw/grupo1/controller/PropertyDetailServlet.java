@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
+import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -20,13 +21,20 @@ public class PropertyDetailServlet extends BaseServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		if (req.getParameter("id") != null) {
+		if (checkIntegerParameter(req, "id")) {
 			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 			PictureService	pictureService = ApplicationContainer.get(PictureService.class);
 						
 			int id = Integer.parseInt(req.getParameter("id"));
 			Property property = propertyService.getById(id);
 			List<Picture> pictures = pictureService.getByPropId(id);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+				throw new PermissionDeniedException();
+			}
+			
 			req.setAttribute("property", property);
 			if (pictures.size() > 0) {
 				req.setAttribute("pictures", pictures);
