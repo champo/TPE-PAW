@@ -13,6 +13,10 @@
 	<p class="error">Error while writing the file. Please try again.</p>
 </c:if>
 
+<c:if test="${not empty deleteError}">
+	<p class="error">Error while deleting the file. Please try again.</p>
+</c:if>
+
 <c:if test="${empty noPermissions}">
 <c:if test="${empty fatal}">
 <h2>
@@ -70,6 +74,7 @@
 <c:if test="${not empty edit}">
 	<form action="editPicture" method="post">
 		<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(picture.id)}" />" />
+		<input type="hidden" name="extension" value="<c:out value="${fn:escapeXml(picture.extension)}" />" />
 		<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.propId)}" />" />
 		<input type="submit" name="delete" value="Delete" />
 	</form>
