@@ -49,6 +49,7 @@ public class ContactServlet extends BaseServlet {
 		} else {
 			req.setAttribute("nameValue", name);
 		}
+
 		if (!checkEmail(req, "email", 1, Integer.MAX_VALUE)) {
 			req.setAttribute("emailInvalidFormat", true);
 			validates = false;
@@ -66,14 +67,11 @@ public class ContactServlet extends BaseServlet {
 		req.setAttribute("commentValue", comment);
 
 		if (validates) {
-			System.out.println("yeah"+parsedId);
 			User user = ApplicationContainer.get(UserService.class).get(parsedId);
 			if (user != null) {
-				System.out.println("yes");
 				req.setAttribute("validates", true);
 				req.setAttribute("user", user);
 			} else {
-				System.out.println("no");
 				req.setAttribute("invalidId", true);
 			}
 		}
