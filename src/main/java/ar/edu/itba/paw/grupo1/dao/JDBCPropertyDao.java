@@ -204,7 +204,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	public List<Property> query(String operation, String property,
 			double rangeFrom, double rangeTo) {
 
-		String query = "SELECT * FROM properties WHERE ";
+		String query = "SELECT * FROM properties WHERE published = true AND ";
 
 		if (operation.equals("selling")) {
 			query += "operationType = 0 AND ";

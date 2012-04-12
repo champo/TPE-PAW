@@ -7,12 +7,7 @@ public class ValidationUtils {
 	}
 	
 	public static boolean isPhoneNumber(String str) {
-		try {
-			Integer.valueOf(str);
-			return true;
-		} catch (NumberFormatException e) {
-			return false;
-		}
+		return str != null && str.matches("^ *[0-9](-?[ 0-9])*[0-9] *$");
 	}
 
 	public static boolean isWithinLength(String value, int min, int max) {

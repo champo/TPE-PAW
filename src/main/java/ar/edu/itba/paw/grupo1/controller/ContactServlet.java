@@ -1,7 +1,6 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,13 +12,6 @@ import ar.edu.itba.paw.grupo1.service.UserService;
 
 @SuppressWarnings("serial")
 public class ContactServlet extends BaseServlet {
-
-	private static final Pattern rfc2822 = Pattern.compile(
-	        "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
-	);
-	private static final Pattern phonePattern = Pattern.compile(
-	        "^ *[0-9](-?[ 0-9])*[0-9] *$"
-	);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -57,16 +49,15 @@ public class ContactServlet extends BaseServlet {
 		} else {
 			req.setAttribute("nameValue", name);
 		}
-		
-		if (email == null || email.length() == 0 || !rfc2822.matcher(email).matches()) {
-			req.setAttribute("invalidEmail", true);
+		if (!checkEmail(req, "email", 1, Integer.MAX_VALUE)) {
+			req.setAttribute("emailInvalidFormat", true);
 			validates = false;
 		} else {
 			req.setAttribute("emailValue", email);
 		}
 		
-		if (phone == null || phone.length() == 0 || !phonePattern.matcher(phone).matches()) {
-			req.setAttribute("invalidPhone", true);
+		if (!checkPhone(req, "phone", 2, Integer.MAX_VALUE)) {
+			req.setAttribute("phoneInvalidFormat", true);
 			validates = false;
 		} else {
 			req.setAttribute("phoneValue", phone);
@@ -75,11 +66,14 @@ public class ContactServlet extends BaseServlet {
 		req.setAttribute("commentValue", comment);
 
 		if (validates) {
+			System.out.println("yeah"+parsedId);
 			User user = ApplicationContainer.get(UserService.class).get(parsedId);
 			if (user != null) {
+				System.out.println("yes");
 				req.setAttribute("validates", true);
 				req.setAttribute("user", user);
 			} else {
+				System.out.println("no");
 				req.setAttribute("invalidId", true);
 			}
 		}
