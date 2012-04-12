@@ -219,7 +219,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		}
 
 		query += "price >= " + rangeFrom + " AND price <= " + rangeTo;
-
+System.out.println(query);
 		List<Property> properties = new ArrayList<Property>();
 		PreparedStatement statement;
 
