@@ -81,7 +81,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 		
 		if (req.getParameter("delete") != null) {
 			pictureService.delete(Integer.parseInt(req.getParameter("id")));
-			File file = new File("src/main/webapp/images/" + picture.getId() + picture.getExtension());
+			File file = new File(getServletContext().getRealPath("/images/") + "/" + picture.getId() + picture.getExtension());
 			if(!file.delete()) {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);

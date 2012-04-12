@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
@@ -132,7 +133,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		pictureService.save(picture);
 		
 		try {
-			file.write(new File("src/main/webapp/images/" + picture.getId() + picture.getExtension()));
+			file.write(new File(getServletContext().getRealPath("/images") + "/" + picture.getId() + picture.getExtension()));
 		} catch (Exception e) {
 			req.setAttribute("picture", picture);
 			req.setAttribute("writeError", 1);
