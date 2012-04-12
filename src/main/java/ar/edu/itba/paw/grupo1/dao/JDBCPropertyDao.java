@@ -20,7 +20,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		super(conn);
 	}
 
-	public List<Property> getProperties(int userId) throws DataAccessException {
+	public List<Property> getProperties(int userId) {
 
 		List<Property> properties = new ArrayList<Property>();
 		PreparedStatement statement;
@@ -46,7 +46,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		return properties;
 	}
 
-	public Property get(int id) throws DataAccessException {
+	public Property get(int id) {
 
 		PreparedStatement statement;
 		Property property = null;
@@ -72,7 +72,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		return property;
 	}
 
-	public void save(Property property) throws DataAccessException {
+	public void save(Property property) {
 
 		try {
 			PreparedStatement statement;
@@ -155,7 +155,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 
 	}
 
-	public boolean checkOwnership(Integer userId, Integer propertyId) throws DataAccessException {
+	public boolean checkOwnership(Integer userId, Integer propertyId) {
 
 		PreparedStatement statement;
 
@@ -181,7 +181,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		return false;
 	}
 
-	public int getUser(int id) throws DataAccessException {
+	public int getUser(int id) {
 		int userId = 0;
 
 		PreparedStatement statement;
@@ -208,7 +208,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	}
 
 	public List<Property> query(String operation, String property,
-			double rangeFrom, double rangeTo) throws DataAccessException {
+			double rangeFrom, double rangeTo) {
 
 		String query = "SELECT * FROM properties WHERE published = true AND ";
 
