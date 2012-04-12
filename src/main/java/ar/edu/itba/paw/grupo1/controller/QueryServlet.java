@@ -21,8 +21,8 @@ public class QueryServlet extends BaseServlet {
 
 		String operation = req.getParameter("operation");
 		String property = req.getParameter("property");
-		String rangeFrom = req.getParameter("range_from");
-		String rangeTo = req.getParameter("range_to");
+		String rangeFrom = req.getParameter("rangeFrom");
+		String rangeTo = req.getParameter("rangeTo");
 
 		if (operation == null && property == null && rangeFrom == null
 				&& rangeTo == null) {
