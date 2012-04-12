@@ -12,6 +12,10 @@ public interface PropertyService {
 	public Property getById(int id);
 
 	public void save(Property property, User user);
-	
+
 	public boolean checkOwner(int propId, User user);
+
+	public List<Property> query(String operation, String property,
+			double rangeFrom, double rangeTo);
+
 }
