@@ -21,8 +21,8 @@ public class QueryServlet extends BaseServlet {
 
 		String operation = req.getParameter("operation");
 		String property = req.getParameter("property");
-		String rangeFrom = req.getParameter("range_from");
-		String rangeTo = req.getParameter("range_to");
+		String rangeFrom = req.getParameter("rangeFrom");
+		String rangeTo = req.getParameter("rangeTo");
 
 		if (operation == null && property == null && rangeFrom == null
 				&& rangeTo == null) {
@@ -39,14 +39,14 @@ public class QueryServlet extends BaseServlet {
 		}
 
 		double parsedRangeFrom = 0;
-		double parsedRangeTo = 0;
+		double parsedRangeTo = Double.MAX_VALUE;
 		boolean badParse = false;
 
 		try {
-			if (rangeFrom != null) {
+			if (rangeFrom != null && !rangeFrom.isEmpty()) {
 				parsedRangeFrom = Double.parseDouble(rangeFrom);
 			}
-			if (rangeTo != null) {
+			if (rangeTo != null && !rangeTo.isEmpty()) {
 				parsedRangeTo = Double.parseDouble(rangeTo);
 			}
 		} catch (NumberFormatException e) {
