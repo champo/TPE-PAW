@@ -10,17 +10,24 @@
 
 	<form action="/query" method="get">
 
-		<label for="operation">Type of operation: </label> <input type="radio"
-			name="operation" value="any" checked="checked">Any <input
-			type="radio" name="operation" value="selling" />Selling <input
-			type="radio" name="operation" value="leasing" />Leasing <br /> <label
-			for="property">Type of property: </label> <input type="radio"
-			name="property" value="any" checked="checked">Any <input
-			type="radio" name="property" value="flat" />Flat <input type="radio"
-			name="property" value="house" />House <br /> <label for="range">Price
-			from <input type="text" name="rangeFrom"> to <input
-			type="text" name="rangeTo"> <br /> <input type="submit"
-			value="Query">
+		<label for="operation">Type of operation: </label>
+		<input type="radio" name="operation" value="any" ${operationAnyChecked} />Any
+		<input type="radio" name="operation" value="selling" ${operationSellingChecked} />Selling
+		<input type="radio" name="operation" value="leasing" ${operationLeasingChecked} />Leasing
+		<br />
+		<label for="property">Type of property: </label>
+		<input type="radio" name="property" value="any" ${propertyAnyChecked} />Any
+		<input type="radio" name="property" value="flat" ${propertyFlatChecked} />Flat
+		<input type="radio"	name="property" value="house" ${propertyHouseChecked} />House
+		<br />
+		<label for="range">Price</label>
+		from
+		<input type="text" name="rangeFrom" value="${fn:escapeXml(rangeFromValue)}" />
+		to
+		<input type="text" name="rangeTo" value="${fn:escapeXml(rangeToValue)}" />
+		<br />
+		<input type="submit" value="Query" />
+
 	</form>
 </div>
 <br />
