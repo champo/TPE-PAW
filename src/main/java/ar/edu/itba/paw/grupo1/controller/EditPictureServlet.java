@@ -33,7 +33,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			}
 			
 			
-			if ( propertyService.checkOwner(picture.getPropId(), user) ) {
+			if (picture!= null && propertyService.checkOwner(picture.getPropId(), user) ) {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 			} else {
@@ -60,7 +60,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 			throw new InvalidParameterException();
 		}
 				
-		if (!propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
+		if (picture == null || !propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
 			req.setAttribute("noPermissions", 1);
 			render(req, resp, "editPicture.jsp", "Edit Picture");
 			return;
