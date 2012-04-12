@@ -4,76 +4,76 @@
 
 <h2>Property <c:out value="${fn:escapeXml(property.id)}" /></h2>
 
-<div class="propertyType">
+<div>
 	Property type:<c:if test="${property.propertyType == 0}">house</c:if><c:if test="${property.propertyType == 1}">flat</c:if>
 </div>
 
-<div class="operationType">
+<div>
 	Operation type:<c:if test="${property.operationType == 0}">selling</c:if><c:if test="${property.operationType == 1}">leasing</c:if>
 </div>
 
-<div class="address">
+<div>
 	Address: <c:out value="${fn:escapeXml(property.address)}"></c:out>
 </div>
 
-<div class="neighbourhood">
+<div>
 	Neighbourhood: <c:out value="${fn:escapeXml(property.neighbourhood)}"></c:out>
 </div>
 
-<div class="price">
+<div>
 	Price: <c:out value="${fn:escapeXml(property.price)}"></c:out>
 </div>
 
-<div class="rooms">
+<div>
 	Rooms: <c:out value="${fn:escapeXml(property.rooms)}"></c:out>
 </div>
 
-<div class="indoorSpace">
+<div>
 	Indoor space: <c:out value="${fn:escapeXml(property.indoorSpace)}"></c:out>
 </div>
 
-<div class="outdoorSpace">
+<div>
 	Outdoor space: <c:out value="${fn:escapeXml(property.outdoorSpace)}"></c:out>
 </div>
 
-<div class="description">
+<div>
 	Description: <c:out value="${fn:escapeXml(property.description)}"></c:out>
 </div>
 
-<div class="antiquity">
+<div>
 	Antiquity: <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
 </div>
 
-<div class="services">
+<div>
 	<h4>Services</h4>
 </div>
 
-<div class="cable">
+<div>
 	Cable: <c:if test="${property.cable}">Yes</c:if>
 </div>
 
-<div class="phone">
+<div>
 	Phone: <c:if test="${property.phone}">Yes</c:if>
 </div>
 
-<div class="pool">
+<div>
 	Pool: <c:if test="${property.pool}">Yes</c:if>
 </div>
 
-<div class="lounge">
+<div>
 	Lounge: <c:if test="${property.lounge}">Yes</c:if>
 </div>
 
-<div class="paddle">
+<div>
 	Paddle: <c:if test="${property.paddle}">Yes</c:if>
 </div>
 
-<div class="barbecue">
+<div>
 	Barbecue: <c:if test="${property.barbecue}">Yes</c:if>
 </div>
 
 <c:if test="${not empty pictures}">
-	<div class="pictures">
+	<div>
 		Pictures of this property: <br />
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
