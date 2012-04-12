@@ -11,7 +11,7 @@
 </h2>
 
 <form action="<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
-	<input type="hidden" name="id" value="<c:out value="${id}" />" />	
+	<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(id)}" />" />	
 	
 	<div class="form-field">
 		<label for="propertyType">Property type:</label>
@@ -31,7 +31,7 @@
 	
 	<div class="form-field">
 		<label for="address">Address:</label>
-		<input type="text" name="address" value="<c:out value="${address}" />" />
+		<input type="text" name="address" value="<c:out value="${fn:escapeXml(address)}" />" />
 	</div>
 	<c:if test="${addressEmpty }">
 		<p class="error">The field 'address' cannot be empty.</p>
@@ -42,7 +42,7 @@
 	
 	<div class="form-field">
 		<label for="neighbourhood">Neighbourhood:</label>
-		<input type="text" name="neighbourhood" value="<c:out value="${neighbourhood}" />" />
+		<input type="text" name="neighbourhood" value="<c:out value="${fn:escapeXml(neighbourhood)}" />" />
 	</div>
 	<c:if test="${neighbourhoodEmpty }">
 		<p class="error">The field 'neighbourhood' cannot be empty.</p>
@@ -53,7 +53,7 @@
 	
 	<div class="form-field">
 		<label for="price">Price:</label>
-		<input type="text" name="price" value="<c:out value="${price}" />" />
+		<input type="text" name="price" value="<c:out value="${fn:escapeXml(price)}" />" />
 	</div>
 	<c:if test="${priceEmpty }">
 		<p class="error">The field 'price' cannot be empty.</p>
@@ -67,7 +67,7 @@
 	
 	<div class="form-field">
 		<label for="rooms">Rooms:</label>
-		<input type="text" name="rooms" value="<c:out value="${rooms}" />" />
+		<input type="text" name="rooms" value="<c:out value="${fn:escapeXml(rooms)}" />" />
 	</div>
 	<c:if test="${roomsEmpty }">
 		<p class="error">The field 'rooms' cannot be empty.</p>
@@ -81,7 +81,7 @@
 	
 	<div class="form-field">
 		<label for="indoorSpace">Indoor Space:</label>
-		<input type="text" name="indoorSpace" value="<c:out value="${indoorSpace}" />" />
+		<input type="text" name="indoorSpace" value="<c:out value="${fn:escapeXml(indoorSpace)}" />" />
 	</div>
 	<c:if test="${indoorSpaceEmpty }">
 		<p class="error">The field 'indoorSpace' cannot be empty.</p>
@@ -95,7 +95,7 @@
 	
 	<div class="form-field">
 		<label for="outdoorSpace">Outdoor Space:</label>
-		<input type="text" name="outdoorSpace" value="<c:out value="${outdoorSpace}" />" />
+		<input type="text" name="outdoorSpace" value="<c:out value="${fn:escapeXml(outdoorSpace)}" />" />
 	</div>
 	<c:if test="${outdoorSpaceEmpty }">
 		<p class="error">The field 'outdoorSpace' cannot be empty.</p>
@@ -109,7 +109,7 @@
 	
 	<div class="form-field">
 		<label for="description">Description:</label>
-		<textarea name="description" cols="40" rows="5"><c:out value="${description}" /></textarea>
+		<textarea name="description" cols="40" rows="5"><c:out value="${fn:escapeXml(description)}" /></textarea>
 	</div>
 	<c:if test="${descriptionBadLength}">
 		<p class="error">The field 'description' has to be shorter than 1000 characters.</p>
@@ -117,7 +117,7 @@
 		
 	<div class="form-field">
 		<label for="antiquity">Antiquity:</label>
-		<input type="text" name="antiquity" value="<c:out value="${antiquity}" />" />
+		<input type="text" name="antiquity" value="<c:out value="${fn:escapeXml(antiquity)}" />" />
 	</div>
 	<c:if test="${antiquityEmpty}">
 		<p class="error">The field 'antiquity' cannot be empty.</p>
@@ -168,14 +168,14 @@
 <c:if test="${not empty edit}">
 		Pictures of this property:
 		<br />
-		<a href="addPicture?propId=<c:out value="${id}" />"> Add new </a>
+		<a href="addPicture?propId=<c:out value="${fn:escapeXml(id)}" />"> Add new </a>
 		<br />
 		<c:forEach var="picture" items="${pictures}">
-			<c:out value="${picture.name}"></c:out>
+			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
 			<br />
-			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${picture.id}"></c:out><c:out value="${picture.extension}"></c:out>" />
+			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
 			<br />
-			<a href="editPicture?id=<c:out value="${picture.id}" />"> Edit or delete </a>  
+			<a href="editPicture?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
 			<br />
 		</c:forEach>
 </c:if>
