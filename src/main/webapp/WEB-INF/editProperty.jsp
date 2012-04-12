@@ -179,3 +179,8 @@
 			<br />
 		</c:forEach>
 </c:if>
+
+<br/ >
+<p> View in map:</p>
+<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(address)}&zoom=14&size=300x300&maptype=roadmap
+&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
