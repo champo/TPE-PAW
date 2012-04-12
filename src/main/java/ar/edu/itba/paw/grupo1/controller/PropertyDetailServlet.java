@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
-import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
@@ -31,8 +30,6 @@ public class PropertyDetailServlet extends BaseServlet {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
-				throw new PermissionDeniedException();
 			}
 			
 			req.setAttribute("property", property);
