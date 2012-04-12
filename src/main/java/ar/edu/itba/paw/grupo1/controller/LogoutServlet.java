@@ -14,6 +14,6 @@ public class LogoutServlet extends BaseServlet {
 			throws ServletException, IOException {
 		
 		logout(req, resp);
-		resp.sendRedirect("/");
+		resp.sendRedirect(req.getContextPath());
 	}
 }

@@ -90,7 +90,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 				return;
 			}
 		}
-		resp.sendRedirect("editProperty?id=" + picture.getPropId());
+		resp.sendRedirect(req.getContextPath() + "/editProperty?id=" + picture.getPropId());
 
 	}
 }

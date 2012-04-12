@@ -33,6 +33,6 @@ public class UnpublishPropertyServlet extends BaseServlet{
 			property.unpublish();
 			propService.save(property, getLoggedInUser(req));			
 		}
-		resp.sendRedirect("/listProperties");
+		resp.sendRedirect(req.getContextPath() + "/listProperties");
 	}
 }

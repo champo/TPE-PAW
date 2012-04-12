@@ -7,17 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF8">
 <title>${documenTitle }</title>
 
-<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" href="${basePath }/css/main.css" />
 </head>
 <body>
 	<h1>Arqvengers Property
 		Administration System</h1>
 	<c:if test="${not empty user}">
 		<span style="float: right;"><c:out value="${user.username}" />
-			[<a href="logout">logout]</a></span>
+			[<a href="${basePath }/logout">logout]</a></span>
 	</c:if>
 	<ul style="list-style:none;">
-		<li><a href="query">Search properties</a></li>
+		<li><a href="${basePath }/query">Search properties</a></li>
 	</ul>
 	<c:import url="/WEB-INF/${documentBodyFile }" />
 </body>

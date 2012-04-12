@@ -78,7 +78,7 @@
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
 			<br />
-			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
+			<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
 			<br />
 		</c:forEach>
 	</div>

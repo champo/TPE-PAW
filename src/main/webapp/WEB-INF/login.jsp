@@ -7,7 +7,7 @@
 	<p class="error">No user with those credentials was found.</p>
 </c:if>
 
-<form action="/login?from=${param.from }" method="post">
+<form action="${basePath }/login?from=${param.from }" method="post">
 	<fieldset>
 		<label for="username">Username: </label>
 		<input type="text" name="username" value="${fn:escapeXml(username) }"/><br />

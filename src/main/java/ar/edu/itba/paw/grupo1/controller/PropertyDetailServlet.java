@@ -36,7 +36,7 @@ public class PropertyDetailServlet extends BaseServlet {
 				throw new InvalidParameterException();
 			} else if (!property.isPublished() && property.getUserId() != getLoggedInUser(req).getId()) {
 				
-				resp.sendRedirect("/query?unpublished=true");
+				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
 				return;
 			}
 

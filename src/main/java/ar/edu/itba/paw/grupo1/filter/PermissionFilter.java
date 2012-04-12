@@ -66,7 +66,7 @@ public class PermissionFilter implements javax.servlet.Filter {
 					from += "?" + req.getQueryString();
 				}
 				
-				resp.sendRedirect("/login?from=" + URLEncoder.encode(from, "UTF-8"));
+				resp.sendRedirect(req.getContextPath() + "/login?from=" + URLEncoder.encode(from, "UTF-8"));
 				return;
 			}
 			

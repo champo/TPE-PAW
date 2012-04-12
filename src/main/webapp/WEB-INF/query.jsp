@@ -11,7 +11,7 @@
 		<p class="error">Invalid price range.</p>
 	</c:if>
 
-	<form action="/query" method="get">
+	<form action="${basePath }/query" method="get">
 
 		<label for="operation">Type of operation: </label>
 		<input type="radio" name="operation" value="any" ${operationAnyChecked} />Any
@@ -59,7 +59,7 @@
 				<li>Address: ${fn:escapeXml(result.address)}</li>
 				<li>Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
 				<li>Price: ${result.price}</li>
-				<li><a href="propertyDetail?id=${result.id}">See more</a></li>
+				<li><a href="${basePath }/propertyDetail?id=${result.id}">See more</a></li>
 			</ul>
 			</p>
 			</c:forEach>

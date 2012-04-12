@@ -69,7 +69,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 			property.unpublish();
 		}	
 		propertyService.save(property, getLoggedInUser(req));
-		resp.sendRedirect("/listProperties");
+		resp.sendRedirect(req.getContextPath() + "/listProperties");
 	}
 
 }

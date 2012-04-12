@@ -18,7 +18,7 @@ public class LoginServlet extends BaseServlet {
 			throws ServletException, IOException {
 		
 		if (isLoggedIn(req)) {
-			resp.sendRedirect("/");
+			resp.sendRedirect(req.getContextPath());
 			return;
 		}
 
@@ -37,7 +37,7 @@ public class LoginServlet extends BaseServlet {
 			throws ServletException, IOException {
 		
 		if (isLoggedIn(req)) {
-			resp.sendRedirect("/");
+			resp.sendRedirect(req.getContextPath());
 			return;
 		}
 		
@@ -62,7 +62,7 @@ public class LoginServlet extends BaseServlet {
 				
 				String to = req.getParameter("from");
 				if (to == null || to.isEmpty()) {
-					to = "/";
+					to = req.getContextPath();
 				}
 				
 				resp.sendRedirect(to);

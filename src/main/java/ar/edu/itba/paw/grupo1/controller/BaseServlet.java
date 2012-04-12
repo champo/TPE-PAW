@@ -19,8 +19,13 @@ public abstract class BaseServlet extends HttpServlet {
 
 	protected void render(HttpServletRequest req, HttpServletResponse resp, String file, String title)
 			throws ServletException, IOException {
+		
 		req.setAttribute("documentTitle", title);
 		req.setAttribute("documentBodyFile", file);
+		
+		// This is a shortcut, since the standard way to get to this in .jsp files is horribly long.
+		req.setAttribute("basePath", req.getContextPath());
+		
 		req.getRequestDispatcher("WEB-INF/layout.jsp").forward(req, resp);
 	}
 

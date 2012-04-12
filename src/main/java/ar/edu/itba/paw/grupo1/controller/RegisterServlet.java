@@ -20,7 +20,7 @@ public class RegisterServlet extends BaseServlet {
 			throws ServletException, IOException {
 		
 		if (isLoggedIn(req)) {
-			resp.sendRedirect("/");
+			resp.sendRedirect(req.getContextPath());
 			return;
 		}
 		
@@ -32,7 +32,7 @@ public class RegisterServlet extends BaseServlet {
 			throws ServletException, IOException {
 		
 		if (isLoggedIn(req)) {
-			resp.sendRedirect("/");
+			resp.sendRedirect(req.getContextPath());
 			return;
 		}
 		

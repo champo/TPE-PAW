@@ -33,6 +33,6 @@ public class PublishPropertyServlet extends BaseServlet{
 			property.publish();
 			propService.save(property, getLoggedInUser(req));			
 		}
-		resp.sendRedirect("/listProperties");
+		resp.sendRedirect(req.getContextPath() + "/listProperties");
 	}
 }
