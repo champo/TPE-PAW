@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.grupo1.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -79,6 +80,14 @@ public class EditPictureServlet extends AbstractPictureServlet {
 		
 		if (req.getParameter("delete") != null) {
 			pictureService.delete(Integer.parseInt(req.getParameter("id")));
+			File file = new File("src/main/webapp/images/" + picture.getId() + picture.getExtension());
+			if(!file.delete()) {
+				req.setAttribute("edit", 1);
+				req.setAttribute("picture", picture);
+				req.setAttribute("deleteError", 1);
+				render(req, resp, "editPicture.jsp", "Edit Picture");
+				return;
+			}
 		}
 		resp.sendRedirect("editProperty?id=" + Integer.parseInt(req.getParameter("propId")));
 

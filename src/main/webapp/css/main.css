@@ -4,6 +4,6 @@
 }
 
 .propPicture {
-	width:400px;
-	height:200px;
+	max-width:400px;
+	max-height:200px;
 }
