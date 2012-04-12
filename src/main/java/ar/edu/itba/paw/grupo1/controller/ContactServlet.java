@@ -33,7 +33,7 @@ public class ContactServlet extends BaseServlet {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
 				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
 				return;
 			} else if (!property.isPublished()) {
