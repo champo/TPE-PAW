@@ -21,12 +21,12 @@ public class AbstractPropertyServlet extends BaseServlet {
 		error |= !checkIntegerParameter(req, "operationType", 0, 1);
 		error |= !checkParameter(req, "address", 0, 50);
 		error |= !checkParameter(req, "neighbourhood", 0, 50);
-		error |= !checkDoubleParameter(req, "price", 0, Double.MAX_VALUE);
+		error |= !checkDoubleParameter(req, "price", 0, Integer.MAX_VALUE);
 		error |= !checkIntegerParameter(req, "rooms", 1, Integer.MAX_VALUE);
-		error |= !checkDoubleParameter(req, "indoorSpace", 0, Double.MAX_VALUE);
-		error |= !checkDoubleParameter(req, "outdoorSpace", 0, Double.MAX_VALUE);
+		error |= !checkDoubleParameter(req, "indoorSpace", 0, Integer.MAX_VALUE);
+		error |= !checkDoubleParameter(req, "outdoorSpace", 0, Integer.MAX_VALUE);
 		error |= !checkParameter(req, "description", 0, 1000, true); //This is an optional field.
-		error |= !checkIntegerParameter(req, "antiquity", 0, 2000);
+		error |= !checkIntegerParameter(req, "antiquity", 0, Integer.MAX_VALUE);
 
 		if (error) {
 			return null;

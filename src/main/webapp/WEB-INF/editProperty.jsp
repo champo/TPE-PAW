@@ -62,7 +62,7 @@
 		<p class="error">The field 'price' must be numeric.</p>
 	</c:if>
 	<c:if test="${priceOutOfRange }">
-		<p class="error">The field 'price' has to be a positive number under MAX_VALUE.</p>
+		<p class="error">The field 'price' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
 	
 	<div>
@@ -76,7 +76,7 @@
 		<p class="error">The field 'rooms' must be numeric.</p>
 	</c:if>
 	<c:if test="${roomsOutOfRange }">
-		<p class="error">The field 'rooms' has to be a positive number under MAX_VALUE.</p>
+		<p class="error">The field 'rooms' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
 	
 	<div>
@@ -90,7 +90,7 @@
 		<p class="error">The field 'indoorSpace' must be numeric.</p>
 	</c:if>
 	<c:if test="${indoorSpaceOutOfRange }">
-		<p class="error">The field 'indoorSpace' has to be a positive number under MAX_VALUE.</p>
+		<p class="error">The field 'indoorSpace' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
 	
 	<div>
@@ -104,7 +104,7 @@
 		<p class="error">The field 'outdoorSpace' must be numeric.</p>
 	</c:if>
 	<c:if test="${outdoorSpaceOutOfRange }">
-		<p class="error">The field 'outdoorSpace' has to be a positive number under MAX_VALUE.</p>
+		<p class="error">The field 'outdoorSpace' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
 	
 	<div>
@@ -126,7 +126,7 @@
 		<p class="error">The field 'antiquity' must be numeric.</p>
 	</c:if>
 	<c:if test="${antiquityOutOfRange}">
-		<p class="error">The field 'antiquity' has to be a positive number under MAX_VALUE.</p>
+		<p class="error">The field 'antiquity' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
 		
 	<div>
