@@ -68,7 +68,7 @@ public class EditPictureServlet extends AbstractPictureServlet {
 		
 		if (req.getParameter("submit") != null) {
 			picture.setName(req.getParameter("name"));
-			if (picture.getName().equals("")) {
+			if (picture.getName().equals("") || picture.getName().length() > 50) {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 				req.setAttribute("nameError", 1);

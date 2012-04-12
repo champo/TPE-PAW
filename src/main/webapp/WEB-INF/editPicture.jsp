@@ -38,7 +38,7 @@
 	</div>
 	<c:if test="${not empty nameError}">
 			<br />
-			<p class="error">Error: The name was empty.</p>
+			<p class="error">Error: The name cannot be empty nor longer than 50 characters.</p>
 			<br />
 	</c:if>
 	
