@@ -19,7 +19,7 @@
 		<filter-class>ar.edu.itba.paw.grupo1.filter.PermissionFilter</filter-class>
 		<init-param>
 			<param-name>guest-actions</param-name>
-			<param-value>/,/index.jsp,/register,/login,/propertyDetail,/query</param-value>
+			<param-value>/,/index.jsp,/register,/login,/propertyDetail,/query,/contact</param-value>
 		</init-param>
 	</filter>
 	

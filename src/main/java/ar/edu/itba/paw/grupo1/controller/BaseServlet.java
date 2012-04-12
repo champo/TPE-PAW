@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.paw.grupo1.ValidationUtils;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @SuppressWarnings("serial")
@@ -143,5 +144,57 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 		return true;
 	}
+	protected boolean checkPhone(HttpServletRequest req, String param, int min, int max) {
+		
+		if (!checkParameter(req, param, min, max)) {
+			return false;
+		} else {
+			
+			if (ValidationUtils.isPhoneNumber(req.getParameter(param))) {
+				return true;
+			} else {
+				req.setAttribute(param + "InvalidFormat", true);
+				return false;
+			}
+		}
+	}
+
+	protected boolean checkEmail(HttpServletRequest req, String param, int min,	int max) {
+
+		if (!checkParameter(req, param, min, max)) {
+			return false;
+		} else if (ValidationUtils.isEmail(req.getParameter(param))) {
+			return true;
+		} else {
+			req.setAttribute(param + "InvalidFormat", true);
+			return false;
+		}
+	}
+
+	protected boolean areParamsEqual(HttpServletRequest req, String param1, String param2) {
+		
+		String value1 = req.getParameter(param1);
+		String value2 = req.getParameter(param2);
+		
+		if (value1 == null || value2 == null) {
+			return false;
+		} else if (value1.equals(value2)) {
+			return true;
+		} else {
+			req.setAttribute(param2 + "DoesntMatch", true);
+			return false;
+		}
+	}
 	
+	protected boolean hasParameter(HttpServletRequest req, String param) {
+		
+		String value = req.getParameter(param);
+		if (value == null || value.length() == 0) {
+			req.setAttribute(param + "Empty", true);
+			return false;
+		}
+		
+		return true;
+	}	
+
 }

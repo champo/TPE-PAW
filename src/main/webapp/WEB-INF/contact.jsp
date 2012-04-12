@@ -4,15 +4,15 @@
 <div>
 	<c:if test="${empty validates}">
 		<c:if test="${invalidId}">
-			<p class="error">Invalid user.</p>
+			<p class="error">Invalid or nonexistent user.</p>
 		</c:if>
 		<c:if test="${invalidName}">
 			<p class="error">Empty or invalid name.</p>
 		</c:if>
-		<c:if test="${invalidEmail}">
+		<c:if test="${emailInvalidFormat}">
 			<p class="error">Empty or invalid email.</p>
 		</c:if>
-		<c:if test="${invalidPhone}">
+		<c:if test="${phoneInvalidFormat}">
 			<p class="error">Empty or invalid phone.</p>
 		</c:if>
 	
