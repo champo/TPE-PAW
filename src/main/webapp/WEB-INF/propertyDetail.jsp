@@ -72,6 +72,10 @@
 	Barbecue: <c:if test="${property.barbecue}">Yes</c:if>
 </div>
 
+<div>
+	<a href="contact?id=${property.id}">Get contact information</a>
+</div>
+
 <c:if test="${not empty pictures}">
 	<div>
 		Pictures of this property: <br />

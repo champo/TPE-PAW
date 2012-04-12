@@ -133,4 +133,14 @@
 		<servlet-name>query</servlet-name>
 		<url-pattern>/query</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>contact</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.ContactServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>contact</servlet-name>
+		<url-pattern>/contact</url-pattern>
+	</servlet-mapping>
 </web-app>
