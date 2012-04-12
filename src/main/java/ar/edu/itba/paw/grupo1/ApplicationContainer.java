@@ -108,9 +108,12 @@ public class ApplicationContainer extends AbstractContainer {
 		}
 		
 		try {
+			Class.forName(config.getProperty("db.class"));
 			return DriverManager.getConnection(config.getProperty("db.url"), config.getProperty("db.user"), config.getProperty("db.pass"));
+		} catch (ClassNotFoundException e) {
+			logger.fatal("The JDBC connector class could not be loaded.", e);
 		} catch (SQLException e) {
-			Logger.getLogger(ApplicationContainer.class).fatal("Failed to build a connection.", e);
+			logger.fatal("Failed to build a connection.", e);
 		}
 		
 		return null;
