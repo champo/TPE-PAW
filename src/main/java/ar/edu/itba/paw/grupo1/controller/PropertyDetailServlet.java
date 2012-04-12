@@ -33,8 +33,9 @@ public class PropertyDetailServlet extends BaseServlet {
 			List<Picture> pictures = pictureService.getByPropId(id);
 
 			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (!property.isPublished() && property.getUserId() != getLoggedInUser(req).getId()) {
+				resp.sendRedirect(req.getContextPath() + "/query");
+                return;
+			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUserId() != getLoggedInUser(req).getId())) {
 				
 				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
 				return;
