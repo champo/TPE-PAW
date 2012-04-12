@@ -3,6 +3,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>Archetype Created Web Application</display-name>
+	<welcome-file-list>
+		<welcome-file>index</welcome-file>
+	</welcome-file-list>
 
 	<filter>
 		<filter-name>sessionFilter</filter-name>
@@ -155,7 +158,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>index</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/index</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
