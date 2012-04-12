@@ -60,7 +60,12 @@ public class LoginServlet extends BaseServlet {
 					rememberUser(resp, user);
 				}
 				
-				resp.sendRedirect("/");
+				String to = req.getParameter("from");
+				if (to == null || to.isEmpty()) {
+					to = "/";
+				}
+				
+				resp.sendRedirect(to);
 				return;
 			}
 		}

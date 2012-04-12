@@ -8,9 +8,23 @@
 		<filter-name>sessionFilter</filter-name>
 		<filter-class>ar.edu.itba.paw.grupo1.filter.SessionFilter</filter-class>
 	</filter>
-
+	
 	<filter-mapping>
 		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>permissionFilter</filter-name>
+		<filter-class>ar.edu.itba.paw.grupo1.filter.PermissionFilter</filter-class>
+		<init-param>
+			<param-name>guest-actions</param-name>
+			<param-value>/,/index.jsp,/register,/login,/propertyDetail,/query</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>permissionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
