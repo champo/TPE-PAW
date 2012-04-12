@@ -46,8 +46,8 @@
 					</c:choose>
 				
 		
-				<li>Address: ${result.address}</li>
-				<li>Neighbourhood: ${result.neighbourhood}</li>
+				<li>Address: ${fn:escapeXml(result.address)}</li>
+				<li>Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
 				<li>Price: ${result.price}</li>
 				<li><a href="propertyDetail?id=${result.id}">See more</a></li>
 			</ul>
