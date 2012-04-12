@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
+import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.User;
 
 
@@ -54,7 +55,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 				throw new UserAlreadyExistsException();
 			} else {
 				logger.warn("Caught SQLException while trying to register user.", e);
-				throw new RuntimeException(e);
+				throw new DataAccessException(e);
 			}
 		}
 		
@@ -82,7 +83,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 			
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying login with user " + username + " pass " + hash, e);
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		
 		return null;
@@ -119,7 +120,7 @@ public class JDBCUserDao extends AbstractDao implements UserDao {
 			
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to get user with id " + userId, e);
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		
 		return null;
