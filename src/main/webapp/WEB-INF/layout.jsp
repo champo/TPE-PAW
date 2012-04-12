@@ -16,6 +16,9 @@
 		<span style="float: right;"><c:out value="${user.username}" />
 			[<a href="logout">logout]</a></span>
 	</c:if>
+	<ul style="list-style:none;">
+		<li><a href="query">Search properties</a></li>
+	</ul>
 	<c:import url="/WEB-INF/${documentBodyFile }" />
 </body>
 </html>
