@@ -2,83 +2,83 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<h2>Property <c:out value="${property.id}" /></h2>
+<h2>Property <c:out value="${fn:escapeXml(property.id)}" /></h2>
 
-<div class="propertyType">
+<div>
 	Property type:<c:if test="${property.propertyType == 0}">house</c:if><c:if test="${property.propertyType == 1}">flat</c:if>
 </div>
 
-<div class="operationType">
+<div>
 	Operation type:<c:if test="${property.operationType == 0}">selling</c:if><c:if test="${property.operationType == 1}">leasing</c:if>
 </div>
 
-<div class="address">
-	Address: <c:out value="${property.address}"></c:out>
+<div>
+	Address: <c:out value="${fn:escapeXml(property.address)}"></c:out>
 </div>
 
-<div class="neighbourhood">
-	Neighbourhood: <c:out value="${property.neighbourhood}"></c:out>
+<div>
+	Neighbourhood: <c:out value="${fn:escapeXml(property.neighbourhood)}"></c:out>
 </div>
 
-<div class="price">
-	Price: <c:out value="${property.price}"></c:out>
+<div>
+	Price: <c:out value="${fn:escapeXml(property.price)}"></c:out>
 </div>
 
-<div class="rooms">
-	Rooms: <c:out value="${property.rooms}"></c:out>
+<div>
+	Rooms: <c:out value="${fn:escapeXml(property.rooms)}"></c:out>
 </div>
 
-<div class="indoorSpace">
-	Indoor space: <c:out value="${property.indoorSpace}"></c:out>
+<div>
+	Indoor space: <c:out value="${fn:escapeXml(property.indoorSpace)}"></c:out>
 </div>
 
-<div class="outdoorSpace">
-	Outdoor space: <c:out value="${property.outdoorSpace}"></c:out>
+<div>
+	Outdoor space: <c:out value="${fn:escapeXml(property.outdoorSpace)}"></c:out>
 </div>
 
-<div class="description">
-	Description: <c:out value="${property.description}"></c:out>
+<div>
+	Description: <c:out value="${fn:escapeXml(property.description)}"></c:out>
 </div>
 
-<div class="antiquity">
-	Antiquity: <c:out value="${property.antiquity}"></c:out>
+<div>
+	Antiquity: <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
 </div>
 
-<div class="services">
+<div>
 	<h4>Services</h4>
 </div>
 
-<div class="cable">
+<div>
 	Cable: <c:if test="${property.cable}">Yes</c:if>
 </div>
 
-<div class="phone">
+<div>
 	Phone: <c:if test="${property.phone}">Yes</c:if>
 </div>
 
-<div class="pool">
+<div>
 	Pool: <c:if test="${property.pool}">Yes</c:if>
 </div>
 
-<div class="lounge">
+<div>
 	Lounge: <c:if test="${property.lounge}">Yes</c:if>
 </div>
 
-<div class="paddle">
+<div>
 	Paddle: <c:if test="${property.paddle}">Yes</c:if>
 </div>
 
-<div class="barbecue">
+<div>
 	Barbecue: <c:if test="${property.barbecue}">Yes</c:if>
 </div>
 
 <c:if test="${not empty pictures}">
-	<div class="pictures">
+	<div>
 		Pictures of this property: <br />
 		<c:forEach var="picture" items="${pictures}">
-			<c:out value="${picture.name}"></c:out>
+			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
 			<br />
-			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${picture.id}"></c:out><c:out value="${picture.extension}"></c:out>" />
+			<img class="propPicture" alt="Image of the property" src="images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
 			<br />
 		</c:forEach>
 	</div>
