@@ -112,7 +112,8 @@
 	<servlet-mapping>
 		<servlet-name>PublishProperty</servlet-name>
 		<url-pattern>/publishProperty</url-pattern>
-	</servlet-mapping>git pull --rebase champo master
+	</servlet-mapping>
+	git pull --rebase champo master
 
 	<servlet>
 		<servlet-name>UnpublishProperty</servlet-name>
@@ -124,13 +125,13 @@
 		<url-pattern>/unpublishProperty</url-pattern>
 	</servlet-mapping>
 
-  <servlet>
-  	<servlet-name>query</servlet-name>
-  	<servlet-class></servlet-class>
-  </servlet>
+	<servlet>
+		<servlet-name>query</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.QueryServlet</servlet-class>
+	</servlet>
 
-  <servlet-mapping>
-  	<servlet-name>query</servlet-name>
-  	<url-pattern>/query</url-pattern>
-  </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>query</servlet-name>
+		<url-pattern>/query</url-pattern>
+	</servlet-mapping>
 </web-app>

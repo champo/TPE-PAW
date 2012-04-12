@@ -7,7 +7,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 public interface PropertyDao {
 
 	public List<Property> getProperties(int userId);
-	
+
 	public Property get(int id);
 
 	public void save(Property property);
@@ -15,4 +15,7 @@ public interface PropertyDao {
 	public boolean checkOwnership(Integer userId, Integer propertyId);
 
 	public int getUser(int id);
+
+	public List<Property> query(String operation, String property,
+			double rangeFrom, double rangeTo);
 }

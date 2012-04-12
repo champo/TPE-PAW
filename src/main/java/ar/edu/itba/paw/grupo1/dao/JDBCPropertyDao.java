@@ -9,10 +9,8 @@ import java.util.List;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 
+public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 
-
-public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
-	
 	public JDBCPropertyDao(Connection conn) {
 		super(conn);
 	}
@@ -23,13 +21,14 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		PreparedStatement statement;
 
 		try {
-			statement = conn.prepareStatement("select * from properties where userId = ?");
+			statement = conn
+					.prepareStatement("select * from properties where userId = ?");
 			statement.setInt(1, userId);
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
 
 				while (myCursor.next()) {
-					Property property = buildProperty(myCursor);  				
+					Property property = buildProperty(myCursor);
 					properties.add(property);
 				}
 			}
@@ -47,7 +46,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		Property property = null;
 
 		try {
-			statement = conn.prepareStatement("select * from properties where id = ?");
+			statement = conn
+					.prepareStatement("select * from properties where id = ?");
 			statement.setInt(1, id);
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
@@ -64,23 +64,26 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 
 		return property;
 	}
+
 	public void save(Property property) {
 
 		try {
 			PreparedStatement statement;
 			if (property.isNew()) {
 
-				statement = conn.prepareStatement("INSERT INTO properties (propertytype, operationtype, address," +
-						" neighbourhood, price, rooms, indoorspace, outdoorspace, description, antiquity," +
-						" cable, phone, pool, lounge, paddle, barbecue, published, userid) " + 
-						"values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				statement = conn
+						.prepareStatement("INSERT INTO properties (propertytype, operationtype, address,"
+								+ " neighbourhood, price, rooms, indoorspace, outdoorspace, description, antiquity,"
+								+ " cable, phone, pool, lounge, paddle, barbecue, published, userid) "
+								+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				setPlaceHolders(statement, property);
 
 			} else {
-				statement = conn.prepareStatement("UPDATE properties SET propertyType = ?, operationType = ?, address = ?, " + 
-						"neighbourhood = ?, price = ?, rooms = ?, indoorSpace = ?, outdoorSpace = ?, description = ?, " + 
-						"antiquity = ?, cable = ?, phone = ?, pool = ?, lounge = ?, paddle = ?, barbecue = ?, published = ?, " +
-						"userId = ? WHERE id = ?");
+				statement = conn
+						.prepareStatement("UPDATE properties SET propertyType = ?, operationType = ?, address = ?, "
+								+ "neighbourhood = ?, price = ?, rooms = ?, indoorSpace = ?, outdoorSpace = ?, description = ?, "
+								+ "antiquity = ?, cable = ?, phone = ?, pool = ?, lounge = ?, paddle = ?, barbecue = ?, published = ?, "
+								+ "userId = ? WHERE id = ?");
 				setPlaceHolders(statement, property);
 				statement.setInt(19, property.getId());
 
@@ -92,8 +95,9 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		}
 	}
 
-	private void setPlaceHolders(PreparedStatement stmt, Property property) throws SQLException {
-		
+	private void setPlaceHolders(PreparedStatement stmt, Property property)
+			throws SQLException {
+
 		stmt.setInt(1, property.getPropertyType());
 		stmt.setInt(2, property.getOperationType());
 		stmt.setString(3, property.getAddress());
@@ -114,9 +118,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		stmt.setInt(18, property.getUserId());
 	}
 
-
 	private Property buildProperty(ResultSet cursor) throws SQLException {
-		
+
 		int id = cursor.getInt("id");
 		int propertyType = cursor.getInt("propertyType");
 		int operationType = cursor.getInt("operationType");
@@ -137,19 +140,20 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		boolean paddle = cursor.getBoolean("paddle");
 		boolean barbecue = cursor.getBoolean("barbecue");
 
-		return new Property(id, propertyType, operationType, address, neighbourhood, price,
-				rooms, indoorSpace, outdoorSpace, description, antiquity, cable, phone,
-				pool, lounge, paddle, barbecue, published, userId);
-		
+		return new Property(id, propertyType, operationType, address,
+				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
+				description, antiquity, cable, phone, pool, lounge, paddle,
+				barbecue, published, userId);
+
 	}
 
-
 	public boolean checkOwnership(Integer userId, Integer propertyId) {
-		
+
 		PreparedStatement statement;
 
 		try {
-			statement = conn.prepareStatement("select * from properties where userId = ? and id = ?");
+			statement = conn
+					.prepareStatement("select * from properties where userId = ? and id = ?");
 			statement.setInt(1, userId);
 			statement.setInt(2, propertyId);
 
@@ -174,7 +178,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		PreparedStatement statement;
 
 		try {
-			statement = conn.prepareStatement("select userId from properties where id = ?");
+			statement = conn
+					.prepareStatement("select userId from properties where id = ?");
 			statement.setInt(1, id);
 
 			if (statement.execute()) {
@@ -192,6 +197,45 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao  {
 		return userId;
 	}
 
+	public List<Property> query(String operation, String property,
+			double rangeFrom, double rangeTo) {
+
+		String query = "SELECT * FROM properties WHERE ";
+
+		if (operation.equals("selling")) {
+			query += "operationType = 0 AND ";
+		} else if (operation.equals("leasing")) {
+			query += "operationType = 1 AND ";
+		}
+
+		if (property.equals("house")) {
+			query += "propertyType = 0 AND ";
+		} else if (property.equals("flat")) {
+			query += "propertyType = 1 AND ";
+		}
+
+		query += "price >= " + rangeFrom + " AND price <= " + rangeTo;
+
+		List<Property> properties = new ArrayList<Property>();
+		PreparedStatement statement;
+
+		try {
+			statement = conn.prepareStatement(query);
+
+			if (statement.execute()) {
+				ResultSet myCursor = statement.getResultSet();
+
+				while (myCursor.next()) {
+					Property prop = buildProperty(myCursor);
+					properties.add(prop);
+				}
+			}
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return properties;
+	}
 }
-
-
