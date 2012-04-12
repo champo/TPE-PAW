@@ -4,7 +4,7 @@
 <div>
 	<h2>Contact form for ${fn:escapeXml(address)} - ${fn:escapeXml(neighbourhood)}</h2> 
 	<c:if test="${empty publisher}">
-		<form action="/contact?propertyId=${fn:escapeXml(param.propertyId)}" method="post">
+		<form action="${basePath}/contact?propertyId=${fn:escapeXml(param.propertyId)}" method="post">
 			<label for="name">Name: </label>
 			<input type="text" name="name" value="${fn:escapeXml(param.name)}" /><br />
 			<c:if test="${nameEmpty }">
