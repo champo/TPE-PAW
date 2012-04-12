@@ -6,13 +6,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
-import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
 @SuppressWarnings("serial")
 public class ContactServlet extends BaseServlet {
@@ -73,7 +76,7 @@ public class ContactServlet extends BaseServlet {
 		
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
 				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
 				return;
 			} else if (!property.isPublished()) {
@@ -83,10 +86,18 @@ public class ContactServlet extends BaseServlet {
 		} else {
 			throw new InvalidParameterException();
 		}
+		User owner = ApplicationContainer.get(UserService.class).get(property.getUserId());
 		req.setAttribute("propertyId", property.getId());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
-		req.setAttribute("publisher", ApplicationContainer.get(UserService.class).get(property.getUserId()));
+		req.setAttribute("publisher", owner);
+		
+		try {
+			ApplicationContainer.get(EmailService.class).sendContact(req.getParameter("email"), req.getParameter("name"), 
+					req.getParameter("comment"), owner, property);
+		} catch (MailingException e) {
+			Logger.getLogger(ContactServlet.class).warn("Failed to send contact email", e);
+		}
 		render(req, resp, "contact.jsp", "Contact");
 	}
 }

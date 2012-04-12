@@ -10,6 +10,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
 public class EmailServiceImpl implements EmailService {
@@ -44,4 +46,15 @@ public class EmailServiceImpl implements EmailService {
 			throw new MailingException(e);
 		}
     }
+
+	@Override
+	public void sendContact(String email, String name, String comment, User owner,
+			Property property) throws MailingException {
+
+		String subject = name + " is interested in your property and wants to contact you!";
+		String body = name + " (" + email + ") has made a request to contact you about your property " +
+				"in " + property.getAddress() + "-" + property.getNeighbourhood() + "\n\n" + comment;
+		
+		sendEmail(owner.getEmail(), body, subject);
+	}
 }
