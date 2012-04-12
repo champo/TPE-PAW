@@ -147,4 +147,15 @@
 		<servlet-name>query</servlet-name>
 		<url-pattern>/query</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.controller.IndexServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

@@ -14,10 +14,17 @@
 		Administration System</h1>
 	<c:if test="${not empty user}">
 		<span style="float: right;"><c:out value="${user.username}" />
-			[<a href="${basePath }/logout">logout]</a></span>
+			<a href="${basePath }/logout">[logout]</a></span>
 	</c:if>
+	<c:if test="${empty user }">
+		<span style="float: right;"><a href="${basePath }/login">[login]</a></span>
+	</c:if>
+	
 	<ul style="list-style:none;">
 		<li><a href="${basePath }/query">Search properties</a></li>
+		<c:if test="${not empty user }">
+			<li><a href="${basePath }/listProperties">My properties</a></li>
+		</c:if>
 	</ul>
 	<c:import url="/WEB-INF/${documentBodyFile }" />
 </body>
