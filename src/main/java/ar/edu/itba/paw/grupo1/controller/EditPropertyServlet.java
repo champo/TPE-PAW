@@ -56,6 +56,7 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 		if (property == null) {
 			setPropertyAttributes(req);
 			req.setAttribute("edit", 1);
+			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
 			render(req, resp, "editProperty.jsp", "Edit Property");
 			return;
 		}
