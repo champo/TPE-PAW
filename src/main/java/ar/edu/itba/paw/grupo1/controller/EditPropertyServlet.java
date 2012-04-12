@@ -52,13 +52,21 @@ public class EditPropertyServlet extends AbstractPropertyServlet {
 
 		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = buildProperty(req, resp);
-
+		
 		if (property == null) {
 			setPropertyAttributes(req);
 			req.setAttribute("edit", 1);
 			render(req, resp, "editProperty.jsp", "Edit Property");
 			return;
 		}
+		
+		//Because that's the way hibernate rolls!
+		Property dbProperty = propertyService.getById(property.getId());
+		if (dbProperty.isPublished()) {				
+			property.publish();
+		} else {
+			property.unpublish();
+		}	
 		propertyService.save(property, getLoggedInUser(req));
 		resp.sendRedirect("/listProperties");
 	}
