@@ -3,6 +3,9 @@
 
 <h1>Query</h1>
 
+<c:if test="${param.unpublished}">
+	<p class="error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
+</c:if>
 <div>
 	<c:if test="${invalidRange}">
 		<p class="error">Invalid price range.</p>
