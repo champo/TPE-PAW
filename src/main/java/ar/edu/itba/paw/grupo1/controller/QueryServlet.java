@@ -39,14 +39,14 @@ public class QueryServlet extends BaseServlet {
 		}
 
 		double parsedRangeFrom = 0;
-		double parsedRangeTo = 0;
+		double parsedRangeTo = Double.MAX_VALUE;
 		boolean badParse = false;
 
 		try {
-			if (rangeFrom != null) {
+			if (rangeFrom != null && !rangeFrom.isEmpty()) {
 				parsedRangeFrom = Double.parseDouble(rangeFrom);
 			}
-			if (rangeTo != null) {
+			if (rangeTo != null && !rangeTo.isEmpty()) {
 				parsedRangeTo = Double.parseDouble(rangeTo);
 			}
 		} catch (NumberFormatException e) {
