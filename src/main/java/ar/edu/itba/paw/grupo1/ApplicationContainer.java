@@ -18,6 +18,8 @@ import ar.edu.itba.paw.grupo1.dao.PictureDao;
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.service.AbstractContainer;
+import ar.edu.itba.paw.grupo1.service.EmailService;
+import ar.edu.itba.paw.grupo1.service.EmailServiceImpl;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PictureServiceImpl;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
@@ -98,6 +100,10 @@ public class ApplicationContainer extends AbstractContainer {
 	
 	protected PictureDao buildPictureDao(Connection conn) {
 		return new JDBCPictureDao(conn);
+	}
+	
+	protected EmailService buildEmailService() {
+		return new EmailServiceImpl(config);
 	}
 	
 	protected Connection buildConnection() {
