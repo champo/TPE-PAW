@@ -21,8 +21,8 @@
 		<filter-name>permissionFilter</filter-name>
 		<filter-class>ar.edu.itba.paw.grupo1.filter.PermissionFilter</filter-class>
 		<init-param>
-			<param-name>guest-actions</param-name>
-			<param-value>/,/index.jsp,/register,/login,/propertyDetail,/query,/contact</param-value>
+			<param-name>restricted-actions</param-name>
+			<param-value>/logout,/listProperties,/editProperty,/addProperty,/addPicture,/editPicture,/publishProperty,/unpublishProperty</param-value>
 		</init-param>
 	</filter>
 	

@@ -25,21 +25,21 @@ import org.apache.log4j.Logger;
 
 public class PermissionFilter implements javax.servlet.Filter {
 
-	private Set<String> guestActions = null;
+	private Set<String> restrictedActions = null;
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
-		String actionsString = filterConfig.getInitParameter("guest-actions");
+		String actionsString = filterConfig.getInitParameter("restricted-actions");
 		
-		guestActions = new TreeSet<String>();
+		restrictedActions = new TreeSet<String>();
 		if (actionsString == null) {
 			return;
 		}
 		
 		String[] actions = actionsString.split(",");
 		for (String action : actions) {
-			guestActions.add(action);
+			restrictedActions.add(action);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class PermissionFilter implements javax.servlet.Filter {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		
-		if (!guestActions.contains(req.getServletPath())) {
+		if (restrictedActions.contains(req.getServletPath())) {
 
 			HttpSession session = req.getSession();
 			if (session.getAttribute("userId") == null) {
