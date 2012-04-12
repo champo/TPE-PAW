@@ -7,9 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ar.edu.itba.paw.grupo1.model.Property;
 
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
+
+	private static Logger logger = Logger.getLogger(JDBCPropertyDao.class);
 
 	public JDBCPropertyDao(Connection conn) {
 		super(conn);
@@ -35,7 +39,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 		return properties;
 	}
@@ -59,7 +63,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 
 		return property;
@@ -91,7 +95,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.execute();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 	}
 
@@ -167,7 +171,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 		return false;
 	}
@@ -192,7 +196,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 		return userId;
 	}
@@ -233,7 +237,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.warn("", e);
 		}
 
 		return properties;

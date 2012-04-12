@@ -28,7 +28,7 @@
 <div>
 	<c:if test="${not empty queryResults}">
 		<c:forEach var="result" items="${queryResults}">
-			<p><ul styl e="list-style:none;">
+			<p><ul style="list-style:none;">
 				<li><c:choose>
 						<c:when test="${result.operationType==0}">
 						Selling	
