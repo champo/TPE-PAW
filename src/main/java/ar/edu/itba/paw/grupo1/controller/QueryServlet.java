@@ -27,6 +27,8 @@ public class QueryServlet extends BaseServlet {
 		if (operation == null && property == null && rangeFrom == null
 				&& rangeTo == null) {
 
+			req.setAttribute("operationAnyChecked", "checked='checked'");
+			req.setAttribute("propertyAnyChecked", "checked='checked'");
 			render(req, resp, "query.jsp", "Query");
 			return;
 		}
@@ -37,6 +39,9 @@ public class QueryServlet extends BaseServlet {
 		if (property == null) {
 			property = "any";
 		}
+
+		req.setAttribute("operation"+operation.substring(0, 1).toUpperCase()+operation.substring(1)+"Checked", "checked='checked'");
+		req.setAttribute("property"+property.substring(0, 1).toUpperCase()+property.substring(1)+"Checked", "checked='checked'");
 
 		double parsedRangeFrom = 0;
 		double parsedRangeTo = Double.MAX_VALUE;
@@ -63,6 +68,9 @@ public class QueryServlet extends BaseServlet {
 			return;
 		}
 
+		req.setAttribute("rangeFromValue", rangeFrom);
+		req.setAttribute("rangeToValue", rangeTo);
+		
 		if (rangeFrom == null) {
 			parsedRangeFrom = 0;
 		}
