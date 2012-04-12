@@ -94,7 +94,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		
 		boolean error = false;
 		
-		if (picture.getName().equals("")) {
+		if (picture.getName().equals("") || picture.getName().length() > 50) {
 			error = true;
 			req.setAttribute("nameError", 1);
 		}

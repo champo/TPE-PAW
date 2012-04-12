@@ -5,7 +5,7 @@
 	<p class="error">You don't have permissions to view this page</p>
 </c:if>
 
-<c:if test="${not empty noPermissions}">
+<c:if test="${not empty fatal}">
 	<p class="error">Unexpected error processing the file. Please contact an administrator.</p>
 </c:if>
 
@@ -38,7 +38,7 @@
 	</div>
 	<c:if test="${not empty nameError}">
 			<br />
-			<p class="error">Error: The name was empty.</p>
+			<p class="error">Error: The name cannot be empty nor longer than 50 characters.</p>
 			<br />
 	</c:if>
 	
@@ -74,8 +74,6 @@
 <c:if test="${not empty edit}">
 	<form action="editPicture" method="post">
 		<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(picture.id)}" />" />
-		<input type="hidden" name="extension" value="<c:out value="${fn:escapeXml(picture.extension)}" />" />
-		<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.propId)}" />" />
 		<input type="submit" name="delete" value="Delete" />
 	</form>
 </c:if>

@@ -18,6 +18,9 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	public void save(Picture picture) {
+		if (picture.getName().length() > 50 || picture.getExtension().length() > 10) {
+			return;
+		}
 		pictureDao.save(picture);
 	}
 
