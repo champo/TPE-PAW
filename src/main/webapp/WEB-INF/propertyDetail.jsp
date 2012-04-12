@@ -73,7 +73,7 @@
 </div>
 
 <div>
-	<a href="contact?id=${property.id}">Get contact information</a>
+	<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
 </div>
 
 <c:if test="${not empty pictures}">

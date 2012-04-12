@@ -7,7 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
+import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
+import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
 @SuppressWarnings("serial")
@@ -17,7 +21,28 @@ public class ContactServlet extends BaseServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		req.setAttribute("id", req.getParameter("id"));
+		int propertyId;
+		Property property;
+		if (checkIntegerParameter(req, "propertyId")) {
+
+			propertyId = Integer.parseInt(req.getParameter("propertyId"));			
+			property = ApplicationContainer.get(PropertyService.class).getById(propertyId);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() == getLoggedInUser(req).getId()) {
+				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
+				return;
+			} else if (!property.isPublished()) {
+				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
+				return;
+			}			
+		} else {
+			throw new InvalidParameterException();
+		}
+		req.setAttribute("propertyId", property.getId());
+		req.setAttribute("address", property.getAddress());
+		req.setAttribute("neighbourhood", property.getNeighbourhood());
 		render(req, resp, "contact.jsp", "Contact");
 	}
 
@@ -25,59 +50,43 @@ public class ContactServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		String name = req.getParameter("name");
-		String email = req.getParameter("email");
-		String phone = req.getParameter("phone");
-		String comment = req.getParameter("comment");
-		String id = req.getParameter("id");
-		int parsedId = 0;
+		Property property;
+		if (checkIntegerParameter(req, "propertyId")) {
+			property = ApplicationContainer.get(PropertyService.class).getById(Integer.parseInt(req.getParameter("propertyId")));
 
-		boolean validates = true;
-		
-		req.setAttribute("id", req.getParameter("id"));
-		
-		try {
-			parsedId = Integer.parseInt(id);
-		} catch (NumberFormatException e) {
-			req.setAttribute("invalidId", true);
-			validates = false;
-		}
-		
-		if (name == null || name.length() == 0) {
-			req.setAttribute("invalidName", true);
-			validates = false;
-		} else {
-			req.setAttribute("nameValue", name);
-		}
-		if (!checkEmail(req, "email", 1, Integer.MAX_VALUE)) {
-			req.setAttribute("emailInvalidFormat", true);
-			validates = false;
-		} else {
-			req.setAttribute("emailValue", email);
-		}
-		
-		if (!checkPhone(req, "phone", 2, Integer.MAX_VALUE)) {
-			req.setAttribute("phoneInvalidFormat", true);
-			validates = false;
-		} else {
-			req.setAttribute("phoneValue", phone);
-		}
-
-		req.setAttribute("commentValue", comment);
-
-		if (validates) {
-			System.out.println("yeah"+parsedId);
-			User user = ApplicationContainer.get(UserService.class).get(parsedId);
-			if (user != null) {
-				System.out.println("yes");
-				req.setAttribute("validates", true);
-				req.setAttribute("user", user);
-			} else {
-				System.out.println("no");
-				req.setAttribute("invalidId", true);
+			boolean error = false;
+			
+			error |= !checkParameter(req, "name", 0, 50);
+			error |= !checkParameter(req, "email", 0, 50);
+			error |= !checkParameter(req, "phone", 0, 50);
+			error |= !checkParameter(req, "comment", 0, 1000, true);
+			error |= !checkEmail(req, "email", 0, 50);
+			error |= !checkPhone(req, "phone", 0, 20);
+			
+			if (error) {
+				req.setAttribute("propertyId", property.getId());
+				req.setAttribute("address", property.getAddress());
+				req.setAttribute("neighbourhood", property.getNeighbourhood());
+				render(req, resp, "contact.jsp", "Contact");
+				return;
 			}
+		
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() == getLoggedInUser(req).getId()) {
+				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
+				return;
+			} else if (!property.isPublished()) {
+				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
+				return;
+			}
+		} else {
+			throw new InvalidParameterException();
 		}
-
+		req.setAttribute("propertyId", property.getId());
+		req.setAttribute("address", property.getAddress());
+		req.setAttribute("neighbourhood", property.getNeighbourhood());
+		req.setAttribute("publisher", ApplicationContainer.get(UserService.class).get(property.getUserId()));
 		render(req, resp, "contact.jsp", "Contact");
 	}
 }
