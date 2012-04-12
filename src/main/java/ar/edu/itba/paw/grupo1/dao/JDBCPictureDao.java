@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 
 
@@ -43,7 +44,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.close();
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to get all pictures");
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		return pictures;
 	}
@@ -69,7 +70,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.close();
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to get the picture with id" + id);
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		return response;
 	}
@@ -95,7 +96,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.close();
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to update picture with id = " + picture.getId() + " to propertyId = " + picture.getPropId() + ", name = " + picture.getName() + " and extension = " + picture.getExtension());
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 
 	}
@@ -118,7 +119,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.close();
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to insert picture with propertyId = " + picture.getPropId() + ", name = " + picture.getName() + " and extension = " + picture.getExtension());
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		
 	}
@@ -133,7 +134,7 @@ public class JDBCPictureDao extends AbstractDao implements PictureDao {
 			statement.close();
 		} catch (SQLException e) {
 			logger.warn("Caught SQLException when trying to delete picture with id = " + id);
-			throw new RuntimeException(e);
+			throw new DataAccessException(e);
 		}
 		
 	}
