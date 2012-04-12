@@ -113,7 +113,6 @@
 		<servlet-name>PublishProperty</servlet-name>
 		<url-pattern>/publishProperty</url-pattern>
 	</servlet-mapping>
-	git pull --rebase champo master
 
 	<servlet>
 		<servlet-name>UnpublishProperty</servlet-name>
