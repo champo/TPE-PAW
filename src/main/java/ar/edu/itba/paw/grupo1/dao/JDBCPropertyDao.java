@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Property;
 
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
@@ -39,7 +40,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to obtain user's registered properties.", e);
+			throw new DataAccessException(e);
 		}
 		return properties;
 	}
@@ -63,7 +65,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to obtain property.", e);
+			throw new DataAccessException(e);
 		}
 
 		return property;
@@ -95,7 +98,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.execute();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to save property.", e);
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -171,7 +175,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to make check property ownership.", e);
+			throw new DataAccessException(e);
 		}
 		return false;
 	}
@@ -196,7 +201,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to get user id.", e);
+			throw new DataAccessException(e);
 		}
 		return userId;
 	}
@@ -237,7 +243,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			statement.close();
 
 		} catch (SQLException e) {
-			logger.warn("", e);
+			logger.warn("Caught SQLException while trying to make search query.", e);
+			throw new DataAccessException(e);
 		}
 
 		return properties;
