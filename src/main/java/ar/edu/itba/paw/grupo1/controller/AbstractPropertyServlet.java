@@ -48,7 +48,7 @@ public class AbstractPropertyServlet extends BaseServlet {
 		boolean lounge = req.getParameter("lounge") != null;			
 		boolean paddle = req.getParameter("paddle") != null;
 		boolean barbecue = req.getParameter("barbecue") != null;
-		boolean published = req.getParameter("published") != null;
+		boolean published = true; // default value
 		
 		int userId = getLoggedInUser(req).getId();
 			
