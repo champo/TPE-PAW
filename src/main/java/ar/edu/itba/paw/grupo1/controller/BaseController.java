@@ -4,30 +4,40 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.support.WebApplicationObjectSupport;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.ValidationUtils;
 import ar.edu.itba.paw.grupo1.model.User;
 
-@SuppressWarnings("serial")
-public abstract class BaseServlet extends HttpServlet {
+@Controller
+public abstract class BaseController extends WebApplicationObjectSupport {
 
-	public BaseServlet() {
+	public BaseController() {
 		super();
 	}
 
-	protected void render(HttpServletRequest req, HttpServletResponse resp, String file, String title)
+	protected ModelAndView render(HttpServletRequest req, HttpServletResponse resp, String file, String title)
 			throws ServletException, IOException {
 		
-		req.setAttribute("documentTitle", title);
-		req.setAttribute("documentBodyFile", file);
+//		req.setAttribute("documentTitle", title);
+//		req.setAttribute("documentBodyFile", file);
+//		
+//		// This is a shortcut, since the standard way to get to this in .jsp files is horribly long.
+//		req.setAttribute("basePath", req.getContextPath());
+//		
+//		req.getRequestDispatcher("WEB-INF/jsp/layout.jsp").forward(req, resp);
 		
-		// This is a shortcut, since the standard way to get to this in .jsp files is horribly long.
-		req.setAttribute("basePath", req.getContextPath());
-		
-		req.getRequestDispatcher("WEB-INF/layout.jsp").forward(req, resp);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("documentTitle", title);
+		mav.addObject("documentBodyFile", file);
+		mav.addObject("basePath", req.getContextPath());
+		mav.setViewName("layout");
+		return mav;
 	}
 
 	protected void setLoggedInUser(HttpServletRequest req, User user) {

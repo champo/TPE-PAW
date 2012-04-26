@@ -3,7 +3,7 @@
 
 <h1>Register</h1>
 
-<form action="${basePath }/register" method="post">
+<form action="${basePath }/user/register" method="post">
 	<fieldset>
 		<label for="name">Name: </label>
 		<input type="text" name="name" value="${fn:escapeXml(param.name)}" /><br />
