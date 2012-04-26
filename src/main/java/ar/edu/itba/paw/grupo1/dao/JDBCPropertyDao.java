@@ -1,6 +1,5 @@
 package ar.edu.itba.paw.grupo1.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,16 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Property;
 
+@Repository
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 
 	private static Logger logger = Logger.getLogger(JDBCPropertyDao.class);
 
-	public JDBCPropertyDao(Connection conn) {
-		super(conn);
+	@Autowired
+	public JDBCPropertyDao(DriverManagerDataSource dataSource) throws SQLException {
+		super(dataSource);
 	}
 
 	public List<Property> getProperties(int userId) {

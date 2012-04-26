@@ -175,7 +175,7 @@
 			<br />
 			<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
 			<br />
-			<a href="${basePath }/editPicture?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
+			<a href="${basePath }/picture/edit?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
 			<br />
 		</c:forEach>
 		
