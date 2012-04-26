@@ -2,13 +2,18 @@ package ar.edu.itba.paw.grupo1.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ar.edu.itba.paw.grupo1.dao.PictureDao;
 import ar.edu.itba.paw.grupo1.model.Picture;
 
+@Service
 public class PictureServiceImpl implements PictureService {
 	
 	private PictureDao pictureDao;
 	
+	@Autowired
 	public PictureServiceImpl(PictureDao pictureDao) {
 		this.pictureDao = pictureDao;
 	}

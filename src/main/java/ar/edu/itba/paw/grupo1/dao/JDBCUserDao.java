@@ -1,24 +1,27 @@
 package ar.edu.itba.paw.grupo1.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.User;
 
-
+@Repository
 public class JDBCUserDao extends AbstractDao implements UserDao {
 	
 	private static final String UNIQUE_VIOLATION_STATE = "23505";
 	private static Logger logger = Logger.getLogger(JDBCUserDao.class);
 
-	public JDBCUserDao(Connection conn) {
-		super(conn);
+	@Autowired
+	public JDBCUserDao(DriverManagerDataSource dataSource) throws SQLException {
+		super(dataSource);
 	}
 
 	@Override

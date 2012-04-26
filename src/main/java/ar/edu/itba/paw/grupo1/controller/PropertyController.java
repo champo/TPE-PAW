@@ -7,13 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
@@ -25,6 +25,16 @@ import ar.edu.itba.paw.grupo1.service.PropertyService;
 @Controller
 public class PropertyController extends AbstractPropertyController {
 
+	PropertyService propertyService;
+	PictureService pictureService;
+	
+	@Autowired
+	public PropertyController(PropertyService propertyService, PictureService pictureService) {
+		this.propertyService = propertyService;
+		this.pictureService = pictureService;
+	}
+	
+	
 	@RequestMapping(value="add", method = RequestMethod.GET)
 	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -37,7 +47,6 @@ public class PropertyController extends AbstractPropertyController {
 	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = buildProperty(req, resp);
 		
 		if (property == null) {
@@ -58,8 +67,6 @@ public class PropertyController extends AbstractPropertyController {
 		Property property = null;
 		List<Picture> pictures = null;
 		if (checkIntegerParameter(req, "id")) {
-			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-			PictureService pictureService = ApplicationContainer.get(PictureService.class);
 			
 			property = propertyService.getById(Integer.parseInt(req.getParameter("id")));
 			pictures = pictureService.getByPropId(Integer.parseInt(req.getParameter("id")));
@@ -83,7 +90,6 @@ public class PropertyController extends AbstractPropertyController {
 	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		Property property = buildProperty(req, resp);
 		
 		if (property == null) {
@@ -112,10 +118,6 @@ public class PropertyController extends AbstractPropertyController {
 			throws ServletException, IOException {
 
 		if (checkIntegerParameter(req, "id")) {
-			PropertyService propertyService = ApplicationContainer
-					.get(PropertyService.class);
-			PictureService pictureService = ApplicationContainer
-					.get(PictureService.class);
 
 			int id = Integer.parseInt(req.getParameter("id"));
 			Property property = propertyService.getById(id);
@@ -143,10 +145,8 @@ public class PropertyController extends AbstractPropertyController {
 	protected ModelAndView list(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		PropertyService propService = ApplicationContainer.get(PropertyService.class);
-		User user = getLoggedInUser(req);
-		
-		req.setAttribute("properties", propService.getProperties(user.getId()));
+		User user = getLoggedInUser(req);		
+		req.setAttribute("properties", propertyService.getProperties(user.getId()));
 		return render(req, resp, "listProperties.jsp", "List Properties");
 	}	
 	
@@ -156,17 +156,15 @@ public class PropertyController extends AbstractPropertyController {
 
 		if (checkIntegerParameter(req, "id")) {
 			int id = Integer.parseInt(req.getParameter("id"));
-			PropertyService propService = ApplicationContainer.get(PropertyService.class);
-			Property property = propService.getById(id);
+			Property property = propertyService.getById(id);
 			
 			if (property == null) {
 				throw new InvalidParameterException();
 			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
-			}
-			
+			}		
 			property.publish();
-			propService.save(property, getLoggedInUser(req));			
+			propertyService.save(property, getLoggedInUser(req));			
 		}
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
@@ -178,17 +176,15 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (checkIntegerParameter(req, "id")) {
 			int id = Integer.parseInt(req.getParameter("id"));
-			PropertyService propService = ApplicationContainer.get(PropertyService.class);
-			Property property = propService.getById(id);
+			Property property = propertyService.getById(id);
 			
 			if (property == null) {
 				throw new InvalidParameterException();
 			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}
-			
 			property.unpublish();
-			propService.save(property, getLoggedInUser(req));			
+			propertyService.save(property, getLoggedInUser(req));			
 		}
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);

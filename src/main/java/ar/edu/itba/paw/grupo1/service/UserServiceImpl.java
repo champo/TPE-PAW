@@ -7,16 +7,20 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.grupo1.ValidationUtils;
 import ar.edu.itba.paw.grupo1.dao.UserDao;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
 
+@Service
 public class UserServiceImpl implements UserService {
 	
 	private UserDao userDao;
 	
+	@Autowired
 	public UserServiceImpl(UserDao userDao) {
 		super();
 		this.userDao = userDao;

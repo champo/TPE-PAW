@@ -7,12 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
@@ -20,6 +20,13 @@ import ar.edu.itba.paw.grupo1.service.PropertyService;
 @RequestMapping
 public class QueryController extends BaseController {
 
+	PropertyService propertyService;
+	
+	@Autowired
+	public QueryController(PropertyService propertyService) {
+		this.propertyService = propertyService;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView query(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -81,8 +88,7 @@ public class QueryController extends BaseController {
 			parsedRangeTo = Double.MAX_VALUE;
 		}
 
-		List<Property> query = ApplicationContainer.get(PropertyService.class)
-				.query(operation, property, parsedRangeFrom, parsedRangeTo);
+		List<Property> query = propertyService.query(operation, property, parsedRangeFrom, parsedRangeTo);
 
 		req.setAttribute("queryResults", query);
 		return render(req, resp, "query.jsp", "Query");
