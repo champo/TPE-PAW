@@ -11,12 +11,12 @@
 		<filter-name>sessionFilter</filter-name>
 		<filter-class>ar.edu.itba.paw.grupo1.filter.SessionFilter</filter-class>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>sessionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter>
 		<filter-name>permissionFilter</filter-name>
 		<filter-class>ar.edu.itba.paw.grupo1.filter.PermissionFilter</filter-class>
@@ -25,149 +25,21 @@
 			<param-value>/logout,/listProperties,/editProperty,/addProperty,/addPicture,/editPicture,/publishProperty,/unpublishProperty</param-value>
 		</init-param>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>permissionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 	<servlet>
-		<servlet-name>register</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.RegisterServlet</servlet-class>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
-		<servlet-name>register</servlet-name>
-		<url-pattern>/register</url-pattern>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>login</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.LoginServlet</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>login</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>logout</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.LogoutServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>logout</servlet-name>
-		<url-pattern>/logout</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ListProperties</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.ListPropertiesServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ListProperties</servlet-name>
-		<url-pattern>/listProperties</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>EditProperty</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.EditPropertyServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>EditProperty</servlet-name>
-		<url-pattern>/editProperty</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>AddProperty</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.AddPropertyServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>AddProperty</servlet-name>
-		<url-pattern>/addProperty</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>AddPicture</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.AddPictureServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>AddPicture</servlet-name>
-		<url-pattern>/addPicture</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>EditPicture</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.EditPictureServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>EditPicture</servlet-name>
-		<url-pattern>/editPicture</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>PropertyDetail</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.PropertyDetailServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>PropertyDetail</servlet-name>
-		<url-pattern>/propertyDetail</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>PublishProperty</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.PublishPropertyServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>PublishProperty</servlet-name>
-		<url-pattern>/publishProperty</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UnpublishProperty</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.UnpublishPropertyServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>UnpublishProperty</servlet-name>
-		<url-pattern>/unpublishProperty</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>query</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.QueryServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>query</servlet-name>
-		<url-pattern>/query</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>index</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.IndexServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>index</servlet-name>
-		<url-pattern>/index</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>contact</servlet-name>
-		<servlet-class>ar.edu.itba.paw.grupo1.controller.ContactServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>contact</servlet-name>
-		<url-pattern>/contact</url-pattern>
-	</servlet-mapping>
 </web-app>

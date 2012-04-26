@@ -3,12 +3,14 @@ package ar.edu.itba.paw.grupo1.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+
 import ar.edu.itba.paw.grupo1.model.Property;
 
-@SuppressWarnings("serial")
-public class AbstractPropertyServlet extends BaseServlet {
+@Controller
+public class AbstractPropertyController extends BaseController {
 
-	public AbstractPropertyServlet() {
+	public AbstractPropertyController() {
 		super();
 	}
 

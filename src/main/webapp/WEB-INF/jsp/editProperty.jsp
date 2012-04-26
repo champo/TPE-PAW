@@ -10,7 +10,7 @@
 	</c:if>
 </h2>
 
-<form action="${basePath }/<c:if test="${empty edit}">addProperty</c:if><c:if test="${not empty edit}">editProperty</c:if>" method="post">
+<form action="${basePath }/<c:if test="${empty edit}">property/add</c:if><c:if test="${not empty edit}">property/edit</c:if>" method="post">
 	<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(id)}" />" />	
 	
 	<div>
@@ -168,7 +168,7 @@
 <c:if test="${not empty edit}">
 		Pictures of this property:
 		<br />
-		<a href="${basePath }/addPicture?propId=<c:out value="${fn:escapeXml(id)}" />"> Add new </a>
+		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(id)}" />"> Add new </a>
 		<br />
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>

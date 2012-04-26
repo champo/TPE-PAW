@@ -121,7 +121,7 @@
 					<li>Address: ${fn:escapeXml(result.address)}</li>
 					<li>Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
 					<li>Price: ${result.price}</li>
-					<li><a href="${basePath }/propertyDetail?id=${result.id}">See more</a></li>
+					<li><a href="${basePath }/property/showDetail?id=${result.id}">See more</a></li>
 				</ul>
 			</p>
 		</c:forEach>

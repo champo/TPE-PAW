@@ -3,12 +3,14 @@ package ar.edu.itba.paw.grupo1.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+
 import ar.edu.itba.paw.grupo1.model.Picture;
 
-@SuppressWarnings("serial")
-public class AbstractPictureServlet extends BaseServlet {
+@Controller
+public abstract class AbstractPictureController extends BaseController {
 
-	public AbstractPictureServlet() {
+	public AbstractPictureController() {
 		super();
 	}
 
