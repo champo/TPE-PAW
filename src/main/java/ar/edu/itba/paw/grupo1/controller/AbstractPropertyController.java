@@ -6,15 +6,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 
-@SuppressWarnings("serial")
-public class AbstractPropertyServlet extends BaseServlet {
+@Controller
+public class AbstractPropertyController extends BaseController {
 
-	public AbstractPropertyServlet() {
+	public AbstractPropertyController() {
 		super();
 	}
 

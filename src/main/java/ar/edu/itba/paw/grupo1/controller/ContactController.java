@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
@@ -17,11 +22,11 @@ import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
-@SuppressWarnings("serial")
-public class ContactServlet extends BaseServlet {
+@Controller
+public class ContactController extends BaseController {
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
 		int propertyId;
@@ -34,11 +39,11 @@ public class ContactServlet extends BaseServlet {
 			if (property == null) {
 				throw new InvalidParameterException();
 			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
-				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
-				return;
+				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
+				return new ModelAndView(view);
 			} else if (!property.isPublished()) {
-				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
-				return;
+				RedirectView view = new RedirectView("/query?unpublished=true",true);
+				return new ModelAndView(view);
 			}			
 		} else {
 			throw new InvalidParameterException();
@@ -46,11 +51,11 @@ public class ContactServlet extends BaseServlet {
 		req.setAttribute("propertyId", property.getId());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
-		render(req, resp, "contact.jsp", "Contact");
+		return render(req, resp, "contact.jsp", "Contact");
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	@RequestMapping(method = RequestMethod.POST)
+	protected ModelAndView doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
 		Property property;
@@ -70,18 +75,17 @@ public class ContactServlet extends BaseServlet {
 				req.setAttribute("propertyId", property.getId());
 				req.setAttribute("address", property.getAddress());
 				req.setAttribute("neighbourhood", property.getNeighbourhood());
-				render(req, resp, "contact.jsp", "Contact");
-				return;
+				return render(req, resp, "contact.jsp", "Contact");
 			}
 		
 			if (property == null) {
 				throw new InvalidParameterException();
 			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
-				resp.sendRedirect(req.getContextPath() + "/propertyDetail?id=" + property.getId());
-				return;
+				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
+				return new ModelAndView(view);
 			} else if (!property.isPublished()) {
-				resp.sendRedirect(req.getContextPath() + "/query?unpublished=true");
-				return;
+				RedirectView view = new RedirectView("/query?unpublished=true",true);
+				return new ModelAndView(view);
 			}
 		} else {
 			throw new InvalidParameterException();
@@ -96,8 +100,8 @@ public class ContactServlet extends BaseServlet {
 			ApplicationContainer.get(EmailService.class).sendContact(req.getParameter("email"), req.getParameter("name"), 
 					req.getParameter("comment"), owner, property);
 		} catch (MailingException e) {
-			Logger.getLogger(ContactServlet.class).warn("Failed to send contact email", e);
+			Logger.getLogger(ContactController.class).warn("Failed to send contact email", e);
 		}
-		render(req, resp, "contact.jsp", "Contact");
+		return render(req, resp, "contact.jsp", "Contact");
 	}
 }
