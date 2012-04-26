@@ -23,15 +23,7 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 
 	protected ModelAndView render(HttpServletRequest req, HttpServletResponse resp, String file, String title)
 			throws ServletException, IOException {
-		
-//		req.setAttribute("documentTitle", title);
-//		req.setAttribute("documentBodyFile", file);
-//		
-//		// This is a shortcut, since the standard way to get to this in .jsp files is horribly long.
-//		req.setAttribute("basePath", req.getContextPath());
-//		
-//		req.getRequestDispatcher("WEB-INF/jsp/layout.jsp").forward(req, resp);
-		
+				
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("documentTitle", title);
 		mav.addObject("documentBodyFile", file);
