@@ -8,8 +8,7 @@ public class Property {
 
 	public enum PropertyType { HOUSE, FLAT }
 	public enum OperationType { SELLING, LEASING }
-	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE }
-	
+	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE }	
 	private Integer id;
 	private PropertyType propertyType = PropertyType.HOUSE;
 	private OperationType operationType = OperationType.SELLING;

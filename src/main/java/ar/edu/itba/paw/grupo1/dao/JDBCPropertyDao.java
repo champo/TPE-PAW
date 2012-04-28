@@ -113,8 +113,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	private void setPlaceHolders(PreparedStatement stmt, Property property)
 			throws SQLException {
 
-		stmt.setInt(1, property.getPropertyType().ordinal());
-		stmt.setInt(2, property.getOperationType().ordinal());
+		stmt.setInt(1, property.getPropertyType());
+		stmt.setInt(2, property.getOperationType());
 		stmt.setString(3, property.getAddress());
 		stmt.setString(4, property.getNeighbourhood());
 		stmt.setDouble(5, property.getPrice());
@@ -168,7 +168,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 			services.add(Services.BARBECUE);
 		}
 
-		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address,
+		return new Property(id, PropertyType.values()[propertyType], 
+				OperationType.values()[operationType], address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
 				description, antiquity, services, published, userId);
 
