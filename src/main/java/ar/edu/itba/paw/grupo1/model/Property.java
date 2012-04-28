@@ -3,9 +3,12 @@ package ar.edu.itba.paw.grupo1.model;
 
 public class Property {
 
+	public enum PropertyType { HOUSE, FLAT }
+	public enum OperationType { SELLING, LEASING }
+	
 	private Integer id;
-	private int propertyType; //0 is house, 1 is flat
-	private int operationType; //0 is for selling, 1 is for leasing
+	private PropertyType propertyType;
+	private OperationType operationType;
 	private String address;
 	private String neighbourhood;
 	private double price;
@@ -27,7 +30,7 @@ public class Property {
 	
 	}
 	
-	public Property(Integer id, int propertyType, int operationType, String address,
+	public Property(Integer id, PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, boolean cable, boolean phone,
@@ -55,7 +58,7 @@ public class Property {
 		this.userId = userId;
 	}
 	
-	public Property(int propertyType, int operationType, String address,
+	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, boolean cable, boolean phone,
@@ -99,7 +102,7 @@ public class Property {
 		return neighbourhood;
 	}
 	
-	public int getOperationType() {
+	public OperationType getOperationType() {
 		return operationType;
 	}
 	
@@ -111,7 +114,7 @@ public class Property {
 		return price;
 	}
 	
-	public int getPropertyType() {
+	public PropertyType getPropertyType() {
 		return propertyType;
 	}
 	
