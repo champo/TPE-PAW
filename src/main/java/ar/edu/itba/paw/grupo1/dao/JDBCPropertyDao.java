@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.OperationType;
+import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 
@@ -106,8 +108,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	private void setPlaceHolders(PreparedStatement stmt, Property property)
 			throws SQLException {
 
-		stmt.setInt(1, property.getPropertyType());
-		stmt.setInt(2, property.getOperationType());
+		stmt.setInt(1, property.getPropertyType().ordinal());
+		stmt.setInt(2, property.getOperationType().ordinal());
 		stmt.setString(3, property.getAddress());
 		stmt.setString(4, property.getNeighbourhood());
 		stmt.setDouble(5, property.getPrice());
@@ -148,7 +150,7 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		boolean paddle = cursor.getBoolean("paddle");
 		boolean barbecue = cursor.getBoolean("barbecue");
 
-		return new Property(id, propertyType, operationType, address,
+		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
 				description, antiquity, cable, phone, pool, lounge, paddle,
 				barbecue, published, userId);

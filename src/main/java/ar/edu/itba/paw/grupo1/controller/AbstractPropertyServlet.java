@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.OperationType;
+import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 
 @SuppressWarnings("serial")
 public class AbstractPropertyServlet extends BaseServlet {
@@ -57,7 +59,7 @@ public class AbstractPropertyServlet extends BaseServlet {
 			id = Integer.parseInt(req.getParameter("id"));
 		}
 		
-		return new Property(id, propertyType, operationType, address, neighbourhood, price, rooms, 
+		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address, neighbourhood, price, rooms, 
 					indoorSpace, outdoorSpace, description, antiquity, cable, phone, pool, lounge, paddle, 
 					barbecue, published, userId);
 	}
@@ -66,8 +68,8 @@ public class AbstractPropertyServlet extends BaseServlet {
 	protected void setPropertyAttributes(HttpServletRequest req, Property property) {
 		
 		req.setAttribute("id", property.getId());
-		req.setAttribute("propertyType", property.getPropertyType());
-		req.setAttribute("operationType", property.getOperationType());
+		req.setAttribute("propertyType", property.getPropertyType().ordinal());
+		req.setAttribute("operationType", property.getOperationType().ordinal());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
 		req.setAttribute("price", property.getPrice());

@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
-import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @SuppressWarnings("serial")
-public class PropertyDetailServlet extends BaseServlet {
+public class PropertyDetailServlet extends AbstractPropertyServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -41,7 +41,7 @@ public class PropertyDetailServlet extends BaseServlet {
 				return;
 			}
 
-			req.setAttribute("property", property);
+			setPropertyAttributes(req, property);
 			if (pictures.size() > 0) {
 				req.setAttribute("pictures", pictures);
 			}
