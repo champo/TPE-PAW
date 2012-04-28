@@ -1,5 +1,8 @@
 package ar.edu.itba.paw.grupo1.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
 
 @Controller
 public class AbstractPropertyController extends BaseController {
@@ -46,12 +50,25 @@ public class AbstractPropertyController extends BaseController {
 		double outdoorSpace = Double.parseDouble(req.getParameter("outdoorSpace"));
 		String description = req.getParameter("description");
 		int antiquity = Integer.parseInt(req.getParameter("antiquity"));
-		boolean cable = req.getParameter("cable") != null;
-		boolean phone = req.getParameter("phone") != null;
-		boolean pool = req.getParameter("pool") != null;
-		boolean lounge = req.getParameter("lounge") != null;			
-		boolean paddle = req.getParameter("paddle") != null;
-		boolean barbecue = req.getParameter("barbecue") != null;
+		List<Services> services = new ArrayList<Services>();
+		if (req.getParameter("cable") != null) {
+			services.add(Services.CABLE);
+		}
+		if (req.getParameter("pool") != null) {
+			services.add(Services.POOL);
+		}
+		if (req.getParameter("phone") != null) {
+			services.add(Services.PHONE);
+		}
+		if (req.getParameter("lounge") != null) {
+			services.add(Services.LOUNGE);
+		}
+		if (req.getParameter("paddle") != null) {
+			services.add(Services.PADDLE);
+		}
+		if (req.getParameter("barbecue") != null) {
+			services.add(Services.BARBECUE);
+		}
 		boolean published = true; // default value
 		
 		int userId = getLoggedInUser(req).getId();
@@ -62,16 +79,15 @@ public class AbstractPropertyController extends BaseController {
 		}
 		
 		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address, neighbourhood, price, rooms, 
-					indoorSpace, outdoorSpace, description, antiquity, cable, phone, pool, lounge, paddle, 
-					barbecue, published, userId);
+					indoorSpace, outdoorSpace, description, antiquity, services, published, userId);
 	}
 	
 	
 	protected void setPropertyAttributes(HttpServletRequest req, Property property) {
 		
 		req.setAttribute("id", property.getId());
-		req.setAttribute("propertyType", property.getPropertyType().ordinal());
-		req.setAttribute("operationType", property.getOperationType().ordinal());
+		req.setAttribute("propertyType", property.getPropertyType());
+		req.setAttribute("operationType", property.getOperationType());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
 		req.setAttribute("price", property.getPrice());

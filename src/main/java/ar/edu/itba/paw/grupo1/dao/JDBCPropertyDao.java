@@ -15,6 +15,7 @@ import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
 
 @Repository
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
@@ -147,17 +148,29 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		int antiquity = cursor.getInt("antiquity");
 		boolean published = cursor.getBoolean("published");
 		int userId = cursor.getInt("userId");
-		boolean cable = cursor.getBoolean("cable");
-		boolean phone = cursor.getBoolean("phone");
-		boolean pool = cursor.getBoolean("pool");
-		boolean lounge = cursor.getBoolean("lounge");
-		boolean paddle = cursor.getBoolean("paddle");
-		boolean barbecue = cursor.getBoolean("barbecue");
+		List<Services> services = new ArrayList<Services>();
+		if (cursor.getBoolean("cable") == true) {
+			services.add(Services.CABLE);
+		}
+		if (cursor.getBoolean("pool") == true) {
+			services.add(Services.POOL);
+		}
+		if (cursor.getBoolean("phone") == true) {
+			services.add(Services.PHONE);
+		}
+		if (cursor.getBoolean("lounge") == true) {
+			services.add(Services.LOUNGE);
+		}
+		if (cursor.getBoolean("paddle") == true) {
+			services.add(Services.PADDLE);
+		}
+		if (cursor.getBoolean("barbecue") == true) {
+			services.add(Services.BARBECUE);
+		}
 
 		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
-				description, antiquity, cable, phone, pool, lounge, paddle,
-				barbecue, published, userId);
+				description, antiquity, services, published, userId);
 
 	}
 
