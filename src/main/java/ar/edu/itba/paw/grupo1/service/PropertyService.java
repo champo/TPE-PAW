@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 public interface PropertyService {
 
@@ -15,7 +16,6 @@ public interface PropertyService {
 
 	public boolean checkOwner(int propId, User user);
 
-	public List<Property> query(String operation, String property,
-			double rangeFrom, double rangeTo);
+	public List<Property> query(PropertyQuery query);
 
 }

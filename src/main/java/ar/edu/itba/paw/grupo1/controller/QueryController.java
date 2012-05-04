@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller
@@ -88,7 +89,7 @@ public class QueryController extends BaseController {
 			parsedRangeTo = Double.MAX_VALUE;
 		}
 
-		List<Property> query = propertyService.query(operation, property, parsedRangeFrom, parsedRangeTo);
+		List<Property> query = propertyService.query(new PropertyQuery(operation, property, parsedRangeFrom, parsedRangeTo));
 
 		req.setAttribute("queryResults", query);
 		return render(req, resp, "query.jsp", "Query");
