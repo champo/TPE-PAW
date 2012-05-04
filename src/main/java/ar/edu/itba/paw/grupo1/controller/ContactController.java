@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -24,7 +24,18 @@ import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
 @Controller
 public class ContactController extends BaseController {
+	
+	private UserService userService;
+	private PropertyService propertyService;
+	private EmailService emailService;
 
+	@Autowired
+	public ContactController(PropertyService propertyService, UserService userService, EmailService emailService) {
+		this.propertyService = propertyService;
+		this.userService = userService;
+		this.emailService = emailService;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	protected ModelAndView doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -34,7 +45,7 @@ public class ContactController extends BaseController {
 		if (checkIntegerParameter(req, "propertyId")) {
 
 			propertyId = Integer.parseInt(req.getParameter("propertyId"));			
-			property = ApplicationContainer.get(PropertyService.class).getById(propertyId);
+			property = propertyService.getById(propertyId);
 			
 			if (property == null) {
 				throw new InvalidParameterException();
@@ -60,7 +71,7 @@ public class ContactController extends BaseController {
 
 		Property property;
 		if (checkIntegerParameter(req, "propertyId")) {
-			property = ApplicationContainer.get(PropertyService.class).getById(Integer.parseInt(req.getParameter("propertyId")));
+			property = propertyService.getById(Integer.parseInt(req.getParameter("propertyId")));
 
 			boolean error = false;
 			
@@ -90,14 +101,14 @@ public class ContactController extends BaseController {
 		} else {
 			throw new InvalidParameterException();
 		}
-		User owner = ApplicationContainer.get(UserService.class).get(property.getUserId());
+		User owner = userService.get(property.getUserId());
 		req.setAttribute("propertyId", property.getId());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
 		req.setAttribute("publisher", owner);
 		
 		try {
-			ApplicationContainer.get(EmailService.class).sendContact(req.getParameter("email"), req.getParameter("name"), 
+			emailService.sendContact(req.getParameter("email"), req.getParameter("name"), 
 					req.getParameter("comment"), owner, property);
 		} catch (MailingException e) {
 			Logger.getLogger(ContactController.class).warn("Failed to send contact email", e);

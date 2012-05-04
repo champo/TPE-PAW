@@ -12,7 +12,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
@@ -21,10 +20,15 @@ public class SessionFilter implements Filter {
 
 	private UserService userService;
 
+	public SessionFilter(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+	
 	@Override
 	public void destroy() {
 	}
-
+	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain next) throws IOException, ServletException {
 		
@@ -63,8 +67,8 @@ public class SessionFilter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		userService = ApplicationContainer.get(UserService.class);
-	}
-	
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+		
+	}	
 }

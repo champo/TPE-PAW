@@ -8,12 +8,20 @@
 	</welcome-file-list>
 
 	<filter>
-		<filter-name>sessionFilter</filter-name>
-		<filter-class>ar.edu.itba.paw.grupo1.filter.SessionFilter</filter-class>
+		<filter-name>springSessionFilterWrapper</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>sessionFilter</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextAttribute</param-name>
+			<param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring</param-value>
+		</init-param>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>sessionFilter</filter-name>
+		<filter-name>springSessionFilterWrapper</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
@@ -22,7 +30,7 @@
 		<filter-class>ar.edu.itba.paw.grupo1.filter.PermissionFilter</filter-class>
 		<init-param>
 			<param-name>restricted-actions</param-name>
-			<param-value>/logout,/listProperties,/editProperty,/addProperty,/addPicture,/editPicture,/publishProperty,/unpublishProperty</param-value>
+			<param-value>/user/logout,/property/list,/property/edit,/property/add,/picture/add,/picture/edit,/property/publish,/property/unpublish</param-value>
 		</init-param>
 	</filter>
 
@@ -30,6 +38,16 @@
 		<filter-name>permissionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
 
 	<servlet>
 		<servlet-name>spring</servlet-name>
@@ -40,6 +58,5 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-
+	
 </web-app>

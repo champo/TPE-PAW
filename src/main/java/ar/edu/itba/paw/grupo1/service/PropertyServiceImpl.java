@@ -2,15 +2,20 @@ package ar.edu.itba.paw.grupo1.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 
+@Service
 public class PropertyServiceImpl implements PropertyService {
 
 	private PropertyDao propertyDao;
 
+	@Autowired
 	public PropertyServiceImpl(PropertyDao propertyDao) {
 		this.propertyDao = propertyDao;
 	}

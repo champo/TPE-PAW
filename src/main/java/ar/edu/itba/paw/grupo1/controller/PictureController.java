@@ -14,13 +14,13 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -30,13 +30,22 @@ import ar.edu.itba.paw.grupo1.service.PropertyService;
 @Controller
 public class PictureController extends AbstractPictureController {
 
+	PropertyService propertyService;
+	PictureService pictureService;
+	
+	@Autowired
+	public PictureController(PropertyService propertyService, PictureService pictureService) {
+		this.propertyService = propertyService;
+		this.pictureService = pictureService;
+			
+	}
+	
+	
 	@RequestMapping(value="add", method = RequestMethod.GET)
 	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		User user = getLoggedInUser(req);
-		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-		
+		User user = getLoggedInUser(req);		
 		int propId = -1;
 		
 		try {
@@ -59,9 +68,6 @@ public class PictureController extends AbstractPictureController {
 	@RequestMapping(value="add", method = RequestMethod.POST)
 	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
 		
 		// Create a factory for disk-based file items
 		FileItemFactory factory = new DiskFileItemFactory();
@@ -149,9 +155,6 @@ public class PictureController extends AbstractPictureController {
 		Picture picture = null;
 		if (req.getParameter("id") != null) {
 			User user = getLoggedInUser(req);
-			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-			PictureService pictureService = ApplicationContainer.get(PictureService.class);
-			
 			try {
 				picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
 			} catch (NumberFormatException e) {
@@ -173,11 +176,7 @@ public class PictureController extends AbstractPictureController {
 
 	@RequestMapping(value="edit", method = RequestMethod.POST)
 	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		PictureService pictureService = ApplicationContainer.get(PictureService.class);
-		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
-		
+			throws ServletException, IOException {		
 		Picture picture = null;
 		
 		try {

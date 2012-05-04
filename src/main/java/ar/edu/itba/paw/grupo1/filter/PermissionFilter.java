@@ -1,16 +1,9 @@
 package ar.edu.itba.paw.grupo1.filter;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URI;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,8 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
 
 public class PermissionFilter implements javax.servlet.Filter {
 
@@ -66,7 +57,7 @@ public class PermissionFilter implements javax.servlet.Filter {
 					from += "?" + req.getQueryString();
 				}
 				
-				resp.sendRedirect(req.getContextPath() + "/login?from=" + URLEncoder.encode(from, "UTF-8"));
+				resp.sendRedirect(req.getContextPath() + "/user/login?from=" + URLEncoder.encode(from, "UTF-8"));
 				return;
 			}
 			

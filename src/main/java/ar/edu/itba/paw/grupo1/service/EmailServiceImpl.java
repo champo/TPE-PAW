@@ -16,16 +16,33 @@ import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
 public class EmailServiceImpl implements EmailService {
 	
-	private Properties props;
-
-	public EmailServiceImpl(Properties props) {
-		this.props = props;
+	private String username;
+	private String password;
+	private String host;
+	private String port;
+	private String auth;
+	private String starttls;
+	
+	
+	public EmailServiceImpl(String username, String password, String host, String port, String auth, String starttls) {
+		this.username = username;
+		this.password = password;
+		this.host = host;
+		this.port = port;
+		this.auth = auth;
+		this.starttls = starttls;
 	}
 	
+
     public void sendEmail(String email, String body, String subject) throws MailingException {
 
-		final String username = props.getProperty("mail.username");
-		final String password = props.getProperty("mail.password");
+    	Properties props = new Properties();
+    	props.setProperty("mail.username", username);
+    	props.setProperty("mail.password", password);
+    	props.setProperty("mail.smtp.port", port);
+		props.setProperty("mail.smtp.auth", auth);
+		props.setProperty("mail.smtp.host", host);
+		props.setProperty("mail.smtp.starttls.enable", starttls);
 		
 		Session session = Session.getInstance(props, 
 				new javax.mail.Authenticator() {

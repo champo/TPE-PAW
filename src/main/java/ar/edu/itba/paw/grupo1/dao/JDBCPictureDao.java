@@ -1,6 +1,5 @@
 package ar.edu.itba.paw.grupo1.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,17 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 
-
+@Repository
 public class JDBCPictureDao extends AbstractDao implements PictureDao {
 
 	private static Logger logger = Logger.getLogger(JDBCPictureDao.class);
 	
-	public JDBCPictureDao(Connection conn) {
-		super(conn);
+	@Autowired
+	public JDBCPictureDao(DriverManagerDataSource dataSource) throws SQLException {
+		super(dataSource);
 	}
 
 	public List<Picture> getPictures(int propertyId) {
