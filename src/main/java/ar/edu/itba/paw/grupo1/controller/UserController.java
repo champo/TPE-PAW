@@ -6,13 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
@@ -20,6 +20,14 @@ import ar.edu.itba.paw.grupo1.service.UserService;
 @Controller
 public class UserController extends BaseController {
 
+	UserService userService;
+	
+	@Autowired
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
+	
+	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	protected ModelAndView registerGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -56,7 +64,7 @@ public class UserController extends BaseController {
 		}
 		
 		try {
-			User user = ApplicationContainer.get(UserService.class).register(
+			User user = userService.register(
 				req.getParameter("name"),
 				req.getParameter("surname"),
 				req.getParameter("email"),
@@ -108,7 +116,6 @@ public class UserController extends BaseController {
 		String password = req.getParameter("password");
 		
 		if (username != null && password != null) {
-			UserService userService = ApplicationContainer.get(UserService.class);
 			User user = userService.login(username, password);
 			
 			if (user != null) {
