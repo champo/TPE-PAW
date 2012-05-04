@@ -14,7 +14,11 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.ApplicationContainer;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
@@ -23,11 +27,11 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
-@SuppressWarnings("serial")
-public class AddPictureServlet extends AbstractPictureServlet {
+@Controller
+public class PictureController extends AbstractPictureController {
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	@RequestMapping(value="add", method = RequestMethod.GET)
+	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		User user = getLoggedInUser(req);
@@ -49,13 +53,11 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			req.setAttribute("noPermissions", 1);
 		}
 		
-		render(req, resp, "editPicture.jsp", "Add Picture");
-		
-		
+		return render(req, resp, "editPicture.jsp", "Add Picture");	
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	@RequestMapping(value="add", method = RequestMethod.POST)
+	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		PictureService pictureService = ApplicationContainer.get(PictureService.class);
@@ -73,8 +75,7 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			items = upload.parseRequest(req);
 		} catch (FileUploadException e) {
 			req.setAttribute("fatal", 1);
-			render(req, resp, "editPicture.jsp", "Add Picture");
-			return;
+			return render(req, resp, "editPicture.jsp", "Add Picture");
 		}
 		
 		Picture picture = new Picture();		
@@ -118,14 +119,12 @@ public class AddPictureServlet extends AbstractPictureServlet {
 		
 		if (error) {
 			req.setAttribute("picture", picture);
-			render(req, resp, "editPicture.jsp", "Add Picture");
-			return;
+			return render(req, resp, "editPicture.jsp", "Add Picture");
 		}
 		
 		if (!propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
 			req.setAttribute("noPermissions", 1);
-			render(req, resp, "editPicture.jsp", "Edit Picture");
-			return;
+			return render(req, resp, "editPicture.jsp", "Edit Picture");
 		}
 		
 		picture.setExtension(extension);
@@ -138,11 +137,85 @@ public class AddPictureServlet extends AbstractPictureServlet {
 			req.setAttribute("picture", picture);
 			req.setAttribute("writeError", 1);
 			render(req, resp, "editPicture.jsp", "Add Picture");
-			return;
 		}
-		
-		resp.sendRedirect(req.getContextPath() + "/editProperty?id=" + picture.getPropId());
+		RedirectView view = new RedirectView("/property/edit?id=" + picture.getPropId(),true);
+		return new ModelAndView(view);
 
 	}
+	
+	@RequestMapping(value="edit", method = RequestMethod.GET)
+	protected ModelAndView editGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		Picture picture = null;
+		if (req.getParameter("id") != null) {
+			User user = getLoggedInUser(req);
+			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+			PictureService pictureService = ApplicationContainer.get(PictureService.class);
+			
+			try {
+				picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
+			} catch (NumberFormatException e) {
+				throw new InvalidParameterException();
+			}
+			
+			
+			if (picture!= null && propertyService.checkOwner(picture.getPropId(), user) ) {
+				req.setAttribute("edit", 1);
+				req.setAttribute("picture", picture);
+			} else {
+				req.setAttribute("noPermissions", 1);
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
+		return render(req, resp, "editPicture.jsp", "Edit Picture");
+	}
 
+	@RequestMapping(value="edit", method = RequestMethod.POST)
+	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		PictureService pictureService = ApplicationContainer.get(PictureService.class);
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+		
+		Picture picture = null;
+		
+		try {
+			picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
+		} catch (NumberFormatException e) {
+			throw new InvalidParameterException();
+		}
+				
+		if (picture == null || !propertyService.checkOwner(picture.getPropId(), getLoggedInUser(req))) {
+			req.setAttribute("noPermissions", 1);
+			return render(req, resp, "editPicture.jsp", "Edit Picture");
+		}
+		
+		if (req.getParameter("submit") != null) {
+			picture.setName(req.getParameter("name"));
+			if (picture.getName().equals("") || picture.getName().length() > 50) {
+				req.setAttribute("edit", 1);
+				req.setAttribute("picture", picture);
+				req.setAttribute("nameError", 1);
+				return render(req, resp, "editPicture.jsp", "Edit Picture");
+			} 
+			pictureService.save(picture);
+		}
+		
+		
+		if (req.getParameter("delete") != null) {
+			pictureService.delete(Integer.parseInt(req.getParameter("id")));
+			File file = new File(getServletContext().getRealPath("/images/") + "/" + picture.getId() + picture.getExtension());
+			if(!file.delete()) {
+				req.setAttribute("edit", 1);
+				req.setAttribute("picture", picture);
+				req.setAttribute("deleteError", 1);
+				return render(req, resp, "editPicture.jsp", "Edit Picture");
+			}
+		}
+		RedirectView view = new RedirectView("/property/edit?id=" + picture.getPropId(),true);
+		return new ModelAndView(view);
+
+	}
+	
 }

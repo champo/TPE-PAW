@@ -1,0 +1,196 @@
+package ar.edu.itba.paw.grupo1.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import ar.edu.itba.paw.grupo1.ApplicationContainer;
+import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
+import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
+import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.service.PictureService;
+import ar.edu.itba.paw.grupo1.service.PropertyService;
+
+@Controller
+public class PropertyController extends AbstractPropertyController {
+
+	@RequestMapping(value="add", method = RequestMethod.GET)
+	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		setPropertyAttributes(req, new Property());
+		return render(req, resp, "editProperty.jsp", "Add Property");
+	}
+
+	@RequestMapping(value="add", method = RequestMethod.POST)
+	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+		Property property = buildProperty(req, resp);
+		
+		if (property == null) {
+			setPropertyAttributes(req);
+			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
+			return render(req, resp, "editProperty.jsp", "Edit Property");
+		}
+		property.publish();
+		propertyService.save(property, getLoggedInUser(req));
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+	
+	@RequestMapping(value="edit", method = RequestMethod.GET)
+	protected ModelAndView editGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		Property property = null;
+		List<Picture> pictures = null;
+		if (checkIntegerParameter(req, "id")) {
+			PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+			PictureService pictureService = ApplicationContainer.get(PictureService.class);
+			
+			property = propertyService.getById(Integer.parseInt(req.getParameter("id")));
+			pictures = pictureService.getByPropId(Integer.parseInt(req.getParameter("id")));
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+				throw new PermissionDeniedException();
+			}
+			
+			req.setAttribute("edit", 1);
+			setPropertyAttributes(req, property);
+			req.setAttribute("pictures", pictures);
+		} else {			
+			throw new InvalidParameterException();
+		}
+		return render(req, resp, "editProperty.jsp", "Edit Property");
+	}
+
+	@RequestMapping(value="edit", method = RequestMethod.POST)
+	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		PropertyService propertyService = ApplicationContainer.get(PropertyService.class);
+		Property property = buildProperty(req, resp);
+		
+		if (property == null) {
+			setPropertyAttributes(req);
+			req.setAttribute("edit", 1);
+			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
+			return render(req, resp, "editProperty.jsp", "Edit Property");
+		}
+		
+		//Because that's the way hibernate rolls!
+		Property dbProperty = propertyService.getById(property.getId());
+		if (dbProperty.isPublished()) {				
+			property.publish();
+		} else {
+			property.unpublish();
+		}	
+		propertyService.save(property, getLoggedInUser(req));
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+
+	
+	
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView showDetail(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		if (checkIntegerParameter(req, "id")) {
+			PropertyService propertyService = ApplicationContainer
+					.get(PropertyService.class);
+			PictureService pictureService = ApplicationContainer
+					.get(PictureService.class);
+
+			int id = Integer.parseInt(req.getParameter("id"));
+			Property property = propertyService.getById(id);
+			List<Picture> pictures = pictureService.getByPropId(id);
+
+			if (property == null) {
+				RedirectView view = new RedirectView("/query",true);
+				return new ModelAndView(view);
+			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUserId() != getLoggedInUser(req).getId())) {
+				RedirectView view = new RedirectView("/query?unpublished=true",true);
+				return new ModelAndView(view);
+			}
+
+			req.setAttribute("property", property);
+			if (pictures.size() > 0) {
+				req.setAttribute("pictures", pictures);
+			}
+		} else {
+			throw new InvalidParameterException();
+		}
+		return render(req, resp, "propertyDetail.jsp", "Property Detail");
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView list(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		PropertyService propService = ApplicationContainer.get(PropertyService.class);
+		User user = getLoggedInUser(req);
+		
+		req.setAttribute("properties", propService.getProperties(user.getId()));
+		return render(req, resp, "listProperties.jsp", "List Properties");
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView publish(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		if (checkIntegerParameter(req, "id")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			PropertyService propService = ApplicationContainer.get(PropertyService.class);
+			Property property = propService.getById(id);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+				throw new PermissionDeniedException();
+			}
+			
+			property.publish();
+			propService.save(property, getLoggedInUser(req));			
+		}
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	protected ModelAndView unpublish(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		if (checkIntegerParameter(req, "id")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			PropertyService propService = ApplicationContainer.get(PropertyService.class);
+			Property property = propService.getById(id);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+				throw new PermissionDeniedException();
+			}
+			
+			property.unpublish();
+			propService.save(property, getLoggedInUser(req));			
+		}
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+}
