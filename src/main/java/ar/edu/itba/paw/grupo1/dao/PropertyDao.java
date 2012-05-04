@@ -3,6 +3,7 @@ package ar.edu.itba.paw.grupo1.dao;
 import java.util.List;
 
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 public interface PropertyDao {
 
@@ -16,6 +17,5 @@ public interface PropertyDao {
 
 	public int getUser(int id);
 
-	public List<Property> query(String operation, String property,
-			double rangeFrom, double rangeTo);
+	public List<Property> query(PropertyQuery query);
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 @Repository
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
@@ -211,30 +212,29 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		return userId;
 	}
 
-	public List<Property> query(String operation, String property,
-			double rangeFrom, double rangeTo) {
+	public List<Property> query(PropertyQuery query) {
 
-		String query = "SELECT * FROM properties WHERE published = true AND ";
+		String queryString = "SELECT * FROM properties WHERE published = true AND ";
 
-		if (operation.equals("selling")) {
-			query += "operationType = 0 AND ";
-		} else if (operation.equals("leasing")) {
-			query += "operationType = 1 AND ";
+		if (query.getOperation().equals("selling")) {
+			queryString += "operationType = 0 AND ";
+		} else if (query.getOperation().equals("leasing")) {
+			queryString += "operationType = 1 AND ";
 		}
 
-		if (property.equals("house")) {
-			query += "propertyType = 0 AND ";
-		} else if (property.equals("flat")) {
-			query += "propertyType = 1 AND ";
+		if (query.getProperty().equals("house")) {
+			queryString += "propertyType = 0 AND ";
+		} else if (query.getProperty().equals("flat")) {
+			queryString += "propertyType = 1 AND ";
 		}
 
-		query += "price >= " + rangeFrom + " AND price <= " + rangeTo;
+		queryString += "price >= " + query.getRangeFrom() + " AND price <= " + query.getRangeTo();
 
 		List<Property> properties = new ArrayList<Property>();
 		PreparedStatement statement;
 
 		try {
-			statement = conn.prepareStatement(query);
+			statement = conn.prepareStatement(queryString);
 
 			if (statement.execute()) {
 				ResultSet myCursor = statement.getResultSet();
