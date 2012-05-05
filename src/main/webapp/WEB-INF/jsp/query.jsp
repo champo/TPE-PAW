@@ -101,7 +101,7 @@
 				<ul style="list-style:none;">
 					<li>
 						<c:choose>
-							<c:when test="${result.operationType==0}">
+							<c:when test="${result.operationType=='SELLING'}">
 								Selling	
 							</c:when>
 							<c:otherwise>
@@ -109,7 +109,7 @@
 							</c:otherwise>
 						</c:choose>
 						<c:choose>
-							<c:when test="${result.propertyType==0}">
+							<c:when test="${result.propertyType=='HOUSE'}">
 								house.
 							</c:when>
 							<c:otherwise>

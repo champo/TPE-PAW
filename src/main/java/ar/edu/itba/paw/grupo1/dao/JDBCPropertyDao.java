@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,8 +115,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	private void setPlaceHolders(PreparedStatement stmt, Property property)
 			throws SQLException {
 
-		stmt.setInt(1, property.getPropertyType());
-		stmt.setInt(2, property.getOperationType());
+		stmt.setInt(1, property.getPropertyType().ordinal());
+		stmt.setInt(2, property.getOperationType().ordinal());
 		stmt.setString(3, property.getAddress());
 		stmt.setString(4, property.getNeighbourhood());
 		stmt.setDouble(5, property.getPrice());
@@ -148,24 +150,24 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		int antiquity = cursor.getInt("antiquity");
 		boolean published = cursor.getBoolean("published");
 		int userId = cursor.getInt("userId");
-		List<Services> services = new ArrayList<Services>();
+		Set<Services> services = new HashSet<Services>();
 		if (cursor.getBoolean("cable") == true) {
-			services.add(Services.CABLE);
+			services.add(Services.Cable);
 		}
 		if (cursor.getBoolean("pool") == true) {
-			services.add(Services.POOL);
+			services.add(Services.Pool);
 		}
 		if (cursor.getBoolean("phone") == true) {
-			services.add(Services.PHONE);
+			services.add(Services.Phone);
 		}
 		if (cursor.getBoolean("lounge") == true) {
-			services.add(Services.LOUNGE);
+			services.add(Services.Lounge);
 		}
 		if (cursor.getBoolean("paddle") == true) {
-			services.add(Services.PADDLE);
+			services.add(Services.Paddle);
 		}
 		if (cursor.getBoolean("barbecue") == true) {
-			services.add(Services.BARBECUE);
+			services.add(Services.Barbecue);
 		}
 
 		return new Property(id, PropertyType.values()[propertyType], 

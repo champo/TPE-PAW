@@ -1,7 +1,11 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,8 @@ import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Service;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
@@ -40,6 +46,21 @@ public class PropertyController extends AbstractPropertyController {
 			throws ServletException, IOException {
 
 		setPropertyAttributes(req, new Property());
+		
+		Comparator<Service> comparator = new Comparator<Service>() {
+			public int compare(Service a, Service b) {
+				return a.getName().ordinal() < b.getName().ordinal() ? 1 : a.getName().ordinal() == b.getName().ordinal() ? 0 : -1;
+			}
+		};
+		
+		SortedSet<Service> services = new TreeSet<Service>(comparator);
+		
+		for (Services service : Services.values()) {
+			services.add(new Service(service, false));
+		}
+		
+		req.setAttribute("services", services);
+		
 		return render(req, resp, "editProperty.jsp", "Add Property");
 	}
 
@@ -80,6 +101,21 @@ public class PropertyController extends AbstractPropertyController {
 			req.setAttribute("edit", 1);
 			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
+			
+			Set<Services> propertyServices = property.getServices();
+			Comparator<Service> comparator = new Comparator<Service>() {
+				public int compare(Service a, Service b) {
+					return a.getName().ordinal() < b.getName().ordinal() ? 1 : a.getName().ordinal() == b.getName().ordinal() ? 0 : -1;
+				}
+			};
+			
+			SortedSet<Service> services = new TreeSet<Service>(comparator);
+			
+			for (Services service : Services.values()) {
+				services.add(new Service(service, propertyServices.contains(service)));
+			}
+			
+			req.setAttribute("services", services);
 		} else {			
 			throw new InvalidParameterException();
 		}

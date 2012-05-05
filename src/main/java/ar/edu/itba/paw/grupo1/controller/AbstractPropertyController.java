@@ -1,7 +1,7 @@
 package ar.edu.itba.paw.grupo1.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,25 +50,12 @@ public class AbstractPropertyController extends BaseController {
 		double outdoorSpace = Double.parseDouble(req.getParameter("outdoorSpace"));
 		String description = req.getParameter("description");
 		int antiquity = Integer.parseInt(req.getParameter("antiquity"));
-		List<Services> services = new ArrayList<Services>();
-		if (req.getParameter("cable") != null) {
-			services.add(Services.CABLE);
-		}
-		if (req.getParameter("pool") != null) {
-			services.add(Services.POOL);
-		}
-		if (req.getParameter("phone") != null) {
-			services.add(Services.PHONE);
-		}
-		if (req.getParameter("lounge") != null) {
-			services.add(Services.LOUNGE);
-		}
-		if (req.getParameter("paddle") != null) {
-			services.add(Services.PADDLE);
-		}
-		if (req.getParameter("barbecue") != null) {
-			services.add(Services.BARBECUE);
-		}
+		Set<Services> services = new HashSet<Services>();
+		for (Services service : Services.values()) {
+			if (req.getParameter(service.toString()) != null) {
+				services.add(service);
+			}
+		} 
 		boolean published = true; // default value
 		
 		int userId = getLoggedInUser(req).getId();
