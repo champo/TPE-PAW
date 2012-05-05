@@ -8,7 +8,12 @@ public class Property {
 
 	public enum PropertyType { HOUSE, FLAT }
 	public enum OperationType { SELLING, LEASING }
-	public enum Services {Cable, Phone, Pool, Lounge, Paddle, Barbecue }	
+	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE;
+		public String toString() {
+			String s = super.toString();
+			return s.substring(0,1) + s.substring(1).toLowerCase();
+		}
+	}	
 	private Integer id;
 	private PropertyType propertyType = PropertyType.HOUSE;
 	private OperationType operationType = OperationType.SELLING;
@@ -106,48 +111,6 @@ public class Property {
 	
 	public int getRooms() {
 		return rooms;
-	}
-	
-	public boolean isBarbecue() {
-		if (services.contains(Services.Barbecue)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isCable() {
-		if (services.contains(Services.Cable)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isLounge() {
-		if (services.contains(Services.Lounge)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isPaddle() {
-		if (services.contains(Services.Paddle)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isPhone() {
-		if (services.contains(Services.Phone)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isPool() {
-		if (services.contains(Services.Pool)) {
-			return true;
-		}
-		return false;
 	}
 	
 	public boolean isPublished() {

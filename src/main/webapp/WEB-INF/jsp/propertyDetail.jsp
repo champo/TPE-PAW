@@ -13,50 +13,52 @@
 </div>
 
 <div>
-	Address: <c:out value="${fn:escapeXml(address)}"></c:out>
+	Address: <c:out value="${fn:escapeXml(property.address)}"></c:out>
 </div>
 
 <div>
-	Neighbourhood: <c:out value="${fn:escapeXml(neighbourhood)}"></c:out>
+	Neighbourhood: <c:out value="${fn:escapeXml(property.neighbourhood)}"></c:out>
 </div>
 
 <div>
-	Price: <c:out value="${fn:escapeXml(price)}"></c:out>
+	Price: <c:out value="${fn:escapeXml(property.price)}"></c:out>
 </div>
 
 <div>
-	Rooms: <c:out value="${fn:escapeXml(rooms)}"></c:out>
+	Rooms: <c:out value="${fn:escapeXml(property.rooms)}"></c:out>
 </div>
 
 <div>
-	Indoor space: <c:out value="${fn:escapeXml(indoorSpace)}"></c:out>
+	Indoor space: <c:out value="${fn:escapeXml(property.indoorSpace)}"></c:out>
 </div>
 
 <div>
-	Outdoor space: <c:out value="${fn:escapeXml(outdoorSpace)}"></c:out>
+	Outdoor space: <c:out value="${fn:escapeXml(property.outdoorSpace)}"></c:out>
 </div>
 
 <div>
-	Description: <c:out value="${fn:escapeXml(description)}"></c:out>
+	Description: <c:out value="${fn:escapeXml(property.description)}"></c:out>
 </div>
 
 <div>
-	Antiquity: <c:out value="${fn:escapeXml(antiquity)}"></c:out>
+	Antiquity: <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
 </div>
 
 <div>
 	<h4>Services</h4>
 </div>
 
-<c:forEach var="service" items="${property.services}">
-	<div>
-		<c:out value="${fn:escapeXml(service)}"></c:out>
-	</div>
+<c:forEach var="service" items="${services}">
+	<c:if test="${service.present == true}">
+		<div>
+			<c:out value="${fn:escapeXml(service.name)}"></c:out>
+		</div>
+	</c:if>
 </c:forEach>
 <br />
 
 <div>
-	<a href="${basePath }/contact?propertyId=${id}">Get contact information</a>
+	<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
 </div>
 
 <c:if test="${not empty pictures}">
@@ -77,5 +79,5 @@
 
 <br/ >
 <p> View in map:</p>
-<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(address)}&zoom=14&size=300x300&maptype=roadmap
+<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(property.address)}&zoom=14&size=300x300&maptype=roadmap
 &markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />

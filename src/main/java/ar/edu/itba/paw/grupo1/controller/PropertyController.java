@@ -47,19 +47,7 @@ public class PropertyController extends AbstractPropertyController {
 
 		setPropertyAttributes(req, new Property());
 		
-		Comparator<Service> comparator = new Comparator<Service>() {
-			public int compare(Service a, Service b) {
-				return a.getName().ordinal() < b.getName().ordinal() ? 1 : a.getName().ordinal() == b.getName().ordinal() ? 0 : -1;
-			}
-		};
-		
-		SortedSet<Service> services = new TreeSet<Service>(comparator);
-		
-		for (Services service : Services.values()) {
-			services.add(new Service(service, false));
-		}
-		
-		req.setAttribute("services", services);
+		req.setAttribute("services", getServices(new Property(), null));
 		
 		return render(req, resp, "editProperty.jsp", "Add Property");
 	}
@@ -72,6 +60,7 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (property == null) {
 			setPropertyAttributes(req);
+			req.setAttribute("services", getServices(new Property(), req));
 			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
 			return render(req, resp, "editProperty.jsp", "Edit Property");
 		}
@@ -101,21 +90,8 @@ public class PropertyController extends AbstractPropertyController {
 			req.setAttribute("edit", 1);
 			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
-			
-			Set<Services> propertyServices = property.getServices();
-			Comparator<Service> comparator = new Comparator<Service>() {
-				public int compare(Service a, Service b) {
-					return a.getName().ordinal() < b.getName().ordinal() ? 1 : a.getName().ordinal() == b.getName().ordinal() ? 0 : -1;
-				}
-			};
-			
-			SortedSet<Service> services = new TreeSet<Service>(comparator);
-			
-			for (Services service : Services.values()) {
-				services.add(new Service(service, propertyServices.contains(service)));
-			}
-			
-			req.setAttribute("services", services);
+				
+			req.setAttribute("services", getServices(property, null));
 		} else {			
 			throw new InvalidParameterException();
 		}
@@ -131,6 +107,7 @@ public class PropertyController extends AbstractPropertyController {
 		if (property == null) {
 			setPropertyAttributes(req);
 			req.setAttribute("edit", 1);
+			req.setAttribute("services", getServices(new Property(), req));
 			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
 			return render(req, resp, "editProperty.jsp", "Edit Property");
 		}
@@ -168,12 +145,14 @@ public class PropertyController extends AbstractPropertyController {
 			}
 
 			req.setAttribute("property", property);
+			req.setAttribute("services", getServices(property, null));
 			if (pictures.size() > 0) {
 				req.setAttribute("pictures", pictures);
 			}
 		} else {
 			throw new InvalidParameterException();
 		}
+		
 		return render(req, resp, "propertyDetail.jsp", "Property Detail");
 	}
 	
@@ -224,5 +203,27 @@ public class PropertyController extends AbstractPropertyController {
 		}
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
+	}
+	
+	private SortedSet<Service> getServices(Property property, HttpServletRequest postReq) {
+		Comparator<Service> comparator = new Comparator<Service>() {
+			public int compare(Service a, Service b) {
+				return a.getName().compareTo(b.getName());
+			}
+		};
+		
+		SortedSet<Service> services = new TreeSet<Service>(comparator);
+		
+		if (postReq != null) {
+			for (Services service: Services.values()) {
+				services.add(new Service(service.toString(), postReq.getParameter(service.toString()) != null));
+			}
+		} else {
+			Set<Services> propertyServices = property.getServices();
+			for (Services service : Services.values()) {
+				services.add(new Service(service.toString(), propertyServices.contains(service)));
+			}
+		}
+		return services;
 	}
 }

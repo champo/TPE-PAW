@@ -83,12 +83,8 @@ public class AbstractPropertyController extends BaseController {
 		req.setAttribute("outdoorSpace", property.getOutdoorSpace());
 		req.setAttribute("description", property.getDescription());
 		req.setAttribute("antiquity", property.getAntiquity());
-		req.setAttribute("cable", property.isCable());
-		req.setAttribute("phone", property.isPhone());
-		req.setAttribute("pool", property.isPool());
-		req.setAttribute("lounge", property.isLounge());
-		req.setAttribute("paddle", property.isPaddle());
-		req.setAttribute("barbecue", property.isBarbecue());
+		req.setAttribute("propertyServices", property.getServices());
+		
 	}
 	
 	
@@ -105,11 +101,5 @@ public class AbstractPropertyController extends BaseController {
 		req.setAttribute("outdoorSpace", req.getParameter("outdoorSpace"));
 		req.setAttribute("description", req.getParameter("description"));
 		req.setAttribute("antiquity", req.getParameter("antiquity"));
-		req.setAttribute("cable", req.getParameter("cable"));
-		req.setAttribute("phone", req.getParameter("phone"));
-		req.setAttribute("pool", req.getParameter("pool"));
-		req.setAttribute("lounge", req.getParameter("lounge"));
-		req.setAttribute("paddle", req.getParameter("paddle"));
-		req.setAttribute("barbecue", req.getParameter("barbecue"));
 	}
 }

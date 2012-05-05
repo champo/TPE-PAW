@@ -4,15 +4,15 @@ import ar.edu.itba.paw.grupo1.model.Property.Services;
 
 public class Service {
 	
-	private Services name;
+	private String name;
 	private boolean present;
 	
-	public Service(Services name, boolean present) {
+	public Service(String name, boolean present) {
 		this.name = name;
 		this. present = present;
 	}
 	
-	public Services getName() {
+	public String getName() {
 		return name;
 	}
 	
