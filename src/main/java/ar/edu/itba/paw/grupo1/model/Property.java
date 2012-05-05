@@ -1,14 +1,14 @@
 package ar.edu.itba.paw.grupo1.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Property {
 
 	public enum PropertyType { HOUSE, FLAT }
 	public enum OperationType { SELLING, LEASING }
-	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE }	
+	public enum Services {Cable, Phone, Pool, Lounge, Paddle, Barbecue }	
 	private Integer id;
 	private PropertyType propertyType = PropertyType.HOUSE;
 	private OperationType operationType = OperationType.SELLING;
@@ -20,7 +20,7 @@ public class Property {
 	private double outdoorSpace;
 	private String description; //Optional
 	private int antiquity;
-	private List<Services> services = new ArrayList<Services>();
+	private Set<Services> services = new HashSet<Services>();
 	private boolean published;
 	private int userId;
 	
@@ -31,7 +31,7 @@ public class Property {
 	public Property(Integer id, PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, List<Services> services,
+			String description, int antiquity, Set<Services> services,
 			boolean published, int userId) {
 		
 		this.id = id;
@@ -53,7 +53,7 @@ public class Property {
 	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, List<Services> services, 
+			String description, int antiquity, Set<Services> services, 
 			boolean published, int userId) {
 		
 		this.propertyType = propertyType;
@@ -88,8 +88,8 @@ public class Property {
 		return neighbourhood;
 	}
 	
-	public int getOperationType() {
-		return operationType.ordinal();
+	public OperationType getOperationType() {
+		return operationType;
 	}
 	
 	public double getOutdoorSpace() {
@@ -100,8 +100,8 @@ public class Property {
 		return price;
 	}
 	
-	public int getPropertyType() {
-		return propertyType.ordinal();
+	public PropertyType getPropertyType() {
+		return propertyType;
 	}
 	
 	public int getRooms() {
@@ -109,55 +109,43 @@ public class Property {
 	}
 	
 	public boolean isBarbecue() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.BARBECUE) {
-				return true;
-			}
+		if (services.contains(Services.Barbecue)) {
+			return true;
 		}
 		return false;
 	}
 	
 	public boolean isCable() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.CABLE) {
-				return true;
-			}
+		if (services.contains(Services.Cable)) {
+			return true;
 		}
 		return false;
 	}
 	
 	public boolean isLounge() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.LOUNGE) {
-				return true;
-			}
+		if (services.contains(Services.Lounge)) {
+			return true;
 		}
 		return false;
 	}
 	
 	public boolean isPaddle() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.PADDLE) {
-				return true;
-			}
+		if (services.contains(Services.Paddle)) {
+			return true;
 		}
 		return false;
 	}
 	
 	public boolean isPhone() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.PHONE) {
-				return true;
-			}
+		if (services.contains(Services.Phone)) {
+			return true;
 		}
 		return false;
 	}
 	
 	public boolean isPool() {
-		for (int i = 0; i < services.size(); i++) {
-			if (services.get(i) == Services.POOL) {
-				return true;
-			}
+		if (services.contains(Services.Pool)) {
+			return true;
 		}
 		return false;
 	}
@@ -191,4 +179,8 @@ public class Property {
 		published = false;
 		return;
 	}	
+	
+	public Set<Services> getServices() {
+		return services;
+	}
 }
