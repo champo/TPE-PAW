@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.grupo1.dao.PropertyDao;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 
@@ -42,8 +43,7 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDao.checkOwnership(user.getId(), propId);
 	}
 
-	public List<Property> query(String operation, String property,
-			double rangeFrom, double rangeTo) {
-		return propertyDao.query(operation, property, rangeFrom, rangeTo);
+	public List<Property> query(PropertyQuery query) {
+		return propertyDao.query(query);
 	}
 }
