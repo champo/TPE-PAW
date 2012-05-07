@@ -2,9 +2,9 @@ package ar.edu.itba.paw.grupo1.service;
 
 import java.util.List;
 
+import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 public interface PropertyService {
 

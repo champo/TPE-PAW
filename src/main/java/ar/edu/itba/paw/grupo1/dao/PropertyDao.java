@@ -2,8 +2,8 @@ package ar.edu.itba.paw.grupo1.dao;
 
 import java.util.List;
 
+import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 public interface PropertyDao {
 
