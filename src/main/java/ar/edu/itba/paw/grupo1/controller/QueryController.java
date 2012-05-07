@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller

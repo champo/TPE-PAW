@@ -12,8 +12,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
+import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.PropertyQuery;
 
 @Repository
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
