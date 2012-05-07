@@ -1,11 +1,17 @@
 package ar.edu.itba.paw.grupo1.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.OperationType;
+import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
 
 @Controller
 public class AbstractPropertyController extends BaseController {
@@ -44,12 +50,12 @@ public class AbstractPropertyController extends BaseController {
 		double outdoorSpace = Double.parseDouble(req.getParameter("outdoorSpace"));
 		String description = req.getParameter("description");
 		int antiquity = Integer.parseInt(req.getParameter("antiquity"));
-		boolean cable = req.getParameter("cable") != null;
-		boolean phone = req.getParameter("phone") != null;
-		boolean pool = req.getParameter("pool") != null;
-		boolean lounge = req.getParameter("lounge") != null;			
-		boolean paddle = req.getParameter("paddle") != null;
-		boolean barbecue = req.getParameter("barbecue") != null;
+		Set<Services> services = new HashSet<Services>();
+		for (Services service : Services.values()) {
+			if (req.getParameter(service.toString()) != null) {
+				services.add(service);
+			}
+		} 
 		boolean published = true; // default value
 		
 		int userId = getLoggedInUser(req).getId();
@@ -59,9 +65,8 @@ public class AbstractPropertyController extends BaseController {
 			id = Integer.parseInt(req.getParameter("id"));
 		}
 		
-		return new Property(id, propertyType, operationType, address, neighbourhood, price, rooms, 
-					indoorSpace, outdoorSpace, description, antiquity, cable, phone, pool, lounge, paddle, 
-					barbecue, published, userId);
+		return new Property(id, PropertyType.values()[propertyType], OperationType.values()[operationType], address, neighbourhood, price, rooms, 
+					indoorSpace, outdoorSpace, description, antiquity, services, published, userId);
 	}
 	
 	
@@ -78,12 +83,8 @@ public class AbstractPropertyController extends BaseController {
 		req.setAttribute("outdoorSpace", property.getOutdoorSpace());
 		req.setAttribute("description", property.getDescription());
 		req.setAttribute("antiquity", property.getAntiquity());
-		req.setAttribute("cable", property.isCable());
-		req.setAttribute("phone", property.isPhone());
-		req.setAttribute("pool", property.isPool());
-		req.setAttribute("lounge", property.isLounge());
-		req.setAttribute("paddle", property.isPaddle());
-		req.setAttribute("barbecue", property.isBarbecue());
+		req.setAttribute("propertyServices", property.getServices());
+		
 	}
 	
 	
@@ -100,11 +101,5 @@ public class AbstractPropertyController extends BaseController {
 		req.setAttribute("outdoorSpace", req.getParameter("outdoorSpace"));
 		req.setAttribute("description", req.getParameter("description"));
 		req.setAttribute("antiquity", req.getParameter("antiquity"));
-		req.setAttribute("cable", req.getParameter("cable"));
-		req.setAttribute("phone", req.getParameter("phone"));
-		req.setAttribute("pool", req.getParameter("pool"));
-		req.setAttribute("lounge", req.getParameter("lounge"));
-		req.setAttribute("paddle", req.getParameter("paddle"));
-		req.setAttribute("barbecue", req.getParameter("barbecue"));
 	}
 }

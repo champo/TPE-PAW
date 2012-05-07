@@ -1,7 +1,11 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,8 @@ import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Service;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
@@ -40,6 +46,9 @@ public class PropertyController extends AbstractPropertyController {
 			throws ServletException, IOException {
 
 		setPropertyAttributes(req, new Property());
+		
+		req.setAttribute("services", getServices(new Property(), null));
+		
 		return render(req, resp, "editProperty.jsp", "Add Property");
 	}
 
@@ -51,6 +60,7 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (property == null) {
 			setPropertyAttributes(req);
+			req.setAttribute("services", getServices(new Property(), req));
 			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
 			return render(req, resp, "editProperty.jsp", "Edit Property");
 		}
@@ -80,6 +90,8 @@ public class PropertyController extends AbstractPropertyController {
 			req.setAttribute("edit", 1);
 			setPropertyAttributes(req, property);
 			req.setAttribute("pictures", pictures);
+				
+			req.setAttribute("services", getServices(property, null));
 		} else {			
 			throw new InvalidParameterException();
 		}
@@ -95,6 +107,7 @@ public class PropertyController extends AbstractPropertyController {
 		if (property == null) {
 			setPropertyAttributes(req);
 			req.setAttribute("edit", 1);
+			req.setAttribute("services", getServices(new Property(), req));
 			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
 			return render(req, resp, "editProperty.jsp", "Edit Property");
 		}
@@ -132,12 +145,14 @@ public class PropertyController extends AbstractPropertyController {
 			}
 
 			req.setAttribute("property", property);
+			req.setAttribute("services", getServices(property, null));
 			if (pictures.size() > 0) {
 				req.setAttribute("pictures", pictures);
 			}
 		} else {
 			throw new InvalidParameterException();
 		}
+		
 		return render(req, resp, "propertyDetail.jsp", "Property Detail");
 	}
 	
@@ -188,5 +203,27 @@ public class PropertyController extends AbstractPropertyController {
 		}
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
+	}
+	
+	private SortedSet<Service> getServices(Property property, HttpServletRequest postReq) {
+		Comparator<Service> comparator = new Comparator<Service>() {
+			public int compare(Service a, Service b) {
+				return a.getName().compareTo(b.getName());
+			}
+		};
+		
+		SortedSet<Service> services = new TreeSet<Service>(comparator);
+		
+		if (postReq != null) {
+			for (Services service: Services.values()) {
+				services.add(new Service(service.toString(), postReq.getParameter(service.toString()) != null));
+			}
+		} else {
+			Set<Services> propertyServices = property.getServices();
+			for (Services service : Services.values()) {
+				services.add(new Service(service.toString(), propertyServices.contains(service)));
+			}
+		}
+		return services;
 	}
 }

@@ -4,7 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,10 @@ import org.springframework.stereotype.Repository;
 import ar.edu.itba.paw.grupo1.dao.exception.DataAccessException;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Service;
+import ar.edu.itba.paw.grupo1.model.Property.OperationType;
+import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
 
 @Repository
 public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
@@ -111,8 +119,8 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 	private void setPlaceHolders(PreparedStatement stmt, Property property)
 			throws SQLException {
 
-		stmt.setInt(1, property.getPropertyType());
-		stmt.setInt(2, property.getOperationType());
+		stmt.setInt(1, property.getPropertyType().ordinal());
+		stmt.setInt(2, property.getOperationType().ordinal());
 		stmt.setString(3, property.getAddress());
 		stmt.setString(4, property.getNeighbourhood());
 		stmt.setDouble(5, property.getPrice());
@@ -121,14 +129,39 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		stmt.setDouble(8, property.getOutdoorSpace());
 		stmt.setString(9, property.getDescription());
 		stmt.setInt(10, property.getAntiquity());
-		stmt.setBoolean(11, property.isCable());
-		stmt.setBoolean(12, property.isPhone());
-		stmt.setBoolean(13, property.isPool());
-		stmt.setBoolean(14, property.isLounge());
-		stmt.setBoolean(15, property.isPaddle());
-		stmt.setBoolean(16, property.isBarbecue());
+		Set<Services> services = property.getServices();
+		stmt.setBoolean(11, isCable(services));
+		stmt.setBoolean(12, isPhone(services));
+		stmt.setBoolean(13, isPool(services));
+		stmt.setBoolean(14, isLounge(services));
+		stmt.setBoolean(15, isPaddle(services));
+		stmt.setBoolean(16, isBarbecue(services));
 		stmt.setBoolean(17, property.isPublished());
 		stmt.setInt(18, property.getUserId());
+	}
+
+	private boolean isCable(Set<Services> services) {
+		return services.contains(Services.CABLE);
+	}
+	
+	private boolean isPhone(Set<Services> services) {
+		return services.contains(Services.PHONE);
+	}
+	
+	private boolean isPool(Set<Services> services) {
+		return services.contains(Services.POOL);
+	}
+	
+	private boolean isLounge(Set<Services> services) {
+		return services.contains(Services.LOUNGE);
+	}
+	
+	private boolean isPaddle(Set<Services> services) {
+		return services.contains(Services.PADDLE);
+	}
+	
+	private boolean isBarbecue(Set<Services> services) {
+		return services.contains(Services.BARBECUE);
 	}
 
 	private Property buildProperty(ResultSet cursor) throws SQLException {
@@ -146,17 +179,30 @@ public class JDBCPropertyDao extends AbstractDao implements PropertyDao {
 		int antiquity = cursor.getInt("antiquity");
 		boolean published = cursor.getBoolean("published");
 		int userId = cursor.getInt("userId");
-		boolean cable = cursor.getBoolean("cable");
-		boolean phone = cursor.getBoolean("phone");
-		boolean pool = cursor.getBoolean("pool");
-		boolean lounge = cursor.getBoolean("lounge");
-		boolean paddle = cursor.getBoolean("paddle");
-		boolean barbecue = cursor.getBoolean("barbecue");
+		Set<Services> services = new HashSet<Services>();
+		if (cursor.getBoolean("cable") == true) {
+			services.add(Services.CABLE);
+		}
+		if (cursor.getBoolean("pool") == true) {
+			services.add(Services.POOL);
+		}
+		if (cursor.getBoolean("phone") == true) {
+			services.add(Services.PHONE);
+		}
+		if (cursor.getBoolean("lounge") == true) {
+			services.add(Services.LOUNGE);
+		}
+		if (cursor.getBoolean("paddle") == true) {
+			services.add(Services.PADDLE);
+		}
+		if (cursor.getBoolean("barbecue") == true) {
+			services.add(Services.BARBECUE);
+		}
 
-		return new Property(id, propertyType, operationType, address,
+		return new Property(id, PropertyType.values()[propertyType], 
+				OperationType.values()[operationType], address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
-				description, antiquity, cable, phone, pool, lounge, paddle,
-				barbecue, published, userId);
+				description, antiquity, services, published, userId);
 
 	}
 
