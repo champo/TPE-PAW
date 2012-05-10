@@ -16,16 +16,16 @@
 	<div>
 		<label for="propertyType">Property type:</label>
 		<select name="propertyType">
-		<option value="0" <c:if test="${propertyType == 0}">selected="selected"</c:if>>House</option>
-		<option value="1" <c:if test="${propertyType == 1}">selected="selected"</c:if>>Flat</option>
+		<option value="0" <c:if test="${propertyType == 'HOUSE'}">selected="selected"</c:if>>House</option>
+		<option value="1" <c:if test="${propertyType == 'FLAT'}">selected="selected"</c:if>>Flat</option>
 		</select>
 	</div>
 	
 	<div>
 		<label for="operationType">Operation type:</label>
 		<select name="operationType">
-		<option value="0" <c:if test="${operationType == 0}">selected="selected"</c:if>>Selling</option>
-		<option value="1" <c:if test="${operationType == 1}">selected="selected"</c:if>>Leasing</option>
+		<option value="0" <c:if test="${operationType == 'SELLING'}">selected="selected"</c:if>>Selling</option>
+		<option value="1" <c:if test="${operationType == 'LEASING'}">selected="selected"</c:if>>Leasing</option>
 		</select>
 	</div>
 	
@@ -128,37 +128,14 @@
 	<c:if test="${antiquityOutOfRange}">
 		<p class="error">The field 'antiquity' has to be a positive number under <c:out value="${integerMaxValue}"></c:out>.</p>
 	</c:if>
+	
+	<c:forEach var="service" items="${services}">
+	<div>
+		<label for="<c:out value="${fn:escapeXml(service.name)}"></c:out>"><c:out value="${fn:escapeXml(service.name)}"></c:out>:</label>
+		<input type="checkbox" name="<c:out value="${fn:escapeXml(service.name)}"></c:out>" value="true" <c:if test="${service.present == true}">checked</c:if>/>
+	</div>
+	</c:forEach>
 		
-	<div>
-		<label for="cable">Cable:</label>
-		<input type="checkbox" name="cable" value="true" <c:if test="${cable == true}">checked</c:if>/>
-	</div>
-	
-	<div>
-		<label for="phone">Phone:</label>
-		<input type="checkbox" name="phone" value="true" <c:if test="${phone == true}">checked</c:if>/>
-	</div>
-	
-	<div>
-		<label for="pool">Pool:</label>
-		<input type="checkbox" name="pool" value="true" <c:if test="${pool == true}">checked</c:if>/>
-	</div>
-	
-	<div>
-		<label for="lounge">Lounge:</label>
-		<input type="checkbox" name="lounge" value="true" <c:if test="${lounge == true}">checked</c:if>/>
-	</div>
-	
-	<div>
-		<label for="paddle">Paddle:</label>
-		<input type="checkbox" name="paddle" value="true" <c:if test="${paddle == true}">checked</c:if>/>
-	</div>
-	
-	<div>
-		<label for="barbecue">Barbecue:</label>
-		<input type="checkbox" name="barbecue" value="true" <c:if test="${barbecue == true}">checked</c:if>/>
-	</div>
-	
 	<div>
 		<input type="submit" name="submit" value="Submit" />
 	</div>	

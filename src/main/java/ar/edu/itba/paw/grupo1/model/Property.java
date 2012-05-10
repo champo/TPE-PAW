@@ -1,11 +1,22 @@
 package ar.edu.itba.paw.grupo1.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Property {
 
+	public enum PropertyType { HOUSE, FLAT }
+	public enum OperationType { SELLING, LEASING }
+	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE;
+		public String toString() {
+			String s = super.toString();
+			return s.substring(0,1) + s.substring(1).toLowerCase();
+		}
+	}	
 	private Integer id;
-	private int propertyType; //0 is house, 1 is flat
-	private int operationType; //0 is for selling, 1 is for leasing
+	private PropertyType propertyType = PropertyType.HOUSE;
+	private OperationType operationType = OperationType.SELLING;
 	private String address;
 	private String neighbourhood;
 	private double price;
@@ -14,12 +25,7 @@ public class Property {
 	private double outdoorSpace;
 	private String description; //Optional
 	private int antiquity;
-	private boolean cable;
-	private boolean phone;
-	private boolean pool;
-	private boolean lounge;
-	private boolean paddle;
-	private boolean barbecue;
+	private Set<Services> services = new HashSet<Services>();
 	private boolean published;
 	private int userId;
 	
@@ -27,12 +33,11 @@ public class Property {
 	
 	}
 	
-	public Property(Integer id, int propertyType, int operationType, String address,
+	public Property(Integer id, PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, boolean cable, boolean phone,
-			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, boolean published, int userId) {
+			String description, int antiquity, Set<Services> services,
+			boolean published, int userId) {
 		
 		this.id = id;
 		this.propertyType = propertyType;
@@ -45,22 +50,16 @@ public class Property {
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
 		this.antiquity = antiquity;
-		this.barbecue = barbecue;
-		this.paddle = paddle;
-		this.pool = pool;
-		this.phone = phone;
-		this.cable = cable;
-		this.lounge = lounge;
+		this.services = services;
 		this.published = published;
 		this.userId = userId;
 	}
 	
-	public Property(int propertyType, int operationType, String address,
+	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, boolean cable, boolean phone,
-			boolean pool, boolean lounge, boolean paddle, 
-			boolean barbecue, boolean published, int userId) {
+			String description, int antiquity, Set<Services> services, 
+			boolean published, int userId) {
 		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
@@ -72,12 +71,7 @@ public class Property {
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
 		this.antiquity = antiquity;
-		this.barbecue = barbecue;
-		this.paddle = paddle;
-		this.pool = pool;
-		this.phone = phone;
-		this.cable = cable;
-		this.lounge = lounge;
+		this.services = services;
 		this.published = published;
 		this.userId = userId;
 	}
@@ -99,7 +93,7 @@ public class Property {
 		return neighbourhood;
 	}
 	
-	public int getOperationType() {
+	public OperationType getOperationType() {
 		return operationType;
 	}
 	
@@ -111,36 +105,12 @@ public class Property {
 		return price;
 	}
 	
-	public int getPropertyType() {
+	public PropertyType getPropertyType() {
 		return propertyType;
 	}
 	
 	public int getRooms() {
 		return rooms;
-	}
-	
-	public boolean isBarbecue() {
-		return barbecue;
-	}
-	
-	public boolean isCable() {
-		return cable;
-	}
-	
-	public boolean isLounge() {
-		return lounge;
-	}
-	
-	public boolean isPaddle() {
-		return paddle;
-	}
-	
-	public boolean isPhone() {
-		return phone;
-	}
-	
-	public boolean isPool() {
-		return pool;
 	}
 	
 	public boolean isPublished() {
@@ -172,4 +142,8 @@ public class Property {
 		published = false;
 		return;
 	}	
+	
+	public Set<Services> getServices() {
+		return services;
+	}
 }
