@@ -32,18 +32,20 @@ public class UserController extends BaseController {
 	protected ModelAndView registerGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
 			RedirectView view = new RedirectView("/",true);
 			return new ModelAndView(view);
 		}
 		
-		return render(req, resp, "register.jsp", "Register");
+		return render(req, resp, "register.jsp", "Register", mav);
 	}
 	
 	@RequestMapping(value="register", method = RequestMethod.POST)
 	protected ModelAndView registerPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
 			RedirectView view = new RedirectView("/",true);
 			return new ModelAndView(view);
@@ -60,7 +62,7 @@ public class UserController extends BaseController {
 		error |= !checkPhone(req, "phone", 0, 20);
 		
 		if (error) {
-			return render(req, resp, "register.jsp", "Register");
+			return render(req, resp, "register.jsp", "Register", mav);
 		}
 		
 		try {
@@ -74,20 +76,21 @@ public class UserController extends BaseController {
 			);
 			
 			if (user != null) {
-				return render(req, resp, "registerSuccess.jsp", "Register");
+				return render(req, resp, "registerSuccess.jsp", "Register", mav);
 			}
 			
 		} catch (UserAlreadyExistsException e) {
 			req.setAttribute("usernameDuplicate", true);
 		}
 		
-		return render(req, resp, "register.jsp", "Register");
+		return render(req, resp, "register.jsp", "Register", mav);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	protected ModelAndView loginGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
 			RedirectView view = new RedirectView("/",true);
 			return new ModelAndView(view);
@@ -100,13 +103,14 @@ public class UserController extends BaseController {
 			req.setAttribute("username", username);
 		}
 		
-		return render(req, resp, "login.jsp", "Login");
+		return render(req, resp, "login.jsp", "Login", mav);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	protected ModelAndView loginPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
 			RedirectView view = new RedirectView("/",true);
 			return new ModelAndView(view);
@@ -143,7 +147,7 @@ public class UserController extends BaseController {
 		req.setAttribute("username", username);
 		
 		req.setAttribute("invalidCredentials", true);
-		return render(req, resp, "login.jsp", "Login");
+		return render(req, resp, "login.jsp", "Login", mav);
 	}
 	
 	@RequestMapping(value = "logout", method = RequestMethod.GET)

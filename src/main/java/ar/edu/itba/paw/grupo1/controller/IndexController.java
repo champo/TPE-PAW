@@ -19,7 +19,8 @@ public class IndexController extends BaseController {
 	protected ModelAndView index(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		return render(req, resp, "index.jsp", "Index");
+		ModelAndView mav = new ModelAndView();
+		return render(req, resp, "index.jsp", "Index", mav);
 	}
 	
 }

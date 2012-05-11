@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.web.PropertyForm;
 
 @Controller
 public class AbstractPropertyController extends BaseController {
@@ -70,36 +72,48 @@ public class AbstractPropertyController extends BaseController {
 	}
 	
 	
-	protected void setPropertyAttributes(HttpServletRequest req, Property property) {
+	protected void setPropertyAttributes(ModelAndView mav, Property property) {
 		
-		req.setAttribute("id", property.getId());
-		req.setAttribute("propertyType", property.getPropertyType());
-		req.setAttribute("operationType", property.getOperationType());
-		req.setAttribute("address", property.getAddress());
-		req.setAttribute("neighbourhood", property.getNeighbourhood());
-		req.setAttribute("price", property.getPrice());
-		req.setAttribute("rooms", property.getRooms());
-		req.setAttribute("indoorSpace", property.getIndoorSpace());
-		req.setAttribute("outdoorSpace", property.getOutdoorSpace());
-		req.setAttribute("description", property.getDescription());
-		req.setAttribute("antiquity", property.getAntiquity());
-		req.setAttribute("propertyServices", property.getServices());
+		PropertyForm propertyForm = new PropertyForm();
+		propertyForm.setPropertyType(property.getPropertyType());
+		propertyForm.setOperationType(property.getOperationType());
+		propertyForm.setAddress(property.getAddress());
+		propertyForm.setNeighbourhood(property.getNeighbourhood());
+		propertyForm.setPrice(property.getPrice());
+		propertyForm.setRooms(property.getRooms());
+		propertyForm.setIndoorSpace(property.getIndoorSpace());
+		propertyForm.setOutdoorSpace(property.getOutdoorSpace());
+		propertyForm.setDescription(property.getDescription());
+		propertyForm.setAntiquity(property.getAntiquity());
+		propertyForm.setServices(property.getServices());
+				
+		mav.addObject("propertyForm", propertyForm);
+		
+//		mav.addObject("id", property.getId());
+//		mav.addObject("neighbourhood", );
+//		mav.addObject("price", );
+//		mav.addObject("rooms", );
+//		mav.addObject("indoorSpace", );
+//		mav.addObject("outdoorSpace", );
+//		mav.addObject("description", );
+//		mav.addObject("antiquity", );
+//		mav.addObject("propertyServices", property.getServices());
 		
 	}
 	
 	
-	protected void setPropertyAttributes(HttpServletRequest req) {
-		
-		req.setAttribute("id", req.getParameter("id"));
-		req.setAttribute("propertyType", req.getParameter("propertyType"));
-		req.setAttribute("operationType", req.getParameter("operationType"));
-		req.setAttribute("address", req.getParameter("address"));
-		req.setAttribute("neighbourhood", req.getParameter("neighbourhood"));
-		req.setAttribute("price", req.getParameter("price"));
-		req.setAttribute("rooms", req.getParameter("rooms"));
-		req.setAttribute("indoorSpace", req.getParameter("indoorSpace"));
-		req.setAttribute("outdoorSpace", req.getParameter("outdoorSpace"));
-		req.setAttribute("description", req.getParameter("description"));
-		req.setAttribute("antiquity", req.getParameter("antiquity"));
-	}
+//	protected void setPropertyAttributes(HttpServletRequest req) {
+//		
+//		req.setAttribute("id", req.getParameter("id"));
+//		req.setAttribute("propertyType", req.getParameter("propertyType"));
+//		req.setAttribute("operationType", req.getParameter("operationType"));
+//		req.setAttribute("address", req.getParameter("address"));
+//		req.setAttribute("neighbourhood", req.getParameter("neighbourhood"));
+//		req.setAttribute("price", req.getParameter("price"));
+//		req.setAttribute("rooms", req.getParameter("rooms"));
+//		req.setAttribute("indoorSpace", req.getParameter("indoorSpace"));
+//		req.setAttribute("outdoorSpace", req.getParameter("outdoorSpace"));
+//		req.setAttribute("description", req.getParameter("description"));
+//		req.setAttribute("antiquity", req.getParameter("antiquity"));
+//	}
 }
