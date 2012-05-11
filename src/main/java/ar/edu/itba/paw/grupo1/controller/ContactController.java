@@ -40,6 +40,7 @@ public class ContactController extends BaseController {
 	protected ModelAndView doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		ModelAndView mav = new ModelAndView();
 		int propertyId;
 		Property property;
 		if (checkIntegerParameter(req, "propertyId")) {
@@ -62,13 +63,14 @@ public class ContactController extends BaseController {
 		req.setAttribute("propertyId", property.getId());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
-		return render(req, resp, "contact.jsp", "Contact");
+		return render(req, resp, "contact.jsp", "Contact", mav);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	protected ModelAndView doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		ModelAndView mav = new ModelAndView();
 		Property property;
 		if (checkIntegerParameter(req, "propertyId")) {
 			property = propertyService.getById(Integer.parseInt(req.getParameter("propertyId")));
@@ -86,7 +88,7 @@ public class ContactController extends BaseController {
 				req.setAttribute("propertyId", property.getId());
 				req.setAttribute("address", property.getAddress());
 				req.setAttribute("neighbourhood", property.getNeighbourhood());
-				return render(req, resp, "contact.jsp", "Contact");
+				return render(req, resp, "contact.jsp", "Contact", mav);
 			}
 		
 			if (property == null) {
@@ -113,6 +115,6 @@ public class ContactController extends BaseController {
 		} catch (MailingException e) {
 			Logger.getLogger(ContactController.class).warn("Failed to send contact email", e);
 		}
-		return render(req, resp, "contact.jsp", "Contact");
+		return render(req, resp, "contact.jsp", "Contact", mav);
 	}
 }
