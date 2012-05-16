@@ -28,6 +28,7 @@ import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller
+@RequestMapping(value="picture")
 public class PictureController extends AbstractPictureController {
 
 	PropertyService propertyService;

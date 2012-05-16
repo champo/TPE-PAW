@@ -6,7 +6,6 @@
 
 	<context:component-scan base-package="ar.edu.itba.paw.grupo1.controller" />
 	
-	<!-- Configures the @Controller programming model -->
 	<!-- JSR-303 support will be detected on classpath and enabled automatically -->
 	<mvc:annotation-driven />
 	

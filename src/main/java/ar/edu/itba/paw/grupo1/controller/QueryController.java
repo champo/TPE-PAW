@@ -18,7 +18,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller
-@RequestMapping
+@RequestMapping(value="query")
 public class QueryController extends BaseController {
 
 	PropertyService propertyService;

@@ -76,13 +76,6 @@
 		<label for="antiquity">Antiquity:</label>
 		<form:input path="antiquity" />
 	</div>
-	
-<%-- 	<c:forEach var="service" items="${services}"> --%>
-<!-- 	<div> -->
-<%-- 		<label for="<c:out value="${fn:escapeXml(service.name)}"></c:out>"><c:out value="${fn:escapeXml(service.name)}"></c:out>:</label> --%>
-<%-- 		<input type="checkbox" name="<c:out value="${fn:escapeXml(service.name)}"></c:out>" value="true" <c:if test="${service.present == true}">checked</c:if>/> --%>
-<!-- 	</div> -->
-<%-- 	</c:forEach> --%>
 			
 	<form:checkboxes path="services" items="${services}" itemLabel="name" itemValue="name"/>
 		
@@ -95,7 +88,7 @@
 <c:if test="${not empty edit}">
 		Pictures of this property:
 		<br />
-		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(id)}" />"> Add new </a>
+		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(param.id)}" />"> Add new </a>
 		<br />
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
