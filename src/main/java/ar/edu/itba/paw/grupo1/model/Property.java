@@ -8,12 +8,7 @@ public class Property {
 
 	public enum PropertyType { HOUSE, FLAT }
 	public enum OperationType { SELLING, LEASING }
-	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE;
-		public String toString() {
-			String s = super.toString();
-			return s.substring(0,1) + s.substring(1).toLowerCase();
-		}
-	}	
+	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE}	
 	private Integer id;
 	private PropertyType propertyType = PropertyType.HOUSE;
 	private OperationType operationType = OperationType.SELLING;
