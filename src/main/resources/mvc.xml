@@ -25,5 +25,11 @@
 		<property name="basename" value="/WEB-INF/i18n/messages" />
 		<property name="cacheSeconds" value="0" />
 	</bean>
+			
+	<!-- Handles HTTP GET requests for /css/** and /images/** by efficiently serving up static resources 
+	in the ${webappRoot}/css/ and ${webappRoot}/images/ directories -->
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+		
 </beans>
 
