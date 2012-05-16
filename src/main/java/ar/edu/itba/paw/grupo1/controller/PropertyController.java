@@ -10,9 +10,11 @@ import java.util.TreeSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -33,13 +35,20 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.web.PropertyForm;
+
 @Controller
+@RequestMapping(value="property")
 public class PropertyController extends AbstractPropertyController {
 
 	PropertyService propertyService;
 	PictureService pictureService;
 	@Autowired
-	Validator validator;
+    private Validator validator;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) throws Exception {
+		binder.registerCustomEditor(Set.class, "services", new CustomCollectionEditor(Set.class, true));
+	}
 	
 	@Autowired
 	public PropertyController(PropertyService propertyService, PictureService pictureService) {
@@ -48,28 +57,27 @@ public class PropertyController extends AbstractPropertyController {
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp, 
+			PropertyForm propertyForm, Errors errors) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		setPropertyAttributes(mav, new Property());
+		setPropertyAttributes(mav, new Property(), propertyForm);
 		
 		mav.addObject("services", getServices(new Property(), null));
-		
 		return render(req, resp, "editProperty.jsp", "Add Property", mav);
 	}
 
 	@RequestMapping(value="add", method = RequestMethod.POST)
-	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp, 
+			@Valid PropertyForm propertyForm, Errors errors) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = buildProperty(req, resp);
+		Property property = buildProperty(propertyForm, getLoggedInUser(req));
 		
-		if (property == null) {
-//			setPropertyAttributes(req);
-			req.setAttribute("services", getServices(new Property(), req));
-			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
+		if (errors.hasErrors()) {
+			mav.addObject("services", getServices(new Property(), req));
 			return render(req, resp, "editProperty.jsp", "Edit Property", mav);
 		}
 		property.publish();
@@ -86,44 +94,39 @@ public class PropertyController extends AbstractPropertyController {
 		Property property = null;
 		List<Picture> pictures = null;
 		ModelAndView mav = new ModelAndView();
-		if (checkIntegerParameter(req, "id")) {
 			
-			property = propertyService.getById(id);
-			pictures = pictureService.getByPropId(id);
-			
-			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
-				throw new PermissionDeniedException();
-			}
-			mav.addObject("edit", 1);
-			setPropertyAttributes(mav, property);
-			mav.addObject("pictures", pictures);				
-			mav.addObject("services", getServices(property, null));
-		} else {			
+		property = propertyService.getById(id);
+		pictures = pictureService.getByPropId(id);
+		
+		if (property == null) {
 			throw new InvalidParameterException();
+		} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+			throw new PermissionDeniedException();
 		}
+		mav.addObject("edit", 1);
+		setPropertyAttributes(mav, property, propertyForm);
+		mav.addObject("pictures", pictures);				
+		mav.addObject("services", getServices(property, null));
 
 		return render(req, resp, "editProperty.jsp", "Edit Property", mav);
 	}
 
 	@RequestMapping(value="edit", method = RequestMethod.POST)
-	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp, 
+			@Valid PropertyForm propertyForm, Errors errors, @RequestParam("id") int id) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = buildProperty(req, resp);
+		Property property = buildProperty(id, propertyForm, getLoggedInUser(req));
 		
-		if (property == null) {
-//			setPropertyAttributes(req);
-			req.setAttribute("edit", 1);
-			req.setAttribute("services", getServices(new Property(), req));
-			req.setAttribute("integerMaxValue", Integer.MAX_VALUE);
+		if (errors.hasErrors()) {
+			mav.addObject("edit", 1);
+			mav.addObject("services", getServices(new Property(), req));
 			return render(req, resp, "editProperty.jsp", "Edit Property", mav);
 		}
 		
 		//Because that's the way hibernate rolls!
-		Property dbProperty = propertyService.getById(property.getId());
+		Property dbProperty = propertyService.getById(id);
 		if (dbProperty.isPublished()) {				
 			property.publish();
 		} else {
@@ -136,7 +139,7 @@ public class PropertyController extends AbstractPropertyController {
 
 	
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="showDetail",method = RequestMethod.GET)
 	protected ModelAndView showDetail(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
@@ -168,7 +171,7 @@ public class PropertyController extends AbstractPropertyController {
 		return render(req, resp, "propertyDetail.jsp", "Property Detail", mav);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="list",method = RequestMethod.GET)
 	protected ModelAndView list(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
@@ -178,7 +181,7 @@ public class PropertyController extends AbstractPropertyController {
 		return render(req, resp, "listProperties.jsp", "List Properties", mav);
 	}	
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="publish", method = RequestMethod.GET)
 	protected ModelAndView publish(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
@@ -198,7 +201,7 @@ public class PropertyController extends AbstractPropertyController {
 		return new ModelAndView(view);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="unpublish",method = RequestMethod.GET)
 	protected ModelAndView unpublish(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		

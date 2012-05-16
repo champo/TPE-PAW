@@ -18,6 +18,7 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
 
 @Controller
+@RequestMapping(value="user")
 public class UserController extends BaseController {
 
 	UserService userService;

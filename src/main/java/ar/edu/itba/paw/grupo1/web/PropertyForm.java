@@ -1,31 +1,56 @@
 package ar.edu.itba.paw.grupo1.web;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.stereotype.Component;
 
+import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.User;
 
 @Component
 public class PropertyForm {
 
 	private PropertyType propertyType;
-	private OperationType operationType;;
+	private OperationType operationType = OperationType.SELLING;
+	@NotEmpty
+	@NotNull
+	@Size(min=0, max=50)
 	private String address;
+	@NotEmpty
+	@NotNull
+	@Size(min=0, max=50)
 	private String neighbourhood;
+	@NotNull
 	private double price;
+	@NotNull
+	@Range(min=1, max=Integer.MAX_VALUE)
 	private int rooms;
+	@NotNull
+	@Range(min=0, max=Integer.MAX_VALUE)
 	private double indoorSpace;
+	@NotNull
+	@Range(min=0, max=Integer.MAX_VALUE)
 	private double outdoorSpace;
-	private String description; // Optional
+	@Size(min=0, max=1000)
+	private String description; //Optional
+	@NotNull
+	@Range(min=0, max=Integer.MAX_VALUE)
 	private int antiquity;
-	private Set<Services> services;
+	@NotNull
+	private Set<Services> services = new HashSet<Services>();
 
 	public PropertyForm() {
 	}
-	
+
 	public PropertyType getPropertyType() {
 		return propertyType;
 	}
@@ -111,7 +136,13 @@ public class PropertyForm {
 	}
 
 	public void setServices(Set<Services> services) {
-		this.services = services;
+		this.services.addAll(services);
+	}
+
+	public Property buildProperty(User user) {
+		return new Property(propertyType, operationType, address,
+				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
+				description, antiquity, services, true, user.getId());
 	}
 
 }

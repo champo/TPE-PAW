@@ -23,6 +23,7 @@ import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 
 @Controller
+@RequestMapping(value="contact")
 public class ContactController extends BaseController {
 	
 	private UserService userService;
