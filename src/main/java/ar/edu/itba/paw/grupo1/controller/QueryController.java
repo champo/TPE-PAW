@@ -18,7 +18,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller
-@RequestMapping
+@RequestMapping(value="query")
 public class QueryController extends BaseController {
 
 	PropertyService propertyService;
@@ -32,6 +32,7 @@ public class QueryController extends BaseController {
 	protected ModelAndView query(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		ModelAndView mav = new ModelAndView();
 		String operation = req.getParameter("operation");
 		String property = req.getParameter("property");
 		String rangeFrom = req.getParameter("rangeFrom");
@@ -42,7 +43,7 @@ public class QueryController extends BaseController {
 
 			req.setAttribute("operationChecked", "any");
 			req.setAttribute("propertyChecked", "any");
-			return render(req, resp, "query.jsp", "Query");
+			return render(req, resp, "query.jsp", "Query", mav);
 		}
 
 		if (operation == null) {
@@ -76,7 +77,7 @@ public class QueryController extends BaseController {
 				|| (rangeFrom != null && rangeTo != null && parsedRangeTo < parsedRangeFrom)) {
 
 			req.setAttribute("invalidRange", true);
-			return render(req, resp, "query.jsp", "Query");
+			return render(req, resp, "query.jsp", "Query", mav);
 		}
 
 		req.setAttribute("rangeFromValue", rangeFrom);
@@ -92,7 +93,7 @@ public class QueryController extends BaseController {
 		List<Property> query = propertyService.query(new PropertyQuery(operation, property, parsedRangeFrom, parsedRangeTo));
 
 		req.setAttribute("queryResults", query);
-		return render(req, resp, "query.jsp", "Query");
+		return render(req, resp, "query.jsp", "Query", mav);
 	}
 
 }
