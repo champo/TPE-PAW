@@ -57,11 +57,11 @@ public class PropertyController extends AbstractPropertyController {
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp, 
-			PropertyForm propertyForm, Errors errors) 
+	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
+		PropertyForm propertyForm = new PropertyForm();
 		setPropertyAttributes(mav, new Property(), propertyForm);
 		
 		mav.addObject("services", getServices(new Property(), null));
@@ -87,13 +87,13 @@ public class PropertyController extends AbstractPropertyController {
 	}
 	
 	@RequestMapping(value="edit", method = RequestMethod.GET)
-	protected ModelAndView editGet(HttpServletRequest req, HttpServletResponse resp, 
-			PropertyForm propertyForm, Errors errors, @RequestParam("id") int id) 
+	protected ModelAndView editGet(HttpServletRequest req, HttpServletResponse resp, @RequestParam("id") int id) 
 					throws ServletException, IOException {
 		
 		Property property = null;
 		List<Picture> pictures = null;
 		ModelAndView mav = new ModelAndView();
+		PropertyForm propertyForm = new PropertyForm();
 			
 		property = propertyService.getById(id);
 		pictures = pictureService.getByPropId(id);
