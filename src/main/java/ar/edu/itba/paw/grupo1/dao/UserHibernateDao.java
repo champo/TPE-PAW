@@ -24,6 +24,12 @@ public class UserHibernateDao extends GenericHibernateDao<User> implements
 			String phone, String username, String password)
 			throws UserAlreadyExistsException {
 		
+		Criteria criteria = createCriteria()
+			.add(Restrictions.eq("username", username));
+		if (criteria.list().size() > 0) {
+			throw new UserAlreadyExistsException();
+		}
+		
 		User user = new User(name, surname, email, phone, username, password);
 		save(user);
 		
