@@ -33,8 +33,8 @@ public class PictureServiceImpl implements PictureService {
 		return pictureDao.getPictures(propertyId);
 	}
 	
-	public void delete(int id) {
-		pictureDao.delete(id);	
+	public void delete(Picture picture) {
+		pictureDao.delete(picture);	
 	}
 
 }
