@@ -30,11 +30,11 @@ import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
-import ar.edu.itba.paw.grupo1.model.Service;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.web.PropertyForm;
+import ar.edu.itba.paw.grupo1.web.Service;
 
 @Controller
 @RequestMapping(value="property")
