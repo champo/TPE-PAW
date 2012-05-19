@@ -8,3 +8,7 @@ update properties set published = not (select published from properties a where 
 --Removing source and adding extension from pictures
 alter table pictures drop column source;
 alter table pictures add extension varchar(10);
+--We drop the database entirely because hibernate will build it with all the new data
+drop database paw1;
+-- Create user paw
+create user paw with password 'paw';
