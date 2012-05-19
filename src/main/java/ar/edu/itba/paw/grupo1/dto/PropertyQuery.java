@@ -6,13 +6,15 @@ public class PropertyQuery {
 	private String property;
 	private double rangeFrom;
 	private double rangeTo;
+	private String order;
 
-	public PropertyQuery(String operation, String property, double rangeFrom, double rangeTo) {
+	public PropertyQuery(String operation, String property, double rangeFrom, double rangeTo, String order) {
 
 		this.operation = operation;
 		this.property = property;
 		this.rangeFrom = rangeFrom;
 		this.rangeTo = rangeTo;
+		this.order = order;
 	}
 
 	public String getOperation() {
@@ -29,5 +31,9 @@ public class PropertyQuery {
 
 	public double getRangeTo() {
 		return rangeTo;
+	}
+
+	public String getOrder() {
+		return order;
 	}
 }

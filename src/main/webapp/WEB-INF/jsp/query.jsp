@@ -89,18 +89,22 @@
 		<input type="text" name="rangeTo" value="${fn:escapeXml(rangeToValue)}" />
 		with
 		<select name="order">
-			<c:when test="${orderChosen == 'ascending'}">
-				<option value="ascending" selected="selected">Ascending</option>
-			</c:when>
-			<c:otherwise>
-				<option value="ascending">Ascending</option>
-			</c:otherwise>
-			<c:when test="${order == 'descending'}">
-				<option value="descending" selected="selected">Descending</option>
-			</c:when>
-			<c:otherwise>
-				<option value="descending">Descending</option>
-			</c:otherwise>
+			<c:choose>
+				<c:when test="${orderChosen == 'ascending'}">
+					<option value="ascending" selected="selected">Ascending</option>
+				</c:when>
+				<c:otherwise>
+					<option value="ascending">Ascending</option>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${order == 'descending'}">
+					<option value="descending" selected="selected">Descending</option>
+				</c:when>
+				<c:otherwise>
+					<option value="descending">Descending</option>
+				</c:otherwise>
+			</c:choose>
 		</select>
 		order
 		<br />
