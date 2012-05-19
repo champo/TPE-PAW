@@ -1,26 +1,45 @@
 package ar.edu.itba.paw.grupo1.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pictures")
 public class Picture {
 
+	@Id
+	@SequenceGenerator(sequenceName = "pictures_seq", name = "pictures_seq")
+	@GeneratedValue(generator = "pictures_seq")
 	private Integer id;
-	private int propId;
+	
+	@ManyToOne
+	private Property property;
+	
+	@Column(length = 50, nullable = false)
 	private String name;
+	
+	@Column(length = 10, nullable = false)
 	private String extension;
 	
 	public Picture() {
 	
 	}
 	
-	public Picture(int id, int propId, String name, String extension) {
+	public Picture(int id, Property property, String name, String extension) {
 		this.id = id;
-		this.propId = propId;
+		this.property = property;
 		this.name = name;
 		this.extension = extension;
 	}
 	
-	public Picture(String name, int propId, String extension) {
+	public Picture(String name, Property property, String extension) {
 		this.name = name;
-		this.propId = propId;
+		this.property = property;
 		this.extension = extension;
 	}
 	
@@ -32,12 +51,12 @@ public class Picture {
 		return name;
 	}
 	
-	public int getPropId() {
-		return propId;
+	public Property getProperty() {
+		return property;
 	}
 
-	public void setPropId(int propId) {
-		this.propId = propId;
+	public void setProperty(Property property) {
+		this.property = property;
 		
 	}
 	

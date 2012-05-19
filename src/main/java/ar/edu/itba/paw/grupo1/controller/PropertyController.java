@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -30,20 +29,19 @@ import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
-import ar.edu.itba.paw.grupo1.model.Service;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.web.PropertyForm;
+import ar.edu.itba.paw.grupo1.web.Service;
 
 @Controller
 @RequestMapping(value="property")
 public class PropertyController extends AbstractPropertyController {
 
-	PropertyService propertyService;
-	PictureService pictureService;
-	@Autowired
-    private Validator validator;
+	protected PropertyService propertyService;
+	protected PictureService pictureService;
+	
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
@@ -100,7 +98,7 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (property == null) {
 			throw new InvalidParameterException();
-		} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+		} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 			throw new PermissionDeniedException();
 		}
 		mav.addObject("edit", 1);
@@ -154,7 +152,7 @@ public class PropertyController extends AbstractPropertyController {
 			if (property == null) {
 				RedirectView view = new RedirectView("/query",true);
 				return new ModelAndView(view);
-			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUserId() != getLoggedInUser(req).getId())) {
+			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUser().getId() != getLoggedInUser(req).getId())) {
 				RedirectView view = new RedirectView("/query?unpublished=true",true);
 				return new ModelAndView(view);
 			}
@@ -191,7 +189,7 @@ public class PropertyController extends AbstractPropertyController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}		
 			property.publish();
@@ -211,7 +209,7 @@ public class PropertyController extends AbstractPropertyController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}
 			property.unpublish();

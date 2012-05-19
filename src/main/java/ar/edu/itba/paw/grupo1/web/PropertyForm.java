@@ -142,7 +142,7 @@ public class PropertyForm {
 	public Property buildProperty(User user) {
 		return new Property(propertyType, operationType, address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
-				description, antiquity, services, true, user.getId());
+				description, antiquity, services, true, user);
 	}
 
 }

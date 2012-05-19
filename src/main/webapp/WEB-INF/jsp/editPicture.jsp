@@ -29,7 +29,7 @@
 </h2>
 
 <form action="${basePath }/<c:if test="${empty edit}">picture/add</c:if><c:if test="${not empty edit}">picture/edit</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data"</c:if> method="post">
-	<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.propId)}" />" />
+	<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.property.id)}" />" />
 	<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(picture.id)}" />" />
 	<input type="hidden" name="extension" value="<c:out value="${fn:escapeXml(picture.extension)}" />" />
 	<div>

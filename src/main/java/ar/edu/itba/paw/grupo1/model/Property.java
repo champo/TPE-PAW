@@ -3,36 +3,90 @@ package ar.edu.itba.paw.grupo1.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "properties")
 public class Property {
 
-	public enum PropertyType { HOUSE, FLAT }
-	public enum OperationType { SELLING, LEASING }
-	public enum Services {CABLE, PHONE, POOL, LOUNGE, PADDLE, BARBECUE}	
+	public enum PropertyType { 
+		HOUSE, 
+		FLAT 
+	}
+	
+	public enum OperationType { 
+		SELLING, 
+		LEASING 
+	}
+	
+	public enum Services {
+		CABLE, 
+		PHONE, 
+		POOL, 
+		LOUNGE, 
+		PADDLE, 
+		BARBECUE 
+	}
+
+	@Id
+	@SequenceGenerator(sequenceName = "properties_seq", name = "properties_seq")
+	@GeneratedValue(generator = "properties_seq")
 	private Integer id;
+	
+	@Column(nullable = false)
 	private PropertyType propertyType = PropertyType.HOUSE;
+
+	@Column(nullable = false)
 	private OperationType operationType = OperationType.SELLING;
+	
+	@Column(nullable = false, length = 50)
 	private String address;
+	
+	@Column(nullable = false, length = 50)
 	private String neighbourhood;
+	
+	@Column(nullable = false)
 	private double price;
+	
+	@Column(nullable = false)
 	private int rooms;
+	
+	@Column(nullable = false)
 	private double indoorSpace;
+	
+	@Column(nullable = false)
 	private double outdoorSpace;
+	
+	@Column(nullable = false, length = 1000)
 	private String description; //Optional
+	
+	@Column(nullable = false)
 	private int antiquity;
+	
+	@ElementCollection
 	private Set<Services> services = new HashSet<Services>();
+	
+	@Column(nullable = false)
 	private boolean published;
-	private int userId;
+	
+	@ManyToOne
+	private User user;
 	
 	public Property() {
-	
 	}
 	
 	public Property(Integer id, PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services,
-			boolean published, int userId) {
+			boolean published, User user) {
 		
 		this.id = id;
 		this.propertyType = propertyType;
@@ -47,14 +101,14 @@ public class Property {
 		this.antiquity = antiquity;
 		this.services = services;
 		this.published = published;
-		this.userId = userId;
+		this.user = user;
 	}
 	
 	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services, 
-			boolean published, int userId) {
+			boolean published, User user) {
 		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
@@ -68,7 +122,7 @@ public class Property {
 		this.antiquity = antiquity;
 		this.services = services;
 		this.published = published;
-		this.userId = userId;
+		this.user = user;
 	}
 	
 	
@@ -112,8 +166,8 @@ public class Property {
 		return published;
 	}
 	
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 	public String getAddress() {
@@ -124,21 +178,19 @@ public class Property {
 		return antiquity;
 	}	
 	
+	public Set<Services> getServices() {
+		return services;
+	}
+	
 	public boolean isNew() {
 		return id == null;
 	}
-
+	
 	public void publish() {
 		published = true;
-		return;
 	}
 	
 	public void unpublish() {
 		published = false;
-		return;
 	}	
-	
-	public Set<Services> getServices() {
-		return services;
-	}
 }

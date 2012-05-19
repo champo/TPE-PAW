@@ -1,13 +1,37 @@
 package ar.edu.itba.paw.grupo1.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+	@Id
+	@SequenceGenerator(sequenceName = "users_seq", name = "users_seq")
+	@GeneratedValue(generator = "users_seq")
 	private Integer id;
+	
+	@Column(nullable = false, length = 50)
 	private String name;
+	
+	@Column(nullable = false, length = 50)
 	private String surname;
+	
+	@Column(nullable = false, length = 50)
 	private String email;
+	
+	@Column(nullable = false, length = 20)
 	private String phone;
+	
+	@Column(nullable = false, length = 50)
 	private String username;
+	
+	@Column(nullable = false, length = 64)
 	private String password;
 	
 	public User() {

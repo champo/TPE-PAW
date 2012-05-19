@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    
+    	<property name="hibernate.connection.useUnicode">true</property>
+    	<property name="hibernate.connection.characterEncoding">utf8</property>
+    
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://localhost/paw</property>
+        <property name="connection.username">paw</property>
+        <property name="connection.password">paw</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">4</property>
+        <property name="hibernate.c3p0.timeout">300</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+        
+        <mapping class="ar.edu.itba.paw.grupo1.model.Picture" />
+        <mapping class="ar.edu.itba.paw.grupo1.model.User" />
+        <mapping class="ar.edu.itba.paw.grupo1.model.Property" />
+        
+    </session-factory>
+    
+</hibernate-configuration>
+
