@@ -39,8 +39,9 @@ import ar.edu.itba.paw.grupo1.web.Service;
 @RequestMapping(value="property")
 public class PropertyController extends AbstractPropertyController {
 
-	PropertyService propertyService;
-	PictureService pictureService;
+	protected PropertyService propertyService;
+	protected PictureService pictureService;
+	
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
@@ -97,7 +98,7 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (property == null) {
 			throw new InvalidParameterException();
-		} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+		} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 			throw new PermissionDeniedException();
 		}
 		mav.addObject("edit", 1);
@@ -151,7 +152,7 @@ public class PropertyController extends AbstractPropertyController {
 			if (property == null) {
 				RedirectView view = new RedirectView("/query",true);
 				return new ModelAndView(view);
-			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUserId() != getLoggedInUser(req).getId())) {
+			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUser().getId() != getLoggedInUser(req).getId())) {
 				RedirectView view = new RedirectView("/query?unpublished=true",true);
 				return new ModelAndView(view);
 			}
@@ -188,7 +189,7 @@ public class PropertyController extends AbstractPropertyController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}		
 			property.publish();
@@ -208,7 +209,7 @@ public class PropertyController extends AbstractPropertyController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUserId() != getLoggedInUser(req).getId()) {
+			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}
 			property.unpublish();

@@ -14,8 +14,6 @@ public interface PropertyService {
 
 	public void save(Property property, User user);
 
-	public boolean checkOwner(int propId, User user);
-
 	public List<Property> query(PropertyQuery query);
 
 }

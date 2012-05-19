@@ -51,7 +51,7 @@ public class ContactController extends BaseController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && property.getUser().getId() == getLoggedInUser(req).getId()) {
 				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
 				return new ModelAndView(view);
 			} else if (!property.isPublished()) {
@@ -86,6 +86,7 @@ public class ContactController extends BaseController {
 			error |= !checkPhone(req, "phone", 0, 20);
 			
 			if (error) {
+				//FIXME: NPE if property is null.
 				req.setAttribute("propertyId", property.getId());
 				req.setAttribute("address", property.getAddress());
 				req.setAttribute("neighbourhood", property.getNeighbourhood());
@@ -94,7 +95,7 @@ public class ContactController extends BaseController {
 		
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (getLoggedInUser(req) != null && property.getUserId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && property.getUser().getId() == getLoggedInUser(req).getId()) {
 				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
 				return new ModelAndView(view);
 			} else if (!property.isPublished()) {
@@ -104,15 +105,14 @@ public class ContactController extends BaseController {
 		} else {
 			throw new InvalidParameterException();
 		}
-		User owner = userService.get(property.getUserId());
 		req.setAttribute("propertyId", property.getId());
 		req.setAttribute("address", property.getAddress());
 		req.setAttribute("neighbourhood", property.getNeighbourhood());
-		req.setAttribute("publisher", owner);
+		req.setAttribute("publisher", property.getUser());
 		
 		try {
 			emailService.sendContact(req.getParameter("email"), req.getParameter("name"), 
-					req.getParameter("comment"), owner, property);
+					req.getParameter("comment"), property.getUser(), property);
 		} catch (MailingException e) {
 			Logger.getLogger(ContactController.class).warn("Failed to send contact email", e);
 		}

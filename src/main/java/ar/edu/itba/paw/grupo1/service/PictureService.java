@@ -12,5 +12,5 @@ public interface PictureService {
 
 	public List<Picture> getByPropId(int propertyId);
 
-	public void delete(int id);
+	public void delete(Picture picture);
 }

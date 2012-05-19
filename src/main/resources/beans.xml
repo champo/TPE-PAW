@@ -17,15 +17,6 @@
 		<property name="locations" value="classpath*:config.properties" />
 	</bean>
 
-	<!-- Database Connection Parameters -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${db.class}" />
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.user}" />
-		<property name="password" value="${db.pass}" />
-	</bean>
-
 	<bean id="emailService" class="ar.edu.itba.paw.grupo1.service.EmailServiceImpl">
 		<constructor-arg value="${mail.username}" name="username" />
 		<constructor-arg value="${mail.password}" name="password" />
@@ -37,6 +28,10 @@
 	
 	<bean id="sessionFilter" class="ar.edu.itba.paw.grupo1.filter.SessionFilter">
 		<constructor-arg  name="userService" ref="userServiceImpl"/>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</bean>
 		 
 </beans>

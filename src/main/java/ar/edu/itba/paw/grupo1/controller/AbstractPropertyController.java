@@ -19,7 +19,7 @@ public class AbstractPropertyController extends BaseController {
 		return new Property(id, propertyForm.getPropertyType(), propertyForm.getOperationType(), propertyForm.getAddress(), 
 				propertyForm.getNeighbourhood(), propertyForm.getPrice(), propertyForm.getRooms(), propertyForm.getIndoorSpace(), 
 				propertyForm.getOutdoorSpace(), propertyForm.getDescription(), propertyForm.getAntiquity(), 
-				propertyForm.getServices(), true, user.getId()); 
+				propertyForm.getServices(), true, user); 
 	}
 	
 	protected Property buildProperty(PropertyForm propertyForm, User user) {
@@ -27,7 +27,7 @@ public class AbstractPropertyController extends BaseController {
 		return new Property(propertyForm.getPropertyType(), propertyForm.getOperationType(), propertyForm.getAddress(), 
 				propertyForm.getNeighbourhood(), propertyForm.getPrice(), propertyForm.getRooms(), propertyForm.getIndoorSpace(), 
 				propertyForm.getOutdoorSpace(), propertyForm.getDescription(), propertyForm.getAntiquity(), 
-				propertyForm.getServices(), true, user.getId());
+				propertyForm.getServices(), true, user);
 	} 
 	
 	protected void setPropertyAttributes(ModelAndView mav, Property property, PropertyForm propertyForm) {
