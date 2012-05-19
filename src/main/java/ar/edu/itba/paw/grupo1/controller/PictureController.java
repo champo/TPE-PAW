@@ -149,7 +149,7 @@ public class PictureController extends AbstractPictureController {
 			req.setAttribute("writeError", 1);
 			render(req, resp, "editPicture.jsp", "Add Picture", mav);
 		}
-		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty(),true);
+		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(),true);
 		return new ModelAndView(view);
 
 	}
@@ -221,7 +221,7 @@ public class PictureController extends AbstractPictureController {
 				return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
 			}
 		}
-		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty(), true);
+		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
 		return new ModelAndView(view);
 
 	}
