@@ -37,12 +37,14 @@ public class QueryController extends BaseController {
 		String property = req.getParameter("property");
 		String rangeFrom = req.getParameter("rangeFrom");
 		String rangeTo = req.getParameter("rangeTo");
+		String order = req.getParameter("order");
 
 		if (operation == null && property == null && rangeFrom == null
-				&& rangeTo == null) {
+				&& rangeTo == null && order == null) {
 
 			req.setAttribute("operationChecked", "any");
 			req.setAttribute("propertyChecked", "any");
+			req.setAttribute("orderChosen", "ascending");
 			return render(req, resp, "query.jsp", "Query", mav);
 		}
 
@@ -52,9 +54,13 @@ public class QueryController extends BaseController {
 		if (property == null) {
 			property = "any";
 		}
+		if (order == null) {
+			order = "ascending";
+		}
 
 		req.setAttribute("operationChecked", operation);
 		req.setAttribute("propertyChecked", property);
+		req.setAttribute("orderChosen", order);
 
 		double parsedRangeFrom = 0;
 		double parsedRangeTo = Double.MAX_VALUE;
@@ -90,7 +96,7 @@ public class QueryController extends BaseController {
 			parsedRangeTo = Double.MAX_VALUE;
 		}
 
-		List<Property> query = propertyService.query(new PropertyQuery(operation, property, parsedRangeFrom, parsedRangeTo));
+		List<Property> query = propertyService.query(new PropertyQuery(operation, property, parsedRangeFrom, parsedRangeTo, order));
 
 		req.setAttribute("queryResults", query);
 		return render(req, resp, "query.jsp", "Query", mav);
