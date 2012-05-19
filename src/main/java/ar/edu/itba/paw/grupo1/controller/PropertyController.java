@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -42,8 +41,6 @@ public class PropertyController extends AbstractPropertyController {
 
 	PropertyService propertyService;
 	PictureService pictureService;
-	@Autowired
-    private Validator validator;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
