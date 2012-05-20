@@ -220,6 +220,52 @@ public class PropertyController extends BaseController {
 		return new ModelAndView(view);
 	}
 	
+	@RequestMapping(value="reserve", method = RequestMethod.GET)
+	protected ModelAndView reserve(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		if (checkIntegerParameter(req, "id")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			Property property = propertyService.getById(id);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (!isMine(req, property)) {
+				throw new PermissionDeniedException();
+			}
+			
+			property.reserve();
+			//TODO: When hibernate flushes by itself next line should begone
+			propertyService.save(property, getLoggedInUser(req));			
+		}
+		
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+	
+	@RequestMapping(value="unreserve",method = RequestMethod.GET)
+	protected ModelAndView unreserve(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		if (checkIntegerParameter(req, "id")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			Property property = propertyService.getById(id);
+			
+			if (property == null) {
+				throw new InvalidParameterException();
+			} else if (!isMine(req, property)) {
+				throw new PermissionDeniedException();
+			}
+			
+			property.unreserve();
+			//TODO: When hibernate flushes by itself next line should begone
+			propertyService.save(property, getLoggedInUser(req));			
+		}
+		
+		RedirectView view = new RedirectView("/property/list",true);
+		return new ModelAndView(view);
+	}
+	
 	private SortedSet<Service> getServices(Property property, HttpServletRequest postReq) {
 		Comparator<Service> comparator = new Comparator<Service>() {
 			public int compare(Service a, Service b) {

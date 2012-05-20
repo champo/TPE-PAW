@@ -5,6 +5,12 @@
 
 <h2>Property <c:out value="${fn:escapeXml(id)}" /></h2>
 
+<c:if test="${!property.reserved}">
+	<div>
+		This property is reserved.
+	</div>
+</c:if>
+
 <div>
 	Property type:<c:if test="${property.propertyType == 'HOUSE'}"> House</c:if><c:if test="${property.propertyType == 'FLAT'}"> Flat</c:if>
 </div>

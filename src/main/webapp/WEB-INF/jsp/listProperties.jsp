@@ -23,6 +23,8 @@
 
 			<c:if test="${!property.published}"><a style="float: right;margin:0px 10px;" href="<c:url value="/property/publish"><c:param name="id" value="${fn:escapeXml(property.id)}" /></c:url>">publish</a></c:if>
 			<c:if test="${property.published}"><a style="float: right;margin:0px 10px;" href="<c:url value="/property/unpublish"><c:param name="id" value="${fn:escapeXml(property.id)}" /></c:url>">unpublish</a></c:if>
+			<c:if test="${!property.reserved}"><a style="float: right;margin:0px 10px;" href="<c:url value="/property/reserve"><c:param name="id" value="${fn:escapeXml(property.id)}" /></c:url>">publish</a></c:if>
+			<c:if test="${property.reserved}"><a style="float: right;margin:0px 10px;" href="<c:url value="/property/unreserve"><c:param name="id" value="${fn:escapeXml(property.id)}" /></c:url>">unpublish</a></c:if>
 		</li>
 	</c:forEach>
 </ul>
