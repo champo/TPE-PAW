@@ -221,46 +221,41 @@ public class PropertyController extends BaseController {
 	}
 	
 	@RequestMapping(value="reserve", method = RequestMethod.GET)
-	protected ModelAndView reserve(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView reserve(HttpServletRequest req, @RequestParam("id") int id)
 			throws ServletException, IOException {
 
-		if (checkIntegerParameter(req, "id")) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			Property property = propertyService.getById(id);
-			
-			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (!isMine(req, property)) {
-				throw new PermissionDeniedException();
-			}
-			
-			property.reserve();
-			//TODO: When hibernate flushes by itself next line should begone
-			propertyService.save(property, getLoggedInUser(req));			
+		Property property = propertyService.getById(id);
+		
+		if (property == null) {
+			throw new InvalidParameterException();
+		} else if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
 		}
+		
+		property.reserve();
+		//TODO: When hibernate flushes by itself next line should begone
+		propertyService.save(property, getLoggedInUser(req));			
 		
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
 	
 	@RequestMapping(value="unreserve",method = RequestMethod.GET)
-	protected ModelAndView unreserve(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView unreserve(HttpServletRequest req, @RequestParam("id") int id)
 			throws ServletException, IOException {
 		
-		if (checkIntegerParameter(req, "id")) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			Property property = propertyService.getById(id);
-			
-			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (!isMine(req, property)) {
-				throw new PermissionDeniedException();
-			}
-			
-			property.unreserve();
-			//TODO: When hibernate flushes by itself next line should begone
-			propertyService.save(property, getLoggedInUser(req));			
+		
+		Property property = propertyService.getById(id);
+		
+		if (property == null) {
+			throw new InvalidParameterException();
+		} else if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
 		}
+			
+		property.unreserve();
+		//TODO: When hibernate flushes by itself next line should begone
+		propertyService.save(property, getLoggedInUser(req));			
 		
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);

@@ -261,8 +261,4 @@ public class Property implements Owned {
 	public void unreserve() {
 		reserved = false;
 	}
-	
-	public void setReserved(boolean reserved) {
-		this.reserved = reserved;
-	}
 }
