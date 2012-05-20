@@ -50,6 +50,7 @@
 
 <div>
 	Antiquity: <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
+	asdasdasd<c:out value="${fn:escapeXml(property.visited)}"></c:out>
 </div>
 
 <div>
