@@ -7,3 +7,15 @@
 	max-width:400px;
 	max-height:200px;
 }
+
+div.reserved {
+	position: relative; 
+}
+
+h4.reserved {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 75px;
+	background-color: red;
+}

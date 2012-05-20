@@ -166,7 +166,7 @@ public class PropertyForm {
 	public Property build(User user) {
 		return new Property(propertyType, operationType, address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
-				description, antiquity, services, true, user);
+				description, antiquity, services, true, user, false);
 	}
 	
 	public void update(Property property) {
