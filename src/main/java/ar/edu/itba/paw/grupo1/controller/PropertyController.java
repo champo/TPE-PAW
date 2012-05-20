@@ -37,7 +37,7 @@ import ar.edu.itba.paw.grupo1.web.Service;
 
 @Controller
 @RequestMapping(value="property")
-public class PropertyController extends AbstractPropertyController {
+public class PropertyController extends BaseController {
 
 	protected PropertyService propertyService;
 	protected PictureService pictureService;
@@ -70,7 +70,7 @@ public class PropertyController extends AbstractPropertyController {
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = buildProperty(propertyForm, getLoggedInUser(req));
+		Property property = propertyForm.build(getLoggedInUser(req));
 		
 		if (errors.hasErrors()) {
 			mav.addObject("services", getServices(new Property(), req));
