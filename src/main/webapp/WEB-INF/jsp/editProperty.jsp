@@ -79,10 +79,11 @@
 		<form:input path="antiquity" />
 	</div>
 		
+		
 	<c:set var="count" value="1" />	
 	<c:forEach var="service" items="${services}">
 		<span>
-			<input id="services<c:out value="${count}"></c:out>" name="services" type="checkbox" value="<c:out value="${fn:escapeXml(service.name)}"></c:out>"/>	
+			<input id="services<c:out value="${count}"></c:out>" name="services" type="checkbox" value="<c:out value="${fn:escapeXml(service.name)}"></c:out>"<c:if test="${service.present}"> checked="checked"</c:if>/>
 			<label for="services<c:out value="${count}"></c:out>"> <spring:message code="${fn:escapeXml(service.name)}"/> </label> 
 		</span>
 		<c:set var="count" value="${count + 1}" scope="page"/>
