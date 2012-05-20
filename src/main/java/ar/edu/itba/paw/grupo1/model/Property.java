@@ -182,6 +182,54 @@ public class Property {
 		return services;
 	}
 	
+	public void setType(PropertyType propertyType) {
+		this.propertyType = propertyType;
+	}
+
+	public void setOperationType(OperationType operationType) {
+		this.operationType = operationType;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setNeighbourhood(String neighbourhood) {
+		this.neighbourhood = neighbourhood;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public void setRooms(int rooms) {
+		this.rooms = rooms;
+	}
+
+	public void setIndoorSpace(double indoorSpace) {
+		this.indoorSpace = indoorSpace;
+	}
+
+	public void setOutdoorSpace(double outdoorSpace) {
+		this.outdoorSpace = outdoorSpace;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setAntiquity(int antiquity) {
+		this.antiquity = antiquity;
+	}
+
+	public void setServices(Set<Services> services) {
+		this.services = services;
+	}
+
+	public void setPublished(boolean published) {
+		this.published = published;
+	}
+
 	public boolean isNew() {
 		return id == null;
 	}

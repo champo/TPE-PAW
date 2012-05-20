@@ -27,9 +27,14 @@ public class PropertyServiceImpl implements PropertyService {
 
 	public void save(Property property, User user) {
 
-		if (property.getId() == null
-				|| user.getId() == property.getUser().getId()) {
-			propertyDao.save(property);
+		if (user.getId() == property.getUser().getId()) {
+			
+			if (property.getId() == null) {
+				propertyDao.save(property);
+			} else {
+				propertyDao.update(property);
+			}
+			
 		} else {
 			throw new PermissionDeniedException();
 		}

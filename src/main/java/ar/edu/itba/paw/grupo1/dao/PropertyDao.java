@@ -14,4 +14,6 @@ public interface PropertyDao {
 	public void save(Property property);
 
 	public List<Property> query(PropertyQuery query);
+
+	public void update(Property property);
 }

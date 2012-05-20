@@ -20,35 +20,59 @@ import ar.edu.itba.paw.grupo1.model.User;
 public class PropertyForm {
 
 	private PropertyType propertyType;
+	
 	private OperationType operationType = OperationType.SELLING;
+	
 	@NotEmpty
 	@NotNull
 	@Size(min=0, max=50)
 	private String address;
+	
 	@NotEmpty
 	@NotNull
 	@Size(min=0, max=50)
 	private String neighbourhood;
+	
 	@NotNull
 	private double price;
+	
 	@NotNull
 	@Range(min=1, max=Integer.MAX_VALUE)
 	private int rooms;
+	
 	@NotNull
 	@Range(min=0, max=Integer.MAX_VALUE)
 	private double indoorSpace;
+	
 	@NotNull
 	@Range(min=0, max=Integer.MAX_VALUE)
 	private double outdoorSpace;
+	
 	@Size(min=0, max=1000)
 	private String description; //Optional
+	
 	@NotNull
 	@Range(min=0, max=Integer.MAX_VALUE)
 	private int antiquity;
+	
 	@NotNull
 	private Set<Services> services = new HashSet<Services>();
 
 	public PropertyForm() {
+	}
+	
+	public PropertyForm(Property property) {
+		propertyType = property.getPropertyType();
+		operationType = property.getOperationType();
+		address = property.getAddress();
+		neighbourhood = property.getNeighbourhood();
+		price = property.getPrice();
+		rooms = property.getRooms();
+		indoorSpace = property.getIndoorSpace();
+		outdoorSpace = property.getOutdoorSpace();
+		description = property.getDescription();
+		antiquity = property.getAntiquity();
+		services = property.getServices();
 	}
 
 	public PropertyType getPropertyType() {
@@ -139,10 +163,23 @@ public class PropertyForm {
 		this.services.addAll(services);
 	}
 
-	public Property buildProperty(User user) {
+	public Property build(User user) {
 		return new Property(propertyType, operationType, address,
 				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
 				description, antiquity, services, true, user);
 	}
-
+	
+	public void update(Property property) {
+		property.setAddress(address);
+		property.setAntiquity(antiquity);
+		property.setDescription(description);
+		property.setIndoorSpace(indoorSpace);
+		property.setOutdoorSpace(outdoorSpace);
+		property.setNeighbourhood(neighbourhood);
+		property.setPrice(price);
+		property.setOperationType(operationType);
+		property.setRooms(rooms);
+		property.setType(propertyType);
+		property.setServices(services);
+	}
 }

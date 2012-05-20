@@ -55,20 +55,18 @@ public class PropertyController extends AbstractPropertyController {
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	protected ModelAndView addGet(HttpServletRequest req, HttpServletResponse resp) 
+	protected ModelAndView addGet() 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		PropertyForm propertyForm = new PropertyForm();
-		setPropertyAttributes(mav, new Property(), propertyForm);
-		
+		mav.addObject("propertyForm", new PropertyForm());
 		mav.addObject("services", getServices(new Property(), null));
-		return render(req, resp, "editProperty.jsp", "Add Property", mav);
+		
+		return render("editProperty.jsp", "Add Property", mav);
 	}
 
 	@RequestMapping(value="add", method = RequestMethod.POST)
-	protected ModelAndView addPost(HttpServletRequest req, HttpServletResponse resp, 
-			@Valid PropertyForm propertyForm, Errors errors) 
+	protected ModelAndView addPost(HttpServletRequest req, @Valid PropertyForm propertyForm, Errors errors) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
@@ -76,8 +74,9 @@ public class PropertyController extends AbstractPropertyController {
 		
 		if (errors.hasErrors()) {
 			mav.addObject("services", getServices(new Property(), req));
-			return render(req, resp, "editProperty.jsp", "Edit Property", mav);
+			return render("editProperty.jsp", "Edit Property", mav);
 		}
+		
 		property.publish();
 		propertyService.save(property, getLoggedInUser(req));
 		RedirectView view = new RedirectView("/property/list",true);
@@ -85,52 +84,50 @@ public class PropertyController extends AbstractPropertyController {
 	}
 	
 	@RequestMapping(value="edit", method = RequestMethod.GET)
-	protected ModelAndView editGet(HttpServletRequest req, HttpServletResponse resp, @RequestParam("id") int id) 
+	protected ModelAndView editGet(HttpServletRequest req, @RequestParam("id") int id) 
 					throws ServletException, IOException {
 		
-		Property property = null;
-		List<Picture> pictures = null;
+		Property property = propertyService.getById(id);
+		List<Picture> pictures = pictureService.getByPropId(id);
 		ModelAndView mav = new ModelAndView();
-		PropertyForm propertyForm = new PropertyForm();
-			
-		property = propertyService.getById(id);
-		pictures = pictureService.getByPropId(id);
 		
 		if (property == null) {
 			throw new InvalidParameterException();
 		} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 			throw new PermissionDeniedException();
 		}
+		
 		mav.addObject("edit", 1);
-		setPropertyAttributes(mav, property, propertyForm);
+		mav.addObject("propertyForm", new PropertyForm(property));
 		mav.addObject("pictures", pictures);				
 		mav.addObject("services", getServices(property, null));
 
-		return render(req, resp, "editProperty.jsp", "Edit Property", mav);
+		return render("editProperty.jsp", "Edit Property", mav);
 	}
 
 	@RequestMapping(value="edit", method = RequestMethod.POST)
-	protected ModelAndView editPost(HttpServletRequest req, HttpServletResponse resp, 
+	protected ModelAndView editPost(HttpServletRequest req, 
 			@Valid PropertyForm propertyForm, Errors errors, @RequestParam("id") int id) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = buildProperty(id, propertyForm, getLoggedInUser(req));
+		
+		Property property = propertyService.getById(id);
+		if (property == null) {
+			throw new InvalidParameterException();
+		} else if (getLoggedInUser(req).getId() != property.getUser().getId()) {
+			throw new PermissionDeniedException();
+		}
 		
 		if (errors.hasErrors()) {
 			mav.addObject("edit", 1);
-			mav.addObject("services", getServices(new Property(), req));
-			return render(req, resp, "editProperty.jsp", "Edit Property", mav);
+			mav.addObject("services", getServices(property, req));
+			return render("editProperty.jsp", "Edit Property", mav);
 		}
 		
-		//Because that's the way hibernate rolls!
-		Property dbProperty = propertyService.getById(id);
-		if (dbProperty.isPublished()) {				
-			property.publish();
-		} else {
-			property.unpublish();
-		}	
+		propertyForm.update(property);
 		propertyService.save(property, getLoggedInUser(req));
+		
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
@@ -191,10 +188,12 @@ public class PropertyController extends AbstractPropertyController {
 				throw new InvalidParameterException();
 			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
-			}		
+			}
+			
 			property.publish();
 			propertyService.save(property, getLoggedInUser(req));			
 		}
+		
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
@@ -212,9 +211,11 @@ public class PropertyController extends AbstractPropertyController {
 			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
 				throw new PermissionDeniedException();
 			}
+			
 			property.unpublish();
 			propertyService.save(property, getLoggedInUser(req));			
 		}
+		
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
