@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 
 <h2>Property <c:out value="${fn:escapeXml(id)}" /></h2>
@@ -51,7 +52,7 @@
 <c:forEach var="service" items="${services}">
 	<c:if test="${service.present == true}">
 		<div>
-			<c:out value="${fn:escapeXml(service.name)}"></c:out>
+			<spring:message code="${fn:escapeXml(service.name)}"/>
 		</div>
 	</c:if>
 </c:forEach>

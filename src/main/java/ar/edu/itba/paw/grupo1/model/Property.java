@@ -32,7 +32,11 @@ public class Property implements Owned {
 		POOL, 
 		LOUNGE, 
 		PADDLE, 
-		BARBECUE 
+		BARBECUE,
+		TENNIS,
+		SECURITY,
+		LAUNDRY,
+		SOLARIUM
 	}
 
 	@Id
