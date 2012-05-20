@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <h2>
 	<c:if test="${empty edit}">
@@ -76,8 +78,16 @@
 		<label for="antiquity">Antiquity:</label>
 		<form:input path="antiquity" />
 	</div>
-			
-	<form:checkboxes path="services" items="${services}" itemLabel="name" itemValue="name"/>
+		
+	<c:set var="count" value="1" />	
+	<c:forEach var="service" items="${services}">
+		<span>
+			<input id="services<c:out value="${count}"></c:out>" name="services" type="checkbox" value="<c:out value="${fn:escapeXml(service.name)}"></c:out>"/>	
+			<label for="services<c:out value="${count}"></c:out>"> <spring:message code="${fn:escapeXml(service.name)}"/> </label> 
+		</span>
+		<c:set var="count" value="${count + 1}" scope="page"/>
+	</c:forEach>
+	<br />	
 		
 	<div>
 		<input type="submit" name="submit" value="Submit" />

@@ -32,7 +32,11 @@ public class Property {
 		POOL, 
 		LOUNGE, 
 		PADDLE, 
-		BARBECUE 
+		BARBECUE,
+		TENNIS,
+		SECURITY,
+		LAUNDRY,
+		SOLARIUM
 	}
 
 	@Id
