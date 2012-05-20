@@ -16,7 +16,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.UserService;
@@ -51,7 +50,7 @@ public class ContactController extends BaseController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (getLoggedInUser(req) != null && property.getUser().getId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && isMine(req, property)) {
 				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
 				return new ModelAndView(view);
 			} else if (!property.isPublished()) {
@@ -95,7 +94,7 @@ public class ContactController extends BaseController {
 		
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (getLoggedInUser(req) != null && property.getUser().getId() == getLoggedInUser(req).getId()) {
+			} else if (getLoggedInUser(req) != null && isMine(req, property)) {
 				RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
 				return new ModelAndView(view);
 			} else if (!property.isPublished()) {

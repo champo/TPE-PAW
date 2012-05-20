@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pictures")
-public class Picture {
+public class Picture implements Owned {
 
 	@Id
 	@SequenceGenerator(sequenceName = "pictures_seq", name = "pictures_seq")
@@ -57,7 +57,6 @@ public class Picture {
 
 	public void setProperty(Property property) {
 		this.property = property;
-		
 	}
 	
 	public void setId(int id) {
@@ -76,5 +75,8 @@ public class Picture {
 		this.extension = extension;
 	}
 	
+	public User getUser() {
+		return property.getUser();
+	}
 }
 

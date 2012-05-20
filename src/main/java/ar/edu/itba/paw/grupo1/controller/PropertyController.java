@@ -93,7 +93,7 @@ public class PropertyController extends BaseController {
 		
 		if (property == null) {
 			throw new InvalidParameterException();
-		} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
+		} else if (!isMine(req, property)) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -115,7 +115,7 @@ public class PropertyController extends BaseController {
 		Property property = propertyService.getById(id);
 		if (property == null) {
 			throw new InvalidParameterException();
-		} else if (getLoggedInUser(req).getId() != property.getUser().getId()) {
+		} else if (!isMine(req, property)) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -149,7 +149,7 @@ public class PropertyController extends BaseController {
 			if (property == null) {
 				RedirectView view = new RedirectView("/query",true);
 				return new ModelAndView(view);
-			} else if (!property.isPublished() && (!isLoggedIn(req) || property.getUser().getId() != getLoggedInUser(req).getId())) {
+			} else if (!property.isPublished() && (!isLoggedIn(req) || !isMine(req, property))) {
 				RedirectView view = new RedirectView("/query?unpublished=true",true);
 				return new ModelAndView(view);
 			}
@@ -186,7 +186,7 @@ public class PropertyController extends BaseController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
+			} else if (!isMine(req, property)) {
 				throw new PermissionDeniedException();
 			}
 			
@@ -208,7 +208,7 @@ public class PropertyController extends BaseController {
 			
 			if (property == null) {
 				throw new InvalidParameterException();
-			} else if (property.getUser().getId() != getLoggedInUser(req).getId()) {
+			} else if (!isMine(req, property)) {
 				throw new PermissionDeniedException();
 			}
 			

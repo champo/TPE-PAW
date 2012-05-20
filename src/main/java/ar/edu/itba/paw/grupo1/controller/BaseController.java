@@ -12,6 +12,7 @@ import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.ValidationUtils;
+import ar.edu.itba.paw.grupo1.model.Owned;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @Controller
@@ -33,6 +34,10 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 	
 	protected ModelAndView render(String file, String title, ModelAndView mav) throws ServletException, IOException {
 		return render(null, null, file, title, mav);
+	}
+	
+	protected boolean isMine(HttpServletRequest req, Owned obj) {
+		return obj.getUser().getId() == getLoggedInUser(req).getId();
 	}
 
 	protected void setLoggedInUser(HttpServletRequest req, User user) {

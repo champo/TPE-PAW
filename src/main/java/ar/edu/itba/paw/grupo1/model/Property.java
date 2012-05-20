@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "properties")
-public class Property {
+public class Property implements Owned {
 
 	public enum PropertyType { 
 		HOUSE, 

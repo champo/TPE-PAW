@@ -55,7 +55,7 @@ public class PictureController extends AbstractPictureController {
 		}
 		
 		Property property = propertyService.getById(Integer.parseInt(req.getParameter("propId")));
-		if (property.getUser().getId() == user.getId()) {
+		if (isMine(req, property)) {
 			Picture picture = new Picture();
 			
 			picture.setProperty(property);
@@ -133,7 +133,7 @@ public class PictureController extends AbstractPictureController {
 			return render(req, resp, "editPicture.jsp", "Add Picture", mav);
 		}
 		
-		if (picture.getProperty().getUser().getId() != getLoggedInUser(req).getId()) {
+		if (isMine(req, picture)) {
 			req.setAttribute("noPermissions", 1);
 			return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
 		}
@@ -169,7 +169,7 @@ public class PictureController extends AbstractPictureController {
 			}
 			
 			
-			if (picture != null && picture.getProperty().getUser().getId() == user.getId()) {
+			if (picture != null && isMine(req, picture)) {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 			} else {
@@ -194,7 +194,7 @@ public class PictureController extends AbstractPictureController {
 			throw new InvalidParameterException();
 		}
 				
-		if (picture == null || picture.getProperty().getUser().getId() != getLoggedInUser(req).getId()) {
+		if (picture == null || !isMine(req, picture)) {
 			req.setAttribute("noPermissions", 1);
 			return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
 		}
