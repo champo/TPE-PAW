@@ -132,8 +132,8 @@ public class PictureController extends AbstractPictureController {
 			req.setAttribute("picture", picture);
 			return render(req, resp, "editPicture.jsp", "Add Picture", mav);
 		}
-		
-		if (isMine(req, picture)) {
+			
+		if (!isMine(req, picture)) {
 			req.setAttribute("noPermissions", 1);
 			return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
 		}
