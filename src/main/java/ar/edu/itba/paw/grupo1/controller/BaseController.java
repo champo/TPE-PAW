@@ -26,9 +26,13 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 				
 		mav.addObject("documentTitle", title);
 		mav.addObject("documentBodyFile", file);
-		mav.addObject("basePath", req.getContextPath());
+		mav.addObject("basePath", getServletContext().getContextPath());
 		mav.setViewName("layout");
 		return mav;
+	}
+	
+	protected ModelAndView render(String file, String title, ModelAndView mav) throws ServletException, IOException {
+		return render(null, null, file, title, mav);
 	}
 
 	protected void setLoggedInUser(HttpServletRequest req, User user) {
