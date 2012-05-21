@@ -9,7 +9,6 @@ import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +54,7 @@ public class PropertyController extends BaseController {
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	protected ModelAndView addGet() 
-			throws ServletException, IOException {
+	protected ModelAndView addGet() { 
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("propertyForm", new PropertyForm());
@@ -66,8 +64,7 @@ public class PropertyController extends BaseController {
 	}
 
 	@RequestMapping(value="add", method = RequestMethod.POST)
-	protected ModelAndView addPost(HttpServletRequest req, @Valid PropertyForm propertyForm, Errors errors) 
-			throws ServletException, IOException {
+	protected ModelAndView addPost(HttpServletRequest req, @Valid PropertyForm propertyForm, Errors errors) { 
 
 		ModelAndView mav = new ModelAndView();
 		Property property = propertyForm.build(getLoggedInUser(req));
@@ -107,12 +104,11 @@ public class PropertyController extends BaseController {
 
 	@RequestMapping(value="edit", method = RequestMethod.POST)
 	protected ModelAndView editPost(HttpServletRequest req, 
-			@Valid PropertyForm propertyForm, Errors errors, @RequestParam("id") int id) 
+			@Valid PropertyForm propertyForm, Errors errors, @RequestParam("id") Property property) 
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
 		
-		Property property = propertyService.getById(id);
 		if (property == null) {
 			throw new InvalidParameterException();
 		} else if (!isMine(req, property)) {
@@ -128,104 +124,82 @@ public class PropertyController extends BaseController {
 		propertyForm.update(property);
 		propertyService.save(property, getLoggedInUser(req));
 		
-		RedirectView view = new RedirectView("/property/list",true);
+		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
 
-	
-	
-	@RequestMapping(value="showDetail",method = RequestMethod.GET)
-	protected ModelAndView showDetail(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	@RequestMapping(value="showDetail", method = RequestMethod.GET)
+	protected ModelAndView showDetail(HttpServletRequest req, @RequestParam("id") Property property) {
+
+		if (property == null) {
+			RedirectView view = new RedirectView("/query", true);
+			return new ModelAndView(view);
+		} else if (!property.isPublished() && (!isLoggedIn(req) || !isMine(req, property))) {
+			RedirectView view = new RedirectView("/query?unpublished=true", true);
+			return new ModelAndView(view);
+		}
 
 		ModelAndView mav = new ModelAndView();
+		List<Picture> pictures = pictureService.getByPropId(property.getId());
 		
-		if (checkIntegerParameter(req, "id")) {
-
-			int id = Integer.parseInt(req.getParameter("id"));
-			Property property = propertyService.getById(id);
-			List<Picture> pictures = pictureService.getByPropId(id);
-
-			if (property == null) {
-				RedirectView view = new RedirectView("/query",true);
-				return new ModelAndView(view);
-			} else if (!property.isPublished() && (!isLoggedIn(req) || !isMine(req, property))) {
-				RedirectView view = new RedirectView("/query?unpublished=true",true);
-				return new ModelAndView(view);
-			}
-
-			req.setAttribute("property", property);
-			req.setAttribute("services", getServices(property, null));
-			if (pictures.size() > 0) {
-				req.setAttribute("pictures", pictures);
-			}
-		} else {
-			throw new InvalidParameterException();
+		mav.addObject("property", property);
+		mav.addObject("services", getServices(property, null));
+		if (pictures.size() > 0) {
+			mav.addObject("pictures", pictures);
 		}
 		
 		return render("propertyDetail.jsp", "Property Detail", mav);
 	}
 	
 	@RequestMapping(value="list",method = RequestMethod.GET)
-	protected ModelAndView list(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected ModelAndView list(HttpServletRequest req) {
 
 		ModelAndView mav = new ModelAndView();
+		
 		User user = getLoggedInUser(req);		
-		req.setAttribute("properties", propertyService.getProperties(user.getId()));
+		mav.addObject("properties", propertyService.getProperties(user.getId()));
+		
 		return render("listProperties.jsp", "List Properties", mav);
 	}	
 	
 	@RequestMapping(value="publish", method = RequestMethod.GET)
-	protected ModelAndView publish(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected ModelAndView publish(HttpServletRequest req, @RequestParam("id") Property property)
+			throws ServletException {
 
-		if (checkIntegerParameter(req, "id")) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			Property property = propertyService.getById(id);
-			
-			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (!isMine(req, property)) {
-				throw new PermissionDeniedException();
-			}
-			
-			property.publish();
-			propertyService.save(property, getLoggedInUser(req));			
+		if (property == null) {
+			throw new InvalidParameterException();
+		} else if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
 		}
+
+		property.publish();
+		propertyService.save(property, getLoggedInUser(req));
 		
-		RedirectView view = new RedirectView("/property/list",true);
+		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
 	
 	@RequestMapping(value="unpublish",method = RequestMethod.GET)
-	protected ModelAndView unpublish(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
-		if (checkIntegerParameter(req, "id")) {
-			int id = Integer.parseInt(req.getParameter("id"));
-			Property property = propertyService.getById(id);
-			
-			if (property == null) {
-				throw new InvalidParameterException();
-			} else if (!isMine(req, property)) {
-				throw new PermissionDeniedException();
-			}
-			
-			property.unpublish();
-			propertyService.save(property, getLoggedInUser(req));			
+	protected ModelAndView unpublish(HttpServletRequest req, @RequestParam("id") Property property)
+			throws ServletException {
+
+		if (property == null) {
+			throw new InvalidParameterException();
+		} else if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
 		}
-		
-		RedirectView view = new RedirectView("/property/list",true);
+
+		property.unpublish();
+		propertyService.save(property, getLoggedInUser(req));			
+
+		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
 	
 	@RequestMapping(value="reserve", method = RequestMethod.GET)
-	protected ModelAndView reserve(HttpServletRequest req, @RequestParam("id") int id)
-			throws ServletException, IOException {
+	protected ModelAndView reserve(HttpServletRequest req, @RequestParam("id") Property property)
+			throws ServletException {
 
-		Property property = propertyService.getById(id);
-		
 		if (property == null) {
 			throw new InvalidParameterException();
 		} else if (!isMine(req, property)) {
@@ -236,16 +210,13 @@ public class PropertyController extends BaseController {
 		//TODO: When hibernate flushes by itself next line should begone
 		propertyService.save(property, getLoggedInUser(req));			
 		
-		RedirectView view = new RedirectView("/property/list",true);
+		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
 	
 	@RequestMapping(value="unreserve",method = RequestMethod.GET)
-	protected ModelAndView unreserve(HttpServletRequest req, @RequestParam("id") int id)
-			throws ServletException, IOException {
-		
-		
-		Property property = propertyService.getById(id);
+	protected ModelAndView unreserve(HttpServletRequest req, @RequestParam("id") Property property)
+			throws ServletException {
 		
 		if (property == null) {
 			throw new InvalidParameterException();
@@ -257,7 +228,7 @@ public class PropertyController extends BaseController {
 		//TODO: When hibernate flushes by itself next line should begone
 		propertyService.save(property, getLoggedInUser(req));			
 		
-		RedirectView view = new RedirectView("/property/list",true);
+		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
 	

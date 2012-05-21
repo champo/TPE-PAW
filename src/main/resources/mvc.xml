@@ -15,7 +15,10 @@
 	
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
 	    <property name="converters">
-	        <bean class="ar.edu.itba.paw.grupo1.web.converter.UserConverter" />
+	        <list>
+	        	<bean class="ar.edu.itba.paw.grupo1.web.converter.UserConverter" />
+	        	<bean class="ar.edu.itba.paw.grupo1.web.converter.PropertyConverter" />
+	        </list>
 	    </property>
     </bean>
 		

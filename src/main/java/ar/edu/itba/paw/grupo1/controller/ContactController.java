@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.EmailService;
-import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 import ar.edu.itba.paw.grupo1.web.ContactForm;
 
@@ -27,21 +26,18 @@ import ar.edu.itba.paw.grupo1.web.ContactForm;
 @RequestMapping(value="contact")
 public class ContactController extends BaseController {
 	
-	private PropertyService propertyService;
 	private EmailService emailService;
 
 	@Autowired
-	public ContactController(PropertyService propertyService, EmailService emailService) {
-		this.propertyService = propertyService;
+	public ContactController(EmailService emailService) {
 		this.emailService = emailService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView doGet(@RequestParam int propertyId, HttpServletRequest req, ContactForm contactForm)
+	protected ModelAndView doGet(@RequestParam("propertyId") Property property, HttpServletRequest req, ContactForm contactForm)
 		throws InvalidParameterException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = propertyService.getById(propertyId);
 			
 		if (property == null) {
 			throw new InvalidParameterException();
@@ -58,11 +54,10 @@ public class ContactController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView doPost(@RequestParam int propertyId, HttpServletRequest req, @Valid ContactForm contactForm, Errors errors)
+	protected ModelAndView doPost(@RequestParam("propertyId") Property property, HttpServletRequest req, @Valid ContactForm contactForm, Errors errors)
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		Property property = propertyService.getById(propertyId);
 
 		if (property == null) {
 			throw new InvalidParameterException();
