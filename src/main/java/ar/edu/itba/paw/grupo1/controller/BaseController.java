@@ -29,7 +29,12 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 	}
 	
 	protected boolean isMine(HttpServletRequest req, Owned obj) {
-		return obj.getUser().getId() == getLoggedInUser(req).getId();
+
+		if (isLoggedIn(req)) {
+			return getLoggedInUser(req).equals(obj.getUser());
+		}
+		
+		return false;
 	}
 
 	protected void setLoggedInUser(HttpServletRequest req, User user) {
