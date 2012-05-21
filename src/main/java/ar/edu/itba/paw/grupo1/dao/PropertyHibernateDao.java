@@ -38,26 +38,40 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 		
 		Criteria criteria = createCriteria().add(Restrictions.eq("published", true));
 
-		if ("selling".equals(query.getOperation())) {
-			criteria.add(Restrictions.eq("opertionType", 0));
-		} else if ("leasing".equals(query.getOperation())) {
-			criteria.add(Restrictions.eq("opertionType", 1));
+		switch (query.getOperation()) {
+			case SELLING:
+				criteria.add(Restrictions.eq("operationType", Property.OperationType.SELLING));
+				break;
+			case LEASING:
+				criteria.add(Restrictions.eq("operationType", Property.OperationType.LEASING));
+				break;
 		}
 
-		if ("house".equals(query.getProperty())) {
-			criteria.add(Restrictions.eq("propertyType", 0));
-		} else if ("flat".equals(query.getProperty())) {
-			criteria.add(Restrictions.eq("propertyType", 1));
+		switch (query.getProperty()) {
+			case HOUSE:
+				criteria.add(Restrictions.eq("propertyType", Property.PropertyType.HOUSE));
+				break;
+			case FLAT:
+				criteria.add(Restrictions.eq("propertyType", Property.PropertyType.FLAT));
+				break;
+		}
+
+		switch (query.getOrder()) {
+			case ASCENDING:
+				criteria.addOrder(Order.asc("price"));
+				break;
+			case DESCENDING:
+				criteria.addOrder(Order.desc("price"));
+				break;
 		}
 		
-		if ("ascending".equals(query.getOrder())) {
-			criteria.addOrder(Order.asc("price"));
-		} else if ("descending".equals(query.getOrder())) {
-			criteria.addOrder(Order.desc("price"));
+		if (query.getRangeFrom() != null) {
+			criteria.add(Restrictions.ge("price", query.getRangeFrom()));
 		}
-		
-		criteria.add(Restrictions.ge("price", query.getRangeFrom()));
-		criteria.add(Restrictions.le("price", query.getRangeTo()));
+
+		if (query.getRangeTo() != null) {
+			criteria.add(Restrictions.le("price", query.getRangeTo()));
+		}
 		
 		return criteria.list();
 	}
