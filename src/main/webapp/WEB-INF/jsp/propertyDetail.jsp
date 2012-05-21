@@ -67,6 +67,8 @@
 
 <div>
 	<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
+	-
+	<a href="${basePath }/query/user?id=${property.user.id }">See ${fn:escapeXml(property.user.username) }'s properties</a>
 </div>
 
 <c:if test="${not empty pictures}">
