@@ -5,9 +5,11 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.web.RegisterForm;
 
 @Controller
 @RequestMapping(value="user")
@@ -30,7 +33,7 @@ public class UserController extends BaseController {
 	
 	
 	@RequestMapping(value="register", method = RequestMethod.GET)
-	protected ModelAndView registerGet(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView registerGet(HttpServletRequest req)
 			throws ServletException, IOException {
 		
 		ModelAndView mav = new ModelAndView();
@@ -38,53 +41,35 @@ public class UserController extends BaseController {
 			RedirectView view = new RedirectView("/",true);
 			return new ModelAndView(view);
 		}
-		
-		return render(req, resp, "register.jsp", "Register", mav);
+
+		mav.addObject(new RegisterForm());
+		return render("register.jsp", "Register", mav);
 	}
 	
 	@RequestMapping(value="register", method = RequestMethod.POST)
-	protected ModelAndView registerPost(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView registerPost(HttpServletRequest req, @Valid RegisterForm form, Errors errors)
 			throws ServletException, IOException {
 		
 		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
-			RedirectView view = new RedirectView("/",true);
+			RedirectView view = new RedirectView("/", true);
 			return new ModelAndView(view);
 		}
 		
-		boolean error = false;
-		
-		error |= !checkParameter(req, "name", 0, 50);
-		error |= !checkParameter(req, "surname", 0, 50);
-		error |= !checkParameter(req, "username", 0, 50);
-		error |= !hasParameter(req, "password");
-		error |= !areParamsEqual(req, "password", "passwordConfirmation");
-		error |= !checkEmail(req, "email", 0, 50);
-		error |= !checkPhone(req, "phone", 0, 20);
-		
-		if (error) {
-			return render(req, resp, "register.jsp", "Register", mav);
+		if (errors.hasErrors()) {
+			return render("register.jsp", "Register", mav);
 		}
 		
 		try {
-			User user = userService.register(
-				req.getParameter("name"),
-				req.getParameter("surname"),
-				req.getParameter("email"),
-				req.getParameter("phone"),
-				req.getParameter("username"),
-				req.getParameter("password")
-			);
-			
-			if (user != null) {
-				return render(req, resp, "registerSuccess.jsp", "Register", mav);
+			if (userService.register(form.build()) != null) {
+				return render("registerSuccess.jsp", "Register", mav);
 			}
 			
 		} catch (UserAlreadyExistsException e) {
 			req.setAttribute("usernameDuplicate", true);
 		}
 		
-		return render(req, resp, "register.jsp", "Register", mav);
+		return render("register.jsp", "Register", mav);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)

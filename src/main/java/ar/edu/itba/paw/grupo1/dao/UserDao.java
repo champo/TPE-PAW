@@ -4,13 +4,14 @@ import ar.edu.itba.paw.grupo1.model.User;
 
 public interface UserDao {
 
-	public User register(String name, String surname, String email, String phone, String username, String password) throws UserAlreadyExistsException;
-	
 	public User login(String username, String hash);
 	
 	public User get(int userId);
 	
+	public User register(User user) throws UserAlreadyExistsException;
+	
 	public class UserAlreadyExistsException extends Exception {
 		
 	}
+
 }

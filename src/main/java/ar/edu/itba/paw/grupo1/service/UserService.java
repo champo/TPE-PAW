@@ -8,9 +8,6 @@ import ar.edu.itba.paw.grupo1.model.User;
 public interface UserService {
 
 	@Transactional
-	public User register(String name, String surname, String email, String phone, String username, String password) throws UserAlreadyExistsException;
-
-	@Transactional
 	public User login(String username, String password);
 
 	@Transactional
@@ -18,5 +15,8 @@ public interface UserService {
 
 	@Transactional
 	public User loginWithHash(String username, String hash);
+
+	@Transactional
+	public User register(User user) throws UserAlreadyExistsException;
 	
 }
