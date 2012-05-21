@@ -27,11 +27,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<!-- <mvc:annotation-driven conversion-service="conversionService" /> -->
-	<!-- <bean id="conversionService" -->
-	<!-- class="ar.edu.itba.paw.grupo1.web.converter.EnhancedFormattingConversionServiceFactoryBean" 
-		/> -->
-		
 	<!-- Application Message Bundle -->	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
