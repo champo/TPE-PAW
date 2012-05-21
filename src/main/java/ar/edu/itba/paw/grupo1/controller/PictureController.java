@@ -24,7 +24,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
@@ -45,7 +44,6 @@ public class PictureController extends AbstractPictureController {
 			throws ServletException, IOException {
 		
 		ModelAndView mav = new ModelAndView();
-		User user = getLoggedInUser(req);		
 		int propId = -1;
 		
 		try {
@@ -54,7 +52,7 @@ public class PictureController extends AbstractPictureController {
 			throw new InvalidParameterException();
 		}
 		
-		Property property = propertyService.getById(Integer.parseInt(req.getParameter("propId")));
+		Property property = propertyService.getById(propId);
 		if (isMine(req, property)) {
 			Picture picture = new Picture();
 			
@@ -161,7 +159,6 @@ public class PictureController extends AbstractPictureController {
 		ModelAndView mav = new ModelAndView();
 		Picture picture = null;
 		if (req.getParameter("id") != null) {
-			User user = getLoggedInUser(req);
 			try {
 				picture = pictureService.getById(Integer.parseInt(req.getParameter("id")));
 			} catch (NumberFormatException e) {
