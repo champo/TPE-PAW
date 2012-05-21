@@ -7,7 +7,7 @@
 	<p class="error">No user with those credentials was found.</p>
 </c:if>
 
-<p>Dont have an account? <a href="${baseUrl }/user/register">Register!</a></p>
+<p>Dont have an account? <a href="${basePath }/user/register">Register!</a></p>
 
 <form action="${basePath }/user/login?from=${param.from }" method="post">
 	<fieldset>
