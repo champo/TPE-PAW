@@ -2,6 +2,7 @@ package ar.edu.itba.paw.grupo1.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class Picture implements Owned {
 	@GeneratedValue(generator = "pictures_seq")
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Property property;
 	
 	@Column(length = 50, nullable = false)
