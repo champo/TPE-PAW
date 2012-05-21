@@ -47,4 +47,9 @@ public class PropertyServiceImpl implements PropertyService {
 	public List<Property> query(PropertyQuery query) {
 		return propertyDao.query(query);
 	}
+
+	@Override
+	public List<Property> getListedProperties(User user) {
+		return propertyDao.getListProperties(user);
+	}
 }

@@ -22,4 +22,7 @@ public interface PropertyService {
 	@Transactional
 	public List<Property> query(PropertyQuery query);
 
+	@Transactional
+	public List<Property> getListedProperties(User user);
+
 }
