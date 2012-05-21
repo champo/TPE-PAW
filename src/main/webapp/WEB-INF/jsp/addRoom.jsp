@@ -14,7 +14,7 @@
 	</h2>
 	
 	<c:set var="url">
-		property/addRoom/${propId}
+		property/addRoom/${property.id}
 	</c:set>
 	
 	

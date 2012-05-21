@@ -240,11 +240,10 @@ public class PropertyController extends BaseController {
 			@PathVariable("propId") Property property) throws ServletException, IOException {
 		
 		ModelAndView mav = new ModelAndView();
-		User user = getLoggedInUser(req);
 
-		if (property.getUser().getId() == user.getId()) {
+		if (isMine(req, property)) {
 			mav.addObject("roomForm", new RoomForm());
-			mav.addObject("propId", property.getId());
+			mav.addObject("property", property);
 			mav.addObject("hasPermissions", 1);
 		}
 		
@@ -257,15 +256,14 @@ public class PropertyController extends BaseController {
 					throws ServletException, IOException {
 		
 		ModelAndView mav = new ModelAndView();
-		User user = getLoggedInUser(req);
 		
-		if (property.getUser().getId() != user.getId()) {
+		if (!isMine(req, property)) {
 			return render("addRoom.jsp", "Add Room", mav);
 		}
 		
 		if (errors.hasErrors()) {
 			mav.addObject("hasPermissions", 1);
-			mav.addObject("propId", property.getId());
+			mav.addObject("property", property);
 			return render("addRoom.jsp", "Add Room", mav);
 		}
 		
@@ -274,7 +272,6 @@ public class PropertyController extends BaseController {
 		propertyService.save(property, getLoggedInUser(req));
 		
 		RedirectView view = new RedirectView("/property/edit?id=" + property.getId(),true);
-		view.addStaticAttribute("rooms", property.getRooms());
 		return new ModelAndView(view);
 	}
 	

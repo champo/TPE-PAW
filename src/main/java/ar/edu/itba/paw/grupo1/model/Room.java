@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -23,7 +22,6 @@ public class Room {
 	private Integer id;
 	
 	@NotNull
-	@NotEmpty
 	@Size(min=0, max=50)
 	@Column(nullable = false, length = 50)
 	private String name;
