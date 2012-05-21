@@ -5,10 +5,12 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +22,7 @@ import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
+import ar.edu.itba.paw.grupo1.web.ContactForm;
 
 @Controller
 @RequestMapping(value="contact")
@@ -37,7 +40,7 @@ public class ContactController extends BaseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView doGet(HttpServletRequest req, HttpServletResponse resp, ContactForm contactForm)
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
@@ -67,24 +70,15 @@ public class ContactController extends BaseController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	protected ModelAndView doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView doPost(HttpServletRequest req, HttpServletResponse resp, @Valid ContactForm contactForm, Errors errors)
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
 		Property property;
 		if (checkIntegerParameter(req, "propertyId")) {
 			property = propertyService.getById(Integer.parseInt(req.getParameter("propertyId")));
-
-			boolean error = false;
 			
-			error |= !checkParameter(req, "name", 0, 50);
-			error |= !checkParameter(req, "email", 0, 50);
-			error |= !checkParameter(req, "phone", 0, 50);
-			error |= !checkParameter(req, "comment", 0, 1000, true);
-			error |= !checkEmail(req, "email", 0, 50);
-			error |= !checkPhone(req, "phone", 0, 20);
-			
-			if (error) {
+			if (errors.hasErrors()) {
 				//FIXME: NPE if property is null.
 				req.setAttribute("propertyId", property.getId());
 				req.setAttribute("address", property.getAddress());
@@ -110,8 +104,8 @@ public class ContactController extends BaseController {
 		req.setAttribute("publisher", property.getUser());
 		
 		try {
-			emailService.sendContact(req.getParameter("email"), req.getParameter("name"), 
-					req.getParameter("comment"), property.getUser(), property);
+			emailService.sendContact(contactForm.getEmail(), contactForm.getName(), 
+					contactForm.getComment(), property.getUser(), property);
 		} catch (MailingException e) {
 			Logger.getLogger(ContactController.class).warn("Failed to send contact email", e);
 		}
