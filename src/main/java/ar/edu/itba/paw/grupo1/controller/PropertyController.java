@@ -81,12 +81,8 @@ public class PropertyController extends BaseController {
 	}
 	
 	@RequestMapping(value="edit", method = RequestMethod.GET)
-	protected ModelAndView editGet(HttpServletRequest req, @RequestParam("id") int id) 
+	protected ModelAndView editGet(HttpServletRequest req, @RequestParam("id") Property property) 
 					throws ServletException, IOException {
-		
-		Property property = propertyService.getById(id);
-		List<Picture> pictures = pictureService.getByPropId(id);
-		ModelAndView mav = new ModelAndView();
 		
 		if (property == null) {
 			throw new InvalidParameterException();
@@ -94,9 +90,10 @@ public class PropertyController extends BaseController {
 			throw new PermissionDeniedException();
 		}
 		
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("edit", 1);
 		mav.addObject("propertyForm", new PropertyForm(property));
-		mav.addObject("pictures", pictures);				
+		mav.addObject("pictures", pictureService.getByPropId(property.getId()));				
 		mav.addObject("services", getServices(property, null));
 
 		return render("editProperty.jsp", "Edit Property", mav);
