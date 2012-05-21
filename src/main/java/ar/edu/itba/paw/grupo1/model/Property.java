@@ -3,6 +3,7 @@ package ar.edu.itba.paw.grupo1.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -61,7 +63,7 @@ public class Property implements Owned {
 	private double price;
 	
 	@Column(nullable = false)
-	private int rooms;
+	private int numRooms;
 	
 	@Column(nullable = false)
 	private double indoorSpace;
@@ -87,6 +89,9 @@ public class Property implements Owned {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private Set<Room> rooms = new HashSet<Room>();
+	
 	public Property() {
 	}
 	
@@ -102,7 +107,7 @@ public class Property implements Owned {
 		this.address = address;
 		this.neighbourhood = neighbourhood;
 		this.price = price;
-		this.rooms = rooms;
+		this.numRooms = rooms;
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
@@ -124,7 +129,7 @@ public class Property implements Owned {
 		this.address = address;
 		this.neighbourhood = neighbourhood;
 		this.price = price;
-		this.rooms = rooms;
+		this.numRooms = rooms;
 		this.indoorSpace = indoorSpace;
 		this.outdoorSpace = outdoorSpace;
 		this.description = description;
@@ -171,8 +176,8 @@ public class Property implements Owned {
 		return propertyType;
 	}
 	
-	public int getRooms() {
-		return rooms;
+	public int getNumRooms() {
+		return numRooms;
 	}
 	
 	public boolean isPublished() {
@@ -215,8 +220,8 @@ public class Property implements Owned {
 		this.price = price;
 	}
 
-	public void setRooms(int rooms) {
-		this.rooms = rooms;
+	public void setNumRooms(int numRooms) {
+		this.numRooms = numRooms;
 	}
 
 	public void setIndoorSpace(double indoorSpace) {
@@ -253,6 +258,10 @@ public class Property implements Owned {
 	
 	public void unpublish() {
 		published = false;
+	}
+
+	public void addRoom(Room room) {
+		rooms.add(room);
 	}	
 	
 	public void reserve() {
@@ -261,5 +270,13 @@ public class Property implements Owned {
 	
 	public void unreserve() {
 		reserved = false;
+	}
+	
+	public Set<Room> getRooms() {
+		return rooms;
+	}
+	
+	public void setRooms(Set<Room> rooms) {
+		this.rooms = rooms;
 	}
 }

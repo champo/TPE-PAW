@@ -32,7 +32,7 @@
         <mapping class="ar.edu.itba.paw.grupo1.model.Picture" />
         <mapping class="ar.edu.itba.paw.grupo1.model.User" />
         <mapping class="ar.edu.itba.paw.grupo1.model.Property" />
-        
+        <mapping class="ar.edu.itba.paw.grupo1.model.Room" />       
     </session-factory>
     
 </hibernate-configuration>
