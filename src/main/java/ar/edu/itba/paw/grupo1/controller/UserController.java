@@ -89,7 +89,7 @@ public class UserController extends BaseController {
 			req.setAttribute("username", username);
 		}
 		
-		return render(req, resp, "login.jsp", "Login", mav);
+		return render("login.jsp", "Login", mav);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
