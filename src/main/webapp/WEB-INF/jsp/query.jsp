@@ -5,9 +5,13 @@
 
 <h1>Query</h1>
 
-<c:if test="${param.unpublished}">
-	<p class="error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
-</c:if>
+<div>
+	<c:if test="${param.unpublished}">
+		<p class="error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
+	</c:if>
+	
+	<form:errors path="pageNumber" element="p" cssClass="error" />
+</div>
 
 <div>
 	<form:form action="${basePath }/query" method="get" commandName="propertyQuery">
@@ -58,4 +62,29 @@
 </div>
 <br />
 
-<c:import url="/WEB-INF/jsp/queryList.jsp" />
+<div>
+	<c:if test="${not empty queryResults}">
+        <c:import url="/WEB-INF/jsp/queryList.jsp" />
+		<p>
+			<c:if test="${pageNumber != 1}">
+				<a href="${pageURL}1">First</a>
+				<a href="${pageURL}${pageNumber - 1}">Previous</a>
+			</c:if>
+			
+			<c:forEach var="page" begin="${paginationFrom}" end="${pageNumber - 1}" step="1">
+				<a href="${pageURL}${page}">${page}</a>
+			</c:forEach>
+
+			${pageNumber}
+			
+			<c:forEach var="page" begin="${pageNumber + 1}" end="${paginationTo}" step="1">
+				<a href="${pageURL}${page}">${page}</a>
+			</c:forEach>
+
+			<c:if test="${pageNumber != lastPage}">
+				<a href="${pageURL}${pageNumber + 1}">Next</a>
+				<a href="${pageURL}${lastPage}">Last</a>
+			</c:if>
+		</p>
+	</c:if>
+</div>

@@ -31,20 +31,11 @@ public class PropertyQuery {
 	private Double rangeTo;
 
 	private OrderType order = OrderType.ASCENDING;
+	
+	@Range(min=1, max=Integer.MAX_VALUE)
+	private int pageNumber = 1;
 
-	public PropertyQuery() {
-		
-	}
-
-	public PropertyQuery(OperationType operation, PropertyType property, double rangeFrom, double rangeTo, OrderType order) {
-
-		this.operation = operation;
-		this.property = property;
-		this.rangeFrom = rangeFrom;
-		this.rangeTo = rangeTo;
-		this.order = order;
-	}
-
+	
 	public OperationType getOperation() {
 		return operation;
 	}
@@ -83,6 +74,14 @@ public class PropertyQuery {
 
 	public void setOrder(OrderType order) {
 		this.order = order;
+	}
+
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
 	}
 
 }
