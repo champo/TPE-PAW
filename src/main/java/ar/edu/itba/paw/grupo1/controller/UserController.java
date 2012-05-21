@@ -24,7 +24,7 @@ import ar.edu.itba.paw.grupo1.web.RegisterForm;
 @RequestMapping(value="user")
 public class UserController extends BaseController {
 
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
 	public UserController(UserService userService) {
