@@ -1,20 +1,18 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
-import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 
 @Controller
@@ -29,77 +27,19 @@ public class QueryController extends BaseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	protected ModelAndView query(HttpServletRequest req, HttpServletResponse resp)
+	protected ModelAndView query(@Valid PropertyQuery propertyQuery, Errors errors)
 			throws ServletException, IOException {
 
 		ModelAndView mav = new ModelAndView();
-		String operation = req.getParameter("operation");
-		String property = req.getParameter("property");
-		String rangeFrom = req.getParameter("rangeFrom");
-		String rangeTo = req.getParameter("rangeTo");
-		String order = req.getParameter("order");
 
-		if (operation == null && property == null && rangeFrom == null
-				&& rangeTo == null && order == null) {
-
-			req.setAttribute("operationChecked", "any");
-			req.setAttribute("propertyChecked", "any");
-			req.setAttribute("orderChosen", "ascending");
-			return render(req, resp, "query.jsp", "Query", mav);
+		if (errors.hasErrors()) {
+			propertyQuery = new PropertyQuery();
+			mav.addObject("invalidRange", true);
 		}
 
-		if (operation == null) {
-			operation = "any";
-		}
-		if (property == null) {
-			property = "any";
-		}
-		if (order == null) {
-			order = "ascending";
-		}
+		mav.addObject("queryResults", propertyService.query(propertyQuery));
 
-		req.setAttribute("operationChecked", operation);
-		req.setAttribute("propertyChecked", property);
-		req.setAttribute("orderChosen", order);
-
-		double parsedRangeFrom = 0;
-		double parsedRangeTo = Double.MAX_VALUE;
-		boolean badParse = false;
-
-		try {
-			if (rangeFrom != null && !rangeFrom.isEmpty()) {
-				parsedRangeFrom = Double.parseDouble(rangeFrom);
-			}
-			if (rangeTo != null && !rangeTo.isEmpty()) {
-				parsedRangeTo = Double.parseDouble(rangeTo);
-			}
-		} catch (NumberFormatException e) {
-			badParse = true;
-		}
-
-		if (badParse
-				|| (rangeFrom != null && parsedRangeFrom < 0)
-				|| (rangeTo != null && parsedRangeTo < 0)
-				|| (rangeFrom != null && rangeTo != null && parsedRangeTo < parsedRangeFrom)) {
-
-			req.setAttribute("invalidRange", true);
-			return render(req, resp, "query.jsp", "Query", mav);
-		}
-
-		req.setAttribute("rangeFromValue", rangeFrom);
-		req.setAttribute("rangeToValue", rangeTo);
-		
-		if (rangeFrom == null) {
-			parsedRangeFrom = 0;
-		}
-		if (rangeTo == null) {
-			parsedRangeTo = Double.MAX_VALUE;
-		}
-
-		List<Property> query = propertyService.query(new PropertyQuery(operation, property, parsedRangeFrom, parsedRangeTo, order));
-
-		req.setAttribute("queryResults", query);
-		return render(req, resp, "query.jsp", "Query", mav);
+		return render("query.jsp", "Query", mav);
 	}
 
 }

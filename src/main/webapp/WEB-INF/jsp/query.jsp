@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <h1>Query</h1>
 
@@ -12,105 +14,42 @@
 		<p class="error">Invalid price range.</p>
 	</c:if>
 
-	<form action="${basePath }/query" method="get">
+	<form:form action="${basePath }/query" method="get" commandName="propertyQuery">
+
+		<form:errors path="*" />
 
 		<label for="operation">Type of operation: </label>
 
-		<c:choose>
-			<c:when test="${operationChecked == 'any'}">
-				<input type="radio" name="operation" value="any" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="operation" value="any" />
-			</c:otherwise>
-		</c:choose>
-		Any
-		
-		<c:choose>
-			<c:when test="${operationChecked == 'selling'}">
-				<input type="radio" name="operation" value="selling" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="operation" value="selling" />
-			</c:otherwise>
-		</c:choose>
-		Selling
-		
-		<c:choose>
-			<c:when test="${operationChecked == 'leasing'}">
-				<input type="radio" name="operation" value="leasing" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="operation" value="leasing" />
-			</c:otherwise>
-		</c:choose>
-		Leasing
-		
+		<form:radiobutton path="operation" value="ANY"/>Any
+		<form:radiobutton path="operation" value="SELLING"/>Selling
+		<form:radiobutton path="operation" value="LEASING"/>Leasing
+
 		<br />
 
 		<label for="property">Type of property: </label>
 
-		<c:choose>
-			<c:when test="${propertyChecked == 'any'}">
-				<input type="radio" name="property" value="any" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="property" value="any" />
-			</c:otherwise>
-		</c:choose>
-		Any
-		
-		<c:choose>
-			<c:when test="${propertyChecked == 'flat'}">
-				<input type="radio" name="property" value="flat" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="property" value="flat" />
-			</c:otherwise>
-		</c:choose>
-		Flat
-		
-		<c:choose>
-			<c:when test="${propertyChecked == 'house'}">
-				<input type="radio" name="property" value="house" checked="checked" />
-			</c:when>
-			<c:otherwise>
-				<input type="radio" name="property" value="house" />
-			</c:otherwise>
-		</c:choose>
-		House
-		
+		<form:radiobutton path="property" value="ANY"/>Any
+		<form:radiobutton path="property" value="FLAT"/>Flat
+		<form:radiobutton path="property" value="HOUSE"/>House
+
 		<br />
 
 		<label for="range">Price</label>
+
 		from
-		<input type="text" name="rangeFrom" value="${fn:escapeXml(rangeFromValue)}" />
+		<form:input path="rangeFrom"/>
 		to
-		<input type="text" name="rangeTo" value="${fn:escapeXml(rangeToValue)}" />
+		<form:input path="rangeTo" type="text"/>
 		with
-		<select name="order">
-			<c:choose>
-				<c:when test="${orderChosen == 'ascending'}">
-					<option value="ascending" selected="selected">Ascending</option>
-				</c:when>
-				<c:otherwise>
-					<option value="ascending">Ascending</option>
-				</c:otherwise>
-			</c:choose>
-			<c:choose>
-				<c:when test="${order == 'descending'}">
-					<option value="descending" selected="selected">Descending</option>
-				</c:when>
-				<c:otherwise>
-					<option value="descending">Descending</option>
-				</c:otherwise>
-			</c:choose>
-		</select>
+		<form:select path="order">
+			<form:option value="ASCENDING">Ascending</form:option>
+			<form:option value="DESCENDING">Descending</form:option>
+		</form:select>
 		order
 		<br />
 		<input type="submit" value="Query" />
 
-	</form>
+	</form:form>
 </div>
 <br />
 
