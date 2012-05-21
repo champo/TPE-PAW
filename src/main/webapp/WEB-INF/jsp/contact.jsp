@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <div>
-	<h2>Contact form for ${fn:escapeXml(address)} - ${fn:escapeXml(neighbourhood)}</h2> 
+	<h2>Contact form for ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h2> 
 	<c:if test="${empty publisher}">
 		<form:form action="${basePath}/contact?propertyId=${fn:escapeXml(param.propertyId)}" method="post" commandName="contactForm">
 
