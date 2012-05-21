@@ -38,7 +38,7 @@ public class UserController extends BaseController {
 		
 		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
-			RedirectView view = new RedirectView("/",true);
+			RedirectView view = new RedirectView("/", true);
 			return new ModelAndView(view);
 		}
 
@@ -98,7 +98,7 @@ public class UserController extends BaseController {
 		
 		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
-			RedirectView view = new RedirectView("/",true);
+			RedirectView view = new RedirectView("/", true);
 			return new ModelAndView(view);
 		}
 		
@@ -122,10 +122,10 @@ public class UserController extends BaseController {
 				
 				String to = req.getParameter("from");
 				if (to == null || to.isEmpty()) {
-					to = req.getContextPath();
+					to = getServletContext().getContextPath();
 				}
 				
-				RedirectView view = new RedirectView(to,true);
+				RedirectView view = new RedirectView(to, false);
 				return new ModelAndView(view);
 			}
 		}
@@ -133,7 +133,7 @@ public class UserController extends BaseController {
 		req.setAttribute("username", username);
 		
 		req.setAttribute("invalidCredentials", true);
-		return render(req, resp, "login.jsp", "Login", mav);
+		return render("login.jsp", "Login", mav);
 	}
 	
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
@@ -141,7 +141,7 @@ public class UserController extends BaseController {
 			throws ServletException, IOException {
 		
 		logout(req, resp);
-		RedirectView view = new RedirectView("/",true);
+		RedirectView view = new RedirectView("/", true);
 		return new ModelAndView(view);
 	}
 }
