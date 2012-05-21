@@ -7,10 +7,17 @@
 	<context:component-scan base-package="ar.edu.itba.paw.grupo1.controller" />
 	
 	<!-- JSR-303 support will be detected on classpath and enabled automatically -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService" /> 
 	
 	<bean
 		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+	
+	
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	    <property name="converters">
+	        <bean class="ar.edu.itba.paw.grupo1.web.converter.UserConverter" />
+	    </property>
+    </bean>
 		
 	<!-- Forwards requests to the "/" resource to the "welcome" view -->
 	<mvc:view-controller path="/" view-name="index"/>

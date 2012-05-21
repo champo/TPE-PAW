@@ -1,7 +1,6 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
 
 import javax.servlet.ServletException;
 import javax.validation.Valid;
@@ -49,13 +48,9 @@ public class QueryController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	protected ModelAndView user(@RequestParam int id) {
+	protected ModelAndView user(@RequestParam(value = "id") User user) {
 		
 		ModelAndView mav = new ModelAndView();
-		User user = userService.get(id);
-		if (user == null) {
-			throw new InvalidParameterException();
-		}
 		
 		mav.addObject("searchUser", user);
 		mav.addObject("queryResults", propertyService.getListedProperties(user));
