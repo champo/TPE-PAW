@@ -5,6 +5,13 @@
 
 <h2>Property <c:out value="${fn:escapeXml(id)}" /></h2>
 
+<c:if test="${property.reserved}">
+	<div>
+		This property is reserved.
+	</div>
+	<br />
+</c:if>
+
 <div>
 	Property type:<c:if test="${property.propertyType == 'HOUSE'}"> House</c:if><c:if test="${property.propertyType == 'FLAT'}"> Flat</c:if>
 </div>
@@ -65,11 +72,20 @@
 <c:if test="${not empty pictures}">
 	<div>
 		Pictures of this property: <br />
+		<c:set var="countPictures" value="1" />	
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
 			<br />
+			<c:if test="${countPictures == 1 && property.reserved}">			
+				<div class="reserved">
+			</c:if>
 			<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
+			<c:if test="${countPictures == 1 && property.reserved}">
+				<h4 class="reserved"> Reserved </h4>
+				</div>
+			</c:if>
 			<br />
+			<c:set var="countPictures" value="${countPictures + 1}" scope="page"/>
 		</c:forEach>
 	</div>
 </c:if>
