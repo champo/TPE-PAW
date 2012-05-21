@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,18 +29,21 @@ import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
 import ar.edu.itba.paw.grupo1.web.PropertyForm;
+import ar.edu.itba.paw.grupo1.web.RoomForm;
 import ar.edu.itba.paw.grupo1.web.Service;
+
 
 @Controller
 @RequestMapping(value="property")
 public class PropertyController extends BaseController {
 
-	protected PropertyService propertyService;
-	protected PictureService pictureService;
+	private PropertyService propertyService;
+	private PictureService pictureService;
 	
 	
 	@InitBinder
@@ -71,7 +75,7 @@ public class PropertyController extends BaseController {
 		
 		if (errors.hasErrors()) {
 			mav.addObject("services", getServices(new Property(), req));
-			return render("editProperty.jsp", "Edit Property", mav);
+			return render("editProperty.jsp", "Add Property", mav);
 		}
 		
 		property.publish();
@@ -95,6 +99,7 @@ public class PropertyController extends BaseController {
 		mav.addObject("propertyForm", new PropertyForm(property));
 		mav.addObject("pictures", pictureService.getByPropId(property.getId()));				
 		mav.addObject("services", getServices(property, null));
+		mav.addObject("rooms", property.getRooms());
 
 		return render("editProperty.jsp", "Edit Property", mav);
 	}
@@ -115,12 +120,13 @@ public class PropertyController extends BaseController {
 		if (errors.hasErrors()) {
 			mav.addObject("edit", 1);
 			mav.addObject("services", getServices(property, req));
+			mav.addObject("rooms", property.getRooms());
 			return render("editProperty.jsp", "Edit Property", mav);
 		}
 		
 		propertyForm.update(property);
 		propertyService.save(property, getLoggedInUser(req));
-		
+
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
 	}
@@ -226,6 +232,49 @@ public class PropertyController extends BaseController {
 		propertyService.save(property, getLoggedInUser(req));			
 		
 		RedirectView view = new RedirectView("/property/list", true);
+		return new ModelAndView(view);
+	}
+	
+	@RequestMapping(value="addRoom/{propId}", method = RequestMethod.GET)
+	protected ModelAndView addRoomGet(HttpServletRequest req, 
+			@PathVariable("propId") Property property) throws ServletException, IOException {
+		
+		ModelAndView mav = new ModelAndView();
+		User user = getLoggedInUser(req);
+
+		if (property.getUser().getId() == user.getId()) {
+			mav.addObject("roomForm", new RoomForm());
+			mav.addObject("propId", property.getId());
+			mav.addObject("hasPermissions", 1);
+		}
+		
+		return render("addRoom.jsp", "Add Room", mav);	
+	}
+	
+	@RequestMapping(value="addRoom/{propId}", method = RequestMethod.POST)
+	protected ModelAndView addRoomPost(HttpServletRequest req,
+			@Valid RoomForm roomForm, Errors errors, @PathVariable("propId") Property property) 
+					throws ServletException, IOException {
+		
+		ModelAndView mav = new ModelAndView();
+		User user = getLoggedInUser(req);
+		
+		if (property.getUser().getId() != user.getId()) {
+			return render("addRoom.jsp", "Add Room", mav);
+		}
+		
+		if (errors.hasErrors()) {
+			mav.addObject("hasPermissions", 1);
+			mav.addObject("propId", property.getId());
+			return render("addRoom.jsp", "Add Room", mav);
+		}
+		
+		Room room = roomForm.buildRoom(property);
+		property.addRoom(room);
+		propertyService.save(property, getLoggedInUser(req));
+		
+		RedirectView view = new RedirectView("/property/edit?id=" + property.getId(),true);
+		view.addStaticAttribute("rooms", property.getRooms());
 		return new ModelAndView(view);
 	}
 	

@@ -38,7 +38,7 @@ public class PropertyForm {
 	
 	@NotNull
 	@Range(min=1, max=Integer.MAX_VALUE)
-	private int rooms;
+	private int numRooms;
 	
 	@NotNull
 	@Range(min=0, max=Integer.MAX_VALUE)
@@ -67,7 +67,7 @@ public class PropertyForm {
 		address = property.getAddress();
 		neighbourhood = property.getNeighbourhood();
 		price = property.getPrice();
-		rooms = property.getRooms();
+		numRooms = property.getNumRooms();
 		indoorSpace = property.getIndoorSpace();
 		outdoorSpace = property.getOutdoorSpace();
 		description = property.getDescription();
@@ -115,12 +115,12 @@ public class PropertyForm {
 		this.price = price;
 	}
 
-	public int getRooms() {
-		return rooms;
+	public int getNumRooms() {
+		return numRooms;
 	}
 
-	public void setRooms(int rooms) {
-		this.rooms = rooms;
+	public void setNumRooms(int rooms) {
+		this.numRooms = rooms;
 	}
 
 	public double getIndoorSpace() {
@@ -165,7 +165,7 @@ public class PropertyForm {
 
 	public Property build(User user) {
 		return new Property(propertyType, operationType, address,
-				neighbourhood, price, rooms, indoorSpace, outdoorSpace,
+				neighbourhood, price, numRooms, indoorSpace, outdoorSpace,
 				description, antiquity, services, true, user, false);
 	}
 	
@@ -178,7 +178,7 @@ public class PropertyForm {
 		property.setNeighbourhood(neighbourhood);
 		property.setPrice(price);
 		property.setOperationType(operationType);
-		property.setRooms(rooms);
+		property.setNumRooms(numRooms);
 		property.setType(propertyType);
 		property.setServices(services);
 	}

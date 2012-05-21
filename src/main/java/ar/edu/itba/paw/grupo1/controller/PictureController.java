@@ -54,6 +54,7 @@ public class PictureController extends AbstractPictureController {
 		
 		Property property = propertyService.getById(propId);
 		if (isMine(req, property)) {
+
 			Picture picture = new Picture();
 			
 			picture.setProperty(property);
