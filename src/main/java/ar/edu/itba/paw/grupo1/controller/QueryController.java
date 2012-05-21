@@ -18,7 +18,6 @@ import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
-import ar.edu.itba.paw.grupo1.service.UserService;
 
 @Controller
 @RequestMapping(value="query")
@@ -26,14 +25,11 @@ public class QueryController extends BaseController {
 
 	private PropertyService propertyService;
 	
-	private UserService userService;
-
 	private final int resultsPerPage = 10;
 	
 	@Autowired
-	public QueryController(PropertyService propertyService, UserService userService) {
+	public QueryController(PropertyService propertyService) {
 		this.propertyService = propertyService;
-		this.userService = userService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
