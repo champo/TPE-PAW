@@ -1,6 +1,5 @@
 package ar.edu.itba.paw.grupo1.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -74,6 +73,15 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 		}
 		
 		return criteria.list();
+	}
+
+	@Override
+	public List<Property> getListProperties(User user) {
+		Criteria criteria = createCriteria()
+			.add(Restrictions.eq("user", user))
+			.add(Restrictions.eq("published", true));
+	
+		return (List<Property>) criteria.list();
 	}
 
 }

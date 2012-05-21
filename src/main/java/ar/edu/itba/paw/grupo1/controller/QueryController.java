@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 import javax.servlet.ServletException;
 import javax.validation.Valid;
@@ -10,20 +11,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
+import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.service.UserService;
 
 @Controller
 @RequestMapping(value="query")
 public class QueryController extends BaseController {
 
-	PropertyService propertyService;
+	private PropertyService propertyService;
+	
+	private UserService userService;
 	
 	@Autowired
-	public QueryController(PropertyService propertyService) {
+	public QueryController(PropertyService propertyService, UserService userService) {
 		this.propertyService = propertyService;
+		this.userService = userService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -40,5 +47,19 @@ public class QueryController extends BaseController {
 
 		return render("query.jsp", "Query", mav);
 	}
-
+	
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	protected ModelAndView user(@RequestParam int id) {
+		
+		ModelAndView mav = new ModelAndView();
+		User user = userService.get(id);
+		if (user == null) {
+			throw new InvalidParameterException();
+		}
+		
+		mav.addObject("searchUser", user);
+		mav.addObject("queryResults", propertyService.getListedProperties(user));
+		
+		return render("list.jsp", "Property list", mav);
+	}
 }

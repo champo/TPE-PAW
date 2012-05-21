@@ -1,8 +1,5 @@
 package ar.edu.itba.paw.grupo1.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +20,8 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 	}
 
 	protected ModelAndView render(HttpServletRequest req, HttpServletResponse resp, String file, String title, 
-			ModelAndView mav) throws ServletException, IOException {
-				
+			ModelAndView mav) {
+
 		mav.addObject("documentTitle", title);
 		mav.addObject("documentBodyFile", file);
 		mav.addObject("basePath", getServletContext().getContextPath());
@@ -32,7 +29,7 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 		return mav;
 	}
 	
-	protected ModelAndView render(String file, String title, ModelAndView mav) throws ServletException, IOException {
+	protected ModelAndView render(String file, String title, ModelAndView mav) {
 		return render(null, null, file, title, mav);
 	}
 	
