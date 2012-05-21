@@ -55,8 +55,8 @@
 	</div>
 	
 	<div>
-		<label for="rooms">Rooms:</label>
-		<form:input path="rooms"/>
+		<label for="numRooms">Rooms:</label>
+		<form:input path="numRooms"/>
 	</div>
 	
 	<div>
@@ -96,7 +96,23 @@
 	
 </form:form>
 
+
 <c:if test="${not empty edit}">
+	Rooms of this property:
+	<br />
+	<a href="${basePath }/property/addRoom/<c:out value="${fn:escapeXml(param.id)}" />"> Add new room</a>
+	<c:forEach var="room" items="${rooms}">
+		<br />
+		<c:out value="${fn:escapeXml(room.name)}" />. 
+		Largo: <c:out value="${fn:escapeXml(room.length)}" />
+		Ancho: <c:out value="${fn:escapeXml(room.width)}" />
+	</c:forEach>
+	<br />
+	
+</c:if>
+
+<c:if test="${not empty edit}">
+		<br />
 		Pictures of this property:
 		<br />
 		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(param.id)}" />"> Add new </a>

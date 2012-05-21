@@ -33,7 +33,7 @@
 </div>
 
 <div>
-	Rooms: <c:out value="${fn:escapeXml(property.rooms)}"></c:out>
+	Rooms: <c:out value="${fn:escapeXml(property.numRooms)}"></c:out>
 </div>
 
 <div>
@@ -64,6 +64,21 @@
 	</c:if>
 </c:forEach>
 <br />
+
+<div>
+	<h4>Rooms</h4>
+</div>
+
+<c:if test="${empty property.rooms}">This property has no room(s) description.<br/></c:if>
+<c:if test="${not empty property.rooms}">
+	<c:forEach var="room" items="${property.rooms}">
+		<c:out value="${fn:escapeXml(room.name)}"/>. 
+		Length: <c:out value="${fn:escapeXml(room.length)}"/>. 
+		Width: <c:out value="${fn:escapeXml(room.width)}"/>. 
+		<br/>
+	</c:forEach>
+</c:if>
+<br/>
 
 <div>
 	<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
