@@ -1,18 +1,18 @@
 package ar.edu.itba.paw.grupo1.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.model.User;
 
 @Repository
 public class PropertyHibernateDao extends GenericHibernateDao<Property>
@@ -33,8 +33,9 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 		return (List<Property>) criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Property> query(PropertyQuery query) {
+	public PaginatedList query(PropertyQuery query, int resultsPerPage) {
 		
 		Criteria criteria = createCriteria().add(Restrictions.eq("published", true));
 
@@ -56,6 +57,19 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 				break;
 		}
 
+		if (query.getRangeFrom() != null) {
+			criteria.add(Restrictions.ge("price", query.getRangeFrom()));
+		}
+
+		if (query.getRangeTo() != null) {
+			criteria.add(Restrictions.le("price", query.getRangeTo()));
+		}
+
+		int rows = ((Number)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		int lastPage = (rows + resultsPerPage - 1) / resultsPerPage;
+
+		criteria.setProjection(null).setResultTransformer(Criteria.ROOT_ENTITY);
+		
 		switch (query.getOrder()) {
 			case ASCENDING:
 				criteria.addOrder(Order.asc("price"));
@@ -64,16 +78,11 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 				criteria.addOrder(Order.desc("price"));
 				break;
 		}
-		
-		if (query.getRangeFrom() != null) {
-			criteria.add(Restrictions.ge("price", query.getRangeFrom()));
-		}
+	
+		criteria.setFirstResult((query.getPageNumber() - 1)*resultsPerPage);
+		criteria.setMaxResults(resultsPerPage);
 
-		if (query.getRangeTo() != null) {
-			criteria.add(Restrictions.le("price", query.getRangeTo()));
-		}
-		
-		return criteria.list();
+		return new PaginatedList(criteria.list(), lastPage);
 	}
 
 }
