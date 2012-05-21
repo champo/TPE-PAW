@@ -1,14 +1,42 @@
 package ar.edu.itba.paw.grupo1.dto;
 
+import org.hibernate.validator.constraints.Range;
+
 public class PropertyQuery {
 
-	private String operation;
-	private String property;
-	private double rangeFrom;
-	private double rangeTo;
-	private String order;
+	public enum OperationType {
+		ANY,
+		SELLING,
+		LEASING,
+	}
+	
+	public enum PropertyType {
+		ANY,
+		HOUSE,
+		FLAT,
+	}
+	
+	public enum OrderType {
+		ASCENDING,
+		DESCENDING,
+	}
 
-	public PropertyQuery(String operation, String property, double rangeFrom, double rangeTo, String order) {
+	private OperationType operation = OperationType.ANY;
+	private PropertyType property = PropertyType.ANY;
+	
+	@Range(min=0, max=Integer.MAX_VALUE)
+	private Double rangeFrom;
+
+	@Range(min=0, max=Integer.MAX_VALUE)
+	private Double rangeTo;
+
+	private OrderType order = OrderType.ASCENDING;
+
+	public PropertyQuery() {
+		
+	}
+
+	public PropertyQuery(OperationType operation, PropertyType property, double rangeFrom, double rangeTo, OrderType order) {
 
 		this.operation = operation;
 		this.property = property;
@@ -17,23 +45,44 @@ public class PropertyQuery {
 		this.order = order;
 	}
 
-	public String getOperation() {
+	public OperationType getOperation() {
 		return operation;
 	}
 
-	public String getProperty() {
+	public void setOperation(OperationType operation) {
+		this.operation = operation;
+	}
+
+	public PropertyType getProperty() {
 		return property;
 	}
 
-	public double getRangeFrom() {
+	public void setProperty(PropertyType property) {
+		this.property = property;
+	}
+
+	public Double getRangeFrom() {
 		return rangeFrom;
 	}
 
-	public double getRangeTo() {
+	public void setRangeFrom(Double rangeFrom) {
+		this.rangeFrom = rangeFrom;
+	}
+
+	public Double getRangeTo() {
 		return rangeTo;
 	}
 
-	public String getOrder() {
+	public void setRangeTo(Double rangeTo) {
+		this.rangeTo = rangeTo;
+	}
+
+	public OrderType getOrder() {
 		return order;
 	}
+
+	public void setOrder(OrderType order) {
+		this.order = order;
+	}
+
 }
