@@ -19,18 +19,14 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 		super();
 	}
 
-	protected ModelAndView render(HttpServletRequest req, HttpServletResponse resp, String file, String title, 
-			ModelAndView mav) {
-
+	protected ModelAndView render(String file, String title, ModelAndView mav) {
+		
 		mav.addObject("documentTitle", title);
 		mav.addObject("documentBodyFile", file);
 		mav.addObject("basePath", getServletContext().getContextPath());
 		mav.setViewName("layout");
+		
 		return mav;
-	}
-	
-	protected ModelAndView render(String file, String title, ModelAndView mav) {
-		return render(null, null, file, title, mav);
 	}
 	
 	protected boolean isMine(HttpServletRequest req, Owned obj) {

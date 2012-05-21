@@ -20,7 +20,6 @@ import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
-import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 import ar.edu.itba.paw.grupo1.web.ContactForm;
 
@@ -28,14 +27,12 @@ import ar.edu.itba.paw.grupo1.web.ContactForm;
 @RequestMapping(value="contact")
 public class ContactController extends BaseController {
 	
-	private UserService userService;
 	private PropertyService propertyService;
 	private EmailService emailService;
 
 	@Autowired
-	public ContactController(PropertyService propertyService, UserService userService, EmailService emailService) {
+	public ContactController(PropertyService propertyService, EmailService emailService) {
 		this.propertyService = propertyService;
-		this.userService = userService;
 		this.emailService = emailService;
 	}
 	

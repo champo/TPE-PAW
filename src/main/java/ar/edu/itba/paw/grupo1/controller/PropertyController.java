@@ -163,7 +163,7 @@ public class PropertyController extends BaseController {
 			throw new InvalidParameterException();
 		}
 		
-		return render(req, resp, "propertyDetail.jsp", "Property Detail", mav);
+		return render("propertyDetail.jsp", "Property Detail", mav);
 	}
 	
 	@RequestMapping(value="list",method = RequestMethod.GET)
@@ -173,7 +173,7 @@ public class PropertyController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		User user = getLoggedInUser(req);		
 		req.setAttribute("properties", propertyService.getProperties(user.getId()));
-		return render(req, resp, "listProperties.jsp", "List Properties", mav);
+		return render("listProperties.jsp", "List Properties", mav);
 	}	
 	
 	@RequestMapping(value="publish", method = RequestMethod.GET)

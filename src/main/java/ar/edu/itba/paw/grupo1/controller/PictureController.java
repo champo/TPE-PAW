@@ -62,7 +62,7 @@ public class PictureController extends AbstractPictureController {
 			req.setAttribute("noPermissions", 1);
 		}
 		
-		return render(req, resp, "editPicture.jsp", "Add Picture", mav);	
+		return render("editPicture.jsp", "Add Picture", mav);	
 	}
 
 	@RequestMapping(value="add", method = RequestMethod.POST)
@@ -83,7 +83,7 @@ public class PictureController extends AbstractPictureController {
 			items = (List<FileItem>) upload.parseRequest(req);
 		} catch (FileUploadException e) {
 			req.setAttribute("fatal", 1);
-			return render(req, resp, "editPicture.jsp", "Add Picture", mav);
+			return render("editPicture.jsp", "Add Picture", mav);
 		}
 		
 		Picture picture = new Picture();		
@@ -128,12 +128,12 @@ public class PictureController extends AbstractPictureController {
 		
 		if (error) {
 			req.setAttribute("picture", picture);
-			return render(req, resp, "editPicture.jsp", "Add Picture", mav);
+			return render("editPicture.jsp", "Add Picture", mav);
 		}
 			
 		if (!isMine(req, picture)) {
 			req.setAttribute("noPermissions", 1);
-			return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
+			return render("editPicture.jsp", "Edit Picture", mav);
 		}
 		
 		picture.setExtension(extension);
@@ -145,7 +145,7 @@ public class PictureController extends AbstractPictureController {
 		} catch (Exception e) {
 			req.setAttribute("picture", picture);
 			req.setAttribute("writeError", 1);
-			render(req, resp, "editPicture.jsp", "Add Picture", mav);
+			render("editPicture.jsp", "Add Picture", mav);
 		}
 		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(),true);
 		return new ModelAndView(view);
@@ -175,7 +175,7 @@ public class PictureController extends AbstractPictureController {
 		} else {
 			throw new InvalidParameterException();
 		}
-		return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
+		return render("editPicture.jsp", "Edit Picture", mav);
 	}
 
 	@RequestMapping(value="edit", method = RequestMethod.POST)
@@ -193,7 +193,7 @@ public class PictureController extends AbstractPictureController {
 				
 		if (picture == null || !isMine(req, picture)) {
 			req.setAttribute("noPermissions", 1);
-			return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
+			return render("editPicture.jsp", "Edit Picture", mav);
 		}
 		
 		if (req.getParameter("submit") != null) {
@@ -202,7 +202,7 @@ public class PictureController extends AbstractPictureController {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 				req.setAttribute("nameError", 1);
-				return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
+				return render("editPicture.jsp", "Edit Picture", mav);
 			} 
 			pictureService.save(picture);
 		}
@@ -215,7 +215,7 @@ public class PictureController extends AbstractPictureController {
 				req.setAttribute("edit", 1);
 				req.setAttribute("picture", picture);
 				req.setAttribute("deleteError", 1);
-				return render(req, resp, "editPicture.jsp", "Edit Picture", mav);
+				return render("editPicture.jsp", "Edit Picture", mav);
 			}
 		}
 		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
