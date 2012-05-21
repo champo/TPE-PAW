@@ -34,7 +34,6 @@ public class QueryController extends BaseController {
 
 		if (errors.hasErrors()) {
 			propertyQuery = new PropertyQuery();
-			mav.addObject("invalidRange", true);
 		}
 
 		mav.addObject("queryResults", propertyService.query(propertyQuery));

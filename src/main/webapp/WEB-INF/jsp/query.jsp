@@ -10,43 +10,48 @@
 </c:if>
 
 <div>
-	<c:if test="${invalidRange}">
-		<p class="error">Invalid price range.</p>
-	</c:if>
-
 	<form:form action="${basePath }/query" method="get" commandName="propertyQuery">
 
-		<form:errors path="*" />
+		<div>
+			<label for="operation">Type of operation: </label>
+	
+			<form:radiobutton path="operation" value="ANY"/>Any
+			<form:radiobutton path="operation" value="SELLING"/>Selling
+			<form:radiobutton path="operation" value="LEASING"/>Leasing
 
-		<label for="operation">Type of operation: </label>
+			<form:errors path="operation" element="p" cssClass="error" />
+		</div>
+		
 
-		<form:radiobutton path="operation" value="ANY"/>Any
-		<form:radiobutton path="operation" value="SELLING"/>Selling
-		<form:radiobutton path="operation" value="LEASING"/>Leasing
+		<div>
+			<label for="property">Type of property: </label>
+	
+			<form:radiobutton path="property" value="ANY"/>Any
+			<form:radiobutton path="property" value="FLAT"/>Flat
+			<form:radiobutton path="property" value="HOUSE"/>House
 
-		<br />
+			<form:errors path="property" element="p" cssClass="error" />
+		</div>
 
-		<label for="property">Type of property: </label>
+		<div>
+			<label for="range">Price</label>
+	
+			from
+			<form:input path="rangeFrom"/>
+			to
+			<form:input path="rangeTo" type="text"/>
+			with
+			<form:select path="order">
+				<form:option value="ASCENDING">Ascending</form:option>
+				<form:option value="DESCENDING">Descending</form:option>
+			</form:select>
+			order
+			
+			<form:errors path="rangeFrom" element="p" cssClass="error" />
+			<form:errors path="rangeTo" element="p" cssClass="error" />
+			<form:errors path="order" element="p" cssClass="error" />
+		</div>
 
-		<form:radiobutton path="property" value="ANY"/>Any
-		<form:radiobutton path="property" value="FLAT"/>Flat
-		<form:radiobutton path="property" value="HOUSE"/>House
-
-		<br />
-
-		<label for="range">Price</label>
-
-		from
-		<form:input path="rangeFrom"/>
-		to
-		<form:input path="rangeTo" type="text"/>
-		with
-		<form:select path="order">
-			<form:option value="ASCENDING">Ascending</form:option>
-			<form:option value="DESCENDING">Descending</form:option>
-		</form:select>
-		order
-		<br />
 		<input type="submit" value="Query" />
 
 	</form:form>
