@@ -125,6 +125,7 @@ public class UserController extends BaseController {
 					to = getServletContext().getContextPath();
 				}
 				
+				System.out.println(to);
 				RedirectView view = new RedirectView(to, false);
 				return new ModelAndView(view);
 			}

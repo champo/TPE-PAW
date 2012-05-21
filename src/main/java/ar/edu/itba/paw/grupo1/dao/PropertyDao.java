@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.User;
 
 public interface PropertyDao {
 
@@ -16,4 +17,6 @@ public interface PropertyDao {
 	public List<Property> query(PropertyQuery query);
 
 	public void update(Property property);
+
+	public List<Property> getListProperties(User user);
 }
