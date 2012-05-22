@@ -14,7 +14,7 @@
 
 <h1>Register</h1>
 
-<form:form action="${basePath }/user/register" method="post" modelAttribute="registerForm">
+<form:form action="${basePath }/user/register" method="post" modelAttribute="registerForm" enctype="multipart/form-data">
 
 	<fieldset>
 	

@@ -19,6 +19,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -56,7 +57,7 @@ public class UserController extends BaseController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="register", method = RequestMethod.POST)
-	protected ModelAndView registerPost(HttpServletRequest req, @Valid RegisterForm form, Errors errors) {
+	protected ModelAndView registerPost(HttpServletRequest req, @Valid RegisterForm form, Errors errors, @RequestParam("logo") MultipartFile logoFile) {
 		
 		ModelAndView mav = new ModelAndView();
 		if (isLoggedIn(req)) {
@@ -65,55 +66,37 @@ public class UserController extends BaseController {
 		}
 
 		if (form.getUserType() == UserType.REAL_ESTATE) {
+
 			mav.addObject("isRealEstate", 1);
-		}
-	
-		if (errors.hasErrors()) {
-			return render("register.jsp", "Register", mav);
-		}
-
-		FileItem file = null;
-
-		if (form.getUserType() == UserType.REAL_ESTATE) {
 
 			if (form.getRealEstateName() == null || form.getRealEstateName().trim().isEmpty()) {
 				mav.addObject("missingRealEstateNameError", 1);
 				return render("register.jsp", "Register", mav);
 			}
 
-			ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
-			List<FileItem> items = null;
-
-			try {
-				items = upload.parseRequest(req);
-			} catch (FileUploadException e) {
-				mav.addObject("fatal", 1);
-				return render("register.jsp", "Register", mav);
-			}
-
-			Iterator<FileItem> iter = items.iterator();
-			while (iter.hasNext()) {
-				file = (FileItem) iter.next();
-				if ("file".equals(file.getFieldName())) {
-					break;
-				}
-			}
-
-			if (file.getName() == null || file.getName().trim().isEmpty()) {
+			if (logoFile == null || logoFile.getOriginalFilename().trim().isEmpty()) {
 				mav.addObject("missingLogo", 1);
 				return render("register.jsp", "Register", mav);
 			}
 			
-			if (!file.getName().matches("\\.(jpg|png|jpeg|gif)$")) {
+			String name = logoFile.getOriginalFilename();
+
+			System.out.println("\n\n____\n\n"+name+"\n\n____\n\n");
+
+			if (!name.matches(".*\\.(jpg|png|jpeg|gif)$")) {
 				mav.addObject("extensionError", 1);
 				return render("register.jsp", "Register", mav);
 			}
 
-			String extension = file.getName().substring(file.getName().lastIndexOf('.'));
+			String extension = name.substring(name.lastIndexOf('.'));
 
 			form.setLogoExtension(extension);
 		}
-		
+
+		if (errors.hasErrors()) {
+			return render("register.jsp", "Register", mav);
+		}
+
 		User user;
 		
 		try {
@@ -129,7 +112,7 @@ public class UserController extends BaseController {
 
 		if (user.getLogoExtension() != null) {
 			try {
-				file.write(new File(getServletContext().getRealPath("/images") + "/logo_" + user.getId() + user.getLogoExtension()));
+				logoFile.transferTo(new File(getServletContext().getRealPath("/images") + "/logo_" + user.getId() + user.getLogoExtension()));
 			} catch (Exception e) {
 				// TODO: delete user from db
 				mav.addObject("writeError", 1);
