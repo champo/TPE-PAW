@@ -6,16 +6,21 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
-public class PictureForm {
+import ar.edu.itba.paw.grupo1.validation.FilenameNotBlank;
+import ar.edu.itba.paw.grupo1.validation.IsImageFile;
 
+@Component
+public class NewPictureForm {
+
+	@FilenameNotBlank
+	@IsImageFile
 	private MultipartFile file;
 
 	@NotBlank
 	@Size(max = 50)
 	private String name;
 
-	public PictureForm() {
+	public NewPictureForm() {
 		
 	}
 	

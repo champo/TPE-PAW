@@ -19,7 +19,8 @@ import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.service.PictureService;
 import ar.edu.itba.paw.grupo1.service.PropertyService;
-import ar.edu.itba.paw.grupo1.web.PictureForm;
+import ar.edu.itba.paw.grupo1.web.EditPictureForm;
+import ar.edu.itba.paw.grupo1.web.NewPictureForm;
 
 @Controller
 @RequestMapping(value="picture")
@@ -46,12 +47,12 @@ public class PictureController extends AbstractPictureController {
 			mav.addObject("noPermissions", 1);
 		}
 		
-		mav.addObject("pictureForm", new PictureForm());
+		mav.addObject("newPictureForm", new NewPictureForm());
 		return render("editPicture.jsp", "Add Picture", mav);	
 	}
 
 	@RequestMapping(value="add/{propId}", method = RequestMethod.POST)
-	protected ModelAndView addPost(HttpServletRequest req, @Valid PictureForm pictureForm, 
+	protected ModelAndView addPost(HttpServletRequest req, @Valid NewPictureForm pictureForm, 
 			Errors errors, @PathVariable("propId") Property property) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -67,7 +68,7 @@ public class PictureController extends AbstractPictureController {
 			return render("editPicture.jsp", "Edit Picture", mav);
 		}
 		
-		if (errors.hasErrors() || hasErrors(file, mav)) {
+		if (errors.hasErrors()) {
 			mav.addObject("picture", picture);
 			return render("editPicture.jsp", "Add Picture", mav);
 		}
@@ -101,13 +102,13 @@ public class PictureController extends AbstractPictureController {
 			mav.addObject("noPermissions", 1);
 		}
 
-		mav.addObject("pictureForm", new PictureForm());
+		mav.addObject("editPictureForm", new EditPictureForm());
 		return render("editPicture.jsp", "Edit Picture", mav);
 	}
 
 	@RequestMapping(value="edit/{propId}/{pictureId}", method = RequestMethod.POST)
 	protected ModelAndView editPost(HttpServletRequest req, @PathVariable("propId") Property property, 
-			@PathVariable("pictureId") Picture picture, @Valid PictureForm pictureForm, Errors errors) { 
+			@PathVariable("pictureId") Picture picture, @Valid EditPictureForm pictureForm, Errors errors) { 
 					
 		ModelAndView mav = new ModelAndView();
 
@@ -152,26 +153,4 @@ public class PictureController extends AbstractPictureController {
 		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
 		return new ModelAndView(view);
 	}
-	
-	private boolean hasErrors(MultipartFile file, ModelAndView mav) {
-		
-		boolean error = false;
-		String extension;
-		if (file.getOriginalFilename().equals("")) {
-			error = true;
-			mav.addObject("noFileError", 1);
-		} else if (!file.getOriginalFilename().contains(".")) {
-			mav.addObject("extensionError", 1);
-			error = true;
-		} else {
-			extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-			if (!extension.equals(".jpg") && !extension.equals(".png") && !extension.equals(".jpeg") && !extension.equals(".gif")) {
-				mav.addObject("extensionError", 1);
-				error = true;
-			}
-		}
-		
-		return error;
-	}
-	
 }

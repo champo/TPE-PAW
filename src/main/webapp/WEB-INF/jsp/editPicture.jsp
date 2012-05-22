@@ -30,7 +30,12 @@
 		<c:if test="${not empty edit}">picture/edit/${picture.property.id}/${picture.id}</c:if>
 	</c:set>
 	
-	<form:form action="${basePath }/${url}" enctype="multipart/form-data" method="post" commandName="pictureForm">
+	<c:set var="form">
+		<c:if test="${empty edit}">newPictureForm</c:if>
+		<c:if test="${not empty edit}">editPictureForm</c:if>
+	</c:set>
+	
+	<form:form action="${basePath }/${url}" enctype="multipart/form-data" method="post" commandName="${form}">
 		
 		<form:errors path="*" cssClass="error"/>
 		
@@ -43,17 +48,6 @@
 		<div>
 			<label for="file">Source:</label>
 			<input type="file" name="file" accept="image/*" size="40"/>
-			
-			<c:if test="${not empty noFileError}">
-				<br />
-				<p class="error">You must choose a file to upload.</p>
-				<br />
-			</c:if>
-			<c:if test="${not empty extensionError}">
-				<br />
-				<p class="error">The file is not a picture. (.gif, .png and .jpg are accepted.)</p>
-				<br />
-			</c:if>
 		</div>
 		</c:if>
 		
