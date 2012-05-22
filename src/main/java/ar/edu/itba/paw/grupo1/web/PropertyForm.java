@@ -23,17 +23,16 @@ public class PropertyForm {
 	
 	private OperationType operationType = OperationType.SELLING;
 	
-	@NotEmpty
 	@NotNull
-	@Size(min=0, max=50)
+	@Size(max=49)
 	private String address;
 	
-	@NotEmpty
 	@NotNull
-	@Size(min=0, max=50)
+	@Size(max=49)
 	private String neighbourhood;
 	
 	@NotNull
+	@Range(min=0, max=Integer.MAX_VALUE)	
 	private double price;
 	
 	@NotNull
@@ -48,7 +47,7 @@ public class PropertyForm {
 	@Range(min=0, max=Integer.MAX_VALUE)
 	private double outdoorSpace;
 	
-	@Size(min=0, max=1000)
+	@Size(max=999)
 	private String description; //Optional
 	
 	@NotNull
