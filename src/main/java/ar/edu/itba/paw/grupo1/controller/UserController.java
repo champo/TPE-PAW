@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.User.UserType;
 import ar.edu.itba.paw.grupo1.service.UserService;
 import ar.edu.itba.paw.grupo1.web.LoginForm;
 import ar.edu.itba.paw.grupo1.web.RegisterForm;
@@ -62,42 +63,52 @@ public class UserController extends BaseController {
 			RedirectView view = new RedirectView("/", true);
 			return new ModelAndView(view);
 		}
-		
+
+		if (form.getUserType() == UserType.REAL_ESTATE) {
+			mav.addObject("isRealEstate", 1);
+		}
+	
 		if (errors.hasErrors()) {
 			return render("register.jsp", "Register", mav);
 		}
-		
-		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
-		List<FileItem> items = null;
 
-		try {
-			items = upload.parseRequest(req);
-		} catch (FileUploadException e) {
-			mav.addObject("fatal", 1);
-			return render("register.jsp", "Register", mav);
-		}
-		
 		FileItem file = null;
-		Iterator<FileItem> iter = items.iterator();
-		while (iter.hasNext()) {
-			file = (FileItem) iter.next();
-			if ("file".equals(file.getFieldName())) {
-				break;
-			}
-		}
-		
-		if (file.getName() != null && !file.getName().trim().isEmpty()) {
+
+		if (form.getUserType() == UserType.REAL_ESTATE) {
 
 			if (form.getRealEstateName() == null || form.getRealEstateName().trim().isEmpty()) {
 				mav.addObject("missingRealEstateNameError", 1);
 				return render("register.jsp", "Register", mav);
 			}
 
+			ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+			List<FileItem> items = null;
+
+			try {
+				items = upload.parseRequest(req);
+			} catch (FileUploadException e) {
+				mav.addObject("fatal", 1);
+				return render("register.jsp", "Register", mav);
+			}
+
+			Iterator<FileItem> iter = items.iterator();
+			while (iter.hasNext()) {
+				file = (FileItem) iter.next();
+				if ("file".equals(file.getFieldName())) {
+					break;
+				}
+			}
+
+			if (file.getName() == null || file.getName().trim().isEmpty()) {
+				mav.addObject("missingLogo", 1);
+				return render("register.jsp", "Register", mav);
+			}
+			
 			if (!file.getName().matches("\\.(jpg|png|jpeg|gif)$")) {
 				mav.addObject("extensionError", 1);
 				return render("register.jsp", "Register", mav);
 			}
-			
+
 			String extension = file.getName().substring(file.getName().lastIndexOf('.'));
 
 			form.setLogoExtension(extension);

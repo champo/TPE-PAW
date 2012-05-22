@@ -77,14 +77,20 @@
 		</script>
 		
 		<div>
-			<label for="type">User type: </label>
-			<select onchange="showRealEstateOptions(this.options[this.selectedIndex].value=='realEstate');">
-				<option value="regular" selected="selected">Regular</option>
-				<option value="realEstate">Real estate</option>
-			</select>
+			<label for="userType">User type: </label>
+			<form:select path="userType" onchange="showRealEstateOptions(this.options[this.selectedIndex].value=='REAL_ESTATE');">
+				<form:option value="REGULAR">Regular</form:option>
+				<form:option value="REAL_ESTATE">Real estate</form:option>
+			</form:select>
+			<form:errors path="userType" element="p" cssClass="error" />
 		</div>
 
-		<div id="realEstateOptions" class="hide">
+		<c:if test="${empty isRealEstate }">
+			<div id="realEstateOptions" class="hide">
+		</c:if>
+		<c:if test="${not empty isRealEstate }">
+			<div id="realEstateOptions" class="show">
+		</c:if>
 		
 			<div>
 				<label for="realEstateName">Real estate name: </label>
@@ -100,6 +106,11 @@
 			<div>
 				<label for="logo">Logo: </label>
 				<input type="file" name="logo" accept="image/*" size="40" >
+				<c:if test="${not empty missingLogo}">
+					<br />
+					<p class="error">The field logo should not be empty.</p>
+					<br />
+				</c:if>
 				<c:if test="${not empty fileError}">
 					<br />
 					<p class="error">That is not a valid file.</p>

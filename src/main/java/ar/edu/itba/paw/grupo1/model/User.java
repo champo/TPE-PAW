@@ -11,6 +11,12 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 
+	public enum UserType {
+
+		REGULAR,
+		REAL_ESTATE,
+	}
+
 	@Id
 	@SequenceGenerator(sequenceName = "users_seq", name = "users_seq")
 	@GeneratedValue(generator = "users_seq")
@@ -36,7 +42,7 @@ public class User {
 	
 	@Column(nullable = true, length = 50)
 	private String realEstateName;
-	
+
 	@Column(nullable = true, length = 10)
 	private String logoExtension;
 
