@@ -12,6 +12,16 @@
 	<br />
 </c:if>
 
+<c:if test="${not empty realEstateName}">
+	<div>
+		Real estate: <c:out value="${fn:escapeXml(realEstateName)}"></c:out>
+		
+		<c:if test="${not empty logo}">
+			<img class="realEstateLogo" alt="Real estate logo" src="${basePath }/images/${logo}" />
+		</c:if>
+	</div>
+</c:if>
+
 <div>
 	Property type:<c:if test="${property.propertyType == 'HOUSE'}"> House</c:if><c:if test="${property.propertyType == 'FLAT'}"> Flat</c:if>
 </div>

@@ -4,9 +4,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 
+<c:if test="${not empty fatal}">
+	<p class="error">Unexpected error processing the file. Please contact an administrator.</p>
+</c:if>
+
+<c:if test="${not empty writeError}">
+	<p class="error">Error while writing the file. Please try again.</p>
+</c:if>
+
 <h1>Register</h1>
 
-<form:form action="${basePath }/user/register" method="post" modelAttribute="registerForm">
+<form:form action="${basePath }/user/register" method="post" modelAttribute="registerForm" enctype="multipart/form-data">
 
 	<fieldset>
 	
@@ -55,6 +63,68 @@
 			<form:errors element="p" cssClass="error" />
 		</div>
 		
+		<script type="text/javascript">
+			function showRealEstateOptions(show) {
+
+				div = document.getElementsByTagName("div")["realEstateOptions"];
+				
+				if ( show ) {
+					div.className = "show";
+				} else {
+					div.className = "hide";
+				}
+			}
+		</script>
+		
+		<div>
+			<label for="userType">User type: </label>
+			<form:select path="userType" onchange="showRealEstateOptions(this.options[this.selectedIndex].value=='REAL_ESTATE');">
+				<form:option value="REGULAR">Regular</form:option>
+				<form:option value="REAL_ESTATE">Real estate</form:option>
+			</form:select>
+			<form:errors path="userType" element="p" cssClass="error" />
+		</div>
+
+		<c:if test="${empty isRealEstate }">
+			<div id="realEstateOptions" class="hide">
+		</c:if>
+		<c:if test="${not empty isRealEstate }">
+			<div id="realEstateOptions" class="show">
+		</c:if>
+		
+			<div>
+				<label for="realEstateName">Real estate name: </label>
+				<form:input path="realEstateName" type="text"/>
+				<form:errors path="realEstateName" element="p" cssClass="error" />
+				<c:if test="${not empty missingRealEstateNameError}">
+					<br />
+					<p class="error">The field real estate name should not be empty.</p>
+					<br />
+				</c:if>
+			</div>
+			
+			<div>
+				<label for="logo">Logo: </label>
+				<input type="file" name="logo" accept="image/*" size="40" >
+				<c:if test="${not empty missingLogo}">
+					<br />
+					<p class="error">The field logo should not be empty.</p>
+					<br />
+				</c:if>
+				<c:if test="${not empty fileError}">
+					<br />
+					<p class="error">That is not a valid file.</p>
+					<br />
+				</c:if>
+				<c:if test="${not empty extensionError}">
+					<br />
+					<p class="error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
+					<br />
+				</c:if>
+			</div>
+
+		</div>
+
 		<input type="submit" value="Register" />
 	</fieldset>
 </form:form>
