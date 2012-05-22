@@ -9,7 +9,7 @@
 
 <p>Dont have an account? <a href="${basePath }/user/register">Register!</a></p>
 
-<form action="${basePath }/user/login?from=${param.from }" method="post">
+<form action="${basePath }/user/login?from=${fn:escapeXml(param.from) }" method="post">
 	<fieldset>
 		<label for="username">Username: </label>
 		<input type="text" name="username" value="${fn:escapeXml(username) }"/><br />
