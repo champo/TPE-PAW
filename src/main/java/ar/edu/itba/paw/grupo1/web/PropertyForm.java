@@ -56,6 +56,10 @@ public class PropertyForm {
 	private int antiquity;
 	
 	@NotNull
+	@Range(min=0, max=Integer.MAX_VALUE)
+	private int visited;
+	
+	@NotNull
 	private Set<Services> services = new HashSet<Services>();
 
 	public PropertyForm() {
@@ -166,7 +170,7 @@ public class PropertyForm {
 	public Property build(User user) {
 		return new Property(propertyType, operationType, address,
 				neighbourhood, price, numRooms, indoorSpace, outdoorSpace,
-				description, antiquity, services, true, user, false);
+				description, antiquity, services, true, user, false, visited);
 	}
 	
 	public void update(Property property) {
