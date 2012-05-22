@@ -34,6 +34,12 @@ public class User {
 	@Column(nullable = false, length = 64)
 	private String password;
 	
+	@Column(nullable = true, length = 50)
+	private String realEstateName;
+	
+	@Column(nullable = true, length = 10)
+	private String logoExtension;
+
 	public User() {
 		
 	}
@@ -62,6 +68,33 @@ public class User {
 		this.password = password;
 	}
 	
+	public User(String name, String surname, String email, String phone,
+			String username, String password, String realEstateName,
+			String logoExtension) {
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.phone = phone;
+		this.username = username;
+		this.password = password;
+		this.realEstateName = realEstateName;
+		this.logoExtension = logoExtension;
+	}
+
+	public User(Integer id, String name, String surname, String email,
+			String phone, String username, String password,
+			String realEstateName, String logoExtension) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.phone = phone;
+		this.username = username;
+		this.password = password;
+		this.realEstateName = realEstateName;
+		this.logoExtension = logoExtension;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -88,6 +121,22 @@ public class User {
 	
 	public String getUsername() {
 		return username;
+	}
+
+	public String getRealEstateName() {
+		return realEstateName;
+	}
+
+	public void setRealEstateName(String realEstateName) {
+		this.realEstateName = realEstateName;
+	}
+
+	public String getLogoExtension() {
+		return logoExtension;
+	}
+
+	public void setLogoExtension(String logoExtension) {
+		this.logoExtension = logoExtension;
 	}
 
 	@Override

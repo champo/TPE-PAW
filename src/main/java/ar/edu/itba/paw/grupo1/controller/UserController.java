@@ -1,9 +1,17 @@
 package ar.edu.itba.paw.grupo1.controller;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -44,6 +52,7 @@ public class UserController extends BaseController {
 		return render("register.jsp", "Register", mav);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="register", method = RequestMethod.POST)
 	protected ModelAndView registerPost(HttpServletRequest req, @Valid RegisterForm form, Errors errors) {
 		
@@ -57,16 +66,61 @@ public class UserController extends BaseController {
 			return render("register.jsp", "Register", mav);
 		}
 		
+		ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+		List<FileItem> items = null;
+
 		try {
-			if (userService.register(form.build()) != null) {
-				return render("registerSuccess.jsp", "Register", mav);
-			}
-			
-		} catch (UserAlreadyExistsException e) {
-			req.setAttribute("usernameDuplicate", true);
+			items = upload.parseRequest(req);
+		} catch (FileUploadException e) {
+			mav.addObject("fatal", 1);
+			return render("register.jsp", "Register", mav);
 		}
 		
-		return render("register.jsp", "Register", mav);
+		FileItem file = null;
+		Iterator<FileItem> iter = items.iterator();
+		while (iter.hasNext()) {
+			file = (FileItem) iter.next();
+			if ("file".equals(file.getFieldName())) {
+				break;
+			}
+		}
+		
+		if (file.getName() != null && !file.getName().trim().isEmpty()) {
+
+			if (!file.getName().matches("\\.(jpg|png|jpeg|gif)$")) {
+				mav.addObject("extensionError", 1);
+				return render("register.jsp", "Register", mav);
+			}
+			
+			String extension = file.getName().substring(file.getName().lastIndexOf('.'));
+
+			form.setLogoExtension(extension);
+		}
+		
+		User user;
+		
+		try {
+			user = userService.register(form.build());
+		} catch (UserAlreadyExistsException e) {
+			mav.addObject("usernameDuplicate", true);
+			return render("register.jsp", "Register", mav);
+		}
+
+		if (user == null) {
+			return render("register.jsp", "Register", mav);
+		}
+
+		if (user.getLogoExtension() != null) {
+			try {
+				file.write(new File(getServletContext().getRealPath("/images") + "/logo_" + user.getId() + user.getLogoExtension()));
+			} catch (Exception e) {
+				// TODO: delete user from db
+				mav.addObject("writeError", 1);
+				return render("register.jsp", "Register", mav);
+			}
+		}
+
+		return render("registerSuccess.jsp", "Register", mav);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)

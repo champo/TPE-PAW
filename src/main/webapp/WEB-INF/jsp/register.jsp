@@ -4,6 +4,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 
+<c:if test="${not empty fatal}">
+	<p class="error">Unexpected error processing the file. Please contact an administrator.</p>
+</c:if>
+
+<c:if test="${not empty writeError}">
+	<p class="error">Error while writing the file. Please try again.</p>
+</c:if>
+
 <h1>Register</h1>
 
 <form:form action="${basePath }/user/register" method="post" modelAttribute="registerForm">
@@ -55,6 +63,52 @@
 			<form:errors element="p" cssClass="error" />
 		</div>
 		
+		<script type="text/javascript">
+			function showRealEstateOptions(show) {
+
+				div = document.getElementsByTagName("div")["realEstateOptions"];
+				
+				if ( show ) {
+					div.className = "show";
+				} else {
+					div.className = "hide";
+				}
+			}
+		</script>
+		
+		<div>
+			<label for="type">User type: </label>
+			<select onchange="showRealEstateOptions(this.options[this.selectedIndex].value=='realEstate');">
+				<option value="regular" selected="selected">Regular</option>
+				<option value="realEstate">Real estate</option>
+			</select>
+		</div>
+
+		<div id="realEstateOptions" class="hide">
+		
+			<div>
+				<label for="realEstateName">Real estate name: </label>
+				<form:input path="realEstateName" type="text"/>
+				<form:errors path="realEstateName" element="p" cssClass="error" />
+			</div>
+			
+			<div>
+				<label for="logo">Logo: </label>
+				<input type="file" name="logo" accept="image/*" size="40" >
+				<c:if test="${not empty fileError}">
+					<br />
+					<p class="error">That is not a valid file.</p>
+					<br />
+				</c:if>
+				<c:if test="${not empty extensionError}">
+					<br />
+					<p class="error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
+					<br />
+				</c:if>
+			</div>
+
+		</div>
+
 		<input type="submit" value="Register" />
 	</fieldset>
 </form:form>

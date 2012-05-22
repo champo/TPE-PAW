@@ -40,8 +40,13 @@ public class RegisterForm {
 
 	private String passwordConfirm;
 
+	@Length(max = 50)
+	private String realEstateName;
+	
+	private String logoExtension;
+	
 	public User build() {
-		return new User(name, surname, email, phone, username, HashingService.hash(password));
+		return new User(name, surname, email, phone, username, HashingService.hash(password), realEstateName, logoExtension);
 	}
 
 	public String getName() {
@@ -98,6 +103,22 @@ public class RegisterForm {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getRealEstateName() {
+		return realEstateName;
+	}
+
+	public void setRealEstateName(String realEstateName) {
+		this.realEstateName = realEstateName;
+	}
+
+	public String getLogoExtension() {
+		return logoExtension;
+	}
+
+	public void setLogoExtension(String logoExtension) {
+		this.logoExtension = logoExtension;
 	}
 	
 	

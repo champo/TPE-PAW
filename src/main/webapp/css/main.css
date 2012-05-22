@@ -19,3 +19,7 @@ h4.reserved {
 	width: 75px;
 	background-color: red;
 }
+
+.show { display: normal; }
+
+.hide { display: none; }
