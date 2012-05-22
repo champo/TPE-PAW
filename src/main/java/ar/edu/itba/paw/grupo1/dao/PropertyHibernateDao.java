@@ -30,7 +30,7 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 		
 		Criteria criteria = createCriteria()
 			.add(Restrictions.eq("user.id", userId));
-		
+		criteria.addOrder(Order.asc("id"));
 		return (List<Property>) criteria.list();
 	}
 
