@@ -25,10 +25,6 @@ public class NewPictureForm {
 	public NewPictureForm() {
 		
 	}
-	
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
 
     public MultipartFile getFile() {
         return file;
@@ -36,10 +32,6 @@ public class NewPictureForm {
     
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void build(Picture picture, String extension, Property property) {
