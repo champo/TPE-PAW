@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.validation.FilenameNotBlank;
 import ar.edu.itba.paw.grupo1.validation.IsImageFile;
 
@@ -38,5 +40,13 @@ public class NewPictureForm {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void build(Picture picture, String extension, Property property) {
+		
+		picture.setExtension(extension);
+		picture.setName(name);
+		picture.setProperty(property);	
+		
 	}
 }

@@ -57,24 +57,21 @@ public class PictureController extends AbstractPictureController {
 		
 		ModelAndView mav = new ModelAndView();
 		Picture picture = new Picture();
-
 		MultipartFile file = pictureForm.getFile();
-		picture.setName(pictureForm.getName());
-		picture.setProperty(property);	
 
-		
-		if (property == null || !isMine(req, picture)) {
-			mav.addObject("noPermissions", 1);
-			return render("editPicture.jsp", "Edit Picture", mav);
-		}
-		
 		if (errors.hasErrors()) {
 			mav.addObject("picture", picture);
 			return render("editPicture.jsp", "Add Picture", mav);
 		}
 		
 		String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-		picture.setExtension(extension);
+		pictureForm.build(picture, extension, property);
+		
+		if (property == null || !isMine(req, picture)) {
+			mav.addObject("noPermissions", 1);
+			return render("editPicture.jsp", "Edit Picture", mav);
+		}
+		
 		pictureService.save(picture);
 		
 		try {
