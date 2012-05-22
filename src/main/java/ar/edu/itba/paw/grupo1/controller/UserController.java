@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.hibernate.ejb.criteria.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -86,6 +87,11 @@ public class UserController extends BaseController {
 		}
 		
 		if (file.getName() != null && !file.getName().trim().isEmpty()) {
+
+			if (form.getRealEstateName() == null || form.getRealEstateName().trim().isEmpty()) {
+				mav.addObject("missingRealEstateNameError", 1);
+				return render("register.jsp", "Register", mav);
+			}
 
 			if (!file.getName().matches("\\.(jpg|png|jpeg|gif)$")) {
 				mav.addObject("extensionError", 1);

@@ -90,6 +90,11 @@
 				<label for="realEstateName">Real estate name: </label>
 				<form:input path="realEstateName" type="text"/>
 				<form:errors path="realEstateName" element="p" cssClass="error" />
+				<c:if test="${not empty missingRealEstateNameError}">
+					<br />
+					<p class="error">The field real estate name should not be empty.</p>
+					<br />
+				</c:if>
 			</div>
 			
 			<div>
