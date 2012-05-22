@@ -26,6 +26,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
+import ar.edu.itba.paw.grupo1.dao.PropertyHibernateDao;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
@@ -144,6 +145,9 @@ public class PropertyController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		List<Picture> pictures = pictureService.getByPropId(property.getId());
+		
+		property.visited();
+		propertyService.save(property, getLoggedInUser(req));
 		
 		mav.addObject("property", property);
 		mav.addObject("services", getServices(property, null));

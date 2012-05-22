@@ -86,6 +86,9 @@ public class Property implements Owned {
 	@Column(nullable = false)
 	private boolean reserved;
 	
+	@Column(nullable = false)
+	private int visited;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
@@ -99,8 +102,7 @@ public class Property implements Owned {
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services,
-			boolean published, User user, boolean reserved) {
-		
+			boolean published, User user, boolean reserved, int visited) {
 		this.id = id;
 		this.propertyType = propertyType;
 		this.operationType = operationType;
@@ -116,14 +118,14 @@ public class Property implements Owned {
 		this.published = published;
 		this.user = user;
 		this.reserved = reserved;
+		this.visited = visited;
 	}
 	
 	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services, 
-			boolean published, User user, boolean reserved) {
-		
+			boolean published, User user, boolean reserved, int visited) {
 		this.propertyType = propertyType;
 		this.operationType = operationType;
 		this.address = address;
@@ -138,10 +140,19 @@ public class Property implements Owned {
 		this.published = published;
 		this.user = user;
 		this.reserved = reserved;
+		this.visited = visited;
 	}
 	
 	public boolean isReserved() {
 		return reserved;
+	}
+	
+	public int getVisited() {
+		return visited;
+	}
+	
+	public void visited() {
+		visited++;
 	}
 	
 	public String getDescription() {

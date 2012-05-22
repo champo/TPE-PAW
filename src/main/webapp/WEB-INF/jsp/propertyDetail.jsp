@@ -115,3 +115,7 @@
 <p> View in map:</p>
 <img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(property.address)}&zoom=14&size=300x300&maptype=roadmap
 &markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
+</br>
+<div>
+	This property has been visited <c:out value="${fn:escapeXml(property.visited)}"></c:out> time<c:if test="${property.visited != 1}">s</c:if>.
+</div>
