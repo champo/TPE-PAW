@@ -10,7 +10,6 @@ import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 
 @Service
 public class PropertyServiceImpl implements PropertyService {
@@ -26,18 +25,11 @@ public class PropertyServiceImpl implements PropertyService {
 		return propertyDao.get(id);
 	}
 
-	public void save(Property property, User user) {
-
-		if (user.getId() == property.getUser().getId()) {
-			
-			if (property.getId() == null) {
-				propertyDao.save(property);
-			} else {
-				propertyDao.update(property);
-			}
-			
+	public void save(Property property) {
+		if (property.getId() == null) {
+			propertyDao.save(property);
 		} else {
-			throw new PermissionDeniedException();
+			propertyDao.update(property);
 		}
 	}
 

@@ -80,7 +80,10 @@ public class PropertyController extends BaseController {
 		}
 		
 		property.publish();
-		propertyService.save(property, getLoggedInUser(req));
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		propertyService.save(property);
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
@@ -127,7 +130,12 @@ public class PropertyController extends BaseController {
 		}
 		
 		propertyForm.update(property);
-		propertyService.save(property, getLoggedInUser(req));
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);
 
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -148,7 +156,7 @@ public class PropertyController extends BaseController {
 		List<Picture> pictures = pictureService.getByPropId(property.getId());
 		
 		property.visited();
-		propertyService.save(property, property.getUser());
+		propertyService.save(property);
 		
 		User user = property.getUser();
 		
@@ -190,7 +198,12 @@ public class PropertyController extends BaseController {
 		}
 
 		property.publish();
-		propertyService.save(property, getLoggedInUser(req));
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -207,7 +220,12 @@ public class PropertyController extends BaseController {
 		}
 
 		property.unpublish();
-		propertyService.save(property, getLoggedInUser(req));			
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);			
 
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -224,8 +242,12 @@ public class PropertyController extends BaseController {
 		}
 		
 		property.reserve();
-		//TODO: When hibernate flushes by itself next line should begone
-		propertyService.save(property, getLoggedInUser(req));			
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);			
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -242,8 +264,12 @@ public class PropertyController extends BaseController {
 		}
 			
 		property.unreserve();
-		//TODO: When hibernate flushes by itself next line should begone
-		propertyService.save(property, getLoggedInUser(req));			
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);			
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -283,7 +309,12 @@ public class PropertyController extends BaseController {
 		
 		Room room = roomForm.buildRoom(property);
 		property.addRoom(room);
-		propertyService.save(property, getLoggedInUser(req));
+		
+		if (!isMine(req, property)) {
+			throw new PermissionDeniedException();
+		}
+		
+		propertyService.save(property);
 		
 		RedirectView view = new RedirectView("/property/edit?id=" + property.getId(),true);
 		return new ModelAndView(view);
