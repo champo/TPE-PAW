@@ -19,7 +19,7 @@
 			<div class="container">
 				<a class="brand" href="${basePath}/index">
 					<img style="height:22px;border:none" alt="A" src="${basePath}/images/arqvengers.png" />
-					rqvengers Property Administration System
+					rqvengers PropAdS
 				</a>
 				<ul class="nav">
 					<li><a href="${basePath}/index">Home</a></li>
