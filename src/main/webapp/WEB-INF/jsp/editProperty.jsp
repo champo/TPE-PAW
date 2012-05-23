@@ -115,14 +115,14 @@
 		<br />
 		Pictures of this property:
 		<br />
-		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(param.id)}" />"> Add new </a>
+		<a href="${basePath }/picture/add/<c:out value="${fn:escapeXml(param.id)}" />"> Add new </a>
 		<br />
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
 			<br />
 			<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
 			<br />
-			<a href="${basePath }/picture/edit?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
+			<a href="${basePath }/picture/edit/<c:out value="${fn:escapeXml(param.id)}" />/<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
 			<br />
 		</c:forEach>
 		
