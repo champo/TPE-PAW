@@ -9,9 +9,9 @@
 
 
 <c:if test="${not empty hasPermissions}">
-	<div class="page-header"><h2>
+	<div class="page-header"><h1>
 			Add New Room
-	</h2></div>
+	</h1></div>
 	
 	<c:set var="url">
 		property/addRoom/${property.id}

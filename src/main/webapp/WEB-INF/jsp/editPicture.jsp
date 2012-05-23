@@ -19,14 +19,15 @@
 
 <c:if test="${empty noPermissions}">
 <c:if test="${empty fatal}">
-<h2>
+
+<div class="page-header"><h1>
 	<c:if test="${empty edit}">
 		Add New Picture
 	</c:if>
 	<c:if test="${not empty edit}">
 		Edit Picture <c:out value="${fn:escapeXml(picture.id)}" />
 	</c:if>
-</h2>
+</h1></div>
 
 <form action="${basePath }/<c:if test="${empty edit}">picture/add</c:if><c:if test="${not empty edit}">picture/edit</c:if>" <c:if test="${empty edit}">enctype="multipart/form-data"</c:if> method="post">
 	<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.property.id)}" />" />
@@ -65,8 +66,10 @@
 		<img class="propPicture" name="picture" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}" /><c:out value="${fn:escapeXml(picture.extension)}" />" alt="Picture #<c:out value="${fn:escapeXml(picture.id)}" />" />
 	</c:if>
 	
+	<br />
+	<br />
 	<div>
-		<input type="submit" name="submit" value="Submit" />
+		<input type="submit" name="submit" value="Submit" class="btn btn-primary"/>
 	</div>	
 	
 </form>
@@ -74,7 +77,7 @@
 <c:if test="${not empty edit}">
 	<form action="${basePath }/picture/edit" method="post">
 		<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(picture.id)}" />" />
-		<input type="submit" name="delete" value="Delete" />
+		<input type="submit" name="delete" value="Delete" class="btn"/>
 	</form>
 </c:if>
 
