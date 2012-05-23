@@ -18,6 +18,7 @@
 	        <list>
 	        	<bean class="ar.edu.itba.paw.grupo1.web.converter.UserConverter" />
 	        	<bean class="ar.edu.itba.paw.grupo1.web.converter.PropertyConverter" />
+	        	<bean class="ar.edu.itba.paw.grupo1.web.converter.PictureConverter" />
 	        </list>
 	    </property>
     </bean>
