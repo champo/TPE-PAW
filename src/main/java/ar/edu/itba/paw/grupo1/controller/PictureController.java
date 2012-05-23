@@ -27,13 +27,12 @@ import ar.edu.itba.paw.grupo1.web.NewPictureForm;
 
 @Controller
 @RequestMapping(value="picture")
-public class PictureController extends AbstractPictureController implements HandlerExceptionResolver {
+public class PictureController extends BaseController implements HandlerExceptionResolver {
 
 	protected PictureService pictureService;
-	
+		
 	@Autowired
 	public PictureController(PropertyService propertyService, PictureService pictureService) {
-		super(propertyService);
 		this.pictureService = pictureService;
 	}
 	
