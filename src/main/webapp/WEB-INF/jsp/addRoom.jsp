@@ -37,8 +37,9 @@
 			<form:input path="width" />
 		</div>
 		
+		<br />
 		<div>
-			<input type="submit" name="submit" value="Submit" />
+			<input type="submit" name="submit" value="Submit" class="btn"/>
 		</div>	
 		
 	</form:form>
