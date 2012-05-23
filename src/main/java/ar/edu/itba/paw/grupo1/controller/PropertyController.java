@@ -122,6 +122,7 @@ public class PropertyController extends BaseController {
 			mav.addObject("edit", 1);
 			mav.addObject("services", getServices(property, req));
 			mav.addObject("rooms", property.getRooms());
+			mav.addObject("pictures", pictureService.getByPropId(property.getId()));
 			return render("editProperty.jsp", "Edit Property", mav);
 		}
 		
