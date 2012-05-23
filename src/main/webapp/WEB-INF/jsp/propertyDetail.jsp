@@ -3,102 +3,121 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 
-<h2>Property <c:out value="${fn:escapeXml(id)}" /></h2>
+<div class="page-header"><h1>Property <c:out value="${fn:escapeXml(id)}" /></h1></div>
 
 <c:if test="${property.reserved}">
-	<div>
+	<p class="alert">
 		This property is reserved.
-	</div>
+	</p>
 	<br />
 </c:if>
 
 <c:if test="${not empty realEstateName}">
-	<div>
+	<p>
 		Real estate: <c:out value="${fn:escapeXml(realEstateName)}"></c:out>
 		
 		<c:if test="${not empty logo}">
 			<img class="realEstateLogo" alt="Real estate logo" src="${basePath }/images/${logo}" />
 		</c:if>
+	</p>
+</c:if>
+
+<div class="row">
+	<div class="span8">
+		<p>
+			<strong>Property type:</strong><c:if test="${property.propertyType == 'HOUSE'}"> House</c:if><c:if test="${property.propertyType == 'FLAT'}"> Flat</c:if>
+		</p>
+		
+		<p>
+			<strong>Operation type:</strong><c:if test="${property.operationType == 'SELLING'}"> Selling</c:if><c:if test="${property.operationType == 'LEASING'}"> Leasing</c:if>
+		</p>
+		
+		<p>
+			<strong>Address:</strong> <c:out value="${fn:escapeXml(property.address)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Neighbourhood:</strong> <c:out value="${fn:escapeXml(property.neighbourhood)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Price:</strong> <c:out value="${fn:escapeXml(property.price)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Rooms:</strong> <c:out value="${fn:escapeXml(property.numRooms)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Indoor space:</strong> <c:out value="${fn:escapeXml(property.indoorSpace)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Outdoor space:</strong> <c:out value="${fn:escapeXml(property.outdoorSpace)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Description:</strong> <c:out value="${fn:escapeXml(property.description)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Antiquity:</strong> <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
+		</p>
+		
+		<p>
+			<strong>Services:</strong>
+		
+			<ul>
+				<c:forEach var="service" items="${services}">
+					<c:if test="${service.present == true}">
+						<li>
+							<spring:message code="${fn:escapeXml(service.name)}"/>
+						</li>
+					</c:if>
+				</c:forEach>
+			</ul>
+		</p>
+		
+		<p>
+			<strong>Rooms:</strong>
+		
+			<c:if test="${empty property.rooms}">This property has no room(s) description.<br/></c:if>
+			<c:if test="${not empty property.rooms}">
+				<br />
+				<ul>
+					<c:forEach var="room" items="${property.rooms}">
+						<li>
+							<c:out value="${fn:escapeXml(room.name)}"/>.<br />
+							Length: <c:out value="${fn:escapeXml(room.length)}"/>.<br /> 
+							Width: <c:out value="${fn:escapeXml(room.width)}"/>.
+						</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+		</p>
+		
+		<br />
+		
+		<p>
+			<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
+			-
+			<a href="${basePath }/query/user?id=${property.user.id }">See ${fn:escapeXml(property.user.username) }'s properties</a>
+		</p>
 	</div>
-</c:if>
-
-<div>
-	Property type:<c:if test="${property.propertyType == 'HOUSE'}"> House</c:if><c:if test="${property.propertyType == 'FLAT'}"> Flat</c:if>
+	<div class="span4">
+		<p><strong> View in map:</strong></p>
+		<p>
+			<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(property.address)}&zoom=14&size=300x300&maptype=roadmap&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
+		</p>
+	</div>
 </div>
 
-<div>
-	Operation type:<c:if test="${property.operationType == 'SELLING'}"> Selling</c:if><c:if test="${property.operationType == 'LEASING'}"> Leasing</c:if>
-</div>
-
-<div>
-	Address: <c:out value="${fn:escapeXml(property.address)}"></c:out>
-</div>
-
-<div>
-	Neighbourhood: <c:out value="${fn:escapeXml(property.neighbourhood)}"></c:out>
-</div>
-
-<div>
-	Price: <c:out value="${fn:escapeXml(property.price)}"></c:out>
-</div>
-
-<div>
-	Rooms: <c:out value="${fn:escapeXml(property.numRooms)}"></c:out>
-</div>
-
-<div>
-	Indoor space: <c:out value="${fn:escapeXml(property.indoorSpace)}"></c:out>
-</div>
-
-<div>
-	Outdoor space: <c:out value="${fn:escapeXml(property.outdoorSpace)}"></c:out>
-</div>
-
-<div>
-	Description: <c:out value="${fn:escapeXml(property.description)}"></c:out>
-</div>
-
-<div>
-	Antiquity: <c:out value="${fn:escapeXml(property.antiquity)}"></c:out>
-</div>
-
-<div>
-	<h4>Services</h4>
-</div>
-
-<c:forEach var="service" items="${services}">
-	<c:if test="${service.present == true}">
-		<div>
-			<spring:message code="${fn:escapeXml(service.name)}"/>
-		</div>
-	</c:if>
-</c:forEach>
 <br />
-
-<div>
-	<h4>Rooms</h4>
-</div>
-
-<c:if test="${empty property.rooms}">This property has no room(s) description.<br/></c:if>
-<c:if test="${not empty property.rooms}">
-	<c:forEach var="room" items="${property.rooms}">
-		<c:out value="${fn:escapeXml(room.name)}"/>. 
-		Length: <c:out value="${fn:escapeXml(room.length)}"/>. 
-		Width: <c:out value="${fn:escapeXml(room.width)}"/>. 
-		<br/>
-	</c:forEach>
-</c:if>
-<br/>
-
-<div>
-	<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
-	-
-	<a href="${basePath }/query/user?id=${property.user.id }">See ${fn:escapeXml(property.user.username) }'s properties</a>
-</div>
+<br />
 
 <c:if test="${not empty pictures}">
 	<div>
-		Pictures of this property: <br />
+		<strong>Pictures of this property:</strong> <br />
 		<c:set var="countPictures" value="1" />	
 		<c:forEach var="picture" items="${pictures}">
 			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
@@ -121,11 +140,9 @@
 	This property has no pictures.
 </c:if>
 
-<br/ >
-<p> View in map:</p>
-<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(property.address)}&zoom=14&size=300x300&maptype=roadmap
-&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
-</br>
-<div>
+<br />
+<br />
+
+<p>
 	This property has been visited <c:out value="${fn:escapeXml(property.visited)}"></c:out> time<c:if test="${property.visited != 1}">s</c:if>.
 </div>

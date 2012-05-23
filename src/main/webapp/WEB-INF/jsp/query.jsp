@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<div class="page-header"><h1>Query</h1></div>
+<div class="page-header"><h1>Search properties</h1></div>
 
 <div>
 	<c:if test="${param.unpublished}">
