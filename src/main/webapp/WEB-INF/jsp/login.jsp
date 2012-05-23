@@ -8,6 +8,7 @@
 </c:if>
 
 <p>Dont have an account? <a href="${basePath }/user/register">Register!</a></p>
+<br />
 
 <form action="${basePath }/user/login?from=${fn:escapeXml(param.from) }" method="post">
 	<fieldset>
