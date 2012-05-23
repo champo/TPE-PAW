@@ -26,7 +26,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
-import ar.edu.itba.paw.grupo1.dao.PropertyHibernateDao;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
@@ -130,11 +129,7 @@ public class PropertyController extends BaseController {
 		}
 		
 		propertyForm.update(property);
-		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
-		
+			
 		propertyService.save(property);
 
 		RedirectView view = new RedirectView("/property/list", true);
@@ -199,10 +194,6 @@ public class PropertyController extends BaseController {
 
 		property.publish();
 		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
-		
 		propertyService.save(property);
 		
 		RedirectView view = new RedirectView("/property/list", true);
@@ -220,10 +211,6 @@ public class PropertyController extends BaseController {
 		}
 
 		property.unpublish();
-		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
 		
 		propertyService.save(property);			
 
@@ -243,10 +230,6 @@ public class PropertyController extends BaseController {
 		
 		property.reserve();
 		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
-		
 		propertyService.save(property);			
 		
 		RedirectView view = new RedirectView("/property/list", true);
@@ -264,10 +247,6 @@ public class PropertyController extends BaseController {
 		}
 			
 		property.unreserve();
-		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
 		
 		propertyService.save(property);			
 		
@@ -309,10 +288,6 @@ public class PropertyController extends BaseController {
 		
 		Room room = roomForm.buildRoom(property);
 		property.addRoom(room);
-		
-		if (!isMine(req, property)) {
-			throw new PermissionDeniedException();
-		}
 		
 		propertyService.save(property);
 		
