@@ -26,20 +26,22 @@
 			<label for="name">Name:</label>
 			<form:input path="name" />
 		</div>
-		
-		<div>
-			<label for="length">Length:</label>
-			<form:input path="length" />
-		</div>
-		
-		<div>
-			<label for="width">Width:</label>
-			<form:input path="width" />
+		<br/>
+		<div class="row">
+			<div class="span3">
+				<label for="length">Length:</label>
+				<form:input path="length" />
+			</div>
+			
+			<div class="span3 offset1">
+				<label for="width">Width:</label>
+				<form:input path="width" />
+			</div>
 		</div>
 		
 		<br />
 		<div>
-			<input type="submit" name="submit" value="Submit" class="btn"/>
+			<input type="submit" name="submit" value="Submit" class="btn btn-primary"/>
 		</div>	
 		
 	</form:form>

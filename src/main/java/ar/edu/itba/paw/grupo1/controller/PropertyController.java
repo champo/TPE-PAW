@@ -147,7 +147,7 @@ public class PropertyController extends BaseController {
 		List<Picture> pictures = pictureService.getByPropId(property.getId());
 		
 		property.visited();
-		propertyService.save(property, getLoggedInUser(req));
+//		propertyService.save(property, getLoggedInUser(req));
 		
 		User user = property.getUser();
 		

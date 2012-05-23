@@ -33,37 +33,41 @@
 	<input type="hidden" name="propId" value="<c:out value="${fn:escapeXml(picture.property.id)}" />" />
 	<input type="hidden" name="id" value="<c:out value="${fn:escapeXml(picture.id)}" />" />
 	<input type="hidden" name="extension" value="<c:out value="${fn:escapeXml(picture.extension)}" />" />
-	<div>
-		<label for="name">Name:</label>
-		<input type="text" name="name" value="<c:out value="${fn:escapeXml(picture.name)}" />" />
-	</div>
-	<c:if test="${not empty nameError}">
-			<br />
-			<p class="alert alert-error">Error: The name cannot be empty nor longer than 50 characters.</p>
-			<br />
-	</c:if>
 	
-	<c:if test="${empty edit}">
-	<div>
-		<label for="file">Source:</label>
-		<input type="file" name="file" accept="image/*" size="40"/>
-		
-		<c:if test="${not empty fileError}">
-			<br />
-			<p class="alert alert-error">That is not a valid file.</p>
-			<br />
-		</c:if>
-		<c:if test="${not empty extensionError}">
-			<br />
-			<p class="alert alert-error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
-			<br />
+	<div class="row">
+		<div class="span3">
+			<label for="name">Name:</label>
+			<input type="text" name="name" value="<c:out value="${fn:escapeXml(picture.name)}" />" />
+			<c:if test="${not empty nameError}">
+					<p class="alert alert-error">Error: The name cannot be empty nor longer than 50 characters.</p>
+			</c:if>
+		</div>
+	
+		<c:if test="${empty edit}">
+			<div class="span3 offset1">
+				<label for="file">Source:</label>
+				<input type="file" name="file" accept="image/*" size="40"/>
+				
+				<c:if test="${not empty fileError}">
+					<br />
+					<p class="alert alert-error">That is not a valid file.</p>
+					<br />
+				</c:if>
+				<c:if test="${not empty extensionError}">
+					<br />
+					<p class="alert alert-error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
+					<br />
+				</c:if>
+			</div>
 		</c:if>
 	</div>
-	</c:if>
 	
 	<c:if test="${not empty edit}">
-		Preview: <br />
-		<img class="propPicture" name="picture" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}" /><c:out value="${fn:escapeXml(picture.extension)}" />" alt="Picture #<c:out value="${fn:escapeXml(picture.id)}" />" />
+		<br/>
+		<p>
+			Preview: <br />
+			<img class="propPicture" name="picture" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}" /><c:out value="${fn:escapeXml(picture.extension)}" />" alt="Picture #<c:out value="${fn:escapeXml(picture.id)}" />" />
+		</p>
 	</c:if>
 	
 	<br />

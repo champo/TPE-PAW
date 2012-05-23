@@ -4,8 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <div>
-	<div class="page-header"><h2>Contact form for ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h2></div> 
 	<c:if test="${empty publisher}">
+		<div class="page-header"><h1>Contact form for property ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h1></div>
+ 
 		<form:form action="${basePath}/contact?propertyId=${fn:escapeXml(param.propertyId)}" method="post" commandName="contactForm">
 
 			<div>
@@ -32,24 +33,30 @@
 			</div>
 			<br />
 
-			<div>
-				<label for="comment">Comment (optional):</label>
-				<br />
-				<form:errors path="comment" element="p" cssClass="alert alert-error" />
-
-				<form:textarea rows="5" cols="50" path="comment" />
+			<div class="row">
+				<div class="span7">
+					<label for="comment">Comment (optional):</label>
+					<br />
+					<form:errors path="comment" element="p" cssClass="alert alert-error" />
+	
+					<form:textarea rows="5" path="comment" class="span7"/>
+				</div>
 			</div>
 			<br />
 
-			<input type="submit" value="Submit">
+			<input type="submit" value="Submit" class="btn btn-primary">
 		</form:form>
 	</c:if>
+
 	<c:if test="${not empty publisher}">
-		<div class="page-header"><h2>Contact information</h2></div>
+		<div class="page-header"><h1>Contact information for property ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h1></div>
+ 
 		<p>
-		Phone: ${fn:escapeXml(publisher.phone)}
-		<br />
-		Email: ${fn:escapeXml(publisher.email)}
+			<strong>Phone:</strong> ${fn:escapeXml(publisher.phone)}
+		</p>
+
+		<p>
+			<strong>Email:</strong> ${fn:escapeXml(publisher.email)}
 		</p>
 	</c:if>	
 </div>

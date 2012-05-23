@@ -84,7 +84,7 @@
 			<p class="row">
 				<div class="span7">
 					<label for="description">Description:</label>
-					<form:textarea path="description" cols="40" rows="5" class="span7"/>
+					<form:textarea path="description" rows="5" class="span7"/>
 				</div>
 			</p>
 			
@@ -125,7 +125,8 @@
 	</div>
 </form:form>
 
-<br/>
+<hr />
+<br />
 
 <c:if test="${not empty edit}">
 	Rooms of this property:

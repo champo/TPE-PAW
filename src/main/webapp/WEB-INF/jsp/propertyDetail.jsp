@@ -12,16 +12,6 @@
 	<br />
 </c:if>
 
-<c:if test="${not empty realEstateName}">
-	<p>
-		Real estate: <c:out value="${fn:escapeXml(realEstateName)}"></c:out>
-		
-		<c:if test="${not empty logo}">
-			<img class="realEstateLogo" alt="Real estate logo" src="${basePath }/images/${logo}" />
-		</c:if>
-	</p>
-</c:if>
-
 <div class="row">
 	<div class="span8">
 		<p>
@@ -105,6 +95,29 @@
 		</p>
 	</div>
 	<div class="span4">
+	
+		<c:if test="${not empty realEstateName}">
+			<div class="alert alert-info span3">
+				<p>
+					<strong>Real estate</strong>
+				</p>
+		
+				<p>
+					<div class="row">
+						<div class="span2">		
+							<c:if test="${not empty logo}">
+								<img class="realEstateLogo" alt="Real estate logo" src="${basePath }/images/${logo}" />
+							</c:if>
+						</div>
+						<div class="span1">
+							<br />
+							<strong><c:out value="${fn:escapeXml(realEstateName)}"></c:out></strong>
+						</div>
+					</div>
+				</p>
+			</div>
+		</c:if>
+
 		<p><strong> View in map:</strong></p>
 		<p>
 			<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(property.address)}&zoom=14&size=300x300&maptype=roadmap&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
