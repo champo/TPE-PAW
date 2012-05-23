@@ -11,18 +11,26 @@
 
 <form action="${basePath }/user/login?from=${fn:escapeXml(param.from) }" method="post">
 	<fieldset>
-		<label for="username">Username: </label>
-		<input type="text" name="username" value="${fn:escapeXml(username) }"/><br />
-		
-		<label for="rememberName">Remember username</label>
-		<input type="checkbox" name="rememberName" /><br /> 
+		<p>
+			<label for="username">Username: </label>
+			<input type="text" name="username" value="${fn:escapeXml(username) }"/><br />
+			
+			<label for="rememberName" class="checkbox inline">
+				<input type="checkbox" name="rememberName"/> Remember username
+			</label>
+		</p> 
 
-		<label for="password">Password: </label>
-		<input type="password" name="password" value="${fn:escapeXml(param.password) }"/><br />
+		<p>
+			<label for="password">Password: </label>
+			<input type="password" name="password" value="${fn:escapeXml(param.password) }"/><br />
+			
+			<label for="rememberMe" class="checkbox inline">
+				<input type="checkbox" name="rememberMe" /> Remember login
+			</label>
+		</p>
 		
-		<label for="rememberMe">Remember login </label>
-		<input type="checkbox" name="rememberMe" /><br/>
-		
-		<input type="submit" value="Login" />
+		<br />
+	
+		<input type="submit" value="Login" class="btn"/>
 	</fieldset>
 </form>
