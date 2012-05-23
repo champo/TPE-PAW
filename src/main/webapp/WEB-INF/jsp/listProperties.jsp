@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<h1>Properties list</h1>
+<div class="page-header"><h1>Properties list</h1></div>
 
 <a href="${basePath }/property/add">[Add new property]</a>
 

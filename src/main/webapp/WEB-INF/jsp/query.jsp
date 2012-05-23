@@ -3,14 +3,14 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<h1>Query</h1>
+<div class="page-header"><h1>Query</h1></div>
 
 <div>
 	<c:if test="${param.unpublished}">
-		<p class="error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
+		<p class="alert alert-error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
 	</c:if>
 	
-	<form:errors path="pageNumber" element="p" cssClass="error" />
+	<form:errors path="pageNumber" element="p" cssClass="alert alert-error" />
 </div>
 
 <div>
@@ -23,7 +23,7 @@
 			<form:radiobutton path="operation" value="SELLING"/>Selling
 			<form:radiobutton path="operation" value="LEASING"/>Leasing
 
-			<form:errors path="operation" element="p" cssClass="error" />
+			<form:errors path="operation" element="p" cssClass="alert alert-error" />
 		</div>
 		
 
@@ -34,7 +34,7 @@
 			<form:radiobutton path="property" value="FLAT"/>Flat
 			<form:radiobutton path="property" value="HOUSE"/>House
 
-			<form:errors path="property" element="p" cssClass="error" />
+			<form:errors path="property" element="p" cssClass="alert alert-error" />
 		</div>
 
 		<div>
@@ -51,9 +51,9 @@
 			</form:select>
 			order
 			
-			<form:errors path="rangeFrom" element="p" cssClass="error" />
-			<form:errors path="rangeTo" element="p" cssClass="error" />
-			<form:errors path="order" element="p" cssClass="error" />
+			<form:errors path="rangeFrom" element="p" cssClass="alert alert-error" />
+			<form:errors path="rangeTo" element="p" cssClass="alert alert-error" />
+			<form:errors path="order" element="p" cssClass="alert alert-error" />
 		</div>
 
 		<input type="submit" value="Query" />

@@ -2,19 +2,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <c:if test="${not empty noPermissions}">
-	<p class="error">You don't have permissions to view this page</p>
+	<p class="alert alert-error">You don't have permissions to view this page</p>
 </c:if>
 
 <c:if test="${not empty fatal}">
-	<p class="error">Unexpected error processing the file. Please contact an administrator.</p>
+	<p class="alert alert-error">Unexpected error processing the file. Please contact an administrator.</p>
 </c:if>
 
 <c:if test="${not empty writeError}">
-	<p class="error">Error while writing the file. Please try again.</p>
+	<p class="alert alert-error">Error while writing the file. Please try again.</p>
 </c:if>
 
 <c:if test="${not empty deleteError}">
-	<p class="error">Error while deleting the file. Please try again.</p>
+	<p class="alert alert-error">Error while deleting the file. Please try again.</p>
 </c:if>
 
 <c:if test="${empty noPermissions}">
@@ -38,7 +38,7 @@
 	</div>
 	<c:if test="${not empty nameError}">
 			<br />
-			<p class="error">Error: The name cannot be empty nor longer than 50 characters.</p>
+			<p class="alert alert-error">Error: The name cannot be empty nor longer than 50 characters.</p>
 			<br />
 	</c:if>
 	
@@ -49,12 +49,12 @@
 		
 		<c:if test="${not empty fileError}">
 			<br />
-			<p class="error">That is not a valid file.</p>
+			<p class="alert alert-error">That is not a valid file.</p>
 			<br />
 		</c:if>
 		<c:if test="${not empty extensionError}">
 			<br />
-			<p class="error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
+			<p class="alert alert-error">The file is not a picture. .gif, .png and .jpg are accepted.</p>
 			<br />
 		</c:if>
 	</div>

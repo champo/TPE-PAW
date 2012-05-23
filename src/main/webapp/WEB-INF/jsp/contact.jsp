@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <div>
-	<h2>Contact form for ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h2> 
+	<div class="page-header"><h2>Contact form for ${fn:escapeXml(property.address)} - ${fn:escapeXml(property.neighbourhood)}</h2></div> 
 	<c:if test="${empty publisher}">
 		<form:form action="${basePath}/contact?propertyId=${fn:escapeXml(param.propertyId)}" method="post" commandName="contactForm">
 
@@ -12,7 +12,7 @@
 				<label for="name">Name: </label>
 				<form:input type="text" path="name" />
 
-				<form:errors path="name" element="p" cssClass="error" />
+				<form:errors path="name" element="p" cssClass="alert alert-error" />
 			</div>
 			<br />
 
@@ -20,7 +20,7 @@
 				<label for="email">Email: </label>
 				<form:input type="text" path="email"/>
 
-				<form:errors path="email" element="p" cssClass="error" />
+				<form:errors path="email" element="p" cssClass="alert alert-error" />
 			</div>
 			<br />
 
@@ -28,14 +28,14 @@
 				<label for="phone">Phone: </label>
 				<form:input type="text" path="phone"/>
 
-				<form:errors path="phone" element="p" cssClass="error" />
+				<form:errors path="phone" element="p" cssClass="alert alert-error" />
 			</div>
 			<br />
 
 			<div>
 				<label for="comment">Comment (optional):</label>
 				<br />
-				<form:errors path="comment" element="p" cssClass="error" />
+				<form:errors path="comment" element="p" cssClass="alert alert-error" />
 
 				<form:textarea rows="5" cols="50" path="comment" />
 			</div>
@@ -45,7 +45,7 @@
 		</form:form>
 	</c:if>
 	<c:if test="${not empty publisher}">
-		<h2>Contact information</h2>
+		<div class="page-header"><h2>Contact information</h2></div>
 		<p>
 		Phone: ${fn:escapeXml(publisher.phone)}
 		<br />
