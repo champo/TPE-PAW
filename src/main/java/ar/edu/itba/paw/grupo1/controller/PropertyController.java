@@ -145,7 +145,11 @@ public class PropertyController extends BaseController {
 
 		ModelAndView mav = new ModelAndView();
 		List<Picture> pictures = pictureService.getByPropId(property.getId());
-		
+
+		if (isLoggedIn(req) && isMine(req, property)) {
+			mav.addObject("ownProperty", 1);
+		}
+
 		property.visited();
 //		propertyService.save(property, getLoggedInUser(req));
 		

@@ -89,8 +89,10 @@
 		<br />
 		
 		<p>
-			<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
-			-
+			<c:if test="${empty ownProperty}">
+				<a href="${basePath }/contact?propertyId=${property.id}">Get contact information</a>
+				-
+			</c:if>
 			<a href="${basePath }/query/user?id=${property.user.id }">See ${fn:escapeXml(property.user.username) }'s properties</a>
 		</p>
 	</div>

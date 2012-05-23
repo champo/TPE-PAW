@@ -22,11 +22,31 @@
 					rqvengers PropAdS
 				</a>
 				<ul class="nav">
-					<li><a href="${basePath}/index">Home</a></li>
-					<li><a href="${basePath }/query">Search properties</a></li>
+
+					<c:if test="${documentBodyFile == 'index.jsp'}">
+						<li class="active"><a href="${basePath}/index">Home</a></li>
+					</c:if>
+					<c:if test="${documentBodyFile != 'index.jsp'}">
+						<li><a href="${basePath}/index">Home</a></li>
+					</c:if>
+
+					<c:if test="${documentBodyFile == 'query.jsp'}">
+						<li class="active"><a href="${basePath }/query">Search properties</a></li>
+					</c:if>
+					<c:if test="${documentBodyFile != 'query.jsp'}">
+						<li><a href="${basePath }/query">Search properties</a></li>
+					</c:if>
+
 					<c:if test="${not empty user }">
 						<li class="divider-vertical"></li>
-						<li><a href="${basePath }/property/list">My properties</a></li>
+						
+						<c:if test="${documentBodyFile == 'listProperties.jsp'}">
+							<li class="active"><a href="${basePath }/property/list">My properties</a></li>
+						</c:if>
+						<c:if test="${documentBodyFile != 'listProperties.jsp'}">
+							<li><a href="${basePath }/property/list">My properties</a></li>
+						</c:if>
+
 						<li class="divider-vertical"></li>
 					</c:if>
 				</ul>

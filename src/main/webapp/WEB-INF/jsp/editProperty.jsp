@@ -116,12 +116,14 @@
 				</div>
 			</p>
 		</div>
-		<div class="span4">
-			<p> View in map:</p>
-			<p>
-				<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(address)}&zoom=14&size=300x300&maptype=roadmap&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
-			</p>
-		</div>
+		<c:if test="${not empty edit}">
+			<div class="span4">
+				<p> View in map:</p>
+				<p>
+					<img src="http://maps.googleapis.com/maps/api/staticmap?center=${fn:escapeXml(address)}&zoom=14&size=300x300&maptype=roadmap&markers=color:red%7C${fn:escapeXml(address)}&sensor=false" />
+				</p>
+			</div>
+		</c:if>
 	</div>
 </form:form>
 
@@ -153,13 +155,20 @@
 		<a href="${basePath }/picture/add?propId=<c:out value="${fn:escapeXml(param.id)}" />"> Add new picture</a>
 		<br />
 		<br />
-		<c:forEach var="picture" items="${pictures}">
-			<c:out value="${fn:escapeXml(picture.name)}"></c:out>
-			<br />
-			<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
-			<br />
-			<a href="${basePath }/picture/edit?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
-			<br />
-		</c:forEach>
+		<div class="row">
+			<c:forEach var="picture" items="${pictures}">
+				<div class="span4">
+					<p>
+						<c:out value="${fn:escapeXml(picture.name)}"></c:out>
+					</p>
+					<p>
+						<img class="propPicture" alt="Image of the property" src="${basePath }/images/<c:out value="${fn:escapeXml(picture.id)}"></c:out><c:out value="${fn:escapeXml(picture.extension)}"></c:out>" />
+					</p>
+					<p>
+						<a href="${basePath }/picture/edit?id=<c:out value="${fn:escapeXml(picture.id)}" />"> Edit or delete </a>  
+					</p>
+				</div>
+			</c:forEach>
+		</div>
 		<br />
 </c:if>
