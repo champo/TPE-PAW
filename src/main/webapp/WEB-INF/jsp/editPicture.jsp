@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <c:if test="${not empty noPermissions}">
 	<p class="error">You don't have permissions to view this page</p>
@@ -12,6 +13,10 @@
 
 <c:if test="${not empty deleteError}">
 	<p class="error">Error while deleting the file. Please try again.</p>
+</c:if>
+
+<c:if test="${not empty param.maxUploadSizeError}">
+	<p class="error">Error while uploading the file. The maximum file size is <spring:message code="MAXUPLOADSIZE"/> .</p>
 </c:if>
 
 <c:if test="${empty noPermissions}">
@@ -26,7 +31,7 @@
 	</h2>
 	
 	<c:set var="url">
-		<c:if test="${empty edit}">picture/add/${picture.property.id}</c:if>
+		<c:if test="${empty edit}">picture/add/${property.id}</c:if>
 		<c:if test="${not empty edit}">picture/edit/${picture.property.id}/${picture.id}</c:if>
 	</c:set>
 	

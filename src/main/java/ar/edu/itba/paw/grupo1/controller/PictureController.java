@@ -3,6 +3,7 @@ package ar.edu.itba.paw.grupo1.controller;
 import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -24,7 +27,7 @@ import ar.edu.itba.paw.grupo1.web.NewPictureForm;
 
 @Controller
 @RequestMapping(value="picture")
-public class PictureController extends AbstractPictureController {
+public class PictureController extends AbstractPictureController implements HandlerExceptionResolver {
 
 	protected PictureService pictureService;
 	
@@ -42,7 +45,7 @@ public class PictureController extends AbstractPictureController {
 		if (property != null && isMine(req, property)) {
 			Picture picture = new Picture();
 			picture.setProperty(property);
-			mav.addObject("picture", picture);
+			mav.addObject("property", property);
 		} else {
 			mav.addObject("noPermissions", 1);
 		}
@@ -58,9 +61,9 @@ public class PictureController extends AbstractPictureController {
 		ModelAndView mav = new ModelAndView();
 		Picture picture = new Picture();
 		MultipartFile file = pictureForm.getFile();
-
+		
 		if (errors.hasErrors()) {
-			mav.addObject("picture", picture);
+			mav.addObject("property", property);
 			return render("editPicture.jsp", "Add Picture", mav);
 		}
 		
@@ -69,7 +72,7 @@ public class PictureController extends AbstractPictureController {
 		
 		if (property == null || !isMine(req, picture)) {
 			mav.addObject("noPermissions", 1);
-			return render("editPicture.jsp", "Edit Picture", mav);
+			return render("editPicture.jsp", "Add Picture", mav);
 		}
 		
 		pictureService.save(picture);
@@ -150,4 +153,19 @@ public class PictureController extends AbstractPictureController {
 		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
 		return new ModelAndView(view);
 	}
+	
+	
+	@Override
+	public ModelAndView resolveException(HttpServletRequest req, HttpServletResponse resp, 
+			Object handler, Exception e) {
+		
+		if (e instanceof MaxUploadSizeExceededException) {
+            RedirectView view = new RedirectView(req.getRequestURI() + "?maxUploadSizeError=true", true);
+    		return new ModelAndView(view);
+        } else {
+        	return null;
+        }
+		
+	}
+	
 }

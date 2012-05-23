@@ -26,6 +26,14 @@ public class NewPictureForm {
 		
 	}
 
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
     public MultipartFile getFile() {
         return file;
     }
