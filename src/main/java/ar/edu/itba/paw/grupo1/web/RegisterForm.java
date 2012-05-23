@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.User.UserType;
 import ar.edu.itba.paw.grupo1.service.HashingService;
 import ar.edu.itba.paw.grupo1.validation.IsEqual;
 
@@ -40,8 +41,15 @@ public class RegisterForm {
 
 	private String passwordConfirm;
 
+	@Length(max = 50)
+	private String realEstateName;
+	
+	private String logoExtension;
+	
+	private User.UserType userType = UserType.REGULAR;
+
 	public User build() {
-		return new User(name, surname, email, phone, username, HashingService.hash(password));
+		return new User(name, surname, email, phone, username, HashingService.hash(password), realEstateName, logoExtension);
 	}
 
 	public String getName() {
@@ -98,6 +106,30 @@ public class RegisterForm {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getRealEstateName() {
+		return realEstateName;
+	}
+
+	public void setRealEstateName(String realEstateName) {
+		this.realEstateName = realEstateName;
+	}
+
+	public String getLogoExtension() {
+		return logoExtension;
+	}
+
+	public void setLogoExtension(String logoExtension) {
+		this.logoExtension = logoExtension;
+	}
+
+	public User.UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(User.UserType userType) {
+		this.userType = userType;
 	}
 	
 	

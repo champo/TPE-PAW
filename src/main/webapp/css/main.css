@@ -8,6 +8,11 @@
 	max-height:200px;
 }
 
+.realEstateLogo {
+	max-width:100px;
+	max-height:100px;
+}
+
 div.reserved {
 	position: relative; 
 }
@@ -19,3 +24,7 @@ h4.reserved {
 	width: 75px;
 	background-color: red;
 }
+
+.show { display: normal; }
+
+.hide { display: none; }

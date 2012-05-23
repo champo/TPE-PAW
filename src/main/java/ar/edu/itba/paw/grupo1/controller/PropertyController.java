@@ -149,6 +149,15 @@ public class PropertyController extends BaseController {
 		property.visited();
 		propertyService.save(property, getLoggedInUser(req));
 		
+		User user = property.getUser();
+		
+		if (user.getRealEstateName() != null) {
+			mav.addObject("realEstateName", user.getRealEstateName());
+			if (user.getLogoExtension() != null) {
+				mav.addObject("logo", "logo_"+user.getId()+user.getLogoExtension());
+			}
+		}
+
 		mav.addObject("property", property);
 		mav.addObject("services", getServices(property, null));
 		if (pictures.size() > 0) {
