@@ -3,15 +3,15 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <c:if test="${empty hasPermissions}">
-	<p class="error">You don't have permissions to view this page</p>
+	<p class="alert alert-error">You don't have permissions to view this page</p>
 </c:if>
 
 
 
 <c:if test="${not empty hasPermissions}">
-	<h2>
+	<div class="page-header"><h1>
 			Add New Room
-	</h2>
+	</h1></div>
 	
 	<c:set var="url">
 		property/addRoom/${property.id}
@@ -20,25 +20,28 @@
 	
 	<form:form action="${basePath }/${url }" method="post" commandName="roomForm">
 		
-		<form:errors path="*" cssClass="error"/>
+		<form:errors path="*" cssClass="alert alert-error"/>
 	
 		<div>
 			<label for="name">Name:</label>
 			<form:input path="name" />
 		</div>
-		
-		<div>
-			<label for="length">Length:</label>
-			<form:input path="length" />
+		<br/>
+		<div class="row">
+			<div class="span3">
+				<label for="length">Length:</label>
+				<form:input path="length" />
+			</div>
+			
+			<div class="span3 offset1">
+				<label for="width">Width:</label>
+				<form:input path="width" />
+			</div>
 		</div>
 		
+		<br />
 		<div>
-			<label for="width">Width:</label>
-			<form:input path="width" />
-		</div>
-		
-		<div>
-			<input type="submit" name="submit" value="Submit" />
+			<input type="submit" name="submit" value="Submit" class="btn btn-primary"/>
 		</div>	
 		
 	</form:form>
