@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 
-<div class="page-header"><h1>Property <c:out value="${fn:escapeXml(id)}" /></h1></div>
+<div class="page-header"><h1>Property detail<c:out value="${fn:escapeXml(id)}" /></h1></div>
 
 <c:if test="${property.reserved}">
 	<p class="alert">
