@@ -18,7 +18,7 @@ public interface PropertyService {
 	public Property getById(int id);
 
 	@Transactional
-	public void save(Property property, User user);
+	public void save(Property property);
 
 	@Transactional
 	public PaginatedList query(PropertyQuery query, int resultsPerPage);
