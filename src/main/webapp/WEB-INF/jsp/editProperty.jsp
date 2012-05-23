@@ -137,8 +137,8 @@
 		<c:forEach var="room" items="${rooms}">
 			<li>
 				<strong><c:out value="${fn:escapeXml(room.name)}" />:</strong> 
-				Largo: <c:out value="${fn:escapeXml(room.length)}" />
-				Ancho: <c:out value="${fn:escapeXml(room.width)}" />
+				length: <c:out value="${fn:escapeXml(room.length)}" />,
+				width: <c:out value="${fn:escapeXml(room.width)}" />
 			</li>
 		</c:forEach>
 	</ul>
