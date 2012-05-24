@@ -1,3 +1,5 @@
 In order to create a .war that contains test data suitable to use with the .sql files under src/test/resources, just use the test profile.
 For example:
     mvn -P test package
+
+If you come from Sprint 1 and still have a DB username paw, you might want to run the fix_user.sql file under src/test/resources, before any other .sql
