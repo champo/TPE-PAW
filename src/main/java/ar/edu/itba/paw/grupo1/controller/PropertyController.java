@@ -59,8 +59,9 @@ public class PropertyController extends BaseController {
 	protected ModelAndView addGet() { 
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("propertyForm", new PropertyForm());
-		mav.addObject("services", getServices(new Property(), null));
+		PropertyForm propertyForm = new PropertyForm();
+		mav.addObject("propertyForm", propertyForm);
+		mav.addObject("services", getServices(propertyForm.getServices()));
 		
 		return render("editProperty.jsp", "Add Property", mav);
 	}
@@ -72,7 +73,7 @@ public class PropertyController extends BaseController {
 		Property property = propertyForm.build(getLoggedInUser(req));
 		
 		if (errors.hasErrors()) {
-			mav.addObject("services", getServices(new Property(), req));
+			mav.addObject("services", getServices(propertyForm.getServices()));
 			return render("editProperty.jsp", "Add Property", mav);
 		}
 		
@@ -95,10 +96,11 @@ public class PropertyController extends BaseController {
 		}
 		
 		ModelAndView mav = new ModelAndView();
+		PropertyForm propertyForm = new PropertyForm(property);
 		mav.addObject("edit", 1);
-		mav.addObject("propertyForm", new PropertyForm(property));
+		mav.addObject("propertyForm", propertyForm);
 		mav.addObject("pictures", pictureRepository.getPictures(property));				
-		mav.addObject("services", getServices(property, null));
+		mav.addObject("services", getServices(propertyForm.getServices()));
 		mav.addObject("rooms", property.getRooms());
 
 		return render("editProperty.jsp", "Edit Property", mav);
@@ -119,7 +121,7 @@ public class PropertyController extends BaseController {
 		
 		if (errors.hasErrors()) {
 			mav.addObject("edit", 1);
-			mav.addObject("services", getServices(property, req));
+			mav.addObject("services", getServices(propertyForm.getServices()));
 			mav.addObject("rooms", property.getRooms());
 			mav.addObject("pictures", pictureRepository.getPictures(property));
 			return render("editProperty.jsp", "Edit Property", mav);
@@ -159,7 +161,6 @@ public class PropertyController extends BaseController {
 		}
 
 		mav.addObject("property", property);
-		mav.addObject("services", getServices(property, null));
 		if (pictures.size() > 0) {
 			mav.addObject("pictures", pictures);
 		}
@@ -281,7 +282,7 @@ public class PropertyController extends BaseController {
 		return redirect("/property/edit?id=" + property.getId());
 	}
 	
-	private SortedSet<Service> getServices(Property property, HttpServletRequest postReq) {
+	private SortedSet<Service> getServices(Set<Services> propertyServices) {
 		Comparator<Service> comparator = new Comparator<Service>() {
 			public int compare(Service a, Service b) {
 				return a.getName().compareTo(b.getName());
@@ -290,16 +291,10 @@ public class PropertyController extends BaseController {
 		
 		SortedSet<Service> services = new TreeSet<Service>(comparator);
 		
-		if (postReq != null) {
-			for (Services service: Services.values()) {
-				services.add(new Service(service.toString(), postReq.getParameter(service.toString()) != null));
-			}
-		} else {
-			Set<Services> propertyServices = property.getServices();
-			for (Services service : Services.values()) {
-				services.add(new Service(service.toString(), propertyServices.contains(service)));
-			}
+		for (Services service : Services.values()) {
+			services.add(new Service(service.toString(), propertyServices.contains(service)));
 		}
+	
 		return services;
 	}
 }
