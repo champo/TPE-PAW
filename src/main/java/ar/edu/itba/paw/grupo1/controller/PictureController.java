@@ -98,7 +98,10 @@ public class PictureController extends BaseController implements HandlerExceptio
 			mav.addObject("noPermissions", 1);
 		}
 
-		mav.addObject("editPictureForm", new EditPictureForm());
+		EditPictureForm editPictureForm = new EditPictureForm();		
+		editPictureForm.setName(picture.getName());
+
+		mav.addObject("editPictureForm", editPictureForm);
 		return render("editPicture.jsp", "Edit Picture", mav);
 	}
 
