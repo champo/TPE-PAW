@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.controller.exception.PermissionDeniedException;
@@ -82,8 +81,7 @@ public class PropertyController extends BaseController {
 			throw new PermissionDeniedException();
 		}
 		propertyRepository.save(property);
-		RedirectView view = new RedirectView("/property/list",true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 	
 	@RequestMapping(value="edit", method = RequestMethod.GET)
@@ -131,19 +129,17 @@ public class PropertyController extends BaseController {
 			
 		propertyRepository.save(property);
 
-		RedirectView view = new RedirectView("/property/list", true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 
 	@RequestMapping(value="showDetail", method = RequestMethod.GET)
 	protected ModelAndView showDetail(HttpServletRequest req, @RequestParam("id") Property property) {
 
 		if (property == null) {
-			RedirectView view = new RedirectView("/query", true);
-			return new ModelAndView(view);
+			return redirect("/query");
 		} else if (!property.isPublished() && (!isLoggedIn(req) || !isMine(req, property))) {
-			RedirectView view = new RedirectView("/query?unpublished=true", true);
-			return new ModelAndView(view);
+			return redirect("/query?unpublished=true");
+
 		}
 
 		ModelAndView mav = new ModelAndView();
@@ -192,11 +188,9 @@ public class PropertyController extends BaseController {
 		}
 
 		property.publish();
-		
 		propertyRepository.save(property);
 		
-		RedirectView view = new RedirectView("/property/list", true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 	
 	@RequestMapping(value="unpublish",method = RequestMethod.GET)
@@ -209,12 +203,10 @@ public class PropertyController extends BaseController {
 			throw new PermissionDeniedException();
 		}
 
-		property.unpublish();
-		
+		property.unpublish();		
 		propertyRepository.save(property);			
 
-		RedirectView view = new RedirectView("/property/list", true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 	
 	@RequestMapping(value="reserve", method = RequestMethod.GET)
@@ -230,9 +222,7 @@ public class PropertyController extends BaseController {
 		property.reserve();
 		
 		propertyRepository.save(property);			
-		
-		RedirectView view = new RedirectView("/property/list", true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 	
 	@RequestMapping(value="unreserve",method = RequestMethod.GET)
@@ -246,11 +236,9 @@ public class PropertyController extends BaseController {
 		}
 			
 		property.unreserve();
-		
 		propertyRepository.save(property);			
 		
-		RedirectView view = new RedirectView("/property/list", true);
-		return new ModelAndView(view);
+		return redirect("/property/list");
 	}
 	
 	@RequestMapping(value="addRoom/{propId}", method = RequestMethod.GET)
@@ -289,9 +277,7 @@ public class PropertyController extends BaseController {
 		property.addRoom(room);
 		
 		propertyRepository.save(property);
-		
-		RedirectView view = new RedirectView("/property/edit?id=" + property.getId(),true);
-		return new ModelAndView(view);
+		return redirect("/property/edit?id=" + property.getId());
 	}
 	
 	private SortedSet<Service> getServices(Property property, HttpServletRequest postReq) {

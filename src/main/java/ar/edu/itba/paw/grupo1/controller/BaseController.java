@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.model.Owned;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -75,4 +76,10 @@ public abstract class BaseController extends WebApplicationObjectSupport {
 		
 		return null;
 	}
+	
+	protected ModelAndView redirect(String url) {
+		RedirectView view = new RedirectView(url, true);
+		return new ModelAndView(view);
+	}
+	
 }

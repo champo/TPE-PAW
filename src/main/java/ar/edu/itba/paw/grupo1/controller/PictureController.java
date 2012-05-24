@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
@@ -82,8 +81,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			mav.addObject("writeError", 1);
 			render("editPicture.jsp", "Add Picture", mav);
 		}
-		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(),true);
-		return new ModelAndView(view);
+		return redirect("/property/edit?id=" + picture.getProperty().getId());
 
 	}
 
@@ -123,9 +121,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 		picture.setName(pictureForm.getName());
 		pictureRepository.save(picture);
 		
-		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
-		return new ModelAndView(view);
-
+		return redirect("/property/edit?id=" + picture.getProperty().getId());
 	}
 	
 	@RequestMapping(value="delete/{propId}/{pictureId}", method = RequestMethod.POST)
@@ -148,8 +144,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			return render("editPicture.jsp", "Edit Picture", mav);
 		}
 		
-		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
-		return new ModelAndView(view);
+		return redirect("/property/edit?id=" + picture.getProperty().getId());
 	}
 	
 	
@@ -158,8 +153,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			Object handler, Exception e) {
 		
 		if (e instanceof MaxUploadSizeExceededException) {
-            RedirectView view = new RedirectView(req.getRequestURI() + "?maxUploadSizeError=true", true);
-    		return new ModelAndView(view);
+    		return redirect(req.getRequestURI() + "?maxUploadSizeError=true"); 
         } else {
         	return null;
         }
