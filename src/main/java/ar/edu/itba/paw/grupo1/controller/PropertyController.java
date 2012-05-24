@@ -97,7 +97,7 @@ public class PropertyController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("edit", 1);
 		mav.addObject("propertyForm", new PropertyForm(property));
-		mav.addObject("pictures", pictureRepository.get(property.getId()));				
+		mav.addObject("pictures", pictureRepository.getPictures(property));				
 		mav.addObject("services", getServices(property, null));
 		mav.addObject("rooms", property.getRooms());
 
@@ -121,7 +121,7 @@ public class PropertyController extends BaseController {
 			mav.addObject("edit", 1);
 			mav.addObject("services", getServices(property, req));
 			mav.addObject("rooms", property.getRooms());
-			mav.addObject("pictures", pictureRepository.get(property.getId()));
+			mav.addObject("pictures", pictureRepository.getPictures(property));
 			return render("editProperty.jsp", "Edit Property", mav);
 		}
 		
