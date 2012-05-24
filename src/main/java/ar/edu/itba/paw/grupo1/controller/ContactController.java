@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.controller.exception.InvalidParameterException;
 import ar.edu.itba.paw.grupo1.model.Property;
@@ -42,11 +41,9 @@ public class ContactController extends BaseController {
 		if (property == null) {
 			throw new InvalidParameterException();
 		} else if (getLoggedInUser(req) != null && isMine(req, property)) {
-			RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(), true);
-			return new ModelAndView(view);
+			return redirect("/property/showDetail?id=" + property.getId());
 		} else if (!property.isPublished()) {
-			RedirectView view = new RedirectView("/query?unpublished=true", true);
-			return new ModelAndView(view);
+			return redirect("/query?unpublished=true");
 		}			
 		
 		mav.addObject(property);
@@ -62,11 +59,9 @@ public class ContactController extends BaseController {
 		if (property == null) {
 			throw new InvalidParameterException();
 		} else if (getLoggedInUser(req) != null && isMine(req, property)) {
-			RedirectView view = new RedirectView("/property/showDetail?id=" + property.getId(),true);
-			return new ModelAndView(view);
+			return redirect("/property/showDetail?id=" + property.getId());
 		} else if (!property.isPublished()) {
-			RedirectView view = new RedirectView("/query?unpublished=true",true);
-			return new ModelAndView(view);
+			return redirect("/query?unpublished=true");
 		}
 
 		mav.addObject(property);
