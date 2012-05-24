@@ -40,6 +40,7 @@ public class UserHibernateRepository extends GenericHibernateRepository<User> im
 			.add(Restrictions.eq("password", hash))
 			.setMaxResults(1);
 		
+		@SuppressWarnings("unchecked")
 		List<User> result = criteria.list();
 		if (result.size() == 0) {
 			return null;
@@ -48,6 +49,7 @@ public class UserHibernateRepository extends GenericHibernateRepository<User> im
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getBrokers() {
 		
