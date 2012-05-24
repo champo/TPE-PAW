@@ -106,12 +106,12 @@
 		
 				<p>
 					<div class="row">
-						<div class="span2">		
+						<div class="span2">
 							<c:if test="${not empty logo}">
-								<img class="realEstateLogo" alt="Real estate logo" src="${basePath }/images/${logo}" />
+								<img class="realEstateLogo" alt="Logo" src="${basePath }/images/${logo}" />
 							</c:if>
 						</div>
-						<div class="span1">
+						<div class="span1" style="margin: 0px;">
 							<br />
 							<strong><c:out value="${fn:escapeXml(realEstateName)}"></c:out></strong>
 						</div>
