@@ -58,12 +58,10 @@
 			<strong>Services:</strong>
 		
 			<ul>
-				<c:forEach var="service" items="${services}">
-					<c:if test="${service.present == true}">
-						<li>
-							<spring:message code="${fn:escapeXml(service.name)}"/>
-						</li>
-					</c:if>
+				<c:forEach var="service" items="${property.services}">
+					<li>
+						<spring:message code="${fn:escapeXml(service)}"/>
+					</li>
 				</c:forEach>
 			</ul>
 		</p>
