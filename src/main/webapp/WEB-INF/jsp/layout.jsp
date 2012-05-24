@@ -36,11 +36,11 @@
 					<c:if test="${documentBodyFile != 'query.jsp'}">
 						<li><a href="${basePath }/query">Search properties</a></li>
 					</c:if>
-					<li class="divider-vertical"></li>
-					<c:if test="${documentBodyFile == 'query.jsp'}">
+
+					<c:if test="${documentBodyFile == 'brokers.jsp'}">
                         <li class="active"><a href="${basePath }/brokers">Brokers</a></li>
 					</c:if>
-					<c:if test="${documentBodyFile != 'query.jsp'}">
+					<c:if test="${documentBodyFile != 'brokers.jsp'}">
                         <li><a href="${basePath }/brokers">Brokers</a></li>
 					</c:if>
 
