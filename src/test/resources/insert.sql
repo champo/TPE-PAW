@@ -1,8 +1,8 @@
-INSERT INTO Users (name, surname, email, phone, username, password) VALUES ('Dario','Susnisky','dario.susnisky@gmail.com'
-    ,'4234-8124','dario.susnisky','6764F7CB5C3FC4612AA26501996CAA298340D002885597E2AA6E8417BECA529F');
+INSERT INTO Users (name, surname, email, phone, username, password, realestatename, logoextension) VALUES ('Dario','Susnisky','dario.susnisky@gmail.com'
+    ,'4234-8124','dario.susnisky','6764F7CB5C3FC4612AA26501996CAA298340D002885597E2AA6E8417BECA529F', 'Inmobiliaria Santander', '.jpg');
 
-INSERT INTO Users (name, surname, email, phone, username, password) VALUES ('Juan','Civile','juan.civile@gmail.com',
-    '4123-5678','juan.civile','59B0914D9CA0BF908C7FDA6CA7A5E036217AF427AA00CAB2B7FDB0AD98E34CB4');
+INSERT INTO Users (name, surname, email, phone, username, password, realestatename, logoextension) VALUES ('Juan','Civile','juan.civile@gmail.com',
+    '4123-5678','juan.civile','59B0914D9CA0BF908C7FDA6CA7A5E036217AF427AA00CAB2B7FDB0AD98E34CB4', 'champo properties', '.jpg');
 
 INSERT INTO Users (name, surname, email, phone, username, password) VALUES ('Alvaro','Crespo','alvaro.crespo@gmail.com',
     '4987-6543','alvaro.crespo','21110D3F9C3606318C324A51DEC4CEC8F9CCA66E922C7EB1574F09C0751BEA16');
