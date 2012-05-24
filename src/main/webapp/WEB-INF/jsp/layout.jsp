@@ -6,7 +6,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF8">
-	<title>${documenTitle }</title>
+	<title>${documentTitle }</title>
 	
 	<link rel="stylesheet" type="text/css" href="${basePath }/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="${basePath }/css/bootstrap.min.css" />
