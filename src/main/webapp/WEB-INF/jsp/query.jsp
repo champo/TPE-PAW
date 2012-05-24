@@ -85,15 +85,15 @@
 						<li><a href="${pageURL}${pageNumber - 1}">Previous</a></li>
 					</c:if>
 					<c:if test="${pageNumber == 1}">
-						<li class="disabled"><a href="${pageURL}1">First</a></li>
-						<li class="disabled"><a href="${pageURL}${pageNumber - 1}">Previous</a></li>
+						<li class="disabled"><a href="javascript:void(0)">First</a></li>
+						<li class="disabled"><a href="javascript:void(0)">Previous</a></li>
 					</c:if>
 
 					<c:forEach var="page" begin="${paginationFrom}" end="${pageNumber - 1}" step="1">
 						<li><a href="${pageURL}${page}">${page}</a></li>
 					</c:forEach>
 		
-					<li class="active"><a href="#">${pageNumber}</a></li>
+					<li class="active"><a href="javascript:void(0)">${pageNumber}</a></li>
 					
 					<c:forEach var="page" begin="${pageNumber + 1}" end="${paginationTo}" step="1">
 						<li><a href="${pageURL}${page}">${page}</a></li>
@@ -104,8 +104,8 @@
 						<li><a href="${pageURL}${lastPage}">Last</a></li>
 					</c:if>
 					<c:if test="${pageNumber == lastPage}">
-						<li class="disabled"><a href="${pageURL}${pageNumber + 1}">Next</a></li>
-						<li class="disabled"><a href="${pageURL}${lastPage}">Last</a></li>
+						<li class="disabled"><a href="javascript:void(0)">Next</a></li>
+						<li class="disabled"><a href="javascript:void(0)">Last</a></li>
 					</c:if>
 				</ul>
 			</div>
