@@ -86,6 +86,7 @@ public class PropertyHibernateDao extends GenericHibernateRepository<Property>
 		return new PaginatedList(criteria.list(), lastPage);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Property> getListedProperties(User user) {
 		Criteria criteria = createCriteria()

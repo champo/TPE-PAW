@@ -1,6 +1,5 @@
 package ar.edu.itba.paw.grupo1.web;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 

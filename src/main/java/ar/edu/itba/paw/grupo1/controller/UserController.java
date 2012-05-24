@@ -47,7 +47,6 @@ public class UserController extends BaseController {
 		return render("register.jsp", "Register", mav);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="register", method = RequestMethod.POST)
 	protected ModelAndView registerPost(HttpServletRequest req, @Valid RegisterForm form, Errors errors, @RequestParam("logo") MultipartFile logoFile) {
 		

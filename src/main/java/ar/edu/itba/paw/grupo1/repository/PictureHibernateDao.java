@@ -20,6 +20,7 @@ public class PictureHibernateDao extends GenericHibernateRepository<Picture> imp
 		super(sessionFactory);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Picture> getPictures(Property property) {
 		Criteria criteria = createCriteria()

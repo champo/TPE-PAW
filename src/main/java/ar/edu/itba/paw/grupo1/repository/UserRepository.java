@@ -20,6 +20,7 @@ public interface UserRepository {
 	@Transactional
 	public List<User> getBrokers();
 	
+	@SuppressWarnings("serial")
 	public class UserAlreadyExistsException extends Exception {
 		
 	}
