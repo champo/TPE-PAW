@@ -7,12 +7,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -43,8 +45,7 @@ public class Property implements Owned {
 	}
 
 	@Id
-	@SequenceGenerator(sequenceName = "properties_seq", name = "properties_seq")
-	@GeneratedValue(generator = "properties_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false)
@@ -78,6 +79,7 @@ public class Property implements Owned {
 	private int antiquity;
 	
 	@ElementCollection
+	@Enumerated(EnumType.STRING)
 	private Set<Services> services = new HashSet<Services>();
 	
 	@Column(nullable = false)
@@ -92,7 +94,7 @@ public class Property implements Owned {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy="property")
 	private Set<Room> rooms = new HashSet<Room>();
 	
 	public Property() {
