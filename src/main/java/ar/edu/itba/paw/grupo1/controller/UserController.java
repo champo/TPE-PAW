@@ -82,6 +82,9 @@ public class UserController extends BaseController {
 			String extension = name.substring(name.lastIndexOf('.'));
 
 			form.setLogoExtension(extension);
+		} else {
+			form.setRealEstateName(null);
+			form.setLogoExtension(null);
 		}
 
 		if (errors.hasErrors()) {
