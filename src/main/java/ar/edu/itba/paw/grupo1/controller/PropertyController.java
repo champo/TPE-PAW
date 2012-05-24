@@ -147,7 +147,7 @@ public class PropertyController extends BaseController {
 		}
 
 		ModelAndView mav = new ModelAndView();
-		List<Picture> pictures = pictureRepository.getPictures(property.getId());
+		List<Picture> pictures = pictureRepository.getPictures(property);
 		
 		property.visited();
 		propertyRepository.save(property);
@@ -176,7 +176,7 @@ public class PropertyController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 		User user = getLoggedInUser(req);		
-		mav.addObject("properties", propertyRepository.getProperties(user.getId()));
+		mav.addObject("properties", propertyRepository.getProperties(user));
 		
 		return render("listProperties.jsp", "List Properties", mav);
 	}	

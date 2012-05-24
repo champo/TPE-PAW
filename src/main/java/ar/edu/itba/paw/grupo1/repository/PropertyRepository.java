@@ -12,7 +12,7 @@ import ar.edu.itba.paw.grupo1.model.User;
 public interface PropertyRepository {
 
 	@Transactional
-	public List<Property> getProperties(int userId);
+	public List<Property> getProperties(User user);
 
 	@Transactional
 	public Property get(int id);

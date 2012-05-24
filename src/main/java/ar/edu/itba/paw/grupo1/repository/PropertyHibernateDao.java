@@ -26,10 +26,10 @@ public class PropertyHibernateDao extends GenericHibernateRepository<Property>
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Property> getProperties(int userId) {
+	public List<Property> getProperties(User user) {
 		
 		Criteria criteria = createCriteria()
-			.add(Restrictions.eq("user.id", userId));
+			.add(Restrictions.eq("user.id", user.getId()));
 		criteria.addOrder(Order.asc("id"));
 		return (List<Property>) criteria.list();
 	}

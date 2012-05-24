@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.Property;
 
 @Repository
 public class PictureHibernateDao extends GenericHibernateRepository<Picture> implements
@@ -20,9 +21,9 @@ public class PictureHibernateDao extends GenericHibernateRepository<Picture> imp
 	}
 
 	@Override
-	public List<Picture> getPictures(int propertyId) {
+	public List<Picture> getPictures(Property property) {
 		Criteria criteria = createCriteria()
-				.add(Restrictions.eq("property.id", propertyId));
+				.add(Restrictions.eq("property.id", property.getId()));
 		
 		return criteria.list();
 	}
