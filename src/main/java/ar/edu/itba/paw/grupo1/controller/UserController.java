@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.User.UserType;
@@ -166,8 +167,7 @@ public class UserController extends BaseController {
 					}
 				}
 				
-				System.out.println(from);
-				return redirect(from);
+				return new ModelAndView(new RedirectView(from, false));
 			}
 		}
 		
