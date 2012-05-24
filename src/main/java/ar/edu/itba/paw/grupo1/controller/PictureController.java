@@ -20,8 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.service.PictureService;
-import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.web.EditPictureForm;
 import ar.edu.itba.paw.grupo1.web.NewPictureForm;
 
@@ -29,11 +28,11 @@ import ar.edu.itba.paw.grupo1.web.NewPictureForm;
 @RequestMapping(value="picture")
 public class PictureController extends BaseController implements HandlerExceptionResolver {
 
-	protected PictureService pictureService;
+	protected PictureRepository pictureRepository;
 		
 	@Autowired
-	public PictureController(PropertyService propertyService, PictureService pictureService) {
-		this.pictureService = pictureService;
+	public PictureController(PictureRepository pictureRepository) {
+		this.pictureRepository = pictureRepository;
 	}
 	
 	@RequestMapping(value="add/{propId}", method = RequestMethod.GET)
@@ -74,7 +73,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			return render("editPicture.jsp", "Add Picture", mav);
 		}
 		
-		pictureService.save(picture);
+		pictureRepository.save(picture);
 		
 		try {
 			file.transferTo(new File(getServletContext().getRealPath("/images") + "/" + picture.getId() + picture.getExtension()));
@@ -122,7 +121,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			return render("editPicture.jsp", "Edit Picture", mav);
 		} 
 		picture.setName(pictureForm.getName());
-		pictureService.save(picture);
+		pictureRepository.save(picture);
 		
 		RedirectView view = new RedirectView("/property/edit?id=" + picture.getProperty().getId(), true);
 		return new ModelAndView(view);
@@ -140,7 +139,7 @@ public class PictureController extends BaseController implements HandlerExceptio
 			return render("editPicture.jsp", "Edit Picture", mav);
 		}
 		
-		pictureService.delete(picture);
+		pictureRepository.delete(picture);
 		File file = new File(getServletContext().getRealPath("/images/") + "/" + picture.getId() + picture.getExtension());
 		if(!file.delete()) {
 			mav.addObject("edit", 1);

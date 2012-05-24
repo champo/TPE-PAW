@@ -14,15 +14,15 @@ import javax.servlet.http.HttpSession;
 
 import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.repository.UserRepository;
 
 public class SessionFilter implements Filter {
 
-	private UserService userService;
+	private UserRepository userRepository;
 
-	public SessionFilter(UserService userService) {
+	public SessionFilter(UserRepository userRepository) {
 		super();
-		this.userService = userService;
+		this.userRepository = userRepository;
 	}
 	
 	@Override
@@ -44,14 +44,14 @@ public class SessionFilter implements Filter {
 		
 		if (userIdObj instanceof Integer) {
 			Integer userId = (Integer) userIdObj;
-			user = (User) userService.get(userId);
+			user = (User) userRepository.get(userId);
 		} else {
 
 			Cookie username = CookiesHelper.getCookie(httpReq, "username");
 			Cookie hash = CookiesHelper.getCookie(httpReq, "hash");
 			
 			if (username != null && hash != null) {
-				user = userService.loginWithHash(username.getValue(), hash.getValue());
+				user = userRepository.login(username.getValue(), hash.getValue());
 				
 				if (user != null) {
 					session.setAttribute("userId", user.getId());
@@ -68,7 +68,5 @@ public class SessionFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-		
 	}	
 }

@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @Repository
-public class PropertyHibernateDao extends GenericHibernateDao<Property>
-		implements PropertyDao {
+public class PropertyHibernateDao extends GenericHibernateRepository<Property>
+		implements PropertyRepository {
 
 	@Autowired
 	public PropertyHibernateDao(SessionFactory sessionFactory) {
@@ -87,7 +87,7 @@ public class PropertyHibernateDao extends GenericHibernateDao<Property>
 	}
 
 	@Override
-	public List<Property> getListProperties(User user) {
+	public List<Property> getListedProperties(User user) {
 		Criteria criteria = createCriteria()
 			.add(Restrictions.eq("user", user))
 			.add(Restrictions.eq("published", true));

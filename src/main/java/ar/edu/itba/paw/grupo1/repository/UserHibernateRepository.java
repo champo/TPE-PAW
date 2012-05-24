@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Repository;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @Repository
-public class UserHibernateDao extends GenericHibernateDao<User> implements
-		UserDao {
+public class UserHibernateRepository extends GenericHibernateRepository<User> implements
+		UserRepository {
 
 	@Autowired
-	public UserHibernateDao(SessionFactory sessionFactory) {
+	public UserHibernateRepository(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 

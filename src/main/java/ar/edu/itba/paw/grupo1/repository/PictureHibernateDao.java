@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import ar.edu.itba.paw.grupo1.model.Picture;
 
 @Repository
-public class PictureHibernateDao extends GenericHibernateDao<Picture> implements
-		PictureDao {
+public class PictureHibernateDao extends GenericHibernateRepository<Picture> implements
+		PictureRepository {
 
 	@Autowired
 	public PictureHibernateDao(SessionFactory sessionFactory) {

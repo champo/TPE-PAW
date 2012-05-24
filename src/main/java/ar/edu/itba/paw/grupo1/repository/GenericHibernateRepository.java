@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 
-public abstract class GenericHibernateDao<E> implements GenericDao<E> {
+public abstract class GenericHibernateRepository<E> implements GenericRepository<E> {
 
 	protected SessionFactory sessionFactory;
 
@@ -17,7 +17,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	 * @param sessionFactory The session factory to be used.
 	 */
 	@SuppressWarnings("unchecked")
-	public GenericHibernateDao(SessionFactory sessionFactory) {
+	public GenericHibernateRepository(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 
 		// Get the generic class

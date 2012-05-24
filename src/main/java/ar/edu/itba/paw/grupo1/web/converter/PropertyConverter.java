@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
 import ar.edu.itba.paw.grupo1.model.Property;
-import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 
 public class PropertyConverter implements Converter<String, Property> {
 	
 	@Autowired
-	private PropertyService propertyService;
+	private PropertyRepository propertyRepository;
 
 	@Override
 	public Property convert(String source) {
@@ -18,7 +18,7 @@ public class PropertyConverter implements Converter<String, Property> {
 		}
 		
 		try {
-			return propertyService.getById(Integer.parseInt(source));
+			return propertyRepository.get(Integer.parseInt(source));
 		} catch (NumberFormatException e) {
 			return null;
 		}

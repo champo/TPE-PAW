@@ -17,19 +17,19 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 
 @Controller
 @RequestMapping(value="query")
 public class QueryController extends BaseController {
 
-	private PropertyService propertyService;
+	private PropertyRepository propertyRepository;
 	
 	private final int resultsPerPage = 10;
 	
 	@Autowired
-	public QueryController(PropertyService propertyService) {
-		this.propertyService = propertyService;
+	public QueryController(PropertyRepository propertyRepository) {
+		this.propertyRepository = propertyRepository;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -42,7 +42,7 @@ public class QueryController extends BaseController {
 			propertyQuery = new PropertyQuery();
 		}
 
-		PaginatedList paginatedList = propertyService.query(propertyQuery, resultsPerPage);
+		PaginatedList paginatedList = propertyRepository.query(propertyQuery, resultsPerPage);
 
 		mav.addObject("queryResults", paginatedList.getList());
 		mav.addObject("pageNumber", propertyQuery.getPageNumber());
@@ -75,7 +75,7 @@ public class QueryController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.addObject("searchUser", user);
-		mav.addObject("queryResults", propertyService.getListedProperties(user));
+		mav.addObject("queryResults", propertyRepository.getListedProperties(user));
 		
 		return render("list.jsp", "Property list", mav);
 	}

@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
-import ar.edu.itba.paw.grupo1.service.PictureService;
+import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 
 public class PictureConverter implements Converter<String, Picture> {
 
 	@Autowired
-	private PictureService pictureService;
+	private PictureRepository pictureRepository;
 
 	
 	@Override
@@ -19,7 +19,7 @@ public class PictureConverter implements Converter<String, Picture> {
 		}
 		
 		try {
-			return pictureService.getById(Integer.parseInt(source));
+			return pictureRepository.get(Integer.parseInt(source));
 		} catch (NumberFormatException e) {
 			return null;
 		}

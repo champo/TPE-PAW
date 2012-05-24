@@ -1,18 +1,11 @@
 package ar.edu.itba.paw.grupo1.controller;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.hibernate.ejb.criteria.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -23,10 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ar.edu.itba.paw.grupo1.dao.UserDao.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.User.UserType;
-import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.repository.UserRepository;
+import ar.edu.itba.paw.grupo1.repository.UserRepository.UserAlreadyExistsException;
+import ar.edu.itba.paw.grupo1.service.HashingService;
 import ar.edu.itba.paw.grupo1.web.LoginForm;
 import ar.edu.itba.paw.grupo1.web.RegisterForm;
 
@@ -34,11 +28,11 @@ import ar.edu.itba.paw.grupo1.web.RegisterForm;
 @RequestMapping(value="user")
 public class UserController extends BaseController {
 
-	private UserService userService;
+	private UserRepository userRepository;
 	
 	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
+	public UserController(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 	
 	
@@ -100,7 +94,7 @@ public class UserController extends BaseController {
 		User user;
 		
 		try {
-			user = userService.register(form.build());
+			user = userRepository.register(form.build());
 		} catch (UserAlreadyExistsException e) {
 			mav.addObject("usernameDuplicate", true);
 			return render("register.jsp", "Register", mav);
@@ -151,7 +145,7 @@ public class UserController extends BaseController {
 		String password = loginForm.getPassword();
 		
 		if (username != null && password != null) {
-			User user = userService.login(username, password);
+			User user = userRepository.login(username, HashingService.hash(password));
 			
 			if (user != null) {
 				// We can log in now!

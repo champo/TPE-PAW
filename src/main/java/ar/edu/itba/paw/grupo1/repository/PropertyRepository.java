@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.service;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 
-public interface PropertyService {
+public interface PropertyRepository {
 
 	@Transactional
 	public List<Property> getProperties(int userId);
 
 	@Transactional
-	public Property getById(int id);
+	public Property get(int id);
 
 	@Transactional
 	public void save(Property property);
@@ -24,6 +24,8 @@ public interface PropertyService {
 	public PaginatedList query(PropertyQuery query, int resultsPerPage);
 
 	@Transactional
-	public List<Property> getListedProperties(User user);
+	public void update(Property property);
 
+	@Transactional
+	public List<Property> getListedProperties(User user);
 }

@@ -1,8 +1,8 @@
-package ar.edu.itba.paw.grupo1.dao;
+package ar.edu.itba.paw.grupo1.repository;
 
 import java.util.List;
 
-public interface GenericDao<E> {
+public interface GenericRepository<E> {
 
 	/**
 	 * Retrieve an instance with the given {@code id}

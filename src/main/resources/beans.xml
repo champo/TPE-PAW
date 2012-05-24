@@ -37,7 +37,7 @@
 	</bean>
 	
 	<bean id="sessionFilter" class="ar.edu.itba.paw.grupo1.filter.SessionFilter">
-		<constructor-arg  name="userService" ref="userServiceImpl"/>
+		<constructor-arg name="userRepository" ref="userHibernateRepository" />
 	</bean>
 	
 	<!-- Configure Hibernate & Spring Transactions -->

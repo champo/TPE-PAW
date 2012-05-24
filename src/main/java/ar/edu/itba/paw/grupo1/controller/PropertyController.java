@@ -31,8 +31,8 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.service.PictureService;
-import ar.edu.itba.paw.grupo1.service.PropertyService;
+import ar.edu.itba.paw.grupo1.repository.PictureRepository;
+import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.web.PropertyForm;
 import ar.edu.itba.paw.grupo1.web.RoomForm;
 import ar.edu.itba.paw.grupo1.web.Service;
@@ -42,9 +42,8 @@ import ar.edu.itba.paw.grupo1.web.Service;
 @RequestMapping(value="property")
 public class PropertyController extends BaseController {
 
-	private PropertyService propertyService;
-	private PictureService pictureService;
-	
+	private PropertyRepository propertyRepository;
+	private PictureRepository pictureRepository;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) throws Exception {
@@ -52,9 +51,9 @@ public class PropertyController extends BaseController {
 	}
 	
 	@Autowired
-	public PropertyController(PropertyService propertyService, PictureService pictureService) {
-		this.propertyService = propertyService;
-		this.pictureService = pictureService;
+	public PropertyController(PropertyRepository propertyRepository, PictureRepository pictureRepository) {
+		this.propertyRepository = propertyRepository;
+		this.pictureRepository = pictureRepository;
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
@@ -82,7 +81,7 @@ public class PropertyController extends BaseController {
 		if (!isMine(req, property)) {
 			throw new PermissionDeniedException();
 		}
-		propertyService.save(property);
+		propertyRepository.save(property);
 		RedirectView view = new RedirectView("/property/list",true);
 		return new ModelAndView(view);
 	}
@@ -100,7 +99,7 @@ public class PropertyController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("edit", 1);
 		mav.addObject("propertyForm", new PropertyForm(property));
-		mav.addObject("pictures", pictureService.getByPropId(property.getId()));				
+		mav.addObject("pictures", pictureRepository.get(property.getId()));				
 		mav.addObject("services", getServices(property, null));
 		mav.addObject("rooms", property.getRooms());
 
@@ -124,13 +123,13 @@ public class PropertyController extends BaseController {
 			mav.addObject("edit", 1);
 			mav.addObject("services", getServices(property, req));
 			mav.addObject("rooms", property.getRooms());
-			mav.addObject("pictures", pictureService.getByPropId(property.getId()));
+			mav.addObject("pictures", pictureRepository.get(property.getId()));
 			return render("editProperty.jsp", "Edit Property", mav);
 		}
 		
 		propertyForm.update(property);
 			
-		propertyService.save(property);
+		propertyRepository.save(property);
 
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -148,10 +147,10 @@ public class PropertyController extends BaseController {
 		}
 
 		ModelAndView mav = new ModelAndView();
-		List<Picture> pictures = pictureService.getByPropId(property.getId());
+		List<Picture> pictures = pictureRepository.getPictures(property.getId());
 		
 		property.visited();
-		propertyService.save(property);
+		propertyRepository.save(property);
 		
 		User user = property.getUser();
 		
@@ -177,7 +176,7 @@ public class PropertyController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 		User user = getLoggedInUser(req);		
-		mav.addObject("properties", propertyService.getProperties(user.getId()));
+		mav.addObject("properties", propertyRepository.getProperties(user.getId()));
 		
 		return render("listProperties.jsp", "List Properties", mav);
 	}	
@@ -194,7 +193,7 @@ public class PropertyController extends BaseController {
 
 		property.publish();
 		
-		propertyService.save(property);
+		propertyRepository.save(property);
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -212,7 +211,7 @@ public class PropertyController extends BaseController {
 
 		property.unpublish();
 		
-		propertyService.save(property);			
+		propertyRepository.save(property);			
 
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -230,7 +229,7 @@ public class PropertyController extends BaseController {
 		
 		property.reserve();
 		
-		propertyService.save(property);			
+		propertyRepository.save(property);			
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -248,7 +247,7 @@ public class PropertyController extends BaseController {
 			
 		property.unreserve();
 		
-		propertyService.save(property);			
+		propertyRepository.save(property);			
 		
 		RedirectView view = new RedirectView("/property/list", true);
 		return new ModelAndView(view);
@@ -289,7 +288,7 @@ public class PropertyController extends BaseController {
 		Room room = roomForm.buildRoom(property);
 		property.addRoom(room);
 		
-		propertyService.save(property);
+		propertyRepository.save(property);
 		
 		RedirectView view = new RedirectView("/property/edit?id=" + property.getId(),true);
 		return new ModelAndView(view);

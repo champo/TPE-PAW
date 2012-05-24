@@ -5,13 +5,13 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.service.UserService;
+import ar.edu.itba.paw.grupo1.repository.UserRepository;
 
 @Component
 public class UserConverter implements Converter<String, User> {
 
 	@Autowired
-	private UserService userService;
+	private UserRepository userRepository;
 	
 	@Override
 	public User convert(String source) {
@@ -21,7 +21,7 @@ public class UserConverter implements Converter<String, User> {
 		}
 		
 		try {
-			return userService.get(Integer.parseInt(source));
+			return userRepository.get(Integer.parseInt(source));
 		} catch (NumberFormatException e) {
 			return null;
 		}
