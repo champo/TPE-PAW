@@ -28,62 +28,150 @@ INSERT INTO Users (name, surname, email, phone, username, password) VALUES ('Fro
 INSERT INTO Users (name, surname, email, phone, username, password) VALUES ('Barney','Stinson','awesome@gmail.com',
     '4666-6666','barney.stinson','F6A20F6639C13FD2E46F61883095A6E97EE30E06D88D5287D22E8BE45591E394');
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (1,1,'Doblas 344, Capital Federal, Argentina','Caballito',1500,5,140,5,'My great house',5,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,1);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (1,1,'Doblas 344, Capital Federal, Argentina','Caballito',1500,5,140,5,'My great house',5,TRUE,1,FALSE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (1,0,'Ayacucho 867, Capital Federal, Argentina','Recoleta',650,3,90,0,'My new residence',0,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,2);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (1,0,'Ayacucho 867, Capital Federal, Argentina','Recoleta',650,3,90,0,'My new residence',0,TRUE,2,FALSE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,1,'Callao 832, Capital Federal, Argentina','The north',100000,72,4000,3000,'The Winterfell castle',10000,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,8);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,1,'Callao 832, Capital Federal, Argentina','The north',100000,72,4000,3000,'The Winterfell castle',10000,TRUE,8,FALSE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,0,'Malabia 2166, Capital Federal, Argentina','The wall',500000,150,5000,10000,'Castle Black in the wall',8000,FALSE,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,8);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,0,'Malabia 2166, Capital Federal, Argentina','The wall',500000,150,5000,10000,'Castle Black in the wall',8000,TRUE,8,FALSE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,0,'Paseo Colon 500, Capital Federal, Argentina','The Riverlands',50000,54,3400,2600,'Riverun castle',6500,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,8);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,0,'Paseo Colon 500, Capital Federal, Argentina','The Riverlands',50000,54,3400,2600,'Riverun castle',6500,FALSE,8,TRUE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (1,1,'Juramento 2399, Capital Federal, Argentina','NY',1000,3,85,0,'Its near Mclarens',10,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,10);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (1,1,'Juramento 2399, Capital Federal, Argentina','NY',1000,3,85,0,'Its near Mclarens',10,TRUE,10,TRUE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (1,0,'Mexico 167, capital Federal, Argentina','Long island',3000,5,250,100,'Marshall and lilys place in long island',30,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,10);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (1,0,'Mexico 167, capital Federal, Argentina','Long island',3000,5,250,100,'Marshall and lilys place in long island',30,FALSE,10,TRUE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,1,'Nueva York 3414, Capital Federal, Argentina','Space!',10000,5,500,0,'The one and only Millenium Falcon',15,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,6);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,1,'Nueva York 3414, Capital Federal, Argentina','Space!',10000,5,500,0,'The one and only Millenium Falcon',15,TRUE,6,TRUE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,0,'Bulnes 172, Capital Federal, Argentina','Almagro',1000,3,110,10,'',3,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,5);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,0,'Bulnes 172, Capital Federal, Argentina','Almagro',1000,3,110,10,'',3,FALSE,5,TRUE,0);
 
-INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, rooms, indoorSpace, outDoorSpace,
-    description, antiquity, cable, phone, pool, lounge, paddle, barbecue, published, userId) VALUES
-    (0,0,'Reconquista 328, Capital Federal, Buenos Aires','Iron Islands',900000,43,10000,5000,'Pyke',10000,FALSE,FALSE,TRUE,TRUE,TRUE,TRUE,FALSE,8);
+INSERT INTO Properties (propertyType, operationType, address, neighbourhood, price, numrooms, indoorSpace, outDoorSpace,
+    description, antiquity, published, user_id, reserved, visited) VALUES
+    (0,0,'Reconquista 328, Capital Federal, Buenos Aires','Iron Islands',900000,43,10000,5000,'Pyke',10000,FALSE,8,FALSE,0);
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('Winterfell',3,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('Winterfell',3,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('Our moat',3,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('Our moat',3,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('A painting of Winterfell',3,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('A painting of Winterfell',3,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('Castle Black from the distance',4,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('Castle Black from the distance',4,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('The Falcon, flying',8,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('The Falcon, flying',8,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('A map of the falcon',8,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('A map of the falcon',8,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('Teds apartmentent, talking about the belt',6,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('Teds apartmentent, talking about the belt',6,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('An accident on the house',7,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('An accident on the house',7,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('The bedroom',1,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('The bedroom',1,'.jpg');
 
-INSERT INTO Pictures (name, propertyId, extension) VALUES ('The living room',1,'.jpg');
+INSERT INTO Pictures (name, property_id, extension) VALUES ('The living room',1,'.jpg');
+
+INSERT INTO property_services (property_id, services) VALUES (1,'SECURITY');
+
+INSERT INTO property_services (property_id, services) VALUES (1,'POOL');
+
+INSERT INTO property_services (property_id, services) VALUES (1,'TENNIS');
+
+INSERT INTO property_services (property_id, services) VALUES (2,'SOLARIUM');
+
+INSERT INTO property_services (property_id, services) VALUES (2,'BARBECUE');
+
+INSERT INTO property_services (property_id, services) VALUES (2,'PHONE');
+
+INSERT INTO property_services (property_id, services) VALUES (3,'LAUNDRY');
+
+INSERT INTO property_services (property_id, services) VALUES (3,'CABLE');
+
+INSERT INTO property_services (property_id, services) VALUES (3,'PADDLE');
+
+INSERT INTO property_services (property_id, services) VALUES (4,'LOUNGE');
+
+INSERT INTO property_services (property_id, services) VALUES (4,'SECURITY');
+
+INSERT INTO property_services (property_id, services) VALUES (4,'POOL');
+
+INSERT INTO property_services (property_id, services) VALUES (5,'TENNIS');
+
+INSERT INTO property_services (property_id, services) VALUES (5,'SOLARIUM');
+
+INSERT INTO property_services (property_id, services) VALUES (5,'BARBECUE');
+
+INSERT INTO property_services (property_id, services) VALUES (6,'PHONE');
+
+INSERT INTO property_services (property_id, services) VALUES (6,'LAUNDRY');
+
+INSERT INTO property_services (property_id, services) VALUES (6,'CABLE');
+
+INSERT INTO property_services (property_id, services) VALUES (7,'PADDLE');
+
+INSERT INTO property_services (property_id, services) VALUES (7,'LOUNGE');
+
+INSERT INTO property_services (property_id, services) VALUES (7,'SECURITY');
+
+INSERT INTO property_services (property_id, services) VALUES (8,'POOL');
+
+INSERT INTO property_services (property_id, services) VALUES (9,'TENNIS');
+
+INSERT INTO property_services (property_id, services) VALUES (10,'SOLARIUM');
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (2, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (2, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (2, 'Bedroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (2, 'Yard', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (3, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (3, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (4, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (4, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (5, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (5, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (6, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (6, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (7, 'Kitchen', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (7, 'Yard', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (8, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (8, 'Bedroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (9, 'Yard', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (9, 'Bathroom', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (10, 'Dreamatorium', 3, 3);
+
+INSERT INTO rooms (property_id, name, length, width) VALUES (10, 'Bathroom', 3, 3);
