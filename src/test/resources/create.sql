@@ -7,8 +7,6 @@ CREATE TABLE users
     phone varchar(20),
     username varchar(50),
     password char(64),
-    realEstateName varchar(50),
-    logoExtension varchar(10),
 
     PRIMARY KEY(id)
 );
@@ -25,7 +23,7 @@ CREATE TABLE properties
     address varchar(50),
     neighbourhood varchar(50),
     price double precision,
-    numRooms smallint,
+    rooms smallint,
     indoorSpace double precision,
     outDoorSpace double precision,
     description varchar(1000),
