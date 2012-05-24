@@ -24,6 +24,8 @@
 				<ul class="nav">
 					<li><a href="${basePath}/index">Home</a></li>
 					<li><a href="${basePath }/query">Search properties</a></li>
+					<li class="divider-vertical"></li>
+					<li><a href="${basePath }/brokers">Brokers</a></li>
 					<c:if test="${not empty user }">
 						<li class="divider-vertical"></li>
 						<li><a href="${basePath }/property/list">My properties</a></li>

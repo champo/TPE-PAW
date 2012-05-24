@@ -48,4 +48,13 @@ public class UserHibernateRepository extends GenericHibernateRepository<User> im
 		}
 	}
 
+	@Override
+	public List<User> getBrokers() {
+		
+		Criteria criteria = createCriteria()
+			.add(Restrictions.isNotNull("realEstateName"));
+
+		return criteria.list();
+	}
+
 }

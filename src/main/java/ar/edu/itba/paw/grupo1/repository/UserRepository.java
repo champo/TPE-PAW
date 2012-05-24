@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.grupo1.repository;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.itba.paw.grupo1.model.User;
@@ -15,8 +17,12 @@ public interface UserRepository {
 	@Transactional
 	public User register(User user) throws UserAlreadyExistsException;
 	
+	@Transactional
+	public List<User> getBrokers();
+	
 	public class UserAlreadyExistsException extends Exception {
 		
 	}
+
 
 }
