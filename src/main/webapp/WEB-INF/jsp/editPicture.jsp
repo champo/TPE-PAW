@@ -49,7 +49,7 @@
         <div class="row">
             <div class="span3">
                 <label for="name">Name:</label>
-                <form:input path="name" />
+                <form:input path="name" value="${fn:escapeXml(picture.name)}"/>
             </div>
 		
 		<c:if test="${empty edit}">
