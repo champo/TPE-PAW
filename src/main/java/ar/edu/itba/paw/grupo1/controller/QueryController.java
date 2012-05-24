@@ -25,7 +25,7 @@ public class QueryController extends BaseController {
 
 	private PropertyRepository propertyRepository;
 	
-	private final int resultsPerPage = 10;
+	private final int resultsPerPage = 2;
 	
 	@Autowired
 	public QueryController(PropertyRepository propertyRepository) {
