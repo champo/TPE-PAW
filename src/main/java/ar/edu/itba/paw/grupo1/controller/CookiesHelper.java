@@ -37,6 +37,7 @@ public class CookiesHelper {
 	public static void setInfiniteCookie(HttpServletResponse resp, String name,
 			String value) {
 		Cookie cookie = new Cookie(name, value);
+		cookie.setPath("/");
 		cookie.setMaxAge(Integer.MAX_VALUE);
 		resp.addCookie(cookie);
 	}
