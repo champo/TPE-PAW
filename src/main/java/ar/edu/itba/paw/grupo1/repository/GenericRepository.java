@@ -28,11 +28,5 @@ public interface GenericRepository<E> {
 	 */
 	void delete(E entity);
 
-	/**
-	 * Updates an existant entity.
-	 * @param entity to be updated.
-	 */
-	void update(E entity);
-	
 	void save(E entity);
 }

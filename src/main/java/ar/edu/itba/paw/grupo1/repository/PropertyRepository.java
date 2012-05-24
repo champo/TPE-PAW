@@ -24,8 +24,5 @@ public interface PropertyRepository {
 	public PaginatedList query(PropertyQuery query, int resultsPerPage);
 
 	@Transactional
-	public void update(Property property);
-
-	@Transactional
 	public List<Property> getListedProperties(User user);
 }

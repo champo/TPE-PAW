@@ -119,7 +119,6 @@ public class PictureController extends BaseController implements HandlerExceptio
 			return render("editPicture.jsp", "Edit Picture", mav);
 		} 
 		picture.setName(pictureForm.getName());
-		pictureRepository.save(picture);
 		
 		return redirect("/property/edit?id=" + picture.getProperty().getId());
 	}

@@ -126,8 +126,6 @@ public class PropertyController extends BaseController {
 		}
 		
 		propertyForm.update(property);
-			
-		propertyRepository.save(property);
 
 		return redirect("/property/list");
 	}
@@ -150,7 +148,6 @@ public class PropertyController extends BaseController {
 		}
 
 		property.visited();
-		propertyRepository.save(property);
 		
 		User user = property.getUser();
 		

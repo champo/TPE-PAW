@@ -56,11 +56,6 @@ public abstract class GenericHibernateRepository<E> implements GenericRepository
 	}
 
 	@Override
-	public void update(E entity) {
-		sessionFactory.getCurrentSession().update(entity);
-	}
-	
-	@Override
 	public void save(E entity) {
 		sessionFactory.getCurrentSession().save(entity);
 	}
