@@ -36,20 +36,13 @@
 		<constructor-arg value="${mail.smtp.starttls.enable}" name="starttls" />
 	</bean>
 	
-	<bean id="sessionFilter" class="ar.edu.itba.paw.grupo1.filter.SessionFilter">
-		<constructor-arg name="userRepository" ref="userHibernateRepository" />
-	</bean>
-	
-	<bean id="hibernateSessionFilter" class="ar.edu.itba.paw.grupo1.filter.HibernateSessionFilter">
-		<constructor-arg name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
 	<!-- Configure Hibernate & Spring Transactions -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</bean>
 	
 	<tx:annotation-driven />
+	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -58,5 +51,7 @@
 	    <!-- one of the properties available; the maximum file size in bytes -->
 	    <property name="maxUploadSize" value="1000000"/>
 	</bean>
+	
+	<bean class="ar.edu.itba.paw.grupo1.web.Application" />
 	
 </beans>

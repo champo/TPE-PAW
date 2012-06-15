@@ -17,6 +17,8 @@
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         
+    	<property name="hibernate.current_session_context_class">managed</property>
+    	
         <property name="hibernate.c3p0.min_size">1</property>
         <property name="hibernate.c3p0.max_size">4</property>
         <property name="hibernate.c3p0.timeout">300</property>
