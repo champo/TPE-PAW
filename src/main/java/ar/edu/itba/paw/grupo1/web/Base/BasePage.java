@@ -22,10 +22,10 @@ import org.apache.wicket.request.resource.ContextRelativeResource;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.web.Brokers.BrokersPage;
 import ar.edu.itba.paw.grupo1.web.HelloWorld.HelloWorldPage;
+import ar.edu.itba.paw.grupo1.web.Home.HomePage;
 import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
 import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
-import ar.edu.itba.paw.grupo1.web.home.HomePage;
 
 @SuppressWarnings("serial")
 public class BasePage extends WebPage {
