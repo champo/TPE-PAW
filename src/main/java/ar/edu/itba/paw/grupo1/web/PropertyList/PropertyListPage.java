@@ -1,8 +1,8 @@
 package ar.edu.itba.paw.grupo1.web.PropertyList;
 
-import org.apache.wicket.markup.html.WebPage;
+import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 
-public class PropertyListPage  extends WebPage {
+public class PropertyListPage  extends BasePage {
 
 	public PropertyListPage() {
 		// TODO Auto-generated constructor stub
