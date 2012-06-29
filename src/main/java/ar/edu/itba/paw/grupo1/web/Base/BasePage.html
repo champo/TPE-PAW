@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+   <head>
+       	<title>Base Page</title>
+      	<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+   </head>
+<body style="padding-top:70px">
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a wicket:id="logo" class="brand" href="#">
+					<img wicket:id="search_icon" style="height:22px;border:none" alt="A" />
+					rqvengers PropAdS
+				</a>
+				<ul class="nav">
+
+					<li wicket:id="link_list"><a wicket:id="link" href="#"><span wicket:id="label"> Link</span></a></li>
+
+					<li class="divider-vertical"></li>
+				</ul>
+				
+				<ul class="nav pull-right">
+					<li><p wicket:id="username" class="navbar-text" style="color:white">username</p></li>
+					<li><a wicket:id="base_logout_link"href="#">logout</a></li>
+					<li><a wicket:id="base_login_link" href="$#">login</a></li>
+
+				</ul>					
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<wicket:child />
+	</div>	
+</body>
+</html>

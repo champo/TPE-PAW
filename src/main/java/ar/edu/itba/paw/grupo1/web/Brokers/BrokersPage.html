@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<head>
+		<title>Brokers Page</title>
+	</head>
+	<body>
+		<wicket:extend>
+			<ul>
+				<div class="row">
+					<div wicket:id="brokers_list" class="alert alert-info span3">		
+						<p>
+							<div class="row" style="height:100px; display: table-cell; vertical-align:middle;">
+								<div class="span2">
+									<img wicket:id="broker_icon" class="realEstateLogo" alt="Logo" />
+								</div>
+								<div class="span1" style="margin: 0px;">
+									<br />
+									<strong wicket:id="broker_name">broker.name</strong>
+								</div>
+							</div>
+						</p>
+						<p style="text-align: center;">
+							<strong><a wicket:id="broker_properties" href="#"><span wicket:id="label">X properties</span></a></strong>
+						</p>
+					</div>
+				</div>
+			</ul>
+		</wicket:extend>
+
+	</body>
+</html>

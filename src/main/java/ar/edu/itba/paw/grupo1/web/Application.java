@@ -6,7 +6,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.itba.paw.grupo1.web.helloworld.HelloWorldPage;
+import ar.edu.itba.paw.grupo1.web.home.HomePage;
 
 public class Application extends WebApplication {
 
@@ -27,7 +27,7 @@ public class Application extends WebApplication {
 	
 	@Override
 	public Class<? extends Page> getHomePage() {
-		return HelloWorldPage.class;
+		return HomePage.class;
 	}
-
+	
 }
