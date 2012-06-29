@@ -56,5 +56,18 @@ public class UserHibernateRepository extends GenericHibernateRepository<User> im
 
 		return criteria.list();
 	}
+	
+	@Override
+	public User get(String username) {
+		Criteria criteria = createCriteria()
+				.add(Restrictions.eq("username", username));
+
+		List<User> result = criteria.list();
+		if (result.size() == 0) {
+			return null;
+		} else {
+			return result.get(0);
+		}
+	}
 
 }

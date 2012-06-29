@@ -15,6 +15,9 @@ public interface UserRepository {
 	public User get(int userId);
 	
 	@Transactional
+	public User get(String username);
+	
+	@Transactional
 	public User register(User user) throws UserAlreadyExistsException;
 	
 	@Transactional

@@ -5,13 +5,12 @@ import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
 import ar.edu.itba.paw.grupo1.model.User;
-import ar.edu.itba.paw.grupo1.repository.UserRepository;
 
+@SuppressWarnings("serial")
 public class WicketSession extends WebSession {
 
-		private String username;
+		private Integer id;
 
-		
 		public static WicketSession get() {
 			return (WicketSession) Session.get();
 		}
@@ -20,21 +19,20 @@ public class WicketSession extends WebSession {
 			super(request);
 		}
 
-		public String getUsername() {
-			return username;
+		public Integer getUserId() {
+			return id;
 		}
-
-		public boolean signIn(String username, String password, UserRepository users) {
-			User user = users.get(username);
-			if (user != null && user.checkPassword(password)) {
-				this.username = username;
+		
+		public boolean signIn(User user, String hash) {
+			if (user != null && user.checkPassword(hash)) {
+				this.id = user.getId();
 				return true;
 			}
 			return false;
 		}
 
 		public boolean isSignedIn() {
-			return username != null;
+			return id != null;
 		}
 
 		public void signOut() {

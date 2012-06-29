@@ -7,8 +7,12 @@
 	<body>
 		<wicket:extend>
 		
+		<wicket:enclosure>
 		<p>You can see the list of your published properties <a wicket:id="property_list_link" ref="#">here.</a> </p>
+		</wicket:enclosure>
+		<wicket:enclosure child="login_link">
 		<p>You might want to <a wicket:id="login_link" href="#">login</a> or <a wicket:id="register_link" href="#">register</a> if you're new here.</p>
+		</wicket:enclosure>
 				
 		<p><a href="#" wicket:id="helloWorld">Hello World</a></p>
 		</wicket:extend>

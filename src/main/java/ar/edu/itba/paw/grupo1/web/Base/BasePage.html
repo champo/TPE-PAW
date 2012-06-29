@@ -15,18 +15,27 @@
 					rqvengers PropAdS
 				</a>
 				<ul class="nav">
-
 					<li wicket:id="link_list"><a wicket:id="link" href="#"><span wicket:id="label"> Link</span></a></li>
-
-					<li class="divider-vertical"></li>
 				</ul>
-				
-				<ul class="nav pull-right">
-					<li><p wicket:id="username" class="navbar-text" style="color:white">username</p></li>
-					<li><a wicket:id="base_logout_link"href="#">logout</a></li>
-					<li><a wicket:id="base_login_link" href="$#">login</a></li>
+				<wicket:enclosure>
+					<ul class="nav">
+						<li class="divider-vertical"></li>
+						<li><a wicket:id="MyProperties" href="#">My properties</a></li>
+						<li class="divider-vertical"></li>
+					</ul>		
+				</wicket:enclosure>
 
-				</ul>					
+				<wicket:enclosure  child="username">
+					<ul class="nav pull-right">
+						<li><p wicket:id="username" class="navbar-text" style="color:white">username</p></li>
+						<li><a wicket:id="base_logout_link" >logout</a></li>
+					</ul>					
+				</wicket:enclosure>
+				<wicket:enclosure>
+					<ul class="nav pull-right">
+						<li><a wicket:id="base_login_link" href="$#">login</a></li>
+					</ul>					
+				</wicket:enclosure>
 			</div>
 		</div>
 	</div>

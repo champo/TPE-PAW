@@ -165,6 +165,10 @@ public class User {
 			return getId().equals(other.getId());
 		}
 	}
+
+	public boolean checkPassword(String password) {
+		return this.password.equals(password);
+	}
 	
 	
 }
