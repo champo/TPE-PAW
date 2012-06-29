@@ -12,9 +12,9 @@ public class HomePage extends BasePage {
 
 	public HomePage() {
 		add(new BookmarkablePageLink<Void>("helloWorld", HelloWorldPage.class));
-		add(new BookmarkablePageLink<Void>("property_list_link", PropertyListPage.class).setVisible(isSignedIn()));
-		add(new BookmarkablePageLink<Void>("login_link", LoginPage.class).setVisible(!isSignedIn()));
-		add(new BookmarkablePageLink<Void>("register_link", RegisterPage.class).setVisible(!isSignedIn()));
+		add(new BookmarkablePageLink<Void>("propertyListLink", PropertyListPage.class).setVisible(isSignedIn()));
+		add(new BookmarkablePageLink<Void>("loginLink", LoginPage.class).setVisible(!isSignedIn()));
+		add(new BookmarkablePageLink<Void>("registerLink", RegisterPage.class).setVisible(!isSignedIn()));
 
 	}
 }

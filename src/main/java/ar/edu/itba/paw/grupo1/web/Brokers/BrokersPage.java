@@ -25,19 +25,19 @@ public class BrokersPage extends BasePage{
 	public BrokersPage() {
 
 		getBrokers();
-		add(new ListView<BrokerData>("brokers_list", new PropertyModel<List<BrokerData>>(this, "brokersList")) {
+		add(new ListView<BrokerData>("brokersList", new PropertyModel<List<BrokerData>>(this, "brokersList")) {
 			@Override
 			protected void populateItem(ListItem<BrokerData> item) {
 				BrokerData broker = item.getModelObject();
 				if (broker.getLogoExtension() != null && !broker.getLogoExtension().isEmpty()) {
-					item.add(new Image("broker_icon", new ContextRelativeResource("/images/arqvengers.png")));
+					item.add(new Image("brokerIcon", new ContextRelativeResource("/images/arqvengers.png")));
 				} else {
-					item.add(new Image("broker_icon", new ContextRelativeResource("/images/arqvengers.png")).setVisible(false));
+					item.add(new Image("brokerIcon", new ContextRelativeResource("/images/arqvengers.png")).setVisible(false));
 				}
-				item.add(new Label("broker_name", broker.getName()));
+				item.add(new Label("brokerName", broker.getName()));
 				PageParameters pars = new PageParameters();
 				pars.add("user", broker.getId());
-				BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("broker_properties", QueryPage.class, pars);
+				BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("brokerProperties", QueryPage.class, pars);
 				link.add(new Label("label", broker.getProperties() + " properties"));
 				item.add(link);
 			}

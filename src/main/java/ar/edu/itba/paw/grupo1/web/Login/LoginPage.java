@@ -36,7 +36,7 @@ public class LoginPage extends BasePage {
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		add(feedbackPanel);
-		add(new BookmarkablePageLink<Void>("register_link", RegisterPage.class));
+		add(new BookmarkablePageLink<Void>("registerLink", RegisterPage.class));
 		Form<LoginPage> form = new Form<LoginPage>("loginForm", new CompoundPropertyModel<LoginPage>(this)) {
 			@Override
 			protected void onSubmit() {

@@ -45,10 +45,10 @@ public class BasePage extends WebPage {
 		initLinks();
 
 		BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("logo", HomePage.class);
-		link.add(new Image("search_icon", new ContextRelativeResource("/images/arqvengers.png")));
+		link.add(new Image("searchIcon", new ContextRelativeResource("/images/arqvengers.png")));
 		add(link);
 		
-		add(new ListView<Link<Void>>("link_list", new PropertyModel<List<Link<Void>>>(this, "sectionsList")) {
+		add(new ListView<Link<Void>>("linkList", new PropertyModel<List<Link<Void>>>(this, "sectionsList")) {
 			@Override
 			protected void populateItem(ListItem<Link<Void>> item) {
 				item.add(item.getModelObject());
@@ -56,8 +56,8 @@ public class BasePage extends WebPage {
 		});
 		
 		add(new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class).setVisible(isSignedIn()));
-		add(new BookmarkablePageLink<Void>("base_login_link", LoginPage.class).setVisible(!isSignedIn()));
-		add(new Link<Void>("base_logout_link") {
+		add(new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class).setVisible(!isSignedIn()));
+		add(new Link<Void>("baseLogoutLink") {
 
 			@Override
 			public void onClick() {
@@ -120,4 +120,5 @@ public class BasePage extends WebPage {
 		CookiesHelper.expireCookie(req, resp, "username");
 		CookiesHelper.expireCookie(req, resp, "hash");
 	}
+		
 }
