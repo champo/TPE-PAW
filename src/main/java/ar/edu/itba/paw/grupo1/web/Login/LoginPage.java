@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.grupo1.web.Login;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
@@ -19,6 +20,7 @@ import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.Register.RegisterPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.GUEST)
 public class LoginPage extends BasePage {
 
 	@SpringBean

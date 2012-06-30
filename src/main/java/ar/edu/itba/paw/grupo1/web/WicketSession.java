@@ -10,6 +10,8 @@ import ar.edu.itba.paw.grupo1.model.User;
 @SuppressWarnings("serial")
 public class WicketSession extends AbstractAuthenticatedWebSession {
 
+	public static final String GUEST = "GUEST";
+
 	public static final String USER = "USER";
 	
 	private Integer id;
@@ -54,6 +56,8 @@ public class WicketSession extends AbstractAuthenticatedWebSession {
 
 		if (isSignedIn()) {
 			roles.add(USER);
+		} else {
+			roles.add(GUEST);
 		}
 
 		return roles;
