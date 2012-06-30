@@ -25,19 +25,23 @@ public class LoginPage extends BasePage {
 	private UserRepository users;
 	
 	private transient String username;
+	
 	private transient String password;
+	
 	private transient boolean rememberName;
+	
 	private transient boolean rememberMe;
 
-	
-	
 	public LoginPage() {
 		
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		add(feedbackPanel);
+		
 		add(new BookmarkablePageLink<Void>("registerLink", RegisterPage.class));
+		
 		Form<LoginPage> form = new Form<LoginPage>("loginForm", new CompoundPropertyModel<LoginPage>(this)) {
+			
 			@Override
 			protected void onSubmit() {
 				WicketSession session = WicketSession.get();
@@ -58,7 +62,7 @@ public class LoginPage extends BasePage {
 			protected void onError() {
 				super.onError();
 				feedbackPanel.setVisible(true);
-			}	
+			}
 		};
 		
 		form.add(new TextField<String>("username").setRequired(true));
@@ -66,6 +70,7 @@ public class LoginPage extends BasePage {
 		form.add(new CheckBox("rememberName"));
 		form.add(new CheckBox("rememberMe"));
 		form.add(new Button("login", new ResourceModel("login")));
+		
 		add(form);
 		
 	}	

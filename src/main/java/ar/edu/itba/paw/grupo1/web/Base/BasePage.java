@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -105,6 +104,7 @@ public class BasePage extends WebPage {
 	}
 	
 	protected User getSignedInUser() {
+		
 		if (isSignedIn()) {
 			return users.get(WicketSession.get().getUserId());
 		} else {

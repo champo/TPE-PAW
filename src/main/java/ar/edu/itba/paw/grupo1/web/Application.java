@@ -4,7 +4,9 @@ import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -12,8 +14,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.itba.paw.grupo1.web.Home.HomePage;
+import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
 
-public class Application extends WebApplication {
+public class Application extends AuthenticatedWebApplication {
 
 	private final SessionFactory sessionFactory;
 	
@@ -47,5 +50,17 @@ public class Application extends WebApplication {
 		//Here's where the converters are registered
 		return converterLocator;
 	}
+	
+	@Override
+	protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
+		return WicketSession.class;
+	}
+
+	@Override
+	protected Class<? extends WebPage> getSignInPageClass() {
+		return LoginPage.class;
+	}
+	
+	
 	
 }
