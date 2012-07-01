@@ -6,8 +6,36 @@
 	</head>
 	<body>
 		<wicket:extend>
-
+			<div class="page-header"><h1><wicket:message key="page.subtitle"> Properties list</wicket:message></h1></div>
+			
+			<a wicket:id="newProperty" href="#"><wicket:message key="add.newProperty"> Add new property</wicket:message></a>
+			
+			<br />
+			<br />
+			
+			<p wicket:id="noProperties" class="alert">You have no properties loaded in our system.</p>
+			
+			<table class="table">
+				<tbody>
+					<tr wicket:id="properties"><td>
+						<a wicket:id="detail" href="#">
+							<wicket:message key="propertyDetailLink">
+								Property <span wicket:id="id">id</span>
+							</wicket:message>
+						</a>
+						<br />
+						<span wicket:id="description" style="font-size: 15px;">
+							Property description
+						</span>
+						<a wicket:id="edit" style="float: right;margin:0px 10px;" href="#"><wicket:message key="propertyEditLink"> edit </wicket:message></a>
+			
+						<a wicket:id="publish" style="float: right;margin:0px 10px;" href="#"><wicket:message key="publishLink"> publish</wicket:message></a>
+						<a wicket:id="unpublish" style="float: right;margin:0px 10px;" href="#"><wicket:message key="unpublishLink">unpublish</wicket:message></a>
+						<a wicket:id="reserve" style="float: right;margin:0px 10px;" href="#"><wicket:message key="reserveLink">reserve</wicket:message></a>
+						<a wicket:id="unreserve" style="float: right;margin:0px 10px;" href="#"><wicket:message key="unreserveLink">unreserve</wicket:message></a>
+					</td></tr>
+				</tbody>
+			</table>
 		</wicket:extend>
-
 	</body>
 </html>

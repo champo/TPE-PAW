@@ -58,5 +58,4 @@ public class WicketSession extends AbstractAuthenticatedWebSession {
 
 		return roles;
 	}
-
 }
