@@ -8,6 +8,10 @@
 		<welcome-file>index</welcome-file>
 	</welcome-file-list>
 	
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>development</param-value>
+	</context-param>
 	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
