@@ -1,6 +1,11 @@
 package ar.edu.itba.paw.grupo1.web;
 
-public class Service {
+import java.io.Serializable;
+
+import ar.edu.itba.paw.grupo1.model.Property.Services;
+
+@SuppressWarnings("serial")
+public class Service implements Serializable {
 	
 	private String name;
 	private boolean present;
@@ -16,5 +21,15 @@ public class Service {
 	
 	public boolean isPresent() {
 		return present;
+	}
+	
+	public Services ToEnum() {
+		
+		for (Services s: Services.values()) {
+			if (s.name().equals(name)) {
+				return s;
+			}
+		}
+		return null;
 	}
 }

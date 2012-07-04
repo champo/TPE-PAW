@@ -1,9 +1,13 @@
 package ar.edu.itba.paw.grupo1.web.Base;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +27,11 @@ import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Owned;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
+import ar.edu.itba.paw.grupo1.web.Service;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.Brokers.BrokersPage;
 import ar.edu.itba.paw.grupo1.web.Home.HomePage;
@@ -120,5 +127,30 @@ public class BasePage extends WebPage {
 		CookiesHelper.expireCookie(req, resp, "username");
 		CookiesHelper.expireCookie(req, resp, "hash");
 	}
+	
+	protected SortedSet<Service> getServices(Set<Services> propertyServices) {
+		Comparator<Service> comparator = new Comparator<Service>() {
+			public int compare(Service a, Service b) {
+				return a.getName().compareTo(b.getName());
+			}
+		};
 		
+		SortedSet<Service> services = new TreeSet<Service>(comparator);
+		
+		for (Services service : Services.values()) {
+			services.add(new Service(service.toString(), propertyServices.contains(service)));
+		}
+	
+		return services;
+	}
+	
+	protected boolean isMine(Owned obj) {
+
+		if (isSignedIn()) {
+			return getSignedInUser().equals(obj.getUser());
+		}
+		
+		return false;
+	}
+	
 }
