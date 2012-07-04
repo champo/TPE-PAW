@@ -8,13 +8,15 @@ import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
 import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 import ar.edu.itba.paw.grupo1.web.Register.RegisterPage;
 
+@SuppressWarnings("serial")
 public class HomePage extends BasePage {
 
 	public HomePage() {
+		
 		add(new BookmarkablePageLink<Void>("helloWorld", HelloWorldPage.class));
-		add(new BookmarkablePageLink<Void>("propertyListLink", PropertyListPage.class).setVisible(isSignedIn()));
-		add(new BookmarkablePageLink<Void>("loginLink", LoginPage.class).setVisible(!isSignedIn()));
-		add(new BookmarkablePageLink<Void>("registerLink", RegisterPage.class).setVisible(!isSignedIn()));
+		add(this, new BookmarkablePageLink<Void>("propertyListLink", PropertyListPage.class), isSignedIn());
+		add(this, new BookmarkablePageLink<Void>("loginLink", LoginPage.class), !isSignedIn());
+		add(this, new BookmarkablePageLink<Void>("registerLink", RegisterPage.class), !isSignedIn());
 
 	}
 }

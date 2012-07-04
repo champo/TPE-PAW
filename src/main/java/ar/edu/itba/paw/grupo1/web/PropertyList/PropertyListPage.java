@@ -31,7 +31,7 @@ public class PropertyListPage extends BasePage {
 		propertyList = properties.getProperties(getSignedInUser());
 		
 		add(new BookmarkablePageLink<Void>("newProperty", AddPropertyPage.class));
-		add(new Label("noProperties").setVisible(propertyList == null || propertyList.isEmpty()));
+		add(this, new Label("noProperties"), propertyList == null || propertyList.isEmpty());
 
 		add(new ListView<Property>("properties", new PropertyModel<List<Property>>(this, "propertyList")) {
 			

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
@@ -61,23 +63,22 @@ public class BasePage extends WebPage {
 			}
 		});
 		
-		add(new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class).setVisible(isSignedIn()));
-		add(new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class).setVisible(!isSignedIn()));
-		add(new Link<Void>("baseLogoutLink") {
+		add(this, new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class), isSignedIn());
+		add(this, new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class), !isSignedIn());
+		
+		Link<Void> logoutLink = new Link<Void>("baseLogoutLink") {
 
 			@Override
 			public void onClick() {
 				signOut();
 				setResponsePage(new HomePage());
 			}
-			
-			
-		}.setVisible(isSignedIn()));
-		String username = "";
-		if (isSignedIn()) {
-			username = getSignedInUser().getUsername();
-		} 
-		add(new Label("username", username).setVisible(isSignedIn()));
+		};
+		
+		add(this, logoutLink, isSignedIn());
+		
+		String username = isSignedIn()?getSignedInUser().getUsername():"";
+		add(this, new Label("username", username), isSignedIn());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -91,7 +92,7 @@ public class BasePage extends WebPage {
 
 		
 		for(Class<?> page: pages) {
-			BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("link", (Class<? extends Page>)page);
+			BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("link", (Class<? extends Page>) page);
 			link.add(new Label("label", labels.get(page.getSimpleName())));
 			if (this.getClass() == page) {
 				link.add(new AttributeModifier("class", "active"));
@@ -151,6 +152,11 @@ public class BasePage extends WebPage {
 		}
 		
 		return false;
+	}
+	
+	protected void add(MarkupContainer container, Component c, boolean visibilityCondition) {
+		c.setVisible(visibilityCondition);
+		container.add(c);
 	}
 	
 }
