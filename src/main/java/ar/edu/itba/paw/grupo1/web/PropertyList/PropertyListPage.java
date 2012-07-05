@@ -37,10 +37,11 @@ public class PropertyListPage extends BasePage {
 			
 			@Override
 			protected void populateItem(ListItem<Property> item) {
-				final Property property = item.getModelObject();
-
+				Property property = item.getModelObject();
+				final int id = property.getId();
+				
 				PageParameters pars = new PageParameters();
-				pars.add("propertyId", property.getId());
+				pars.add("id", id);
 				Link<Void> detailLink = new BookmarkablePageLink<Void>("detail", PropertyDetailPage.class, pars);
 				detailLink.add(new Label("id", property.getId().toString()));
 				item.add(detailLink);
@@ -51,7 +52,8 @@ public class PropertyListPage extends BasePage {
 
 					@Override
 					public void onClick() {
-						property.publish();
+						properties.get(id).publish();
+						setResponsePage(PropertyListPage.class);
 					}
 				};
 				add(item, publishLink, !property.isPublished());
@@ -60,7 +62,8 @@ public class PropertyListPage extends BasePage {
 
 					@Override
 					public void onClick() {
-						property.unpublish();
+						properties.get(id).unpublish();
+						setResponsePage(PropertyListPage.class);
 					}
 				};
 				add(item, unpublishLink, property.isPublished());
@@ -69,7 +72,8 @@ public class PropertyListPage extends BasePage {
 
 					@Override
 					public void onClick() {
-						property.reserve();
+						properties.get(id).reserve();
+						setResponsePage(PropertyListPage.class);
 					}
 				};
 				add(item, reserveLink, !property.isReserved());
@@ -78,7 +82,8 @@ public class PropertyListPage extends BasePage {
 
 					@Override
 					public void onClick() {
-						property.unreserve();
+						properties.get(id).unreserve();
+						setResponsePage(PropertyListPage.class);
 					}
 				};
 				add(item, unreservelink, property.isReserved());			
