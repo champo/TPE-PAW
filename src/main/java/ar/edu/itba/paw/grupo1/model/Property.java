@@ -10,16 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "properties")
-public class Property implements Owned {
+public class Property extends PersistentEntity implements Owned {
 
 	public enum PropertyType { 
 		HOUSE, 
@@ -43,10 +40,6 @@ public class Property implements Owned {
 		LAUNDRY,
 		SOLARIUM
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	
 	@Column(nullable = false)
 	private PropertyType propertyType = PropertyType.HOUSE;
@@ -160,11 +153,7 @@ public class Property implements Owned {
 	public String getDescription() {
 		return description;
 	}
-	
-	public Integer getId() {
-		return id;
-	}
-	
+
 	public double getIndoorSpace() {
 		return indoorSpace;
 	}
@@ -259,10 +248,6 @@ public class Property implements Owned {
 
 	public void setPublished(boolean published) {
 		this.published = published;
-	}
-
-	public boolean isNew() {
-		return id == null;
 	}
 	
 	public void publish() {

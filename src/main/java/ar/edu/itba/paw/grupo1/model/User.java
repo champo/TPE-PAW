@@ -2,24 +2,17 @@ package ar.edu.itba.paw.grupo1.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends PersistentEntity{
 
 	public enum UserType {
 
 		REGULAR,
 		REAL_ESTATE,
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	
 	@Column(nullable = false, length = 50)
 	private String name;
@@ -104,10 +97,6 @@ public class User {
 		return email;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-	
 	public String getName() {
 		return name;
 	}

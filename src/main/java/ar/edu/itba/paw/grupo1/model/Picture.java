@@ -3,19 +3,12 @@ package ar.edu.itba.paw.grupo1.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pictures")
-public class Picture implements Owned {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Picture extends PersistentEntity implements Owned {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Property property;
@@ -43,10 +36,6 @@ public class Picture implements Owned {
 		this.extension = extension;
 	}
 	
-	public Integer getId() {
-		return id;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -57,10 +46,6 @@ public class Picture implements Owned {
 
 	public void setProperty(Property property) {
 		this.property = property;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public void setName(String name) {
