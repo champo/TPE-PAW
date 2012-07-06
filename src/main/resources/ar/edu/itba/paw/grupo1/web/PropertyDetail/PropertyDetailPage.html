@@ -6,8 +6,159 @@
 	</head>
 	<body>
 		<wicket:extend>
-
+		
+			<div class="page-header"><h1><wicket:message key="page.subtitle"> Property detail</wicket:message></h1></div>
+			
+			<wicket:enclosure>
+				<p wicket:id="reserved" class="alert">This property is reserved.</p>
+				<br />
+			</wicket:enclosure>
+			
+			<div class="row">
+				<div class="span8">
+					<p>
+						<strong><wicket:message key="propertyType">Property type</wicket:message>:</strong> <span wicket:id="propertyType">House/Flat</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="operationType">Operation type</wicket:message>:</strong> <span wicket:id="operationType"> Selling/Leasing</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="address">Address</wicket:message>:</strong> <span wicket:id="address">address example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="neighbourhood">Neighbourhood</wicket:message>:</strong> <span wicket:id="neighbourhood">neighbourhood example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="price">Price</wicket:message>:</strong> <span wicket:id="price">price example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="numRooms">Rooms</wicket:message>:</strong> <span wicket:id="numRooms">number of rooms example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="indoorSpace">Indoor space</wicket:message>:</strong> <span wicket:id="indoorSpace">indoorSpace example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="outdoorSpace">Outdoor space</wicket:message>:</strong> <span wicket:id="outdoorSpace">outdoorSpace example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="description">Description</wicket:message>:</strong> <span wicket:id="description">description example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="antiquity">Antiquity</wicket:message>:</strong> <span wicket:id="antiquity">antiquity example</span>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="services">Services</wicket:message>:</strong>	
+						<ul>
+							<li wicket:id="services">
+								<span wicket:id="label">service X</span>
+							</li>
+						</ul>
+					</p>
+					
+					<p>
+						<strong><wicket:message key="rooms">Rooms</wicket:message>:</strong>
+					
+						<wicket:enclosure>
+							<span wicket:id="noRooms">This property has no room(s) description</span>.<br/>
+						</wicket:enclosure> 
+						<wicket:enclosure child="rooms">
+							<br />
+							<ul>
+								<li wicket:id="rooms">
+									<strong ><span wicket:id="label">Room name</span>:</strong>
+									<wicket:message key="length">length</wicket:message>: <span wicket:id="length">X</span>,
+									<wicket:message key="width">width</wicket:message>: <span wicket:id="width">Y</span>.
+								</li>
+							</ul>
+						</wicket:enclosure>
+					</p>
+					
+					<br />
+					
+					<p>
+						<wicket:enclosure child="contactInfo">
+							<a wicket:id="contactInfo" href="#"><span wicket:id="label">Get contact information</span></a>
+							-
+						</wicket:enclosure>
+						<a wicket:id="seeMore" href="$#"><span wicket:id="label">See this user's properties</span></a>
+					</p>
+				</div>
+				<div class="span4">
+				
+					<wicket:enclosure child="realEstate">
+						<div class="alert alert-info span3">
+							<p>
+								<strong ><span wicket:id="realEstate">Real estate</span></strong>
+							</p>
+					
+							<p>
+								<div class="row">
+									<div class="span2">
+										<wicket:enclosure child="realEstateLogo">
+											<img wicket:id="realEstateLogo" class="realEstateLogo" alt="Logo"/>
+										</wicket:enclosure>
+									</div>
+									<div class="span1" style="margin: 0px;">
+										<br />
+										<strong wicket:id="realEstateName">Real estate name</strong>
+									</div>
+								</div>
+							</p>
+						</div>
+					</wicket:enclosure>
+			
+					<p><strong><wicket:message key="viewInMap"> View in map</wicket:message>:</strong></p>
+					<p>
+						<img wicket:id="googleMap"/>
+					</p>
+				</div>
+			</div>
+			
+			<br />
+			<br />
+			
+			<wicket:enclosure child="propertyPictures">
+				<div>
+					<strong><span wicket:id="propertyPictures">Pictures of this property</span>:</strong> <br />
+					<div wicket:id="pictures">
+						<span wicket:id="name">Picture name</span>
+						<br />
+						<wicket:enclosure child="firstPicture">			
+							<div class="reserved">
+								<img wicket:id="firstPicture" class="propPicture" alt="Image of the property"/>
+								<h4 wicket:id="reservedBanner" class="reserved"> Reserved </h4>
+							</div>
+						</wicket:enclosure>
+						<wicket:enclosure>
+							<img wicket:id="picture" class="propPicture" alt="Image of the property"/>
+						</wicket:enclosure>
+						
+						<br />
+					</div>
+				</div>
+			</wicket:enclosure>
+			
+			<div wicket:id="noPictures">
+				This property has no pictures.
+			</div>
+			
+			<br />
+			<br />
+			
+			<p wicket:id="visitsCounter">
+				This property has been visited X times.
+			</p>
+			
 		</wicket:extend>
-
 	</body>
 </html>
