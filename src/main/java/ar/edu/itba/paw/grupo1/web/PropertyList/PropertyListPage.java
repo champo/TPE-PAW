@@ -2,7 +2,6 @@ package ar.edu.itba.paw.grupo1.web.PropertyList;
 
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -14,6 +13,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
+import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.AddProperty.AddPropertyPage;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
@@ -31,7 +31,7 @@ public class PropertyListPage extends BasePage {
 		propertyList = properties.getProperties(getSignedInUser());
 		
 		add(new BookmarkablePageLink<Void>("newProperty", AddPropertyPage.class));
-		add(this, new Label("noProperties"), propertyList == null || propertyList.isEmpty());
+		add(new Label("noProperties"), propertyList == null || propertyList.isEmpty());
 
 		add(new ListView<Property>("properties", new PropertyModel<List<Property>>(this, "propertyList")) {
 			
@@ -56,7 +56,7 @@ public class PropertyListPage extends BasePage {
 						setResponsePage(PropertyListPage.class);
 					}
 				};
-				add(item, publishLink, !property.isPublished());
+				WicketUtils.addToContainer(item, publishLink, !property.isPublished());
 				
 				Link<Void> unpublishLink = new Link<Void>("unpublish") {
 
@@ -66,7 +66,7 @@ public class PropertyListPage extends BasePage {
 						setResponsePage(PropertyListPage.class);
 					}
 				};
-				add(item, unpublishLink, property.isPublished());
+				WicketUtils.addToContainer(item, unpublishLink, property.isPublished());
 				
 				Link<Void> reserveLink = new Link<Void>("reserve") {
 
@@ -76,7 +76,7 @@ public class PropertyListPage extends BasePage {
 						setResponsePage(PropertyListPage.class);
 					}
 				};
-				add(item, reserveLink, !property.isReserved());
+				WicketUtils.addToContainer(item, reserveLink, !property.isReserved());
 				
 				Link<Void> unreservelink = new Link<Void>("unreserve") {
 
@@ -86,12 +86,7 @@ public class PropertyListPage extends BasePage {
 						setResponsePage(PropertyListPage.class);
 					}
 				};
-				add(item, unreservelink, property.isReserved());			
-			}
-
-			private void add(ListItem<Property> item, Component c, boolean condition) {
-				c.setVisible(condition);
-				item.add(c);
+				WicketUtils.addToContainer(item, unreservelink, property.isReserved());			
 			}
 		});
 

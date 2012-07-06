@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
@@ -29,12 +28,13 @@ import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
-import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.Owned;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.web.Service;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
+import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Brokers.BrokersPage;
 import ar.edu.itba.paw.grupo1.web.Home.HomePage;
 import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
@@ -63,8 +63,8 @@ public class BasePage extends WebPage {
 			}
 		});
 		
-		add(this, new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class), isSignedIn());
-		add(this, new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class), !isSignedIn());
+		add(new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class), isSignedIn());
+		add(new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class), !isSignedIn());
 		
 		Link<Void> logoutLink = new Link<Void>("baseLogoutLink") {
 
@@ -75,10 +75,10 @@ public class BasePage extends WebPage {
 			}
 		};
 		
-		add(this, logoutLink, isSignedIn());
+		add(logoutLink, isSignedIn());
 		
 		String username = isSignedIn()?getSignedInUser().getUsername():"";
-		add(this, new Label("username", username), isSignedIn());
+		add(new Label("username", username), isSignedIn());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -154,9 +154,7 @@ public class BasePage extends WebPage {
 		return false;
 	}
 	
-	protected void add(MarkupContainer container, Component c, boolean visibilityCondition) {
-		c.setVisible(visibilityCondition);
-		container.add(c);
+	protected void add(Component c, boolean visibilityCondition) {
+		WicketUtils.addToContainer(this, c, visibilityCondition);
 	}
-	
 }

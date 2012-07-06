@@ -14,9 +14,9 @@ public class HomePage extends BasePage {
 	public HomePage() {
 		
 		add(new BookmarkablePageLink<Void>("helloWorld", HelloWorldPage.class));
-		add(this, new BookmarkablePageLink<Void>("propertyListLink", PropertyListPage.class), isSignedIn());
-		add(this, new BookmarkablePageLink<Void>("loginLink", LoginPage.class), !isSignedIn());
-		add(this, new BookmarkablePageLink<Void>("registerLink", RegisterPage.class), !isSignedIn());
+		add(new BookmarkablePageLink<Void>("propertyListLink", PropertyListPage.class), isSignedIn());
+		add(new BookmarkablePageLink<Void>("loginLink", LoginPage.class), !isSignedIn());
+		add(new BookmarkablePageLink<Void>("registerLink", RegisterPage.class), !isSignedIn());
 
 	}
 }

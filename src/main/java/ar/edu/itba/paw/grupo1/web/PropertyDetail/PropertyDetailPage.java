@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -26,6 +25,7 @@ import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
+import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.Contact.ContactPage;
 import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
@@ -91,7 +91,7 @@ public class PropertyDetailPage extends BasePage {
 				item.add(new Label("width", Double.toString(room.getWidth())));
 			}
 		};
-		add(this, roomsView, rooms != null && !rooms.isEmpty());
+		add(roomsView, rooms != null && !rooms.isEmpty());
 				
 		addLink("contactInfo", ContactPage.class, null, null, !propertyOwner.equals(getSignedInUser()));
 		
@@ -104,7 +104,7 @@ public class PropertyDetailPage extends BasePage {
 		addLabel("realEstate", isRealEstate);
 		
 		String logoFilename = "logo_" + propertyOwner.getId() + propertyOwner.getLogoExtension();
-		add(this, new Image("realEstateLogo", new ContextRelativeResource("/images/" + logoFilename)), isRealEstate);
+		add(new Image("realEstateLogo", new ContextRelativeResource("/images/" + logoFilename)), isRealEstate);
 		
 		addLabel("realEstateName", realEstateName, isRealEstate);
 		addGoogleMapImage();
@@ -123,20 +123,15 @@ public class PropertyDetailPage extends BasePage {
 				item.add(new Label("name", picture.getName()));
 				addPropertyPicture(item, "firstPicture", picture, hasReservedBanner);
 				addPropertyPicture(item, "picture", picture, !hasReservedBanner);
-				add(item, new Label("reservedBanner", getLocalizer().getString("reserved", this)), hasReservedBanner);
+				WicketUtils.addToContainer(item, new Label("reservedBanner", getLocalizer().getString("reserved", this)), hasReservedBanner);
 			}
 
 			private void addPropertyPicture(ListItem<Picture> item, String id, Picture picture,	boolean visibilityCondition) {
 				String filePath = "/images/" + picture.getId() + "" + picture.getExtension();
-				add(item, new Image(id, new ContextRelativeResource(filePath)), visibilityCondition);
-			}
-
-			private void add(ListItem<Picture> item, Component c, boolean visibilityCondition) {
-				c.setVisible(visibilityCondition);
-				item.add(c);
+				WicketUtils.addToContainer(item, new Image(id, new ContextRelativeResource(filePath)), visibilityCondition);
 			}
 		};
-		add(this, picturesView, picturesList != null && !picturesList.isEmpty());
+		add(picturesView, picturesList != null && !picturesList.isEmpty());
 		
 		addLabel("noPictures", picturesList == null || picturesList.isEmpty());
 		String key = property.getVisited() == 1?"visitsCounter1":"visitsCounter";
@@ -144,11 +139,11 @@ public class PropertyDetailPage extends BasePage {
 	}
 
 	private void addLabel(String id, String label, boolean visibilityCondition) {
-		add(this, new Label(id, label), visibilityCondition);	
+		add(new Label(id, label), visibilityCondition);	
 	}
 
 	private void addLabel(String id, String key, PropertyModel<Property> model, boolean visibilityCondition) {
-		add(this, new Label(id, getLocalizer().getString(key, this, model)), visibilityCondition);				
+		add(new Label(id, getLocalizer().getString(key, this, model)), visibilityCondition);				
 	}
 
 	private void addLabel(String id, boolean visibilityCondition) {
@@ -182,6 +177,6 @@ public class PropertyDetailPage extends BasePage {
 			link = new BookmarkablePageLink<Void>(id, clazz, params);
 		}
 		link.add(new Label("label", getLocalizer().getString(id, this, model)));
-		add(this, link, visibilityCondition);		
+		add(link, visibilityCondition);		
 	}	
 }
