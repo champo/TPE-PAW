@@ -44,7 +44,7 @@ public class EditPropertyPage extends BasePage{
 	
 	public EditPropertyPage(Property property) {
 		
-		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
+		EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
 		Set<Room> rooms = model.getObject().getRooms();
 		List<Picture> picturesList = pictures.getPictures(model.getObject());
 		
@@ -83,12 +83,11 @@ public class EditPropertyPage extends BasePage{
 		addPicturesSection(model, picturesList, picturesModel);
 	}
 
-	private void addRoomSection(final EntityModel<Property> model,
-			Set<Room> rooms, IModel<List<Room>> roomsModel) {
-		Link<Property> addRoomLink = new Link<Property>("addRoom") {
+	private void addRoomSection(EntityModel<Property> model, Set<Room> rooms, IModel<List<Room>> roomsModel) {
+		Link<Property> addRoomLink = new Link<Property>("addRoom", model) {
 			
 		     public void onClick() {
-		          setResponsePage(new AddRoomPage(model.getObject()));
+		          setResponsePage(new AddRoomPage(getModelObject()));
 		     }
 		};
 		add(addRoomLink);
