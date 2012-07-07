@@ -1,11 +1,133 @@
 package ar.edu.itba.paw.grupo1.web.EditProperty;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.resource.ContextRelativeResource;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import ar.edu.itba.paw.grupo1.model.EntityModel;
+import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Room;
+import ar.edu.itba.paw.grupo1.repository.PictureRepository;
+import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
+import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
+import ar.edu.itba.paw.grupo1.web.WicketUtils;
+import ar.edu.itba.paw.grupo1.web.AddPicture.AddPicturePage;
+import ar.edu.itba.paw.grupo1.web.AddRoom.AddRoomPage;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.EditPicture.EditPicturePage;
+import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 
 @SuppressWarnings("serial")
 public class EditPropertyPage extends BasePage{
+	
+	@SpringBean
+	private PictureRepository pictures;
+	
+	public EditPropertyPage(Property property) {
+		
+		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
+		Set<Room> rooms = model.getObject().getRooms();
+		List<Picture> picturesList = pictures.getPictures(model.getObject());
+		
+		IModel<List<Room>> roomsModel = initRoomsModel(model);
+		IModel<List<Picture>> picturesModel = initPicturesModel(model, pictures);
+		
+		add(new Label("page.subtitle", getLocalizer().getString("page.subtitle", this, model)));
+		
+		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel.setVisible(false);
+        final CheckGroup<Services> group = new CheckGroup<Services>("group", new ArrayList<Services>(property.getServices()));
 
-	public EditPropertyPage() {
-		// TODO Auto-generated constructor stub
+		Form<Property> form = new Form<Property>("editPropertyForm", new CompoundPropertyModel<Property>(model)) {
+			
+			@Override
+			protected void onSubmit() {
+				if (!isMine(getModelObject())) {
+					throw new PermissionDeniedException();
+				}
+				getModelObject().setServices(new HashSet<Services>(group.getModelObject()));
+				setResponsePage(PropertyListPage.class);
+			}
+
+			@Override
+			protected void onError() {
+				super.onError();
+				feedbackPanel.setVisible(true);
+			}
+		};
+		form.add(new PropertyFormPanel("propertyFormPanel", Arrays.asList(Services.values()), group));
+		form.add(feedbackPanel);		
+		form.add(new Button("submit", new ResourceModel("Submit")));
+		add(form);
+		
+		addRoomSection(model, rooms, roomsModel);
+		addPicturesSection(model, picturesList, picturesModel);
+	}
+
+	private void addRoomSection(final EntityModel<Property> model,
+			Set<Room> rooms, IModel<List<Room>> roomsModel) {
+		Link<Property> addRoomLink = new Link<Property>("addRoom") {
+			
+		     public void onClick() {
+		          setResponsePage(new AddRoomPage(model.getObject()));
+		     }
+		};
+		add(addRoomLink);
+		
+		addRoomsView(rooms, roomsModel);
+	}
+
+	private void addPicturesSection(final EntityModel<Property> model,
+			List<Picture> picturesList, IModel<List<Picture>> picturesModel) {
+		Link<Property> addPictureLink = new Link<Property>("addPicture") {
+			
+		     public void onClick() {
+		          setResponsePage(new AddPicturePage(model.getObject()));
+		     }
+		};
+		add(addPictureLink);
+		
+		ListView<Picture> picturesView = new ListView<Picture>("pictures", picturesModel) {
+
+			@Override
+			protected void populateItem(final ListItem<Picture> item) {
+				
+				Picture picture = item.getModelObject();				
+				item.add(new Label("name", picture.getName()));
+				addPropertyPicture(item, "picture", picture, true);
+				Link<Property> editPictureLink = new Link<Property>("editDelete") {
+					
+				     public void onClick() {
+				          setResponsePage(new EditPicturePage(model.getObject(), item.getModelObject()));
+				     }
+				};
+				item.add(editPictureLink);
+			}
+
+			private void addPropertyPicture(ListItem<Picture> item, String id, Picture picture,	boolean visibilityCondition) {
+				String filePath = "/images/" + picture.getId() + "" + picture.getExtension();
+				WicketUtils.addToContainer(item, new Image(id, new ContextRelativeResource(filePath)), visibilityCondition);
+			}
+		};
+		add(picturesView, picturesList != null && !picturesList.isEmpty());
 	}
 }

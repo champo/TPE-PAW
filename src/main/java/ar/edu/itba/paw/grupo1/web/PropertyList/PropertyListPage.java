@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.EntityModel;
@@ -50,20 +49,25 @@ public class PropertyListPage extends BasePage {
 			protected void populateItem(Item<Property> item) {
 
 				Property property = item.getModelObject();
-				final int id = property.getId();
 				
-				PageParameters pars = new PageParameters();
-				pars.add("id", id);
 				Link<Property> detailLink = new Link<Property>("detail", item.getModel()) {
+					
 				     public void onClick() {
 				          setResponsePage(new PropertyDetailPage(getModel()));
 				     }
 				};
 				detailLink.add(new Label("id", property.getId().toString()));
 				item.add(detailLink);
-
 				item.add(new Label("description", property.getDescription()));
-				item.add(new BookmarkablePageLink<Void>("edit", EditPropertyPage.class, pars));
+				
+				Link<Property> editLink = new Link<Property>("edit", item.getModel()) {
+					
+				     public void onClick() {
+				          setResponsePage(new EditPropertyPage(getModelObject()));
+				     }
+				};
+				item.add(editLink);
+				
 				Link<Property> publishLink = new Link<Property>("publish", item.getModel()) {
 
 					@Override

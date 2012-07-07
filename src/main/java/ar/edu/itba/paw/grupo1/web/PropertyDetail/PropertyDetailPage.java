@@ -52,18 +52,8 @@ public class PropertyDetailPage extends BasePage {
 				return new ArrayList<Services>(model.getObject().getServices()); 
 			}
 		};
-		IModel<List<Room>> roomsModel = new LoadableDetachableModel<List<Room>>() {
-			@Override
-			protected List<Room> load() {
-				return new ArrayList<Room>(model.getObject().getRooms()); 
-			}
-		};
-		IModel<List<Picture>> picturesModel = new LoadableDetachableModel<List<Picture>>() {
-			@Override
-			protected List<Picture> load() {
-				return new ArrayList<Picture>(pictures.getPictures(model.getObject())); 
-			}
-		};
+		IModel<List<Room>> roomsModel = initRoomsModel(model);
+		IModel<List<Picture>> picturesModel = initPicturesModel(model, pictures);
 		
 		addLabel("reserved", "property.reserved", null, property.isReserved());
 		add(new Label("propertyType", getLocalizer().getString(property.getPropertyType().toString(), this)));

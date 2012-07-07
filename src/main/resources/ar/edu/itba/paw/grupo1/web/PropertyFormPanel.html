@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<body>
+		<wicket:panel>
+		
+			<p class="row">
+				<div class="span3">
+					<label><wicket:message key="propertyType"> Property type</wicket:message>:</label>
+					<select wicket:id="propertyType">
+						<option value='HOUSE'> House</option>
+						<option value='FLAT'>Flat</option>
+					</select>
+				</div>
+				
+				<div class="span3 offset1">
+					<label><wicket:message key="operationType"> Operation type</wicket:message>:</label>
+					<select wicket:id="operationType">
+						<option value="SELLING"> Selling</option>
+						<option value="LEASING"> Leasing</option>
+					</select>
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span3">
+					<label><wicket:message key="address"> Address</wicket:message>:</label>
+					<input wicket:id="address" type="text"/>
+				</div>
+				
+				<div class="span3 offset1">
+					<label><wicket:message key="neighbourhood">Neighbourhood</wicket:message>:</label>
+					<input wicket:id="neighbourhood"/>
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span3">
+					<label><wicket:message key="price">Price</wicket:message>:</label>
+					<input wicket:id="price"/>
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span3">
+					<label><wicket:message key="numRooms">Rooms</wicket:message>:</label>
+					<input wicket:id="numRooms"/>
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span3">
+					<label> <wicket:message key="indoorSpace">Indoor Space</wicket:message>:</label>
+					<input wicket:id="indoorSpace"/>
+				</div>
+				
+				<div class="span3 offset1">
+					<label><wicket:message key="outdoorSpace">Outdoor Space</wicket:message>:</label>
+					<input wicket:id="outdoorSpace" />
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span7">
+					<label><wicket:message key="description">Description</wicket:message>:</label>
+					<textarea wicket:id="description" rows="5" class="span7"/>
+				</div>
+			</p>
+			
+			<p class="row">
+				<div class="span3">
+					<label><wicket:message key="antiquity">Antiquity</wicket:message>:</label>
+					<input wicket:id="antiquity" />
+				</div>
+			</p>
+			
+			<p class="row">
+				<span wicket:id="group">
+				<div wicket:id="servicesList" class="span2">
+					<input wicket:id="service" type="checkbox"/>
+					<label wicket:id="serviceLabel" class="checkbox inline">service</label> 
+				</div>
+				<input type="checkbox" wicket:id="groupselector">check/uncheck all</input>
+				</span>
+			</p>
+									
+		</wicket:panel>
+	</body>
+</html>

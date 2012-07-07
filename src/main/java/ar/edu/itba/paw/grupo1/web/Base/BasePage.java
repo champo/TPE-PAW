@@ -1,13 +1,10 @@
 package ar.edu.itba.paw.grupo1.web.Base;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,16 +20,20 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
 import ar.edu.itba.paw.grupo1.model.Owned;
-import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.Picture;
+import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
-import ar.edu.itba.paw.grupo1.web.Service;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Brokers.BrokersPage;
@@ -129,22 +130,6 @@ public class BasePage extends WebPage {
 		CookiesHelper.expireCookie(req, resp, "hash");
 	}
 	
-	protected SortedSet<Service> getServices(Set<Services> propertyServices) {
-		Comparator<Service> comparator = new Comparator<Service>() {
-			public int compare(Service a, Service b) {
-				return a.getName().compareTo(b.getName());
-			}
-		};
-		
-		SortedSet<Service> services = new TreeSet<Service>(comparator);
-		
-		for (Services service : Services.values()) {
-			services.add(new Service(service.toString(), propertyServices.contains(service)));
-		}
-	
-		return services;
-	}
-	
 	protected boolean isMine(Owned obj) {
 
 		if (isSignedIn()) {
@@ -157,4 +142,40 @@ public class BasePage extends WebPage {
 	protected void add(Component c, boolean visibilityCondition) {
 		WicketUtils.addToContainer(this, c, visibilityCondition);
 	}
+	
+	protected IModel<List<Room>> initRoomsModel(final IModel<Property> model) {
+		
+		IModel<List<Room>> roomsModel = new LoadableDetachableModel<List<Room>>() {
+			@Override
+			protected List<Room> load() {
+				return new ArrayList<Room>(model.getObject().getRooms()); 
+			}
+		};
+		return roomsModel;
+	}
+	
+	protected IModel<List<Picture>> initPicturesModel(final IModel<Property> model, final PictureRepository pictures) {
+		IModel<List<Picture>> picturesModel = new LoadableDetachableModel<List<Picture>>() {
+			@Override
+			protected List<Picture> load() {
+				return new ArrayList<Picture>(pictures.getPictures(model.getObject())); 
+			}
+		};
+		return picturesModel;
+	}
+	
+	protected void addRoomsView(Set<Room> rooms, IModel<List<Room>> roomsModel) {
+		ListView<Room> roomsView = new ListView<Room>("rooms", roomsModel) {
+
+			@Override
+			protected void populateItem(ListItem<Room> item) {
+				Room room = item.getModelObject();
+				item.add(new Label("label", room.getName()));
+				item.add(new Label("length", Double.toString(room.getLength())));
+				item.add(new Label("width", Double.toString(room.getWidth())));
+			}
+		};
+		add(roomsView, rooms != null && !rooms.isEmpty());
+	}
+	
 }

@@ -7,6 +7,67 @@
 	<body>
 		<wicket:extend>
 
+			<div class="page-header">
+				<h1><span wicket:id="page.subtitle"> Edit Property idX</span></h1>
+			</div>
+			
+			<form wicket:id="editPropertyForm">
+				
+				<div wicket:id="feedback" class="alert alert-error"/>
+							
+				<div class="row">
+					<div class="span8">
+
+						<div wicket:id="propertyFormPanel" />
+						
+						<p class="row">&nbsp</p>
+						
+						<p class="row">
+							<div class="span3">
+								<input wicket:id="submit" type="submit" class="btn btn-primary"/>				
+							</div>
+						</p>
+					</div>
+				</div>
+			</form>
+			
+			<hr />
+			<br />
+			
+			<wicket:message key="propertyRooms">Rooms of this property</wicket:message>:
+			<br />
+			<a wicket:id="addRoom" href="#"><wicket:message key="addRoom"> Add new room</wicket:message></a>
+			<br />
+			<br />
+			<ul>
+				<li wicket:id="rooms">
+					<strong ><span wicket:id="label">Room name</span>:</strong>
+					<wicket:message key="length">length</wicket:message>: <span wicket:id="length">X</span>,
+					<wicket:message key="width">width</wicket:message>: <span wicket:id="width">Y</span>.
+				</li>
+			</ul>
+			<br />
+			
+			<wicket:message key="propertyPictures"> Pictures of this property</wicket:message>:
+			<br />
+			<a wicket:id="addPicture" href="#"><wicket:message key="addPicture"> Add new </wicket:message></a>
+			<br />
+			<br />
+			<div class="row">
+				<div wicket:id="pictures" class="span4">
+					<p>
+						<span wicket:id="name">Picture name</span>
+					</p>
+					<p>
+						<img wicket:id="picture" class="propPicture" alt="Image of the property"/>
+					</p>
+					<p>
+						<a wicket:id="editDelete" href="#"><wicket:message key="editDelete"> Edit or delete</wicket:message></a>  
+					</p>
+				</div>
+			</div>
+			<br />
+			
 		</wicket:extend>
 
 	</body>
