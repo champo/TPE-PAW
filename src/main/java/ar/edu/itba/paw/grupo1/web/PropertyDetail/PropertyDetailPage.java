@@ -97,9 +97,7 @@ public class PropertyDetailPage extends BasePage {
 			}
 		};
 		contactLink.add(new Label("label", getLocalizer().getString("contactInfo", this)));
-		add(contactLink, !propertyOwner.equals(getSignedInUser()));	
-//		add(contactLink, true);	
-
+		add(contactLink, !isMine(property));	
 		
 		Link<User> queryLink = new Link<User>("seeMore", new EntityModel<User>(User.class, propertyOwner)) {
 			

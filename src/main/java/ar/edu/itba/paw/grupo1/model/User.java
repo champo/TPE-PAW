@@ -94,28 +94,6 @@ public class User extends PersistentEntity{
 		this.logoExtension = logoExtension;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		
-		if (this == obj) {
-			return true;
-		} else if (obj == null) {
-			return false;
-		} else if (!(obj instanceof User)) {
-			System.out.println("instanceof");
-			return false;
-		}
-		
-		User other = (User) obj;
-		if (getId() == null || other.getId() == null) {
-			System.out.println("yougotanull");
-			return false;
-		} else {
-			System.out.println("got to the end");
-			return getId().equals(other.getId());
-		}
-	}
-
 	public boolean checkPassword(String password) {
 		return this.password.equals(password);
 	}

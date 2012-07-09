@@ -132,8 +132,8 @@ public class BasePage extends WebPage {
 	
 	protected boolean isMine(Owned obj) {
 
-		if (isSignedIn()) {
-			return getSignedInUser().equals(obj.getUser());
+		if (isSignedIn() && obj.getUser() != null) {
+			return getSignedInUser().getId().equals(obj.getUser().getId());
 		}
 		
 		return false;
