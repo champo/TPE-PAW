@@ -6,8 +6,88 @@
 	</head>
 	<body>
 		<wicket:extend>
+			
+			<div class="page-header"><h1>Search properties</h1></div>
 
-			<h1 wicket:id="test">testing</h1>
+			<div>
+				<wicket:enclosure>
+					<p wicket:id="unpublished" class="alert alert-error">The property you were trying to access is unpublished. You no longer have to access to it.</p>
+				</wicket:enclosure>
+				
+			</div>
+			
+			<div class="well">
+				<form wicket:id="queryForm">
+			
+					<div wicket:id="feedback" class="alert alert-error"/>
+			
+					<p>
+						<label><wicket:message key="operationType">Type of operation</wicket:message>: </label>
+			
+						<label class="radio inline">
+							<span wicket:id="operationRadioChoice"/>
+						</label>
+			
+					</p>
+					
+			
+					<p>
+						<label><wicket:message key="propertyType">Type of property</wicket:message>: </label>
+				
+						<label class="radio inline">
+							<span wicket:id="propertyRadioChoice"/>
+						</label>	
+					</p>
+			
+					<p>
+						<label><wicket:message key="range">Price</wicket:message></label>
+										
+						<wicket:message key="from">from</wicket:message>
+						<input wicket:id="rangeFrom" type="text" class="input-small"/>
+						<wicket:message key="to">to</wicket:message>
+						<input wicket:id="rangeTo" type="text" class="input-small"/>
+						<wicket:message key="with">with</wicket:message>
+						
+						<select wicket:id="order" class="span2">
+							<option value="ASCENDING">Ascending</option>
+							<option value="DESCENDING">Descending</option>
+						</select>
+						<wicket:message key="order">order</wicket:message>
+					</p>
+			
+					<input wicket:id="Query" type="submit" class="btn btn-primary"/>
+			
+				</form>
+			</div>
+			<br />
+			
+			<div>
+				<wicket:enclosure child="queryListPanel">
+				
+					<div wicket:id="queryListPanel"/>
+							        
+					<p>
+						<div class="pagination pagination-centered">
+							<ul>
+								<li><a wicket:id="firstPage" href="#">First</a></li>
+								<li><a wicket:id="previousPage" href="#">Previous</a></li>
+
+			
+								<li wicket:id="previousPages"><a wicket:id="page" href="#">${page}</a></li>
+					
+								<li class="active"><a href="javascript:void(0)">${pageNumber}</a></li>
+								
+								<li wicket:id="previousPages"><a wicket:id="page"  href="#">${page}</a></li>
+					
+								<li><a wicket:id="nextPage" href="#">Next</a></li>
+								<li><a wicket:id="lastPage" href="#">Last</a></li>
+							</ul>
+						</div>
+					</p>
+				</wicket:enclosure>
+			</div>
+			
+			
 		</wicket:extend>
 
 	</body>

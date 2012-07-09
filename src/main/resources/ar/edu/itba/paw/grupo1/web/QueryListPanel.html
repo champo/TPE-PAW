@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<body>
+		<wicket:panel>
+			<div>
+				<wicket:enclosure child="queryResults">
+					<table class="table">
+						<tbody>
+							<wicket:container wicket:id="queryResults">
+								<tr><td>
+									<ul style="list-style:none;">
+										<li wicket:id="opertaionType">Selling/Leasing</li>
+										<li wicket:id="propertyType">Selling/Leasing</li>
+										<li wicket:id="address">Address: ${fn:escapeXml(result.address)}</li>
+										<li wicket:id="neighbourhood">>Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
+										<li wicket:id="price">>Price: ${result.price}</li>
+										<li><a wicket:id="seeMore" href="#"><span wicket:id="seeMoreLabel">See more</span></a></li>
+									</ul>
+								</td></tr>
+							</wicket:container>
+						</tbody>
+					</table>
+				<wicket:enclosure>
+			</div>
+									
+		</wicket:panel>
+	</body>
+</html>
