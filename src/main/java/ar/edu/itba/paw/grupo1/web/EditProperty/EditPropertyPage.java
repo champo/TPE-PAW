@@ -51,7 +51,7 @@ public class EditPropertyPage extends BasePage{
 		IModel<List<Room>> roomsModel = initRoomsModel(model);
 		IModel<List<Picture>> picturesModel = initPicturesModel(model, pictures);
 		
-		add(new Label("page.subtitle", getLocalizer().getString("page.subtitle", this, model)));
+		add(new Label("page.subtitle", getString("page.subtitle", model)));
 		
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);

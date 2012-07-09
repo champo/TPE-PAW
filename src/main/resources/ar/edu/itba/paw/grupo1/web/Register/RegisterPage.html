@@ -6,7 +6,57 @@
 	</head>
 	<body>
 		<wicket:extend>
-
+		
+			<div class="page-header">
+				<h1><wicket:message key="page.subtitle" /></h1>
+			</div>
+		
+			<div wicket:id="feedback" class="alert alert-error"/>
+		
+			<form wicket:id="registerForm">
+				
+				<fieldset>
+					<p>
+						<label><wicket:message key="name">Name</wicket:message>:</label>
+						<input wicket:id="name" type="text" name="name"/><br />
+					</p> 
+					
+					<p>
+						<label><wicket:message key="surname">Surname</wicket:message>:</label>
+						<input wicket:id="surname" type="text" name="surname"/><br />
+					</p>
+					
+					<p>
+						<label><wicket:message key="email">Email</wicket:message>:</label>
+						<input wicket:id="email" type="text" name="email"/><br />
+					</p>
+					
+					<p>
+						<label><wicket:message key="phone">Phone</wicket:message>:</label>
+						<input wicket:id="phone" type="text" name="phone"/><br />
+					</p> 
+					
+					<p>
+						<label><wicket:message key="username">Username</wicket:message>:</label>
+						<input wicket:id="username" type="text" name="username"/><br />
+					</p> 
+			
+					<p>
+						<label for="password"><wicket:message key="password">Password</wicket:message>: </label>
+						<input wicket:id="password" type="password" name="password"/><br />
+					</p>
+					
+					<p>
+						<label for="passwordConfirm"><wicket:message key="passwordConfirm">Confirm password</wicket:message>: </label>
+						<input wicket:id="passwordConfirm" type="password" name="passwordConfirm"/><br />
+					</p>
+					
+					<br />
+				
+					<input wicket:id="register" type="submit" class="btn"/>
+				</fieldset>
+				
+			</form>
 		</wicket:extend>
 	</body>
 </html>
