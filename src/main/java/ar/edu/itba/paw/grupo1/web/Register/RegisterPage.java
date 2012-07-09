@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.grupo1.web.Register;
 
-import java.util.regex.Pattern;
-
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -12,10 +10,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.paw.grupo1.model.User;
@@ -76,21 +72,7 @@ public class RegisterPage extends BasePage {
 				.add(EmailAddressValidator.getInstance());
 			
 			addStringField("phone", 20)
-				.add(new IValidator<String>() {
-					
-					private final Pattern regexp = Pattern.compile("^ *[0-9](-?[ 0-9])*[0-9] *$");
-					
-					@Override
-					public void validate(IValidatable<String> validatable) {
-						
-						
-						if (!regexp.matcher(validatable.getValue()).matches()) {
-							validatable.error(new ValidationError().addMessageKey("phone.invalid"));
-						}
-
-					}
-						
-				});
+				.add(new PatternValidator("^ *[0-9](-?[ 0-9])*[0-9] *$"));
 			
 			addStringField("username", 50);
 
