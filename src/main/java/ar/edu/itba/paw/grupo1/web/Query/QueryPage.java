@@ -17,4 +17,9 @@ public class QueryPage extends BasePage {
 	public QueryPage() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public QueryPage(boolean unpublished) {
+		// TODO Auto-generated constructor stub
+		//show that the property is no longer published, the user cannot acces it
+	}
 }

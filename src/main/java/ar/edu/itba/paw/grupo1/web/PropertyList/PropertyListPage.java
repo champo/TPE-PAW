@@ -53,7 +53,7 @@ public class PropertyListPage extends BasePage {
 				Link<Property> detailLink = new Link<Property>("detail", item.getModel()) {
 					
 				     public void onClick() {
-				          setResponsePage(new PropertyDetailPage(getModel()));
+				          setResponsePage(new PropertyDetailPage(getModelObject()));
 				     }
 				};
 				detailLink.add(new Label("id", property.getId().toString()));

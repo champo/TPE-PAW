@@ -6,8 +6,69 @@
 	</head>
 	<body>
 		<wicket:extend>
+		
+			<div>
+				<wicket:enclosure child="contactFormHeader">
+					<div class="page-header">
+						<h1 wicket:id="contactFormHeader">
+						Contact form for property property.address - property.neighbourhood
+						</h1>
+					</div>
+			 
+					<form wicket:id="contactForm">
+						
+						<div wicket:id="feedback" class="alert alert-error"/>
+			
+						<div>
+							<label><span wicket:id="nameLabel">Name </span>:</label>
+							<input wicket:id="name" type="text"/>
+						</div>
+						<br />
+			
+						<div>
+							<label><span wicket:id="emailLabel">Email </span>:</label>
+							<input wicket:id="email" type="text"/>
+			
+						</div>
+						<br />
+			
+						<div>
+							<label><span wicket:id="phoneLabel">Phone </span>:</label>
+							<input wicket:id="phone" type="text" />
+						</div>
+						<br />
+			
+						<div class="row">
+							<div class="span7">
+								<label><span wicket:id="commentLabel">Comment (optional)</span>:</label>
+								<br />				
+								<textarea wicket:id="comment" rows="5" class="span7"/>
+							</div>
+						</div>
+						<br />
+			
+						<input wicket:id="submit" type="submit"  class="btn btn-primary">
+					</form>
+				</wicket:enclosure>
+			
+				<wicket:enclosure child="contactInfoHeader">
+					<div class="page-header">
+						<h1 wicket:id="contactInfoHeader">
+							Contact information for property property.address - property.neighbourhood
+						</h1>
+					</div>
+						
+			 
+					<p>
+						<strong><span wicket:id="contactPhone">Phone</span>:</strong> <span wicket:id="publisherPhone">publisher.phone</span>
+					</p>
+			
+					<p>
+						<strong><span wicket:id="contactEmail">Email</span>:</strong> <span wicket:id="publisherEmail">publisher.email</span>
+					</p>
+				</wicket:enclosure>	
+			</div>
 
 		</wicket:extend>
-
 	</body>
 </html>

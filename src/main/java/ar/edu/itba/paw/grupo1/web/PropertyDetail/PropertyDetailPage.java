@@ -5,21 +5,20 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.image.NonCachingImage;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
@@ -37,9 +36,9 @@ public class PropertyDetailPage extends BasePage {
 	@SpringBean
 	private PictureRepository pictures;
 	
-	public PropertyDetailPage(final IModel<Property> model) {
+	public PropertyDetailPage(Property property) {
 		
-		Property property = model.getObject();
+		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
 		User propertyOwner = property.getUser();
 		Set<Room> rooms = property.getRooms();
 		List<Picture> picturesList = pictures.getPictures(property);
@@ -90,12 +89,28 @@ public class PropertyDetailPage extends BasePage {
 		};
 		add(roomsView, rooms != null && !rooms.isEmpty());
 				
-		addLink("contactInfo", ContactPage.class, null, null, !propertyOwner.equals(getSignedInUser()));
+		Link<Property> contactLink = new Link<Property>("contactInfo", model) {
+			
+			@Override
+			public void onClick() {
+				setResponsePage(new ContactPage(getModelObject()));
+			}
+		};
+		contactLink.add(new Label("label", getLocalizer().getString("contactInfo", this)));
+//		add(contactLink, !propertyOwner.equals(getSignedInUser()));	
+		add(contactLink, true);	
+
 		
-		PageParameters params = new PageParameters();
-		params.add("id", propertyOwner.getId());
-		addLink("seeMore", QueryPage.class, params, new PropertyModel<Property>(property, "user"), true);
-		
+		Link<User> queryLink = new Link<User>("seeMore", new EntityModel<User>(User.class, propertyOwner)) {
+			
+			@Override
+			public void onClick() {
+				setResponsePage(new QueryPage(getModelObject()));
+			}
+		};
+		queryLink.add(new Label("label", getLocalizer().getString("seeMore", this, new PropertyModel<Property>(property, "user"))));
+		add(queryLink);	
+				
 		String realEstateName = propertyOwner.getRealEstateName();
 		boolean isRealEstate = realEstateName != null && !realEstateName.isEmpty();
 		addLabel("realEstate", isRealEstate);
@@ -162,17 +177,4 @@ public class PropertyDetailPage extends BasePage {
 		dynamicImage.setOutputMarkupId(true);
 		add(dynamicImage);
 	}
-
-	private void addLink(String id, Class<? extends Page> clazz, PageParameters params, 
-			PropertyModel<Property> model, boolean visibilityCondition) {
-		
-		BookmarkablePageLink<Void> link;
-		if (params == null) {
-			link = new BookmarkablePageLink<Void>(id, clazz); 
-		} else {
-			link = new BookmarkablePageLink<Void>(id, clazz, params);
-		}
-		link.add(new Label("label", getLocalizer().getString(id, this, model)));
-		add(link, visibilityCondition);		
-	}	
 }
