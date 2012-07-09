@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.grupo1.web.Login;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -10,6 +12,8 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.User;
@@ -46,10 +50,24 @@ public class LoginPage extends BasePage {
 			
 			@Override
 			protected void onSubmit() {
+				
+				
 				WicketSession session = WicketSession.get();
 				User user = users.get(username);
 				
-				if (session.signIn(user, HashingService.hash(password))) {
+				String hash = HashingService.hash(password);
+				if (session.signIn(user, hash)) {
+					
+					WebResponse response = (WebResponse) getResponse();
+					
+					if (rememberName) {
+						response.addCookie(infiniteCookie("username", username));
+					}
+					
+					if (rememberMe) {
+						response.addCookie(infiniteCookie("username", username));
+						response.addCookie(infiniteCookie("pass", hash));
+					}
 					
 					if (!continueToOriginalDestination()) {
 						setResponsePage(getApplication().getHomePage());
@@ -60,12 +78,25 @@ public class LoginPage extends BasePage {
 				}
 			}
 			
+			private Cookie infiniteCookie(String key, String value) {
+				Cookie cookie = new Cookie(key, value);
+				cookie.setMaxAge(Integer.MAX_VALUE);
+				cookie.setPath("/");
+				
+				return cookie;
+			}
+			
 			@Override
 			protected void onError() {
 				super.onError();
 				feedbackPanel.setVisible(true);
 			}
 		};
+		
+		Cookie usernameCookie = ((WebRequest) getRequest()).getCookie("username");
+		if (usernameCookie != null) {
+			username = usernameCookie.getValue();
+		}
 		
 		form.add(new TextField<String>("username").setRequired(true));
 		form.add(new PasswordTextField("password"));

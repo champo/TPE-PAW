@@ -13,6 +13,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.web.Home.HomePage;
 import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
 
@@ -20,9 +21,12 @@ public class Application extends AuthenticatedWebApplication {
 
 	private final SessionFactory sessionFactory;
 	
+	private final UserRepository users;
+	
 	@Autowired
-	public Application(SessionFactory sessionFactory) {
+	public Application(SessionFactory sessionFactory, UserRepository users) {
 		this.sessionFactory = sessionFactory;
+		this.users = users;
 	}
 	
 	@Override
@@ -40,7 +44,7 @@ public class Application extends AuthenticatedWebApplication {
 
 	@Override
 	public Session newSession(Request request, Response response) {
-		return new WicketSession(request);
+		return new WicketSession(request, users);
 	}
 	
 	
