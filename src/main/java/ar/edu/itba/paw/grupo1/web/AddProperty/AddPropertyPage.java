@@ -54,9 +54,14 @@ public class AddPropertyPage extends BasePage {
 			@Override
 			protected void onSubmit() {
 				
+				String desc = "";
+				if (description != null) {
+					desc = description;
+				}
+				
 				Set<Services> services = new HashSet<Services>(group.getModelObject());
 				Property property = new Property(propertyType, operationType, address, neighbourhood, price,
-						numRooms, indoorSpace, outdoorSpace, description, antiquity, services, true, 
+						numRooms, indoorSpace, outdoorSpace, desc, antiquity, services, true, 
 						getSignedInUser(), false, 0);
 				property.publish();
 				properties.save(property);
