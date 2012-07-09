@@ -39,50 +39,11 @@ public class User extends PersistentEntity{
 	private String logoExtension;
 
 	public User() {
-		
-	}
-	
-	public User(int id, String name, String surname,
-			String email, String phone, String username,
-			String password) {
-		
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.phone = phone;
-		this.username = username;
-		this.password = password;
-	}
-	
-	public User(String name, String surname, String email, 
-			String phone, String username, String password) {
-		
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.phone = phone;
-		this.username = username;
-		this.password = password;
 	}
 	
 	public User(String name, String surname, String email, String phone,
 			String username, String password, String realEstateName,
 			String logoExtension) {
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.phone = phone;
-		this.username = username;
-		this.password = password;
-		this.realEstateName = realEstateName;
-		this.logoExtension = logoExtension;
-	}
-
-	public User(Integer id, String name, String surname, String email,
-			String phone, String username, String password,
-			String realEstateName, String logoExtension) {
-		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;

@@ -20,14 +20,6 @@ public class Picture extends PersistentEntity implements Owned {
 	private String extension;
 	
 	public Picture() {
-	
-	}
-	
-	public Picture(int id, Property property, String name, String extension) {
-		this.id = id;
-		this.property = property;
-		this.name = name;
-		this.extension = extension;
 	}
 	
 	public Picture(String name, Property property, String extension) {

@@ -34,18 +34,9 @@ public class Room extends PersistentEntity {
 	public Room() {
 	}
 
-	public Room(Integer id, String name, double lenght, double width,
-			Property property) {
-		this.id = id;
+	public Room(String name, double length, double width, Property property) {
 		this.name = name;
-		this.length = lenght;
-		this.width = width;
-		this.property = property;
-	}
-
-	public Room(String name, double lenght, double width, Property property) {
-		this.name = name;
-		this.length = lenght;
+		this.length = length;
 		this.width = width;
 		this.property = property;
 	}
