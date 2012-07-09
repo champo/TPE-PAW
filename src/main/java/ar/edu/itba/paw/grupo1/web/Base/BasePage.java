@@ -64,8 +64,13 @@ public class BasePage extends WebPage {
 			}
 		});
 		
-		add(new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class), isSignedIn());
-		add(new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class), !isSignedIn());
+		BookmarkablePageLink<Void> myPropertiesLink = new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class);
+		addLabelToLink(myPropertiesLink, getLocalizer().getString("myProperties", this));
+		add(myPropertiesLink, isSignedIn());
+		
+		BookmarkablePageLink<Void> loginLink = new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class);
+		addLabelToLink(loginLink,  getLocalizer().getString("login", this));
+		add(loginLink, !isSignedIn());
 		
 		Link<Void> logoutLink = new Link<Void>("baseLogoutLink") {
 
@@ -75,7 +80,7 @@ public class BasePage extends WebPage {
 				setResponsePage(new HomePage());
 			}
 		};
-		
+		addLabelToLink(logoutLink, getLocalizer().getString("logout", this));
 		add(logoutLink, isSignedIn());
 		
 		String username = isSignedIn()?getSignedInUser().getUsername():"";
@@ -87,19 +92,23 @@ public class BasePage extends WebPage {
 		
 		Class<?> pages[] = {HomePage.class, QueryPage.class, BrokersPage.class};
 		Map<String, String> labels = new HashMap<String, String>();
-		labels.put("HomePage", "Home");
-		labels.put("QueryPage", "Search properties");
-		labels.put("BrokersPage", "Brokers");
+		labels.put("HomePage", getLocalizer().getString("home", this));
+		labels.put("QueryPage", getLocalizer().getString("search", this));
+		labels.put("BrokersPage", getLocalizer().getString("brokers", this));
 
 		
 		for(Class<?> page: pages) {
 			BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("link", (Class<? extends Page>) page);
-			link.add(new Label("label", labels.get(page.getSimpleName())));
+			addLabelToLink(link, labels.get(page.getSimpleName()));
 			if (this.getClass() == page) {
 				link.add(new AttributeModifier("class", "active"));
 			}
 			sectionsList.add(link);
 		}
+	}
+
+	protected <T> void addLabelToLink(Link<T> link, String labelValue) {
+		link.add(new Label("label", labelValue));		
 	}
 
 	public void renderHead(IHeaderResponse response) {
