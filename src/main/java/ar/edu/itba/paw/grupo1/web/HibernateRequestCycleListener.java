@@ -13,8 +13,9 @@ import org.springframework.util.Assert;
 public class HibernateRequestCycleListener extends AbstractRequestCycleListener {
 
 	private final SessionFactory sessionFactory;
-	private boolean error;
-
+	
+	private ThreadLocal<Boolean> error = new ThreadLocal<Boolean>();
+	
 	public HibernateRequestCycleListener(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -23,13 +24,14 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 	public void onBeginRequest(RequestCycle cycle) {
 		Assert.state(!ManagedSessionContext.hasBind(sessionFactory), "Session already bound to this thread");
 		Session session = sessionFactory.openSession();
+		error.set(false);
 		ManagedSessionContext.bind(session);
 		session.beginTransaction();
 	}
 	
 	@Override
 	public void onEndRequest(RequestCycle cycle) {
-		if (!error) {
+		if (error.get() == false) {
 			commit();
 		} else {
 			rollback();
@@ -39,7 +41,7 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
 		rollback();
-		error = true;
+		error.set(true);
 		return null;
 	}
 	
