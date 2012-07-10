@@ -3,6 +3,7 @@ package ar.edu.itba.paw.grupo1.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,6 +21,7 @@ public class Picture extends PersistentEntity implements Owned {
 	private String extension;
 	
 	@Column(nullable = false)
+	@Lob
 	private byte[] data = null;
 	
 	public Picture() {

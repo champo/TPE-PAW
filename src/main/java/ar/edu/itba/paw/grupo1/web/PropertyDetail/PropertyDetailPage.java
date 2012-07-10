@@ -25,6 +25,7 @@ import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
+import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.Contact.ContactPage;
@@ -135,9 +136,15 @@ public class PropertyDetailPage extends BasePage {
 				WicketUtils.addToContainer(item, new Label("reservedBanner", getLocalizer().getString("reserved", this)), hasReservedBanner);
 			}
 
-			private void addPropertyPicture(ListItem<Picture> item, String id, Picture picture,	boolean visibilityCondition) {
-				String filePath = "/images/" + picture.getId() + "" + picture.getExtension();
-				WicketUtils.addToContainer(item, new Image(id, new ContextRelativeResource(filePath)), visibilityCondition);
+			private void addPropertyPicture(ListItem<Picture> item, String id, final Picture picture,	boolean visibilityCondition) {
+				item.add(new NonCachingImage(id, 
+		                new AbstractReadOnlyModel() { 
+		                    @Override 
+		                    public Object getObject() { 
+		                        // TODO Auto-generated method stub 
+		                        return new ImageResource(picture.getData(), picture.getExtension()); 
+		                    } 
+		                }).setVisible(visibilityCondition)); 
 			}
 		};
 		add(picturesView, picturesList != null && !picturesList.isEmpty());
