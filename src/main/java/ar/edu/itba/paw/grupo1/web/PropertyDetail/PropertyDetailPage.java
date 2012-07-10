@@ -15,7 +15,6 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.EntityModel;
@@ -24,6 +23,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.User.UserType;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
@@ -40,7 +40,7 @@ public class PropertyDetailPage extends BasePage {
 	public PropertyDetailPage(Property property) {
 		
 		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
-		User propertyOwner = property.getUser();
+		final User propertyOwner = property.getUser();
 		Set<Room> rooms = property.getRooms();
 		List<Picture> picturesList = pictures.getPictures(property);
 
@@ -111,11 +111,21 @@ public class PropertyDetailPage extends BasePage {
 		add(queryLink);	
 				
 		String realEstateName = propertyOwner.getRealEstateName();
-		boolean isRealEstate = realEstateName != null && !realEstateName.isEmpty();
+		boolean isRealEstate = propertyOwner.getType() == UserType.REAL_ESTATE;
 		addLabel("realEstate", isRealEstate);
 		
-		String logoFilename = "logo_" + propertyOwner.getId() + propertyOwner.getLogoExtension();
-		add(new Image("realEstateLogo", new ContextRelativeResource("/images/" + logoFilename)), isRealEstate);
+		NonCachingImage logo = new NonCachingImage("realEstateLogo", new AbstractReadOnlyModel() {
+			
+			@Override 
+			public Object getObject() { 
+				return new ImageResource(propertyOwner.getPhoto(), propertyOwner.getLogoExtension()); 
+			} 
+
+		});
+		
+		logo.setVisible(isRealEstate);
+		add(logo);
+		
 		
 		addLabel("realEstateName", realEstateName, isRealEstate);
 		addGoogleMapImage(property);
@@ -147,6 +157,7 @@ public class PropertyDetailPage extends BasePage {
 		                }).setVisible(visibilityCondition)); 
 			}
 		};
+		
 		add(picturesView, picturesList != null && !picturesList.isEmpty());
 		
 		addLabel("noPictures", picturesList == null || picturesList.isEmpty());

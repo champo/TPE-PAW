@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.User.UserType;
 
 @Repository
 public class UserHibernateRepository extends GenericHibernateRepository<User> implements
@@ -52,7 +53,7 @@ public class UserHibernateRepository extends GenericHibernateRepository<User> im
 	public List<User> getBrokers() {
 		
 		Criteria criteria = createCriteria()
-			.add(Restrictions.isNotNull("realEstateName"));
+			.add(Restrictions.eq("type", UserType.REAL_ESTATE));
 
 		return criteria.list();
 	}

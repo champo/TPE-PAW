@@ -5,18 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
+import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.Query.UserPropertiesPage;
 
@@ -47,15 +48,19 @@ public class BrokersPage extends BasePage{
 			@Override
 			protected void populateItem(Item<User> item) {
 				
-				User broker = item.getModelObject();
-				String logoFilePath = null;
-				if (broker.getLogoExtension() != null && !broker.getLogoExtension().isEmpty()) {
-					logoFilePath = "/images/logo_" + broker.getId() + "" + broker.getLogoExtension();
-					item.add(new Image("brokerIcon", new ContextRelativeResource(logoFilePath)));
-				} else {
-					item.add(new Image("brokerIcon", new ContextRelativeResource(logoFilePath)).setVisible(false));
-				}
+				final User broker = item.getModelObject();
 				
+				NonCachingImage logo = new NonCachingImage("brokerIcon", new AbstractReadOnlyModel() {
+					
+					@Override 
+					public Object getObject() { 
+						return new ImageResource(broker.getPhoto(), broker.getLogoExtension()); 
+					} 
+
+				});
+				
+				item.add(logo);
+								
 				item.add(new Label("brokerName", broker.getName()));
 				Link<User> link = new Link<User>("brokerProperties", new EntityModel<User>(User.class, broker)) {
 
