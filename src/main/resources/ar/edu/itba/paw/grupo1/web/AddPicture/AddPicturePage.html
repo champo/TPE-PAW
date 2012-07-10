@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<head>
+		<title>Add Picture Page</title>
+	</head>
+	<body>
+		<wicket:extend>
+
+			<div class="page-header">
+				<h1><wicket:message key="page.subtitle"> Add New Picture</wicket:message></h1>
+			</div>
+			
+			<form wicket:id="addPictureForm">
+				
+				<div wicket:id="feedback" class="alert alert-error"/>
+				
+				<div class="row">
+					<div class="span8">
+						
+						<div class="span3">
+							<label><wicket:message key="name"> Name</wicket:message>:</label>
+							<input wicket:id="name" type="text"/>
+						</div>
+						
+						<p class="row">&nbsp</p>
+						
+						<div class="span3">
+							<label><wicket:message key="name"> Name</wicket:message>:</label>
+							<input wicket:id="fileUpload" type="file"/>
+						</div>
+																		
+						<p class="row">&nbsp</p>
+						
+						<p class="row">
+							<div class="span3">
+								<input wicket:id="submit" type="submit" class="btn btn-primary"/>				
+							</div>
+						</p>
+					</div>
+				</div>
+			</form>
+
+		</wicket:extend>
+	</body>
+</html>

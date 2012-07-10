@@ -11,10 +11,12 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
@@ -27,6 +29,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
+import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
@@ -122,9 +125,15 @@ public class EditPropertyPage extends BasePage{
 				item.add(editPictureLink);
 			}
 
-			private void addPropertyPicture(ListItem<Picture> item, String id, Picture picture,	boolean visibilityCondition) {
-				String filePath = "/images/" + picture.getId() + "" + picture.getExtension();
-				WicketUtils.addToContainer(item, new Image(id, new ContextRelativeResource(filePath)), visibilityCondition);
+			private void addPropertyPicture(ListItem<Picture> item, String id, final Picture picture,	boolean visibilityCondition) {
+				item.add(new NonCachingImage("picture", 
+		                new AbstractReadOnlyModel() { 
+		                    @Override 
+		                    public Object getObject() { 
+		                        // TODO Auto-generated method stub 
+		                        return new ImageResource(picture.getData(), picture.getExtension()); 
+		                    } 
+		                })); 
 			}
 		};
 		add(picturesView, picturesList != null && !picturesList.isEmpty());

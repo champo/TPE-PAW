@@ -19,21 +19,17 @@ public class Picture extends PersistentEntity implements Owned {
 	@Column(length = 10, nullable = false)
 	private String extension;
 	
+	@Column(nullable = false)
+	private byte[] data = null;
+	
 	public Picture() {
 	
 	}
-	
-	public Picture(int id, Property property, String name, String extension) {
-		this.id = id;
-		this.property = property;
-		this.name = name;
-		this.extension = extension;
-	}
-	
-	public Picture(String name, Property property, String extension) {
+	public Picture(String name, Property property, String extension, byte[] data) {
 		this.name = name;
 		this.property = property;
 		this.extension = extension;
+		this.data = data;
 	}
 	
 	public String getName() {
@@ -62,6 +58,10 @@ public class Picture extends PersistentEntity implements Owned {
 	
 	public User getUser() {
 		return property.getUser();
+	}
+	
+	public byte[] getData() {
+		return data;
 	}
 }
 
