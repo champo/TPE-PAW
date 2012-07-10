@@ -38,24 +38,16 @@ public class Picture extends PersistentEntity implements Owned {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public Property getProperty() {
 		return property;
 	}
 
-	public void setProperty(Property property) {
-		this.property = property;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getExtension() {
 		return extension;
-	}
-	
-	public void setExtension(String extension) {
-		this.extension = extension;
 	}
 	
 	public User getUser() {
