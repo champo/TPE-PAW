@@ -16,6 +16,15 @@
 			<form wicket:id="registerForm">
 				
 				<fieldset>
+				
+					<p>
+						<label><wicket:message key="userType"> User type</wicket:message>:</label>
+						<select wicket:id="userType">
+							<option value='REGULAR'>Regular</option>
+							<option value='REAL_STATE'>Real State</option>
+						</select><br />
+					</p>
+				
 					<p>
 						<label><wicket:message key="name">Name</wicket:message>:</label>
 						<input wicket:id="name" type="text" name="name"/><br />
@@ -51,23 +60,17 @@
 						<input wicket:id="passwordConfirm" type="password" name="passwordConfirm"/><br />
 					</p>
 					
-					<p>
-						<label><wicket:message key="userType"> User type</wicket:message>:</label>
-						<select wicket:id="userType">
-							<option value='REGULAR'>Regular</option>
-							<option value='REAL_STATE'>Real State</option>
-						</select><br />
-					</p>
-					
-					<p>
-						<label><wicket:message key="realEstateName">Real state name</wicket:message>:</label>
-						<input wicket:id="realEstateName" type="text" name="realEstateName"/><br />
-					</p> 
-					
-					<p>
-						<label><wicket:message key="realEstateLogo"> Logo</wicket:message>:</label>
-						<input wicket:id="realEstateLogo" type="file"/><br />
-					</p>
+					<wicket:enclosure child="realEstateName">
+						<p>
+							<label><wicket:message key="realEstateName">Real state name</wicket:message>:</label>
+							<input wicket:id="realEstateName" type="text" name="realEstateName"/><br />
+						</p> 
+						
+						<p>
+							<label><wicket:message key="realEstateLogo"> Logo</wicket:message>:</label>
+							<input wicket:id="realEstateLogo" type="file"/><br />
+						</p>
+					</wicket:enclosure>
 					
 					<br />
 				
