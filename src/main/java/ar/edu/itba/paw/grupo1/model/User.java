@@ -2,6 +2,9 @@ package ar.edu.itba.paw.grupo1.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -9,7 +12,6 @@ import javax.persistence.Table;
 public class User extends PersistentEntity{
 
 	public enum UserType {
-
 		REGULAR,
 		REAL_ESTATE,
 	}
@@ -32,26 +34,47 @@ public class User extends PersistentEntity{
 	@Column(nullable = false, length = 64)
 	private String password;
 	
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private UserType type;
+	
 	@Column(nullable = true, length = 50)
 	private String realEstateName;
 
 	@Column(nullable = true, length = 10)
 	private String logoExtension;
+	
+	@Column
+	@Lob
+	private byte[] photo = null;
 
 	User() {
 	}
 	
-	public User(String name, String surname, String email, String phone,
-			String username, String password, String realEstateName,
-			String logoExtension) {
+	protected User(String name, String surname, String email, String phone,
+			String username, String password, UserType type, String realEstateName,
+			String logoExtension, byte[] photo) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.phone = phone;
 		this.username = username;
 		this.password = password;
+		this.type = type;
 		this.realEstateName = realEstateName;
 		this.logoExtension = logoExtension;
+		this.photo = photo;
+	}
+
+	public User(String name, String surname, String email, String phone,
+			String username, String hash) {
+		this(name, surname, email, phone, username, hash, UserType.REGULAR, null, null, null);
+	}
+
+	public User(String name, String surname, String email, String phone,
+			String username, String hash, String realStateName,
+			String logoExtension, byte[] photo) {
+		this(name, surname, email, phone, username, hash, UserType.REAL_ESTATE, realStateName, logoExtension, photo);
 	}
 
 	public String getEmail() {
@@ -82,21 +105,19 @@ public class User extends PersistentEntity{
 		return realEstateName;
 	}
 
-	public void setRealEstateName(String realEstateName) {
-		this.realEstateName = realEstateName;
-	}
-
 	public String getLogoExtension() {
 		return logoExtension;
-	}
-
-	public void setLogoExtension(String logoExtension) {
-		this.logoExtension = logoExtension;
 	}
 
 	public boolean checkPassword(String password) {
 		return this.password.equals(password);
 	}
 	
+	public byte[] getPhoto() {
+		return photo;
+	}
 	
+	public UserType getType() {
+		return type;
+	}
 }

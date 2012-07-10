@@ -1,15 +1,25 @@
 package ar.edu.itba.paw.grupo1.web.Register;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.validator.AbstractValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -45,11 +55,11 @@ public class RegisterPage extends BasePage {
 
 	private String realEstateName;
 
-	private String logoExtension;
-
 	private UserType userType = UserType.REGULAR;
 
 	private FeedbackPanel feedbackPanel;
+	
+	private transient List<FileUpload> realEstateLogo;
 
 	public RegisterPage() {
 		
@@ -61,6 +71,9 @@ public class RegisterPage extends BasePage {
 	}
 	
 	private class RegisterForm extends Form<RegisterPage> {
+
+		private FileUploadField fileUploadField;
+		private TextField<String> realStateNameField;
 
 		public RegisterForm(String id) {
 			super(id, new CompoundPropertyModel<RegisterPage>(RegisterPage.this));
@@ -84,11 +97,62 @@ public class RegisterPage extends BasePage {
 			
 			add(new EqualPasswordInputValidator(password, passwordConfirm));
 			
-			//addStringField("realStateName", 50, false);
-			//add(new TextField<String>("logoExtension"));
+			EnumChoiceRenderer<UserType> choiceRenderer = new EnumChoiceRenderer<UserType>(this);
+			List<? extends UserType> choices = Arrays.asList(UserType.values());
+			
+			DropDownChoice<UserType> typeChoice = new DropDownChoice<UserType>("userType", choices, choiceRenderer) {
+				
+				@Override
+				protected void onSelectionChanged(UserType newSelection) {
+					fileUploadField.setVisible(newSelection == UserType.REAL_ESTATE);
+					realStateNameField.setVisible(newSelection == UserType.REAL_ESTATE);
+					realStateNameField.setRequired(newSelection == UserType.REAL_ESTATE);
+				}
+				
+				@Override
+				protected boolean wantOnSelectionChangedNotifications() {
+					return true;
+				}
+				
+			};
+			typeChoice.setRequired(true);
+			
+			add(typeChoice);
+			
+			fileUploadField = new FileUploadField("realEstateLogo");
+			
+			fileUploadField.add(new AbstractValidator<Collection<FileUpload>>() {
+				
+				protected void onValidate(IValidatable<Collection<FileUpload>> validatable) {
+					
+					if (userType == UserType.REGULAR) {
+						return;
+					}
+					
+					for (FileUpload fileUpload : validatable.getValue()) {
+						
+	                    String uploadContentType = fileUpload.getContentType();
+	                    if (uploadContentType == null || (!uploadContentType.contains("gif") 
+	                    		&& !uploadContentType.contains("jpg") && 
+	                    		!uploadContentType.contains("jpeg") && !uploadContentType.contains("png"))) {
+	                    	error(validatable);
+	                    }
+					}
+				}
+			}); 
+			
+			setMultiPart(true);
+			
+			fileUploadField.setVisible(userType == UserType.REAL_ESTATE);
+			add(fileUploadField);
+			
+			realStateNameField = new TextField<String>("realEstateName");
+			realStateNameField.setVisible(userType == UserType.REAL_ESTATE);
+			realStateNameField.setRequired(userType == UserType.REAL_ESTATE);
+			realStateNameField.add(StringValidator.maximumLength(50));
+			add(realStateNameField);
 			
 			add(new Button("register", new ResourceModel("register")));
-			
 		}
 		
 		protected TextField<String> addStringField(String name, int maxLength) {
@@ -109,9 +173,19 @@ public class RegisterPage extends BasePage {
 		@Override
 		protected void onSubmit() {
 			
+			String hash = HashingService.hash(password);
+			
 			try {
-				String hash = HashingService.hash(password);
-				users.register(new User(name, surname, email, phone, username, hash, realEstateName, logoExtension));
+				
+				User user = null;
+				if (userType == UserType.REAL_ESTATE) {
+					FileUpload file = realEstateLogo.get(0);
+					user = new User(name, surname, email, phone, username, hash, realEstateName, file.getContentType(), file.getBytes());
+				} else {
+					user = new User(name, surname, email, phone, username, hash);
+				}
+				
+				users.register(user);
 			} catch (UserAlreadyExistsException e) {
 				error(getString("username.taken"));
 			}
