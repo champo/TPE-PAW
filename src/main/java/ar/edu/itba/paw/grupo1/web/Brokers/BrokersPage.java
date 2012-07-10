@@ -18,7 +18,7 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
+import ar.edu.itba.paw.grupo1.web.Query.UserPropertiesPage;
 
 @SuppressWarnings("serial")
 public class BrokersPage extends BasePage{
@@ -61,7 +61,7 @@ public class BrokersPage extends BasePage{
 
 					@Override
 					public void onClick() {
-						setResponsePage(new QueryPage(getModelObject()));					
+						setResponsePage(new UserPropertiesPage(getModelObject()));					
 					}
 				};
 				link.add(new Label("label", properties.getProperties(broker).size() + " properties"));

@@ -93,33 +93,10 @@ public class Property extends PersistentEntity implements Owned {
 	public Property() {
 	}
 	
-	public Property(Integer id, PropertyType propertyType, OperationType operationType, String address,
-			String neighbourhood, double price, int rooms,
-			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, Set<Services> services,
-			boolean published, User user, boolean reserved, int visited) {
-		this.id = id;
-		this.propertyType = propertyType;
-		this.operationType = operationType;
-		this.address = address;
-		this.neighbourhood = neighbourhood;
-		this.price = price;
-		this.numRooms = rooms;
-		this.indoorSpace = indoorSpace;
-		this.outdoorSpace = outdoorSpace;
-		this.description = description;
-		this.antiquity = antiquity;
-		this.services = services;
-		this.published = published;
-		this.user = user;
-		this.reserved = reserved;
-		this.visited = visited;
-	}
-	
 	public Property(PropertyType propertyType, OperationType operationType, String address,
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
-			String description, int antiquity, Set<Services> services, 
+			String description, int antiquity, Set<Services> services,
 			boolean published, User user, boolean reserved, int visited) {
 		this.propertyType = propertyType;
 		this.operationType = operationType;

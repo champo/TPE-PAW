@@ -28,7 +28,7 @@ import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.Contact.ContactPage;
-import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
+import ar.edu.itba.paw.grupo1.web.Query.UserPropertiesPage;
 
 @SuppressWarnings("serial")
 public class PropertyDetailPage extends BasePage {
@@ -97,15 +97,13 @@ public class PropertyDetailPage extends BasePage {
 			}
 		};
 		contactLink.add(new Label("label", getLocalizer().getString("contactInfo", this)));
-//		add(contactLink, !propertyOwner.equals(getSignedInUser()));	
-		add(contactLink, true);	
-
+		add(contactLink, !isMine(property));	
 		
 		Link<User> queryLink = new Link<User>("seeMore", new EntityModel<User>(User.class, propertyOwner)) {
 			
 			@Override
 			public void onClick() {
-				setResponsePage(new QueryPage(getModelObject()));
+				setResponsePage(new UserPropertiesPage(getModelObject()));
 			}
 		};
 		queryLink.add(new Label("label", getLocalizer().getString("seeMore", this, new PropertyModel<Property>(property, "user"))));

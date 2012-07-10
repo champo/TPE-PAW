@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.Form;
@@ -18,12 +19,13 @@ import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
-import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
+import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.USER)
 public class AddPropertyPage extends BasePage {
 
 	private transient String address;
@@ -52,14 +54,16 @@ public class AddPropertyPage extends BasePage {
 			@Override
 			protected void onSubmit() {
 				
+				String desc = "";
+				if (description != null) {
+					desc = description;
+				}
+				
 				Set<Services> services = new HashSet<Services>(group.getModelObject());
 				Property property = new Property(propertyType, operationType, address, neighbourhood, price,
-						numRooms, indoorSpace, outdoorSpace, description, antiquity, services, true, 
+						numRooms, indoorSpace, outdoorSpace, desc, antiquity, services, true, 
 						getSignedInUser(), false, 0);
 				property.publish();
-				if (!isMine(property)) {
-					throw new PermissionDeniedException();
-				}
 				properties.save(property);
 				setResponsePage(PropertyListPage.class);
 			}

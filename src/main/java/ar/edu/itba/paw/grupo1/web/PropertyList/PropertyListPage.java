@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -15,6 +16,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
+import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.AddProperty.AddPropertyPage;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
@@ -22,6 +24,7 @@ import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
 import ar.edu.itba.paw.grupo1.web.PropertyDetail.PropertyDetailPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.USER)
 public class PropertyListPage extends BasePage {
 
 	@SpringBean

@@ -1,5 +1,6 @@
 package ar.edu.itba.paw.grupo1.web.AddRoom;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -7,16 +8,17 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
+import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.USER)
 public class AddRoomPage extends BasePage {
 
 	

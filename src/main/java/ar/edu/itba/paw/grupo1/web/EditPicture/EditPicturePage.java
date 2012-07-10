@@ -1,9 +1,9 @@
 package ar.edu.itba.paw.grupo1.web.EditPicture;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -12,18 +12,18 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
-import ar.edu.itba.paw.grupo1.web.AddPicture.AddPicturePage;
+import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.USER)
 public class EditPicturePage extends BasePage {
 	
 	@SpringBean

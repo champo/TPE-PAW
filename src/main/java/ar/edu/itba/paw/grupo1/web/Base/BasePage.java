@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
@@ -26,7 +23,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.paw.grupo1.controller.CookiesHelper;
 import ar.edu.itba.paw.grupo1.model.Owned;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
@@ -77,7 +73,7 @@ public class BasePage extends WebPage {
 			@Override
 			public void onClick() {
 				signOut();
-				setResponsePage(new HomePage());
+				setResponsePage(HomePage.class);
 			}
 		};
 		addLabelToLink(logoutLink, getLocalizer().getString("logout", this));
@@ -131,18 +127,13 @@ public class BasePage extends WebPage {
 	}
 	
 	protected void signOut() {
-		WicketSession.get().signOut();
-
-		HttpServletRequest req = (HttpServletRequest) getRequest().getContainerRequest();
-	    HttpServletResponse resp = (HttpServletResponse) getResponse().getContainerResponse();
-		CookiesHelper.expireCookie(req, resp, "username");
-		CookiesHelper.expireCookie(req, resp, "hash");
+		WicketSession.get().signOut(getRequest(), getResponse());
 	}
 	
 	protected boolean isMine(Owned obj) {
 
-		if (isSignedIn()) {
-			return getSignedInUser().equals(obj.getUser());
+		if (isSignedIn() && obj.getUser() != null) {
+			return getSignedInUser().getId().equals(obj.getUser().getId());
 		}
 		
 		return false;

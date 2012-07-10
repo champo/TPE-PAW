@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckGroup;
@@ -32,6 +33,7 @@ import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
+import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.AddPicture.AddPicturePage;
 import ar.edu.itba.paw.grupo1.web.AddRoom.AddRoomPage;
@@ -40,6 +42,7 @@ import ar.edu.itba.paw.grupo1.web.EditPicture.EditPicturePage;
 import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 
 @SuppressWarnings("serial")
+@AuthorizeInstantiation(WicketSession.USER)
 public class EditPropertyPage extends BasePage{
 	
 	@SpringBean
@@ -54,7 +57,7 @@ public class EditPropertyPage extends BasePage{
 		IModel<List<Room>> roomsModel = initRoomsModel(model);
 		IModel<List<Picture>> picturesModel = initPicturesModel(model, pictures);
 		
-		add(new Label("page.subtitle", getLocalizer().getString("page.subtitle", this, model)));
+		add(new Label("page.subtitle", getString("page.subtitle", model)));
 		
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
