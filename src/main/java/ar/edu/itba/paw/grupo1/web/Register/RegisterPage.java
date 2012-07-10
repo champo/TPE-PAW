@@ -105,6 +105,8 @@ public class RegisterPage extends BasePage {
 				@Override
 				protected void onSelectionChanged(UserType newSelection) {
 					fileUploadField.setVisible(newSelection == UserType.REAL_ESTATE);
+					fileUploadField.setRequired(newSelection == UserType.REAL_ESTATE);
+					
 					realStateNameField.setVisible(newSelection == UserType.REAL_ESTATE);
 					realStateNameField.setRequired(newSelection == UserType.REAL_ESTATE);
 				}
@@ -144,11 +146,15 @@ public class RegisterPage extends BasePage {
 			setMultiPart(true);
 			
 			fileUploadField.setVisible(userType == UserType.REAL_ESTATE);
+			fileUploadField.setRequired(userType == UserType.REAL_ESTATE);
+			
 			add(fileUploadField);
 			
 			realStateNameField = new TextField<String>("realEstateName");
+			
 			realStateNameField.setVisible(userType == UserType.REAL_ESTATE);
 			realStateNameField.setRequired(userType == UserType.REAL_ESTATE);
+			
 			realStateNameField.add(StringValidator.maximumLength(50));
 			add(realStateNameField);
 			
