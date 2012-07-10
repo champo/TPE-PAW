@@ -31,7 +31,7 @@ public class Room extends PersistentEntity {
 	@ManyToOne
 	private Property property;
 	
-	public Room() {
+	Room() {
 	}
 
 	public Room(String name, double length, double width, Property property) {

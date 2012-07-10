@@ -24,9 +24,9 @@ public class Picture extends PersistentEntity implements Owned {
 	@Lob
 	private byte[] data = null;
 	
-	public Picture() {
-	
+	Picture() {
 	}
+	
 	public Picture(String name, Property property, String extension, byte[] data) {
 		this.name = name;
 		this.property = property;

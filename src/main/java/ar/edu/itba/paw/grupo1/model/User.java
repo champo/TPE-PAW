@@ -38,7 +38,7 @@ public class User extends PersistentEntity{
 	@Column(nullable = true, length = 10)
 	private String logoExtension;
 
-	public User() {
+	User() {
 	}
 	
 	public User(String name, String surname, String email, String phone,

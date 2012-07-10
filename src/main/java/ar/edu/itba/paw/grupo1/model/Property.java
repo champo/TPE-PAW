@@ -90,7 +90,7 @@ public class Property extends PersistentEntity implements Owned {
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy="property")
 	private Set<Room> rooms = new HashSet<Room>();
 	
-	public Property() {
+	Property() {
 	}
 	
 	public Property(PropertyType propertyType, OperationType operationType, String address,
