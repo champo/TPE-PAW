@@ -4,10 +4,6 @@
 	version="2.5">
 	<display-name>Archetype Created Web Application</display-name>
 	
-	<welcome-file-list>
-		<welcome-file>index</welcome-file>
-	</welcome-file-list>
-	
 	<context-param>
 		<param-name>configuration</param-name>
 		<param-value>development</param-value>
@@ -40,6 +36,25 @@
 		<param-name>defaultHtmlEscape</param-name>
 		<param-value>true</param-value>
    	</context-param>
+   	
+   	<servlet>
+		<servlet-name>HomeRedirector</servlet-name>
+		<servlet-class>ar.edu.itba.paw.grupo1.web.HomeRedirectServlet</servlet-class>
+		<init-param>
+			<param-name>homeUrl</param-name>
+			<param-value>bin/</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>HomeRedirector</servlet-name>
+		<url-pattern>/index.html</url-pattern>
+	</servlet-mapping>
+
+   	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
    	
 
 </web-app>
