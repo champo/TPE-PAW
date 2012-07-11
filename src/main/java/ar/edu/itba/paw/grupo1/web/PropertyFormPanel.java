@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
@@ -25,7 +26,8 @@ public class PropertyFormPanel extends Panel{
 				
 		WicketUtils.addDropDownMenu(this, "propertyType", new PropertyType[] {PropertyType.HOUSE, PropertyType.FLAT});
 		WicketUtils.addDropDownMenu(this, "operationType", new OperationType[] {OperationType.SELLING, OperationType.LEASING});
-
+		WicketUtils.addDropDownMenu(this, "currency", Currency.values());
+		
 		add(new TextField<String>("address").setRequired(true));
 		add(new TextField<String>("neighbourhood").setRequired(true));
 		add(new TextField<Double>("price").setRequired(true));

@@ -15,6 +15,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
@@ -38,6 +39,7 @@ public class AddPropertyPage extends BasePage {
 	private transient int antiquity;
 	private transient PropertyType propertyType = PropertyType.HOUSE;
 	private transient OperationType operationType = OperationType.SELLING;
+	private transient Currency currency = Currency.$;
 
 	@SpringBean
 	private PropertyRepository properties;
@@ -62,7 +64,7 @@ public class AddPropertyPage extends BasePage {
 				Set<Services> services = new HashSet<Services>(group.getModelObject());
 				Property property = new Property(propertyType, operationType, address, neighbourhood, price,
 						numRooms, indoorSpace, outdoorSpace, desc, antiquity, services, true, 
-						getSignedInUser(), false, 0);
+						getSignedInUser(), false, 0, currency);
 				property.publish();
 				properties.save(property);
 				setResponsePage(PropertyListPage.class);

@@ -172,7 +172,7 @@ public class BasePage extends WebPage {
 			@Override
 			protected void populateItem(ListItem<Room> item) {
 				Room room = item.getModelObject();
-				item.add(new Label("label", room.getName()));
+				item.add(new Label("label", getLocalizer().getString(room.getRoom().toString(), this)));
 				item.add(new Label("length", Double.toString(room.getLength())));
 				item.add(new Label("width", Double.toString(room.getWidth())));
 			}

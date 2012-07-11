@@ -21,6 +21,7 @@ import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.PropertyState;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.User.UserType;
@@ -60,7 +61,11 @@ public class PropertyDetailPage extends BasePage {
 		add(new Label("operationType", getLocalizer().getString(property.getOperationType().toString(), this)));
 		add(new Label("address", property.getAddress()));
 		add(new Label("neighbourhood", property.getNeighbourhood()));
+		add(new Label("currency", property.getCurrency().toString()));
+		add(new Label("currencyPerSquare", property.getCurrency().toString()));
 		add(new Label("price", Double.toString(property.getPrice())));
+		add(new Label("pricePerSquare", Double.toString(property.getPrice() / 
+					(property.getIndoorSpace() + property.getOutdoorSpace()))));
 		add(new Label("numRooms", Integer.toString(property.getNumRooms())));
 		add(new Label("indoorSpace", Double.toString(property.getIndoorSpace())));
 		add(new Label("outdoorSpace", Double.toString(property.getOutdoorSpace())));
@@ -78,18 +83,8 @@ public class PropertyDetailPage extends BasePage {
 		
 		addLabel("noRooms", rooms == null || rooms.isEmpty());
 		
-		ListView<Room> roomsView = new ListView<Room>("rooms", roomsModel) {
-
-			@Override
-			protected void populateItem(ListItem<Room> item) {
-				Room room = item.getModelObject();
-				item.add(new Label("label", room.getName()));
-				item.add(new Label("length", Double.toString(room.getLength())));
-				item.add(new Label("width", Double.toString(room.getWidth())));
-			}
-		};
-		add(roomsView, rooms != null && !rooms.isEmpty());
-				
+		addRoomsView(rooms, roomsModel);
+	
 		Link<Property> contactLink = new Link<Property>("contactInfo", model) {
 			
 			@Override
@@ -165,6 +160,18 @@ public class PropertyDetailPage extends BasePage {
 		addLabel("visitsCounter", key, model, true);
 		
 		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
+		
+		ListView<PropertyState> states = new ListView<PropertyState>("states", property.getStates()) {
+			
+			@Override
+			protected void populateItem(ListItem<PropertyState> item) {
+				
+				item.add(new Label("stateItem", PropertyDetailPage.this.getString("property.stateChange", item.getModel())));
+			}
+		};
+		
+		states.setVisible(isMine(property));
+		add(states);
 	}
 
 	private void addGoogleMapImage(Property property) {
