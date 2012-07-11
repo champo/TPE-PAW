@@ -1,6 +1,8 @@
 package ar.edu.itba.paw.grupo1.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import ar.edu.itba.paw.grupo1.model.PropertyState.State;
 
 @Entity
 @Table(name = "properties")
@@ -92,6 +96,10 @@ public class Property extends PersistentEntity implements Owned {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, mappedBy="property")
 	private Set<Room> rooms = new HashSet<Room>();
+	
+	@Column(nullable = false)
+	@ElementCollection
+	private List<PropertyState> states = new ArrayList<PropertyState>(); 
 	
 	Property() {
 	}
@@ -226,16 +234,16 @@ public class Property extends PersistentEntity implements Owned {
 		this.services = services;
 	}
 
-	public void setPublished(boolean published) {
-		this.published = published;
-	}
-	
 	public void publish() {
+		State oldState = getCurrentState();
 		published = true;
+		changeState(oldState);
 	}
 	
 	public void unpublish() {
+		State oldState = getCurrentState();
 		published = false;
+		changeState(oldState);
 	}
 
 	public void addRoom(Room room) {
@@ -243,11 +251,15 @@ public class Property extends PersistentEntity implements Owned {
 	}	
 	
 	public void reserve() {
+		State oldState = getCurrentState();
 		reserved = true;
+		changeState(oldState);
 	}
 	
 	public void unreserve() {
+		State oldState = getCurrentState();
 		reserved = false;
+		changeState(oldState);
 	}
 	
 	public Set<Room> getRooms() {
@@ -263,6 +275,32 @@ public class Property extends PersistentEntity implements Owned {
 	}
 	
 	public void sell() {
+		State oldState = getCurrentState();
 		sold = true;
+		changeState(oldState);
+	}
+
+	private void changeState(State oldState) {
+		State newState = getCurrentState();
+		
+		if (newState != oldState) {
+			states.add(new PropertyState(newState, oldState));
+		}
+	}
+	
+	private State getCurrentState() {
+		State oldState = State.ACTIVE;
+		if (!published) {
+			oldState = State.CANCELED;
+		} else if (sold) {
+			oldState = State.SOLD;
+		} else if (reserved) {
+			oldState = State.RESERVED;
+		}
+		return oldState;
+	}
+	
+	public List<PropertyState> getStates() {
+		return states;
 	}
 }
