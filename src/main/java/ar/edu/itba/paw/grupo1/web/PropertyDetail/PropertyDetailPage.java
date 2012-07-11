@@ -21,6 +21,7 @@ import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.model.PropertyState;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.User.UserType;
@@ -165,6 +166,18 @@ public class PropertyDetailPage extends BasePage {
 		addLabel("visitsCounter", key, model, true);
 		
 		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
+		
+		ListView<PropertyState> states = new ListView<PropertyState>("states", property.getStates()) {
+			
+			@Override
+			protected void populateItem(ListItem<PropertyState> item) {
+				
+				item.add(new Label("stateItem", PropertyDetailPage.this.getString("property.stateChange", item.getModel())));
+			}
+		};
+		
+		states.setVisible(isMine(property));
+		add(states);
 	}
 
 	private void addLabel(String id, String label, boolean visibilityCondition) {
