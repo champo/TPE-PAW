@@ -61,7 +61,11 @@ public class PropertyDetailPage extends BasePage {
 		add(new Label("operationType", getLocalizer().getString(property.getOperationType().toString(), this)));
 		add(new Label("address", property.getAddress()));
 		add(new Label("neighbourhood", property.getNeighbourhood()));
+		add(new Label("currency", property.getCurrency().toString()));
+		add(new Label("currencyPerSquare", property.getCurrency().toString()));
 		add(new Label("price", Double.toString(property.getPrice())));
+		add(new Label("pricePerSquare", Double.toString(property.getPrice() / 
+					(property.getIndoorSpace() + property.getOutdoorSpace()))));
 		add(new Label("numRooms", Integer.toString(property.getNumRooms())));
 		add(new Label("indoorSpace", Double.toString(property.getIndoorSpace())));
 		add(new Label("outdoorSpace", Double.toString(property.getOutdoorSpace())));

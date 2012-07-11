@@ -32,6 +32,11 @@ public class Property extends PersistentEntity implements Owned {
 		LEASING 
 	}
 	
+	public enum Currency {
+		$,
+		U$S
+	}
+	
 	public enum Services {
 		CABLE, 
 		PHONE, 
@@ -50,6 +55,9 @@ public class Property extends PersistentEntity implements Owned {
 
 	@Column(nullable = false)
 	private OperationType operationType = OperationType.SELLING;
+	
+	@Column(nullable = false)
+	private Currency currency = Currency.$;
 	
 	@Column(nullable = false, length = 50)
 	private String address;
@@ -108,7 +116,8 @@ public class Property extends PersistentEntity implements Owned {
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services,
-			boolean published, User user, boolean reserved, int visited) {
+			boolean published, User user, boolean reserved, int visited, 
+			Currency currency) {
 		this.propertyType = propertyType;
 		this.operationType = operationType;
 		this.address = address;
@@ -124,6 +133,7 @@ public class Property extends PersistentEntity implements Owned {
 		this.user = user;
 		this.reserved = reserved;
 		this.visited = visited;
+		this.currency = currency;
 	}
 	
 	public boolean isReserved() {
@@ -302,5 +312,13 @@ public class Property extends PersistentEntity implements Owned {
 	
 	public List<PropertyState> getStates() {
 		return states;
+	}
+	
+	public Currency getCurrency() {
+		return currency;
+	}
+	
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 }
