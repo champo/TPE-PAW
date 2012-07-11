@@ -71,6 +71,7 @@ public class PropertyListPage extends BasePage {
 				};
 				item.add(editLink);
 				
+				boolean notSold = !property.isSold();
 				Link<Property> publishLink = new Link<Property>("publish", item.getModel()) {
 
 					@Override
@@ -78,7 +79,7 @@ public class PropertyListPage extends BasePage {
 						getModelObject().publish();
 					}
 				};
-				WicketUtils.addToContainer(item, publishLink, !property.isPublished());
+				WicketUtils.addToContainer(item, publishLink, notSold && !property.isPublished());
 				
 				Link<Property> unpublishLink = new Link<Property>("unpublish", item.getModel()) {
 
@@ -87,7 +88,7 @@ public class PropertyListPage extends BasePage {
 						getModelObject().unpublish();
 					}
 				};
-				WicketUtils.addToContainer(item, unpublishLink, property.isPublished());
+				WicketUtils.addToContainer(item, unpublishLink, notSold && property.isPublished());
 				
 				Link<Property> reserveLink = new Link<Property>("reserve", item.getModel()) {
 
@@ -96,7 +97,7 @@ public class PropertyListPage extends BasePage {
 						getModelObject().reserve();
 					}
 				};
-				WicketUtils.addToContainer(item, reserveLink, !property.isReserved());
+				WicketUtils.addToContainer(item, reserveLink, notSold && !property.isReserved());
 				
 				Link<Property> unreservelink = new Link<Property>("unreserve", item.getModel()) {
 
@@ -105,7 +106,7 @@ public class PropertyListPage extends BasePage {
 						getModelObject().unreserve();
 					}
 				};
-				WicketUtils.addToContainer(item, unreservelink, property.isReserved());
+				WicketUtils.addToContainer(item, unreservelink, notSold && property.isReserved());
 				
 				Link<Property> sellLink = new Link<Property>("sell", item.getModel()) {
 
@@ -114,7 +115,7 @@ public class PropertyListPage extends BasePage {
 						getModelObject().sell();
 					}
 				};
-				WicketUtils.addToContainer(item, sellLink, !property.isSold());
+				WicketUtils.addToContainer(item, sellLink, notSold);
 			}
 		});
 	}
