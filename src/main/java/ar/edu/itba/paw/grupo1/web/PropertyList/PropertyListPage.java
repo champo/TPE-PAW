@@ -105,7 +105,16 @@ public class PropertyListPage extends BasePage {
 						getModelObject().unreserve();
 					}
 				};
-				WicketUtils.addToContainer(item, unreservelink, property.isReserved());							
+				WicketUtils.addToContainer(item, unreservelink, property.isReserved());
+				
+				Link<Property> sellLink = new Link<Property>("sell", item.getModel()) {
+
+					@Override
+					public void onClick() {
+						getModelObject().sell();
+					}
+				};
+				WicketUtils.addToContainer(item, sellLink, !property.isSold());
 			}
 		});
 	}

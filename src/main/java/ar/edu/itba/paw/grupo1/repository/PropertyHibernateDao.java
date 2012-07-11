@@ -38,7 +38,9 @@ public class PropertyHibernateDao extends GenericHibernateRepository<Property>
 	@Override
 	public PaginatedList query(PropertyQuery query, int resultsPerPage) {
 		
-		Criteria criteria = createCriteria().add(Restrictions.eq("published", true));
+		Criteria criteria = createCriteria()
+			.add(Restrictions.eq("published", true))
+			.add(Restrictions.eq("sold", false));
 
 		switch (query.getOperation()) {
 			case SELLING:
@@ -88,9 +90,11 @@ public class PropertyHibernateDao extends GenericHibernateRepository<Property>
 
 	@Override
 	public List<Property> getListedProperties(User user) {
+		
 		Criteria criteria = createCriteria()
 			.add(Restrictions.eq("user", user))
-			.add(Restrictions.eq("published", true));
+			.add(Restrictions.eq("published", true))
+			.add(Restrictions.eq("sold", false));
 	
 		return (List<Property>) criteria.list();
 	}

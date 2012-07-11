@@ -163,6 +163,8 @@ public class PropertyDetailPage extends BasePage {
 		addLabel("noPictures", picturesList == null || picturesList.isEmpty());
 		String key = property.getVisited() == 1?"visitsCounter1":"visitsCounter";
 		addLabel("visitsCounter", key, model, true);
+		
+		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
 	}
 
 	private void addLabel(String id, String label, boolean visibilityCondition) {

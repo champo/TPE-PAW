@@ -82,6 +82,9 @@ public class Property extends PersistentEntity implements Owned {
 	private boolean reserved;
 	
 	@Column(nullable = false)
+	private boolean sold;
+	
+	@Column(nullable = false)
 	private int visited;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -253,5 +256,13 @@ public class Property extends PersistentEntity implements Owned {
 	
 	public void setRooms(Set<Room> rooms) {
 		this.rooms = rooms;
+	}
+	
+	public boolean isSold() {
+		return sold;
+	}
+	
+	public void sell() {
+		sold = true;
 	}
 }
