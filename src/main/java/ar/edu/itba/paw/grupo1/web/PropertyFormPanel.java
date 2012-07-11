@@ -12,6 +12,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.validation.validator.RangeValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
@@ -28,14 +30,53 @@ public class PropertyFormPanel extends Panel{
 		WicketUtils.addDropDownMenu(this, "operationType", new OperationType[] {OperationType.SELLING, OperationType.LEASING});
 		WicketUtils.addDropDownMenu(this, "currency", Currency.values());
 		
-		add(new TextField<String>("address").setRequired(true));
-		add(new TextField<String>("neighbourhood").setRequired(true));
-		add(new TextField<Double>("price").setRequired(true));
-		add(new TextField<Integer>("numRooms").setRequired(true));
-		add(new TextField<Double>("indoorSpace").setRequired(true));
-		add(new TextField<Double>("outdoorSpace").setRequired(true));
-		add(new TextArea<String>("description").setRequired(false));
-		add(new TextField<Integer>("antiquity").setRequired(true));	
+		TextField<String> addressTextField = new TextField<String>("address");
+		addressTextField.setRequired(true);
+		addressTextField.add(StringValidator.maximumLength(50));
+		
+		add(addressTextField);
+		
+		TextField<String> neighbourhoodTextField = new TextField<String>("neighbourhood");
+		neighbourhoodTextField.setRequired(true);
+		neighbourhoodTextField.add(StringValidator.maximumLength(50));
+		
+		add(neighbourhoodTextField);
+		
+		TextField<Double> priceTextField = new TextField<Double>("price");
+		priceTextField.setRequired(true);
+		priceTextField.add(new RangeValidator<Double>(0.0 , (double) Integer.MAX_VALUE));
+		
+		add(priceTextField);
+		
+		TextField<Integer> roomsTextField = new TextField<Integer>("numRooms");
+		roomsTextField.setRequired(true);
+		roomsTextField.add(new RangeValidator<Integer>(0 , Integer.MAX_VALUE));
+		
+		add(roomsTextField);
+		
+		TextField<Double> indoorSpaceTextField = new TextField<Double>("indoorSpace");
+		indoorSpaceTextField.setRequired(true);
+		indoorSpaceTextField.add(new RangeValidator<Double>(0.0 , (double) Integer.MAX_VALUE));
+		
+		add(indoorSpaceTextField);
+
+		TextField<Double> outdoorSpaceTextField = new TextField<Double>("outdoorSpace");
+		outdoorSpaceTextField.setRequired(true);
+		outdoorSpaceTextField.add(new RangeValidator<Double>(0.0 , (double) Integer.MAX_VALUE));
+		
+		add(outdoorSpaceTextField);
+		
+		TextArea<String> descriptionTextField = new TextArea<String>("description");
+		descriptionTextField.setRequired(false);
+		descriptionTextField.add(StringValidator.maximumLength(1000));
+		
+		add(descriptionTextField);
+		
+		TextField<Integer> antiquityTextField = new TextField<Integer>("antiquity");
+		antiquityTextField.setRequired(true);
+		antiquityTextField.add(new RangeValidator<Integer>(0 , Integer.MAX_VALUE));
+		
+		add(antiquityTextField);	
 				
 		add(group);
         group.add(new CheckGroupSelector("groupselector"));
