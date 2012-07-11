@@ -15,6 +15,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
@@ -87,9 +88,17 @@ public class AddPicturePage extends BasePage {
 			}
 		}); 
 		
+		fileUploadField.setRequired(true);
+		
 		addPictureForm.setMultiPart(true);
 		addPictureForm.add(fileUploadField);
-		addPictureForm.add(new TextField<String>("name").setRequired(true));
+		
+		TextField<String> nameTextField = new TextField<String>("name");
+		nameTextField.setRequired(true);
+		nameTextField.add(StringValidator.maximumLength(50));
+		
+		addPictureForm.add(nameTextField);
+		
 		addPictureForm.add(new Button("submit", new ResourceModel("submit")));
 		addPictureForm.add(feedbackPanel);
 		

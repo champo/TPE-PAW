@@ -11,6 +11,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
@@ -70,7 +71,11 @@ public class EditPicturePage extends BasePage {
 			}
 		};
 		
-		editPictureForm.add(new TextField<String>("name").setRequired(true));
+		TextField<String> nameTextField = new TextField<String>("name");
+		nameTextField.setRequired(true);
+		nameTextField.add(StringValidator.maximumLength(50));
+		
+		editPictureForm.add(nameTextField);
 		editPictureForm.add(new Button("submit", new ResourceModel("submit")));
 		editPictureForm.add(feedbackPanel);
 		editPictureForm.add(new NonCachingImage("picture", 
