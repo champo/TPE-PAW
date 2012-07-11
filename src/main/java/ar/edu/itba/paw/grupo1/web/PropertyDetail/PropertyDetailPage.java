@@ -15,6 +15,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.EntityModel;
@@ -38,14 +39,13 @@ public class PropertyDetailPage extends BasePage {
 	@SpringBean
 	private PictureRepository pictures;
 	
+	private final IModel<Property> model; 
+	
 	public PropertyDetailPage(Property property) {
-		
-		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
+		model = new EntityModel<Property>(Property.class, property);
 		final User propertyOwner = property.getUser();
 		Set<Room> rooms = property.getRooms();
 		List<Picture> picturesList = pictures.getPictures(property);
-
-		property.visited();
 
 		IModel<List<Services>> servicesModel = new LoadableDetachableModel<List<Services>>() {
 			@Override
@@ -156,8 +156,7 @@ public class PropertyDetailPage extends BasePage {
 		add(picturesView, picturesList != null && !picturesList.isEmpty());
 		
 		addLabel("noPictures", picturesList == null || picturesList.isEmpty());
-		String key = property.getVisited() == 1?"visitsCounter1":"visitsCounter";
-		addLabel("visitsCounter", key, model, true);
+		add(new Label("visitsCounter", new StringResourceModel("visitsCounter", model)));
 		
 		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
 		
@@ -172,6 +171,13 @@ public class PropertyDetailPage extends BasePage {
 		
 		states.setVisible(isMine(property));
 		add(states);
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		model.getObject().visited();
+		
+		super.onBeforeRender();
 	}
 
 	private void addGoogleMapImage(Property property) {

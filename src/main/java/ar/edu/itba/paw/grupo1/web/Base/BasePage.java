@@ -88,13 +88,22 @@ public class BasePage extends WebPage {
 		
 		String username = isSignedIn()?getSignedInUser().getUsername():"";
 		add(new Label("username", username), isSignedIn());
-		
+	}
+	
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
 		showAd();
 	}
 	
 	private void showAd() {
 		
 		final Ad ad = adRepository.getRandomAd();
+		
+		if (get("banner") != null) {
+			remove("banner");
+		}
 		
 		Component banner;
 
