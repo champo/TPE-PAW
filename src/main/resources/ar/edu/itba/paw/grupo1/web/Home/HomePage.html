@@ -7,11 +7,26 @@
 	<body>
 		<wicket:extend>
 		
-		<wicket:enclosure>
-		<p>You can see the list of your published properties <a wicket:id="propertyListLink" ref="#">here.</a> </p>
+		<wicket:enclosure child="propertyListLink">
+			<p>
+				<wicket:message key="seePropertyList">
+					You can see the list of your published properties 
+					<a wicket:id="propertyListLink" ref="#"> <wicket:message key="propertyListLink" /> </a>
+					.
+				</wicket:message>
+			</p>
 		</wicket:enclosure>
+		
 		<wicket:enclosure child="loginLink">
-		<p>You might want to <a wicket:id="loginLink" href="#">login</a> or <a wicket:id="registerLink" href="#">register</a> if you're new here.</p>
+			<p>
+				<wicket:message key="welcome">
+					You might want to 
+					<a wicket:id="loginLink" href="#"> <wicket:message key="loginLink" />  </a> 
+					or
+					<a wicket:id="registerLink" href="#"> <wicket:message key="registerLink" /> </a> 
+					if you're new here.
+				</wicket:message>
+			</p>
 		</wicket:enclosure>
 				
 		</wicket:extend>
