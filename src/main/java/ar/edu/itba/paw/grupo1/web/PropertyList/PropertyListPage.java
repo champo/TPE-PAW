@@ -31,13 +31,9 @@ public class PropertyListPage extends BasePage {
 	private PropertyRepository properties;
 
 	public PropertyListPage() {
-
-		List<Property> propertyList = properties.getProperties(getSignedInUser());
 		
 		add(new BookmarkablePageLink<Void>("newProperty", AddPropertyPage.class));
-		add(new Label("noProperties"), propertyList == null || propertyList.isEmpty());
-
-		add(new RefreshingView<Property>("properties") {
+		RefreshingView<Property> refreshingView = new RefreshingView<Property>("properties") {
 
 			@Override
 			protected Iterator<IModel<Property>> getItemModels() {
@@ -117,6 +113,16 @@ public class PropertyListPage extends BasePage {
 				};
 				WicketUtils.addToContainer(item, sellLink, notSold);
 			}
-		});
+		};
+		addLabel("noProperties", refreshingView.getItems().hasNext());
+		add(refreshingView);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void onBeforeRender() {
+		RefreshingView<Property> refreshingView = (RefreshingView<Property>) get("properties");
+		get("noProperties").setVisible(refreshingView.getItems().hasNext());
+		super.onBeforeRender();
 	}
 }
