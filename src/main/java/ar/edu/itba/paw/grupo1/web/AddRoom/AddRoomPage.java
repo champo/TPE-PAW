@@ -10,6 +10,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Room;
+import ar.edu.itba.paw.grupo1.model.Room.RoomsType;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
@@ -22,7 +23,7 @@ import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
 public class AddRoomPage extends BasePage {
 
 	
-	private transient String name;
+	private transient RoomsType roomsCombo;
 	private transient double length;
 	private transient double width;
 	
@@ -43,7 +44,7 @@ public class AddRoomPage extends BasePage {
 				
 //				Property property = model.getObject();
 				Property property = properties.get(id);
-				Room room = new Room(name, length, width, property);
+				Room room = new Room(roomsCombo, length, width, property);
 				if (!isMine(property)) {
 					throw new PermissionDeniedException();
 				}

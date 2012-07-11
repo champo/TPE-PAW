@@ -79,18 +79,8 @@ public class PropertyDetailPage extends BasePage {
 		
 		addLabel("noRooms", rooms == null || rooms.isEmpty());
 		
-		ListView<Room> roomsView = new ListView<Room>("rooms", roomsModel) {
-
-			@Override
-			protected void populateItem(ListItem<Room> item) {
-				Room room = item.getModelObject();
-				item.add(new Label("label", room.getName()));
-				item.add(new Label("length", Double.toString(room.getLength())));
-				item.add(new Label("width", Double.toString(room.getWidth())));
-			}
-		};
-		add(roomsView, rooms != null && !rooms.isEmpty());
-				
+		addRoomsView(rooms, roomsModel);
+	
 		Link<Property> contactLink = new Link<Property>("contactInfo", model) {
 			
 			@Override

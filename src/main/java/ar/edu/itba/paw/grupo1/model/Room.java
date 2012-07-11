@@ -2,6 +2,8 @@ package ar.edu.itba.paw.grupo1.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -13,10 +15,20 @@ import org.hibernate.validator.constraints.Range;
 @Table(name = "rooms")
 public class Room extends PersistentEntity {
 	
+	public enum RoomsType {
+		BEDROOM,
+		KITCHEN,
+		BATHROOM,
+		LIVINGROOM,
+		PLAYROOM,
+		YARD,
+		OTHER
+	}
+	
+	@Enumerated(EnumType.STRING)
 	@NotNull
-	@Size(min=0, max=50)
-	@Column(nullable = false, length = 50)
-	private String name;
+	@Column(nullable = false)
+	private RoomsType room;
 	
 	@NotNull
 	@Range(min=0, max=Integer.MAX_VALUE)
@@ -34,15 +46,11 @@ public class Room extends PersistentEntity {
 	Room() {
 	}
 
-	public Room(String name, double length, double width, Property property) {
-		this.name = name;
+	public Room(RoomsType room, double length, double width, Property property) {
+		this.room = room;
 		this.length = length;
 		this.width = width;
 		this.property = property;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public double getLength() {
@@ -55,6 +63,10 @@ public class Room extends PersistentEntity {
 
 	public Property getProperty() {
 		return property;
+	}
+	
+	public RoomsType getRoom() {
+		return room;
 	}
 	
 }

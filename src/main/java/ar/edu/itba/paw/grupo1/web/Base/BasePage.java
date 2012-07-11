@@ -165,12 +165,13 @@ public class BasePage extends WebPage {
 	}
 	
 	protected void addRoomsView(Set<Room> rooms, IModel<List<Room>> roomsModel) {
+		
 		ListView<Room> roomsView = new ListView<Room>("rooms", roomsModel) {
 
 			@Override
 			protected void populateItem(ListItem<Room> item) {
 				Room room = item.getModelObject();
-				item.add(new Label("label", room.getName()));
+				item.add(new Label("label", getLocalizer().getString(room.getRoom().toString(), this)));
 				item.add(new Label("length", Double.toString(room.getLength())));
 				item.add(new Label("width", Double.toString(room.getWidth())));
 			}
