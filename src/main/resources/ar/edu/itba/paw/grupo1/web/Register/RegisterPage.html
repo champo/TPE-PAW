@@ -25,41 +25,63 @@
 						</select><br />
 					</p>
 				
-					<p>
-						<label><wicket:message key="name">Name</wicket:message>:</label>
-						<input wicket:id="name" type="text" name="name"/><br />
-					</p> 
+					<div class="row">
+						<div class="span3">
+							<p>
+								<label><wicket:message key="name">Name</wicket:message>:</label>
+								<input wicket:id="name" type="text" name="name"/><br />
+							</p> 
+						</div>
 					
-					<p>
-						<label><wicket:message key="surname">Surname</wicket:message>:</label>
-						<input wicket:id="surname" type="text" name="surname"/><br />
-					</p>
+						<div class="span3 offset1">
+						<p>
+							<label><wicket:message key="surname">Surname</wicket:message>:</label>
+							<input wicket:id="surname" type="text" name="surname"/><br />
+						</p>
+						</div>
+					</div>
+						
+					<div class="row">
+						<div class="span3">
+						<p>
+							<label><wicket:message key="email">Email</wicket:message>:</label>
+							<input wicket:id="email" type="text" name="email"/><br />
+						</p>
+						</div>
 					
-					<p>
-						<label><wicket:message key="email">Email</wicket:message>:</label>
-						<input wicket:id="email" type="text" name="email"/><br />
-					</p>
+						<div class="span3 offset1">
+						<p>
+							<label><wicket:message key="phone">Phone</wicket:message>:</label>
+							<input wicket:id="phone" type="text" name="phone"/><br />
+						</p> 
+						</div>
+					</div>
 					
-					<p>
-						<label><wicket:message key="phone">Phone</wicket:message>:</label>
-						<input wicket:id="phone" type="text" name="phone"/><br />
-					</p> 
-					
-					<p>
-						<label><wicket:message key="username">Username</wicket:message>:</label>
-						<input wicket:id="username" type="text" name="username"/><br />
-					</p> 
-			
-					<p>
-						<label for="password"><wicket:message key="password">Password</wicket:message>: </label>
-						<input wicket:id="password" type="password" name="password"/><br />
-					</p>
-					
-					<p>
-						<label for="passwordConfirm"><wicket:message key="passwordConfirm">Confirm password</wicket:message>: </label>
-						<input wicket:id="passwordConfirm" type="password" name="passwordConfirm"/><br />
-					</p>
-					
+					<div class="row">
+						<div class="span3">
+						<p>
+							<label><wicket:message key="username">Username</wicket:message>:</label>
+							<input wicket:id="username" type="text" name="username"/><br />
+						</p> 
+						</div>
+					</div>
+						
+					<div class="row">					
+						<div class="span3 ">
+						<p>
+							<label for="password"><wicket:message key="password">Password</wicket:message>: </label>
+							<input wicket:id="password" type="password" name="password"/><br />
+						</p>
+						</div>
+
+						<div class="span3 offset1">					
+						<p>
+							<label for="passwordConfirm"><wicket:message key="passwordConfirm">Confirm password</wicket:message>: </label>
+							<input wicket:id="passwordConfirm" type="password" name="passwordConfirm"/><br />
+						</p>
+						</div>
+					</div>
+										
 					<wicket:enclosure child="realEstateName">
 						<p>
 							<label><wicket:message key="realEstateName">Real state name</wicket:message>:</label>

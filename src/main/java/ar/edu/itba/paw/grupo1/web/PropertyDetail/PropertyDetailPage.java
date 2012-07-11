@@ -167,18 +167,6 @@ public class PropertyDetailPage extends BasePage {
 		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
 	}
 
-	private void addLabel(String id, String label, boolean visibilityCondition) {
-		add(new Label(id, label), visibilityCondition);	
-	}
-
-	private void addLabel(String id, String key, IModel<Property> model, boolean visibilityCondition) {
-		add(new Label(id, getLocalizer().getString(key, this, model)), visibilityCondition);				
-	}
-
-	private void addLabel(String id, boolean visibilityCondition) {
-		addLabel(id, id, null, visibilityCondition);
-	}
-
 	private void addGoogleMapImage(Property property) {
 		
 		final String mapSource = "http://maps.googleapis.com/maps/api/staticmap?center=" + property.getAddress() 

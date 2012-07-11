@@ -23,3 +23,9 @@ h4.reserved {
 .show { display: normal; }
 
 .hide { display: none; }
+
+
+.numberRadioChoice label {
+	display: inline !important;
+	margin: 5px;
+}

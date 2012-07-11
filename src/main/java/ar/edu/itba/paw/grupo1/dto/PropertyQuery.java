@@ -1,8 +1,11 @@
 package ar.edu.itba.paw.grupo1.dto;
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.Range;
 
-public class PropertyQuery {
+@SuppressWarnings("serial")
+public class PropertyQuery implements Serializable {
 
 	public enum OperationType {
 		ANY,

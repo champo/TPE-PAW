@@ -23,7 +23,6 @@ public class QueryListPanel extends Panel{
 
 	@SpringBean
 	private PropertyRepository properties;
-	protected List<Property> list;
 	
 	public QueryListPanel(String id, final PropertyQuery propertyQuery, final int resultsPerPage) {
 		super(id);
@@ -33,7 +32,7 @@ public class QueryListPanel extends Panel{
 			@Override
 			protected Iterator<IModel<Property>> getItemModels() {
 				
-				list = properties.query(propertyQuery, resultsPerPage).getList();
+				List<Property> list = properties.query(propertyQuery, resultsPerPage).getList();
 				List<IModel<Property>> res = new ArrayList<IModel<Property>>();
 				for (Property prop: list) {
 					res.add(new EntityModel<Property>(Property.class, prop));
@@ -43,8 +42,12 @@ public class QueryListPanel extends Panel{
 
 			@Override
 			protected void populateItem(Item<Property> item) {
-				// TODO Auto-generated method stub
 				
+				item.add(new Label("operationType", getLocalizer().getString(item.getModelObject().getOperationType().toString(), QueryListPanel.this)));				
+				item.add(new Label("propertyType", getLocalizer().getString(item.getModelObject().getPropertyType().toString(), QueryListPanel.this)));
+				addCustomLabel("neighbourhood", item.getModelObject().getNeighbourhood(), item);
+				addCustomLabel("price", Double.toString(item.getModelObject().getPrice()), item);
+				addCustomLabel("address", item.getModelObject().getAddress(), item);
 				
 				Link<Property> detailLink = new Link<Property>("seeMore", item.getModel()) {
 					
@@ -52,17 +55,18 @@ public class QueryListPanel extends Panel{
 				          setResponsePage(new PropertyDetailPage(getModelObject()));
 				     }
 				};
-				detailLink.add(new Label("seeMoreLabel", getLocalizer().getString("seeMore", this)));
+				detailLink.add(new Label("seeMoreLabel", getLocalizer().getString("seeMore", QueryListPanel.this)));
 				item.add(detailLink);
 				
 			}
+
+			private void addCustomLabel(String id, String value, Item<Property> item) {
+				String prefix = getLocalizer().getString(id, QueryListPanel.this);
+				item.add(new Label(id, prefix + ": " + value));
+			}
+
+
 		};
 		add(queryResultsView);
 	}
-	
-	@Override
-	public boolean isVisible() {
-		return !list.isEmpty();
-	}
-
 }

@@ -155,6 +155,7 @@ public class BasePage extends WebPage {
 	}
 	
 	protected IModel<List<Picture>> initPicturesModel(final IModel<Property> model, final PictureRepository pictures) {
+		
 		IModel<List<Picture>> picturesModel = new LoadableDetachableModel<List<Picture>>() {
 			@Override
 			protected List<Picture> load() {
@@ -165,6 +166,7 @@ public class BasePage extends WebPage {
 	}
 	
 	protected void addRoomsView(Set<Room> rooms, IModel<List<Room>> roomsModel) {
+		
 		ListView<Room> roomsView = new ListView<Room>("rooms", roomsModel) {
 
 			@Override
@@ -176,6 +178,18 @@ public class BasePage extends WebPage {
 			}
 		};
 		add(roomsView, rooms != null && !rooms.isEmpty());
+	}
+	
+	protected void addLabel(String id, String label, boolean visibilityCondition) {
+		add(new Label(id, label), visibilityCondition);	
+	}
+
+	protected void addLabel(String id, String key, IModel<Property> model, boolean visibilityCondition) {
+		add(new Label(id, getLocalizer().getString(key, this, model)), visibilityCondition);				
+	}
+
+	protected void addLabel(String id, boolean visibilityCondition) {
+		addLabel(id, id, null, visibilityCondition);
 	}
 	
 }

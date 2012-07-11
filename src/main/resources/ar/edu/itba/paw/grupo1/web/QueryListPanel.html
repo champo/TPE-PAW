@@ -10,10 +10,10 @@
 							<wicket:container wicket:id="queryResults">
 								<tr><td>
 									<ul style="list-style:none;">
-										<li wicket:id="opertaionType">Selling/Leasing</li>
+										<li wicket:id="operationType">Selling/Leasing</li>
 										<li wicket:id="propertyType">Selling/Leasing</li>
 										<li wicket:id="address">Address: ${fn:escapeXml(result.address)}</li>
-										<li wicket:id="neighbourhood">>Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
+										<li wicket:id="neighbourhood">Neighbourhood: ${fn:escapeXml(result.neighbourhood)}</li>
 										<li wicket:id="price">>Price: ${result.price}</li>
 										<li><a wicket:id="seeMore" href="#"><span wicket:id="seeMoreLabel">See more</span></a></li>
 									</ul>
@@ -21,7 +21,7 @@
 							</wicket:container>
 						</tbody>
 					</table>
-				<wicket:enclosure>
+				</wicket:enclosure>
 			</div>
 									
 		</wicket:panel>
