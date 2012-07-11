@@ -15,6 +15,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.web.PropertyDetail.PropertyDetailPage;
 
@@ -23,16 +24,33 @@ public class QueryListPanel extends Panel{
 
 	@SpringBean
 	private PropertyRepository properties;
+	private transient PropertyQuery propertyQuery;
+	private transient int resultsPerPage;
+	private transient User user;
 	
 	public QueryListPanel(String id, final PropertyQuery propertyQuery, final int resultsPerPage) {
 		super(id);
 		
+		this.propertyQuery = propertyQuery;
+		this.resultsPerPage = resultsPerPage; 
+		
+		addQueryResultsView();
+	}
+	
+	public QueryListPanel(String id, User user) {
+		super(id);
+		this.user = user;
+		addQueryResultsView();
+	}
+	
+
+	private void addQueryResultsView() {
 		RefreshingView<Property> queryResultsView = new RefreshingView<Property>("queryResults") {
 
 			@Override
 			protected Iterator<IModel<Property>> getItemModels() {
 				
-				List<Property> list = properties.query(propertyQuery, resultsPerPage).getList();
+				List<Property> list = getPropertyList();
 				List<IModel<Property>> res = new ArrayList<IModel<Property>>();
 				for (Property prop: list) {
 					res.add(new EntityModel<Property>(Property.class, prop));
@@ -65,8 +83,14 @@ public class QueryListPanel extends Panel{
 				item.add(new Label(id, prefix + ": " + value));
 			}
 
-
 		};
 		add(queryResultsView);
+	}
+	
+	private List<Property> getPropertyList() {
+		if (user != null) {
+			return properties.getListedProperties(user);
+		}
+		return properties.query(propertyQuery, resultsPerPage).getList();
 	}
 }
