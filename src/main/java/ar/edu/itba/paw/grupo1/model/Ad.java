@@ -23,14 +23,7 @@ public class Ad implements Serializable {
 	
 	Ad() {
 	}
-
-	public Ad(String clientName, String url, int weight) {
-		super();
-		this.clientName = clientName;
-		this.url = url;
-		this.weight = weight;
-	}
-
+	
 	public String getClientName() {
 		return clientName;
 	}
