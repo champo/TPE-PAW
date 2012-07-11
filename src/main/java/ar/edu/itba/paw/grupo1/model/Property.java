@@ -57,6 +57,7 @@ public class Property extends PersistentEntity implements Owned {
 	private OperationType operationType = OperationType.SELLING;
 	
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private Currency currency = Currency.$;
 	
 	@Column(nullable = false, length = 50)
