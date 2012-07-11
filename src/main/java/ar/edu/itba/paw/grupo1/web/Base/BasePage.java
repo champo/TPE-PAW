@@ -43,7 +43,7 @@ import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
 import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
 
 @SuppressWarnings("serial")
-public class BasePage extends WebPage {
+public abstract class BasePage extends WebPage {
 
 	@SpringBean
 	private UserRepository users;
