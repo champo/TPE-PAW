@@ -89,7 +89,7 @@ public class Property extends PersistentEntity implements Owned {
 	private Set<Services> services = new HashSet<Services>();
 	
 	@Column(nullable = false)
-	private boolean published;
+	private boolean published = true;
 	
 	@Column(nullable = false)
 	private boolean reserved;
@@ -98,7 +98,7 @@ public class Property extends PersistentEntity implements Owned {
 	private boolean sold;
 	
 	@Column(nullable = false)
-	private int visited;
+	private int visited = 0;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
@@ -117,8 +117,8 @@ public class Property extends PersistentEntity implements Owned {
 			String neighbourhood, double price, int rooms,
 			double indoorSpace, double outdoorSpace, 
 			String description, int antiquity, Set<Services> services,
-			boolean published, User user, boolean reserved, int visited, 
-			Currency currency) {
+			User user, Currency currency) {
+		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
 		this.address = address;
@@ -130,10 +130,7 @@ public class Property extends PersistentEntity implements Owned {
 		this.description = description;
 		this.antiquity = antiquity;
 		this.services = services;
-		this.published = published;
 		this.user = user;
-		this.reserved = reserved;
-		this.visited = visited;
 		this.currency = currency;
 	}
 	

@@ -63,8 +63,8 @@ public class AddPropertyPage extends BasePage {
 				
 				Set<Services> services = new HashSet<Services>(group.getModelObject());
 				Property property = new Property(propertyType, operationType, address, neighbourhood, price,
-						numRooms, indoorSpace, outdoorSpace, desc, antiquity, services, true, 
-						getSignedInUser(), false, 0, currency);
+						numRooms, indoorSpace, outdoorSpace, desc, antiquity, services, getSignedInUser(), 
+						currency);
 				property.publish();
 				properties.save(property);
 				setResponsePage(PropertyListPage.class);
