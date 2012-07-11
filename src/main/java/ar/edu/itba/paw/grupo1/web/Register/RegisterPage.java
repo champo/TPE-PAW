@@ -179,6 +179,7 @@ public class RegisterPage extends BasePage {
 		@Override
 		protected void onSubmit() {
 			
+			feedbackPanel.setVisible(false);
 			String hash = HashingService.hash(password);
 			
 			try {
@@ -194,6 +195,8 @@ public class RegisterPage extends BasePage {
 				users.register(user);
 			} catch (UserAlreadyExistsException e) {
 				error(getString("username.taken"));
+				feedbackPanel.setVisible(true);
+				return;
 			}
 			
 			setResponsePage(HomePage.class);
