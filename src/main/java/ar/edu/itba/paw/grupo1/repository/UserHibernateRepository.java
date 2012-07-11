@@ -12,7 +12,7 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.User.UserType;
 
 @Repository
-public class UserHibernateRepository extends GenericHibernateRepository<User> implements
+public class UserHibernateRepository extends EntityHibernateRepository<User> implements
 		UserRepository {
 
 	@Autowired

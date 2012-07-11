@@ -5,20 +5,11 @@ import java.util.List;
 public interface GenericRepository<E> {
 
 	/**
-	 * Retrieve an instance with the given {@code id}
-	 *
-	 * @param id The id of the {@link E}
-	 *
-	 * @return {@code E}
-	 */
-	E get(int id);
-
-	/**
 	 * Returns all the {@code E} instances
 	 *
 	 * @return list {@link List<E>} with all {@code E} instances
 	 */
-	List<? extends E> getAll();
+	public abstract List<? extends E> getAll();
 
 	/**
 	 * Deletes the given entity
@@ -26,7 +17,8 @@ public interface GenericRepository<E> {
 	 * @param entity
 	 *            to be deleted
 	 */
-	void delete(E entity);
+	public abstract void delete(E entity);
 
-	void save(E entity);
+	public abstract void save(E entity);
+
 }

@@ -16,7 +16,7 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @Repository
-public class PropertyHibernateDao extends GenericHibernateRepository<Property>
+public class PropertyHibernateDao extends EntityHibernateRepository<Property>
 		implements PropertyRepository {
 
 	@Autowired

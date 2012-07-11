@@ -10,6 +10,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -19,15 +20,18 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.paw.grupo1.model.Ad;
 import ar.edu.itba.paw.grupo1.model.Owned;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.repository.AdRepository;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
@@ -43,6 +47,9 @@ public class BasePage extends WebPage {
 
 	@SpringBean
 	private UserRepository users;
+	
+	@SpringBean
+	private AdRepository adRepository;
 	
 	private List<Link<Void>> sectionsList = new ArrayList<Link<Void>>();
 	
@@ -81,8 +88,27 @@ public class BasePage extends WebPage {
 		
 		String username = isSignedIn()?getSignedInUser().getUsername():"";
 		add(new Label("username", username), isSignedIn());
+		
+		showAd();
 	}
 	
+	private void showAd() {
+		
+		final Ad ad = adRepository.getRandomAd();
+		
+		Component banner;
+
+		if (ad != null) {
+			banner = new WebMarkupContainer("banner"); 
+			banner.add(new AttributeModifier("src", new Model<String>(ad.getUrl()))); 
+		} else {
+			banner = new Image("banner", (IModel<?>) null);
+			banner.setVisible(false);
+		}
+
+		add(banner);
+	}
+
 	@SuppressWarnings("unchecked")
 	private void initLinks() {
 		

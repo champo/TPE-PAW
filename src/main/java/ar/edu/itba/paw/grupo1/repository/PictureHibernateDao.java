@@ -12,7 +12,7 @@ import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 
 @Repository
-public class PictureHibernateDao extends GenericHibernateRepository<Picture> implements
+public class PictureHibernateDao extends EntityHibernateRepository<Picture> implements
 		PictureRepository {
 
 	@Autowired

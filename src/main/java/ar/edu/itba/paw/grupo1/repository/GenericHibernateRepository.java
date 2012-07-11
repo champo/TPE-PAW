@@ -6,10 +6,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 
-public abstract class GenericHibernateRepository<E> implements GenericRepository<E> {
+public class GenericHibernateRepository<E> implements GenericRepository<E> {
 
 	protected SessionFactory sessionFactory;
-
 	protected Class<? extends E> eClass;
 
 	/**
@@ -24,20 +23,13 @@ public abstract class GenericHibernateRepository<E> implements GenericRepository
 		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
 		this.eClass = (Class<? extends E>) type.getActualTypeArguments()[0];
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public E get(int id) {
-		// Warning are suppressed as we are getting an E element
-		return (E) sessionFactory.getCurrentSession().get(eClass, id);
-	}
-
+	
 	@Override
 	public List<? extends E> getAll() {
 		// Warning are suppressed as we are getting an E list
 		@SuppressWarnings("unchecked")
 		List<? extends E> results = createCriteria().list();
-
+	
 		return results;
 	}
 

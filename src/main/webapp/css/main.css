@@ -29,3 +29,17 @@ h4.reserved {
 	display: inline !important;
 	margin: 5px;
 }
+
+.center {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+img.center {
+	display: block;
+}
+
+.banner {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
