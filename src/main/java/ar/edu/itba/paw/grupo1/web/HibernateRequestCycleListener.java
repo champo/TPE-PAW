@@ -46,6 +46,11 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 	}
 	
 	private void commit() {
+		
+		if (!ManagedSessionContext.hasBind(sessionFactory)) {
+			return;
+		}
+		
 		Session session = sessionFactory.getCurrentSession();
 		Assert.state(session.isOpen(), "Can't commit a closed session!");
 		try {
@@ -60,6 +65,11 @@ public class HibernateRequestCycleListener extends AbstractRequestCycleListener 
 	}
 
 	private void rollback() {
+
+		if (!ManagedSessionContext.hasBind(sessionFactory)) {
+			return;
+		}
+
 		Session session = sessionFactory.getCurrentSession();
 		Assert.state(session.isOpen(), "Can't rollback a closed session!");
 		try {
