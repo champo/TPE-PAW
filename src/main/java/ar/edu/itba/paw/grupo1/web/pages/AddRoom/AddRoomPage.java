@@ -25,11 +25,12 @@ public class AddRoomPage extends BasePage {
 	private transient RoomsType roomsCombo;
 	private transient double length;
 	private transient double width;
+	private FeedbackPanel feedbackPanel;
 	
 	public AddRoomPage(Property property) {
 		
 		setDefaultModel(new EntityModel<Property>(Property.class, property));
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
 		Form<AddRoomPage> form = new Form<AddRoomPage>("addPropertyForm", new CompoundPropertyModel<AddRoomPage>(this)) {
@@ -63,5 +64,9 @@ public class AddRoomPage extends BasePage {
 		return (Property) getDefaultModelObject();
 	}
 
-	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
 }

@@ -42,6 +42,7 @@ public class ContactPage extends BasePage {
 
 	@SpringBean
 	private PropertyRepository properties;
+	private FeedbackPanel feedbackPanel;
 	
 	public ContactPage(Property property) {
 		
@@ -70,7 +71,7 @@ public class ContactPage extends BasePage {
 		
 		add(new Label("contactFormHeader", getLocalizer().getString("page.contactFormHeader", this, model)), visible);
 
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 
 		Form<ContactPage> form = new Form<ContactPage>("contactForm", new CompoundPropertyModel<ContactPage>(this)) {
@@ -138,4 +139,11 @@ public class ContactPage extends BasePage {
 		form.add(new Button("submit", new ResourceModel("Submit")));
 		add(form, visible);
 	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
+	
 }

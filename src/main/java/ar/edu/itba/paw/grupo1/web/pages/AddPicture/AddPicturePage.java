@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
@@ -41,11 +39,13 @@ public class AddPicturePage extends BasePage {
 	private transient String name;
 	
 	private transient List<FileUpload> fileUpload;
+
+	private FeedbackPanel feedbackPanel;
 	
 	public AddPicturePage(final Property property) {
 		final Integer id = property.getId();
 		
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
 		final Form<AddPicturePage> addPictureForm = new Form<AddPicturePage>(
@@ -106,4 +106,9 @@ public class AddPicturePage extends BasePage {
 		add(addPictureForm);
 	}
 
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
 }

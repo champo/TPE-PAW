@@ -29,13 +29,14 @@ public class EditPicturePage extends BasePage {
 	
 	@SpringBean
 	private PictureRepository pictures;
+	private FeedbackPanel feedbackPanel;
 		
 	public EditPicturePage(Property property, Picture picture) {
 		
 		setDefaultModel(new EntityModel<Property>(Property.class, property));
 		EntityModel<Picture> pictureModel = new EntityModel<Picture>(Picture.class, picture);
 				
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
 		final Form<Picture> editPictureForm = new Form<Picture>("editPictureForm", new CompoundPropertyModel<Picture>(pictureModel)) {
@@ -95,5 +96,11 @@ public class EditPicturePage extends BasePage {
 
 	protected Property getProperty() {
 		return (Property) getDefaultModelObject();
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
 	}
 }

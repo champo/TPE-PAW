@@ -23,6 +23,8 @@ import ar.edu.itba.paw.grupo1.web.panels.QueryListPanel;
 @SuppressWarnings("serial")
 public class QueryPage extends BasePage {
 	
+	private FeedbackPanel feedbackPanel;
+
 	public QueryPage() {
 		this(null);		
 	}
@@ -33,7 +35,7 @@ public class QueryPage extends BasePage {
 			propertyQuery = new PropertyQuery();
 		}
 		
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
 		Form<PropertyQuery> form = new Form<PropertyQuery>("queryForm", new CompoundPropertyModel<PropertyQuery>(propertyQuery)) {
@@ -73,7 +75,13 @@ public class QueryPage extends BasePage {
 
 		QueryListPanel queryListPanel = new QueryListPanel("queryListPanel", propertyQuery);
 		add(queryListPanel, queryListPanel.size() != 0);	
-	}	
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
 }
 
 class PricesRangeValidator extends AbstractFormValidator {
@@ -115,9 +123,6 @@ class PricesRangeValidator extends AbstractFormValidator {
 		if (Double.parseDouble(from) > Double.parseDouble(to)) {
 			error(fromComp);
 		}
-		
 	}
-	
-
 }
 

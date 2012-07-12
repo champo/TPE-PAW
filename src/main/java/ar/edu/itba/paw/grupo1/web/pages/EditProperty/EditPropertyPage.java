@@ -44,6 +44,7 @@ public class EditPropertyPage extends BasePage{
 	
 	@SpringBean
 	private PictureRepository pictures;
+	private FeedbackPanel feedbackPanel;
 	
 	public EditPropertyPage(Property property) {
 		
@@ -56,7 +57,7 @@ public class EditPropertyPage extends BasePage{
 		
 		add(new Label("page.subtitle", getString("page.subtitle", model)));
 		
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
         final CheckGroup<Services> group = new CheckGroup<Services>("group", new ArrayList<Services>(property.getServices()));
 
@@ -142,4 +143,11 @@ public class EditPropertyPage extends BasePage{
 		};
 		add(picturesView, picturesList != null && !picturesList.isEmpty());
 	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
+	
 }

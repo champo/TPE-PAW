@@ -44,10 +44,12 @@ public class AddPropertyPage extends BasePage {
 	@SpringBean
 	private PropertyRepository properties;
 	
+	private FeedbackPanel feedbackPanel;
+	
 	
 	public AddPropertyPage() {
 
-		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+		feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
         final CheckGroup<Services> group = new CheckGroup<Services>("group", new ArrayList<Services>());
 
@@ -80,5 +82,11 @@ public class AddPropertyPage extends BasePage {
 		form.add(feedbackPanel);		
 		form.add(new Button("submit", new ResourceModel("Submit")));
 		add(form);
+	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
 	}
 }

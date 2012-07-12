@@ -255,4 +255,10 @@ public class RegisterPage extends BasePage {
 			feedbackPanel.setVisible(true);
 		}
 	}
+	
+	@Override
+	protected void onBeforeRender() {
+		super.onBeforeRender();
+		feedbackPanel.setVisible(feedbackPanel.anyMessage());
+	}
 }
