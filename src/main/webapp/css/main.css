@@ -42,4 +42,7 @@ img.center {
 .banner {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	
+	max-width: 400px;
+	max-height: 60px;
 }
