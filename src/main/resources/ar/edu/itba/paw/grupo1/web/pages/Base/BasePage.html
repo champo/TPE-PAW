@@ -14,12 +14,16 @@
 					rqvengers PropAdS
 				</a>
 				<ul class="nav">
-					<li wicket:id="linkList"><a wicket:id="link" href="#"><span wicket:id="label"> Link</span></a></li>
+<!-- 				quick fix for displaying this nice in DEVELOPMENTmode, remove the wicket:container  -->
+<!-- 				and move the wicket:id attribute to the ul tag from above.  -->
+					<wicket:container wicket:id="linkList">
+						<li wicket:id="liTag"><a wicket:id="link" href="#"><span wicket:id="label"> Link</span></a></li>
+					</wicket:container>
 				</ul>
-				<wicket:enclosure child="MyProperties">
+				<wicket:enclosure child="MyPropertiesLi">
 					<ul class="nav">
 						<li class="divider-vertical"></li>
-						<li><a wicket:id="MyProperties" href="#"><span wicket:id="label">My properties</span></a></li>
+						<li wicket:id="MyPropertiesLi"><a wicket:id="MyProperties" href="#"><span wicket:id="label">My properties</span></a></li>
 						<li class="divider-vertical"></li>
 					</ul>		
 				</wicket:enclosure>

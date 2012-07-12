@@ -51,7 +51,7 @@ public abstract class BasePage extends WebPage {
 	@SpringBean
 	private AdRepository adRepository;
 	
-	private List<Link<Void>> sectionsList = new ArrayList<Link<Void>>();
+	private List<WebMarkupContainer> sectionsList = new ArrayList<WebMarkupContainer>();
 	
 	public BasePage() {
 		initLinks();
@@ -60,16 +60,22 @@ public abstract class BasePage extends WebPage {
 		link.add(new Image("searchIcon", new ContextRelativeResource("/images/arqvengers.png")));
 		add(link);
 		
-		add(new ListView<Link<Void>>("linkList", new PropertyModel<List<Link<Void>>>(this, "sectionsList")) {
+		add(new ListView<WebMarkupContainer>("linkList", new PropertyModel<List<WebMarkupContainer>>(this, "sectionsList")) {
+			
 			@Override
-			protected void populateItem(ListItem<Link<Void>> item) {
+			protected void populateItem(ListItem<WebMarkupContainer> item) {
 				item.add(item.getModelObject());
 			}
 		});
 		
+		WebMarkupContainer liTag = new WebMarkupContainer("MyPropertiesLi");
 		BookmarkablePageLink<Void> myPropertiesLink = new BookmarkablePageLink<Void>("MyProperties", PropertyListPage.class);
 		addLabelToLink(myPropertiesLink, getLocalizer().getString("myProperties", this));
-		add(myPropertiesLink, isSignedIn());
+		liTag.add(myPropertiesLink);
+		if (getClass().equals(PropertyListPage.class)) {
+			liTag.add(new AttributeModifier("class", "active"));
+		}
+		add(liTag, isSignedIn());
 		
 		BookmarkablePageLink<Void> loginLink = new BookmarkablePageLink<Void>("baseLoginLink", LoginPage.class);
 		addLabelToLink(loginLink,  getLocalizer().getString("login", this));
@@ -129,12 +135,15 @@ public abstract class BasePage extends WebPage {
 
 		
 		for(Class<?> page: pages) {
+			
+			WebMarkupContainer liTag = new WebMarkupContainer("liTag");
 			BookmarkablePageLink<Void> link = new BookmarkablePageLink<Void>("link", (Class<? extends Page>) page);
 			addLabelToLink(link, labels.get(page.getSimpleName()));
-			if (this.getClass() == page) {
-				link.add(new AttributeModifier("class", "active"));
+			if (this.getClass().equals(page)) {
+				liTag.add(new AttributeModifier("class", "active"));
 			}
-			sectionsList.add(link);
+			liTag.add(link);
+			sectionsList.add(liTag);
 		}
 	}
 
