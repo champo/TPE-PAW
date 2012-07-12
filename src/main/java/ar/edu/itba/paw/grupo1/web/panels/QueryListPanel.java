@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web;
+package ar.edu.itba.paw.grupo1.web.panels;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -13,6 +13,8 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
+import ar.edu.itba.paw.grupo1.web.PropertytDataProvider;
+import ar.edu.itba.paw.grupo1.web.UserPropertytDataProvider;
 import ar.edu.itba.paw.grupo1.web.pages.PropertyDetail.PropertyDetailPage;
 
 @SuppressWarnings("serial")

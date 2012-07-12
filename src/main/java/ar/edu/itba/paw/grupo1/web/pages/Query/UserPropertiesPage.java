@@ -4,8 +4,8 @@ import org.apache.wicket.markup.html.basic.Label;
 
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.support.EntityModel;
-import ar.edu.itba.paw.grupo1.web.QueryListPanel;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.panels.QueryListPanel;
 
 @SuppressWarnings("serial")
 public class UserPropertiesPage extends BasePage {

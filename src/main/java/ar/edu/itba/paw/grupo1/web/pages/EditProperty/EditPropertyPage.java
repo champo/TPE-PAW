@@ -30,13 +30,13 @@ import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
-import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.pages.AddPicture.AddPicturePage;
 import ar.edu.itba.paw.grupo1.web.pages.AddRoom.AddRoomPage;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.pages.EditPicture.EditPicturePage;
 import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.panels.PropertyFormPanel;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

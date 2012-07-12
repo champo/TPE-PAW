@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web;
+package ar.edu.itba.paw.grupo1.web.panels;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +19,7 @@ import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
+import ar.edu.itba.paw.grupo1.web.WicketUtils;
 
 @SuppressWarnings("serial")
 public class PropertyFormPanel extends Panel{

@@ -12,10 +12,10 @@ import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.Room.RoomsType;
 import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
-import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.pages.EditProperty.EditPropertyPage;
+import ar.edu.itba.paw.grupo1.web.panels.RoomFormPanel;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

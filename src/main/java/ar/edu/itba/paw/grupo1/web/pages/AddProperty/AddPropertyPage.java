@@ -20,10 +20,10 @@ import ar.edu.itba.paw.grupo1.model.Property.OperationType;
 import ar.edu.itba.paw.grupo1.model.Property.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
-import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.panels.PropertyFormPanel;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

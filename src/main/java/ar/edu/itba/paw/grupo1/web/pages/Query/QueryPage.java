@@ -13,9 +13,9 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery.OperationType;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.OrderType;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Currency;
-import ar.edu.itba.paw.grupo1.web.QueryListPanel;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.panels.QueryListPanel;
 
 @SuppressWarnings("serial")
 public class QueryPage extends BasePage {
