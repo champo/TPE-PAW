@@ -5,12 +5,10 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -36,7 +34,7 @@ public class PropertyHibernateDao extends EntityHibernateRepository<Property>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public PaginatedList query(PropertyQuery query, int resultsPerPage) {
+	public  List<Property> query(PropertyQuery query) {
 		
 		Criteria criteria = createCriteria()
 			.add(Restrictions.eq("published", true))
@@ -67,11 +65,6 @@ public class PropertyHibernateDao extends EntityHibernateRepository<Property>
 		if (query.getRangeTo() != null) {
 			criteria.add(Restrictions.le("price", query.getRangeTo()));
 		}
-
-		int rows = ((Number)criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-		int lastPage = (rows + resultsPerPage - 1) / resultsPerPage;
-
-		criteria.setProjection(null).setResultTransformer(Criteria.ROOT_ENTITY);
 		
 		switch (query.getOrder()) {
 			case ASCENDING:
@@ -82,12 +75,10 @@ public class PropertyHibernateDao extends EntityHibernateRepository<Property>
 				break;
 		}
 	
-		criteria.setFirstResult((query.getPageNumber() - 1)*resultsPerPage);
-		criteria.setMaxResults(resultsPerPage);
-
-		return new PaginatedList(criteria.list(), lastPage);
+		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Property> getListedProperties(User user) {
 		

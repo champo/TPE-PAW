@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.paw.grupo1.dto.PaginatedList;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -21,7 +20,7 @@ public interface PropertyRepository {
 	public void save(Property property);
 
 	@Transactional
-	public PaginatedList query(PropertyQuery query, int resultsPerPage);
+	public List<Property> query(PropertyQuery query);
 
 	@Transactional
 	public List<Property> getListedProperties(User user);
