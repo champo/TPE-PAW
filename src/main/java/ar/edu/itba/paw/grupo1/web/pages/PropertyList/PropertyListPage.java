@@ -114,7 +114,7 @@ public class PropertyListPage extends BasePage {
 				WicketUtils.addToContainer(item, sellLink, notSold);
 			}
 		};
-		addLabel("noProperties", refreshingView.getItems().hasNext());
+		addLabel("noProperties", !refreshingView.getItems().hasNext());
 		add(refreshingView);
 	}
 	
@@ -122,7 +122,7 @@ public class PropertyListPage extends BasePage {
 	@Override
 	protected void onBeforeRender() {
 		RefreshingView<Property> refreshingView = (RefreshingView<Property>) get("properties");
-		get("noProperties").setVisible(refreshingView.getItems().hasNext());
+		get("noProperties").setVisible(!refreshingView.getItems().hasNext());
 		super.onBeforeRender();
 	}
 }
