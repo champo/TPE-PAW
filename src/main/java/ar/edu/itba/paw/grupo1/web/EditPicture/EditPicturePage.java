@@ -13,10 +13,10 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
+import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
-import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
@@ -29,37 +29,24 @@ public class EditPicturePage extends BasePage {
 	
 	@SpringBean
 	private PictureRepository pictures;
-	
-	@SpringBean
-	private PropertyRepository properties;
-	
-	private transient String name;
-	
-	public EditPicturePage(final Property property, final Picture picture) {
 		
-		//EntityModel<Property> propertyModel = new EntityModel<Property>(Property.class, property);
-		//EntityModel<Picture> pictureModel = new EntityModel<Picture>(Picture.class, picture);
-		final Integer idProperty = property.getId();
-		final Integer idPicture = picture.getId();
+	public EditPicturePage(Property property, Picture picture) {
 		
-		name = picture.getName();
-		
+		setDefaultModel(new EntityModel<Property>(Property.class, property));
+		EntityModel<Picture> pictureModel = new EntityModel<Picture>(Picture.class, picture);
+				
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
-		final Form<EditPicturePage> editPictureForm = new Form<EditPicturePage>(
-				"editPictureForm", new CompoundPropertyModel<EditPicturePage>(this)) {
+		final Form<Picture> editPictureForm = new Form<Picture>("editPictureForm", new CompoundPropertyModel<Picture>(pictureModel)) {
 			
 			@Override
 			protected void onSubmit() {
-				Property property = properties.get(idProperty);
-				Picture picture = pictures.get(idPicture);
+				Property property = getProperty();
 				
 				if (!isMine(property)) {
 					throw new PermissionDeniedException();
 				}			
-				
-				picture.setName(name);
 				
 				setResponsePage(new EditPropertyPage(property));
 			}
@@ -78,20 +65,23 @@ public class EditPicturePage extends BasePage {
 		editPictureForm.add(nameTextField);
 		editPictureForm.add(new Button("submit", new ResourceModel("submit")));
 		editPictureForm.add(feedbackPanel);
-		editPictureForm.add(new NonCachingImage("picture", 
-		                new AbstractReadOnlyModel() { 
-		                    @Override 
-		                    public Object getObject() { 
-		                        // TODO Auto-generated method stub 
-		                        return new ImageResource(picture.getData(), picture.getExtension()); 
-		                    } 
-		                }));		
 		
-		Link<Picture> deletePictureLink = new Link<Picture>("picDelete") {
+		final byte[] data = picture.getData();
+		final String extension = picture.getExtension();
+		AbstractReadOnlyModel model = new AbstractReadOnlyModel() { 
+			
+		    @Override 
+		    public Object getObject() {
+				return new ImageResource(data, extension); 
+		    } 
+		};
+		editPictureForm.add(new NonCachingImage("picture", model));		
+		
+		Link<Picture> deletePictureLink = new Link<Picture>("picDelete", pictureModel) {
 			
 		     public void onClick() {
-		    	 Property property = properties.get(idProperty);
-		    	 Picture picture = pictures.get(idPicture);
+		    	 Property property = getProperty();
+		    	 Picture picture = getModelObject();
 		    	 
 		    	 pictures.delete(picture);
 		    	 
@@ -100,8 +90,10 @@ public class EditPicturePage extends BasePage {
 		};
 		
 		editPictureForm.add(deletePictureLink);
-		
 		add(editPictureForm);
 	}
 
+	protected Property getProperty() {
+		return (Property) getDefaultModelObject();
+	}
 }

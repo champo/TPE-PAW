@@ -6,12 +6,11 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.Room.RoomsType;
-import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
@@ -27,13 +26,9 @@ public class AddRoomPage extends BasePage {
 	private transient double length;
 	private transient double width;
 	
-	@SpringBean
-	private PropertyRepository properties;
-	
 	public AddRoomPage(Property property) {
 		
-//		final EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
-		final Integer id = property.getId();
+		setDefaultModel(new EntityModel<Property>(Property.class, property));
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
 		feedbackPanel.setVisible(false);
 		
@@ -42,8 +37,7 @@ public class AddRoomPage extends BasePage {
 			@Override
 			protected void onSubmit() {
 				
-//				Property property = model.getObject();
-				Property property = properties.get(id);
+				Property property = getProperty();
 				Room room = new Room(roomsCombo, length, width, property);
 				if (!isMine(property)) {
 					throw new PermissionDeniedException();
@@ -65,4 +59,9 @@ public class AddRoomPage extends BasePage {
 		add(form);
 	}
 
+	protected Property getProperty() {
+		return (Property) getDefaultModelObject();
+	}
+
+	
 }

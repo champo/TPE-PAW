@@ -125,15 +125,19 @@ public class EditPropertyPage extends BasePage{
 				item.add(editPictureLink);
 			}
 
-			private void addPropertyPicture(ListItem<Picture> item, String id, final Picture picture,	boolean visibilityCondition) {
-				item.add(new NonCachingImage("picture", 
-		                new AbstractReadOnlyModel() { 
-		                    @Override 
-		                    public Object getObject() { 
-		                        // TODO Auto-generated method stub 
-		                        return new ImageResource(picture.getData(), picture.getExtension()); 
-		                    } 
-		                })); 
+			private void addPropertyPicture(ListItem<Picture> item, String id, Picture picture, boolean visibilityCondition) {
+				
+				final byte[] data = picture.getData();
+				final String extension = picture.getExtension();
+				AbstractReadOnlyModel imageModel = new AbstractReadOnlyModel() { 
+					
+				    @Override 
+				    public Object getObject() { 
+				        
+						return new ImageResource(data, extension); 
+				    } 
+				};
+				item.add(new NonCachingImage("picture", imageModel)); 
 			}
 		};
 		add(picturesView, picturesList != null && !picturesList.isEmpty());
