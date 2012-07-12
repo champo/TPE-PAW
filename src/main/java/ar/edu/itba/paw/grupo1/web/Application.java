@@ -9,6 +9,7 @@ import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.mapper.CryptoMapper;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class Application extends AuthenticatedWebApplication {
 		super.init();
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		getRequestCycleListeners().add(new HibernateRequestCycleListener(sessionFactory));
+		setRootRequestMapper(new CryptoMapper(getRootRequestMapper(), this));
 	}
 	
 	

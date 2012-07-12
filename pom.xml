@@ -117,6 +117,11 @@
             <artifactId>wicket-auth-roles</artifactId>
             <version>1.5.7</version>
         </dependency>
+        <dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>1.5.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>

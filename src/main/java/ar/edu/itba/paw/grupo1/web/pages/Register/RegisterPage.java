@@ -5,20 +5,25 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
+import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.AbstractValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
@@ -33,6 +38,7 @@ import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.pages.Home.HomePage;
 
+@SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.GUEST)
 public class RegisterPage extends BasePage {
 	
@@ -54,6 +60,8 @@ public class RegisterPage extends BasePage {
 	private String passwordConfirm;
 
 	private String realEstateName;
+	
+	private String captchaCode;
 
 	private UserType userType = UserType.REGULAR;
 
@@ -158,6 +166,8 @@ public class RegisterPage extends BasePage {
 			realStateNameField.add(StringValidator.maximumLength(50));
 			add(realStateNameField);
 			
+			addCaptcha();
+			
 			add(new Button("register", new ResourceModel("register")));
 		}
 		
@@ -175,6 +185,44 @@ public class RegisterPage extends BasePage {
 			
 			return field;
 		}
+		
+		private void addCaptcha() {
+			
+			String imagePass = randomString(6, 8);
+			CaptchaImageResource captchaImageResource = new CaptchaImageResource(imagePass, 60, 40);
+			add(new NonCachingImage("captchaImage", captchaImageResource));
+			RequiredTextField<String> captchaCode = new RequiredTextField<String>("captchaCode");
+			captchaCode.add(new CaptchaValidator(imagePass));
+			add(captchaCode);
+		}
+
+		private class CaptchaValidator implements IValidator<String> {
+			
+			private String imagePass;
+
+			public CaptchaValidator(String imagePass) {
+				this.imagePass = imagePass;
+			}
+
+			public void validate(IValidatable<String> validatable) {
+				
+				if (!validatable.getValue().equals(imagePass)) {
+					validatable.error(new ValidationError().addMessageKey("IncorrectCaptcha"));
+				}
+			}
+		}
+		
+		private String randomString(int min, int max) {
+	        int num = randomInt(min, max);
+	        byte b[] = new byte[num];
+	        for (int i = 0; i < num; i++)
+	            b[i] = (byte)randomInt('a', 'z');
+	        return new String(b);
+	    }
+		
+		private int randomInt(int min, int max) {
+	        return (int)(Math.random() * (max - min) + min);
+	    }
 		
 		@Override
 		protected void onSubmit() {
