@@ -14,11 +14,11 @@ import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 
 @Repository
-public class PropertyHibernateDao extends EntityHibernateRepository<Property>
+public class PropertyHibernateRepository extends EntityHibernateRepository<Property>
 		implements PropertyRepository {
 
 	@Autowired
-	public PropertyHibernateDao(SessionFactory sessionFactory) {
+	public PropertyHibernateRepository(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 

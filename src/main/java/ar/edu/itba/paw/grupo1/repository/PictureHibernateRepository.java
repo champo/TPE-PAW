@@ -12,14 +12,15 @@ import ar.edu.itba.paw.grupo1.model.Picture;
 import ar.edu.itba.paw.grupo1.model.Property;
 
 @Repository
-public class PictureHibernateDao extends EntityHibernateRepository<Picture> implements
+public class PictureHibernateRepository extends EntityHibernateRepository<Picture> implements
 		PictureRepository {
 
 	@Autowired
-	public PictureHibernateDao(SessionFactory sessionFactory) {
+	public PictureHibernateRepository(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Picture> getPictures(Property property) {
 		Criteria criteria = createCriteria()

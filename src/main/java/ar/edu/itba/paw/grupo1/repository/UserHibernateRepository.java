@@ -34,6 +34,7 @@ public class UserHibernateRepository extends EntityHibernateRepository<User> imp
 		return user;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User login(String username, String hash) {
 		Criteria criteria = createCriteria()
@@ -49,6 +50,7 @@ public class UserHibernateRepository extends EntityHibernateRepository<User> imp
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getBrokers() {
 		
@@ -58,6 +60,7 @@ public class UserHibernateRepository extends EntityHibernateRepository<User> imp
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public User get(String username) {
 		Criteria criteria = createCriteria()
