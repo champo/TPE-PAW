@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -38,19 +37,18 @@ public class PropertyDetailPage extends BasePage {
 	
 	@SpringBean
 	private PictureRepository pictures;
-	
-	private final IModel<Property> model; 
-	
+		
 	public PropertyDetailPage(Property property) {
-		model = new EntityModel<Property>(Property.class, property);
-		final User propertyOwner = property.getUser();
+		
+		EntityModel<Property> model = new EntityModel<Property>(Property.class, property);
+		setDefaultModel(model);
 		Set<Room> rooms = property.getRooms();
 		List<Picture> picturesList = pictures.getPictures(property);
 
 		IModel<List<Services>> servicesModel = new LoadableDetachableModel<List<Services>>() {
 			@Override
 			protected List<Services> load() {
-				return new ArrayList<Services>(model.getObject().getServices()); 
+				return new ArrayList<Services>(getProperty().getServices()); 
 			}
 		};
 		IModel<List<Room>> roomsModel = initRoomsModel(model);
@@ -95,25 +93,25 @@ public class PropertyDetailPage extends BasePage {
 		contactLink.add(new Label("label", getLocalizer().getString("contactInfo", this)));
 		add(contactLink, !isMine(property));	
 		
-		Link<User> queryLink = new Link<User>("seeMore", new EntityModel<User>(User.class, propertyOwner)) {
+		Link<User> queryLink = new Link<User>("seeMore", new EntityModel<User>(User.class, getPropertyOwner())) {
 			
 			@Override
 			public void onClick() {
 				setResponsePage(new UserPropertiesPage(getModelObject()));
 			}
 		};
-		queryLink.add(new Label("label", getLocalizer().getString("seeMore", this, new PropertyModel<Property>(property, "user"))));
+		queryLink.add(new Label("label", getLocalizer().getString("seeMore", this, new EntityModel<User>(User.class, getPropertyOwner()))));
 		add(queryLink);	
 				
-		String realEstateName = propertyOwner.getRealEstateName();
-		boolean isRealEstate = propertyOwner.getType() == UserType.REAL_ESTATE;
+		String realEstateName = getPropertyOwner().getRealEstateName();
+		boolean isRealEstate = getPropertyOwner().getType() == UserType.REAL_ESTATE;
 		addLabel("realEstate", isRealEstate);
 		
 		NonCachingImage logo = new NonCachingImage("realEstateLogo", new AbstractReadOnlyModel() {
 			
 			@Override 
 			public Object getObject() { 
-				return new ImageResource(propertyOwner.getPhoto(), propertyOwner.getLogoExtension()); 
+				return new ImageResource(getPropertyOwner().getPhoto(), getPropertyOwner().getLogoExtension()); 
 			} 
 
 		});
@@ -136,17 +134,17 @@ public class PropertyDetailPage extends BasePage {
 				boolean hasReservedBanner = item.getIndex() == 0 && picture.getProperty().isReserved();
 				
 				item.add(new Label("name", picture.getName()));
-				addPropertyPicture(item, "firstPicture", picture, hasReservedBanner);
-				addPropertyPicture(item, "picture", picture, !hasReservedBanner);
+				addPropertyPicture(item, "firstPicture", hasReservedBanner);
+				addPropertyPicture(item, "picture", !hasReservedBanner);
 				WicketUtils.addToContainer(item, new Label("reservedBanner", getLocalizer().getString("reserved", this)), hasReservedBanner);
 			}
 
-			private void addPropertyPicture(ListItem<Picture> item, String id, final Picture picture,	boolean visibilityCondition) {
+			private void addPropertyPicture(final ListItem<Picture> item, String id, boolean visibilityCondition) {
 				item.add(new NonCachingImage(id, 
 		                new AbstractReadOnlyModel() { 
 		                    @Override 
 		                    public Object getObject() { 
-		                        return new ImageResource(picture.getData(), picture.getExtension()); 
+		                        return new ImageResource(item.getModelObject().getData(), item.getModelObject().getExtension()); 
 		                    } 
 		                }).setVisible(visibilityCondition)); 
 			}
@@ -174,7 +172,7 @@ public class PropertyDetailPage extends BasePage {
 	
 	@Override
 	protected void onBeforeRender() {
-		model.getObject().visited();
+		getProperty().visited();
 		
 		super.onBeforeRender();
 	}
@@ -188,11 +186,19 @@ public class PropertyDetailPage extends BasePage {
 		dynamicImage.add(new AttributeModifier("src", new AbstractReadOnlyModel<Object>() {
 
 			@Override
-			public final Object getObject() {
+			public Object getObject() {
 				return mapSource;
 			}
 		}));
 		dynamicImage.setOutputMarkupId(true);
 		add(dynamicImage);
+	}
+	
+	private Property getProperty() {
+		return (Property) getDefaultModelObject();
+	}
+	
+	private User getPropertyOwner() {
+		return getProperty().getUser();
 	}
 }
