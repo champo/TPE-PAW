@@ -13,6 +13,9 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.validation.validator.PatternValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
@@ -100,10 +103,31 @@ public class ContactPage extends BasePage {
 			}
 		};
 		
-		form.add(new TextField<String>("name").setRequired(true));
-		form.add(new TextField<String>("email").setRequired(true));
-		form.add(new TextField<String>("phone").setRequired(true));
-		form.add(new TextArea<String>("comment").setRequired(false));
+		TextField<String> nameTextField = new TextField<String>("name");
+		nameTextField.setRequired(true);
+		nameTextField.add(StringValidator.maximumLength(50));
+		
+		form.add(nameTextField);
+		
+		TextField<String> emailTextField = new TextField<String>("email");
+		emailTextField.setRequired(true);
+		emailTextField.add(EmailAddressValidator.getInstance());
+		emailTextField.add(StringValidator.maximumLength(50));
+		
+		form.add(emailTextField);
+		
+		TextField<String> phoneTextField = new TextField<String>("phone");
+		phoneTextField.setRequired(true);
+		phoneTextField.add(new PatternValidator("^ *[0-9](-?[ 0-9])*[0-9] *$"));
+		phoneTextField.add(StringValidator.maximumLength(20));
+		
+		form.add(phoneTextField);
+		
+		TextArea<String> commentTextArea = new TextArea<String>("comment");
+		commentTextArea.setRequired(false);
+		commentTextArea.add(StringValidator.maximumLength(1000));
+		
+		form.add(commentTextArea);
 		form.add(new Label("nameLabel", getLocalizer().getString("name", this)));
 		form.add(new Label("emailLabel", getLocalizer().getString("email", this)));
 		form.add(new Label("phoneLabel", getLocalizer().getString("phone", this)));
