@@ -41,7 +41,6 @@ public class AddPicturePage extends BasePage {
 	private transient List<FileUpload> fileUpload;
 	
 	public AddPicturePage(final Property property) {
-		//EntityModel<Property> propertyModel = new EntityModel<Property>(Property.class, property);
 		final Integer id = property.getId();
 		
 		final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");

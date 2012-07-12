@@ -143,8 +143,7 @@ public abstract class BasePage extends WebPage {
 	}
 
 	public void renderHead(IHeaderResponse response) {
-//	    response.renderCSSReference(new PackageResourceReference(BasePage.class,
-//	      "main.css"));
+		response.renderCSSReference("css/main.css");
 	    response.renderCSSReference("css/bootstrap.min.css");
 	}
 	

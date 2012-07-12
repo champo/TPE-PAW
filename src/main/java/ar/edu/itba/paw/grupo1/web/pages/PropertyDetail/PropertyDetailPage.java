@@ -146,7 +146,6 @@ public class PropertyDetailPage extends BasePage {
 		                new AbstractReadOnlyModel() { 
 		                    @Override 
 		                    public Object getObject() { 
-		                        // TODO Auto-generated method stub 
 		                        return new ImageResource(picture.getData(), picture.getExtension()); 
 		                    } 
 		                }).setVisible(visibilityCondition)); 

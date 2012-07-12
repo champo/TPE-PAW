@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.apache.wicket.request.resource.DynamicImageResource;
 
+@SuppressWarnings("serial")
 public class ImageResource extends DynamicImageResource { 
 
     // has to save this. or get the image another way! 
