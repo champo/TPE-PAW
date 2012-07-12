@@ -51,7 +51,7 @@ public class Room extends PersistentEntity {
 		
 		int max = Integer.MAX_VALUE;
 		
-		if (length < 0 || length > max || width < 0 || width > max) {
+		if (length <= 0 || length > max || width <= 0 || width > max) {
 			throw new ModelNotValidException();
 		}
 		

@@ -123,7 +123,7 @@ public class Property extends PersistentEntity implements Owned {
 		int max = Integer.MAX_VALUE;
 		
 		if (address == null || address.length() > 50 || neighbourhood == null ||
-				neighbourhood.length() > 50 || price < 0 || rooms < 0 ||
+				neighbourhood.length() > 50 || price <= 0 || rooms < 0 ||
 				indoorSpace < 0 || outdoorSpace < 0 || description == null ||
 				description.length() > 1000 || antiquity < 0 || price > max ||
 				rooms > max || indoorSpace > max || outdoorSpace > max ||
@@ -233,7 +233,7 @@ public class Property extends PersistentEntity implements Owned {
 	}
 
 	public void setPrice(double price) {
-		if (price < 0 || price > Integer.MAX_VALUE) {
+		if (price <= 0 || price > Integer.MAX_VALUE) {
 			throw new ModelNotValidException();
 		}
 		this.price = price;

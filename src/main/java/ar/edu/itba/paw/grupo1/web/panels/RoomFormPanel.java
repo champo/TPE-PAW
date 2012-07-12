@@ -17,11 +17,11 @@ public class RoomFormPanel extends Panel {
 		
 		TextField<Double> lengthTextField = new TextField<Double>("length");
 		lengthTextField.setRequired(true);
-		lengthTextField.add(new RangeValidator<Double>(0.0, (double) Integer.MAX_VALUE));
+		lengthTextField.add(new RangeValidator<Double>(Double.MIN_NORMAL, (double) Integer.MAX_VALUE));
 		
 		TextField<Double> widthTextField = new TextField<Double>("width");
 		widthTextField.setRequired(true);
-		widthTextField.add(new RangeValidator<Double>(0.0, (double) Integer.MAX_VALUE));
+		widthTextField.add(new RangeValidator<Double>(Double.MIN_NORMAL, (double) Integer.MAX_VALUE));
 		
 		add(lengthTextField);
 		add(widthTextField);

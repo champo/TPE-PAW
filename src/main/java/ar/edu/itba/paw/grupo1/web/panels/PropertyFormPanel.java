@@ -45,7 +45,7 @@ public class PropertyFormPanel extends Panel{
 		
 		TextField<Double> priceTextField = new TextField<Double>("price");
 		priceTextField.setRequired(true);
-		priceTextField.add(new RangeValidator<Double>(0.0 , (double) Integer.MAX_VALUE));
+		priceTextField.add(new RangeValidator<Double>(Double.MIN_NORMAL , (double) Integer.MAX_VALUE));
 		
 		add(priceTextField);
 		
