@@ -58,6 +58,10 @@ public class PropertyHibernateDao extends EntityHibernateRepository<Property>
 				break;
 		}
 
+		if (query.getRangeFrom() != null || query.getRangeTo() != null) {
+			criteria.add(Restrictions.eq("currency", query.getCurrency()));
+		}
+		
 		if (query.getRangeFrom() != null) {
 			criteria.add(Restrictions.ge("price", query.getRangeFrom()));
 		}

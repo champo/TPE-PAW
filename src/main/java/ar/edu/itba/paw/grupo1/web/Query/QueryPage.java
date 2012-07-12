@@ -12,6 +12,7 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.OperationType;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.OrderType;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.PropertyType;
+import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.web.QueryListPanel;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
@@ -56,6 +57,8 @@ public class QueryPage extends BasePage {
 		
 		WicketUtils.addRadioChoice(form, "property", PropertyType.values());
 		WicketUtils.addRadioChoice(form, "operation", OperationType.values());
+		
+		WicketUtils.addDropDownMenu(form, "currency", Currency.values());
 		
 		form.add(new TextField<Double>("rangeFrom"));
 		form.add(new TextField<Double>("rangeTo"));

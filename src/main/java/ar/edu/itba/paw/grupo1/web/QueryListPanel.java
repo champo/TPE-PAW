@@ -39,7 +39,9 @@ public class QueryListPanel extends Panel{
 	        	item.add(new Label("operationType", getLocalizer().getString(property.getOperationType().toString(), QueryListPanel.this)));				
 				item.add(new Label("propertyType", getLocalizer().getString(item.getModelObject().getPropertyType().toString(), QueryListPanel.this)));
 				addCustomLabel("neighbourhood", property.getNeighbourhood(), item);
-				addCustomLabel("price", Double.toString(property.getPrice()), item);
+				addCustomLabel("pricePerSquare", property.getCurrency().toString() + Double.toString(property.getPrice() / 
+					(property.getIndoorSpace() + property.getOutdoorSpace())), item);
+				addCustomLabel("price", property.getCurrency().toString() + Double.toString(property.getPrice()), item);
 				addCustomLabel("address", property.getAddress(), item);
 				
 				Link<Property> detailLink = new Link<Property>("seeMore", item.getModel()) {
