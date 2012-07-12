@@ -7,8 +7,8 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
-import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
+import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 
 @SuppressWarnings("serial")

@@ -7,10 +7,10 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
-import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.Room;
 import ar.edu.itba.paw.grupo1.model.Room.RoomsType;
+import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;

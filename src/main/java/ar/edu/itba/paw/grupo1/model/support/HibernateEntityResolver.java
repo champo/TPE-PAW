@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.model;
+package ar.edu.itba.paw.grupo1.model.support;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -7,6 +7,8 @@ import org.hibernate.TransientObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import ar.edu.itba.paw.grupo1.model.PersistentEntity;
 
 @Component
 @SuppressWarnings("unchecked")

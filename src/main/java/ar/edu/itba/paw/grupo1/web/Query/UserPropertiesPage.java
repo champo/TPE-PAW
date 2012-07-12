@@ -2,8 +2,8 @@ package ar.edu.itba.paw.grupo1.web.Query;
 
 import org.apache.wicket.markup.html.basic.Label;
 
-import ar.edu.itba.paw.grupo1.model.EntityModel;
 import ar.edu.itba.paw.grupo1.model.User;
+import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.web.QueryListPanel;
 import ar.edu.itba.paw.grupo1.web.Base.BasePage;
 

@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.model;
+package ar.edu.itba.paw.grupo1.model.support;
 
 /**
  * Simple entity resolver that delegates finding entities to the underlying storage

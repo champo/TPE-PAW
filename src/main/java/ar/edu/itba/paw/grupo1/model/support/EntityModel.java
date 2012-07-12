@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.model;
+package ar.edu.itba.paw.grupo1.model.support;
 
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.IModel;
