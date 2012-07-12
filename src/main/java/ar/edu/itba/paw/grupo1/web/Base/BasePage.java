@@ -219,7 +219,7 @@ public abstract class BasePage extends WebPage {
 		add(new Label(id, label), visibilityCondition);	
 	}
 
-	protected void addLabel(String id, String key, IModel<Property> model, boolean visibilityCondition) {
+	protected <T> void addLabel(String id, String key, IModel<T> model, boolean visibilityCondition) {
 		add(new Label(id, getLocalizer().getString(key, this, model)), visibilityCondition);				
 	}
 
