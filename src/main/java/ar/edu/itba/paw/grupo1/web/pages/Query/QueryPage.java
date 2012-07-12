@@ -3,10 +3,13 @@ package ar.edu.itba.paw.grupo1.web.pages.Query;
 
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.validation.validator.RangeValidator;
 
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.dto.PropertyQuery.OperationType;
@@ -54,8 +57,14 @@ public class QueryPage extends BasePage {
 		
 		WicketUtils.addDropDownMenu(form, "currency", Currency.values());
 		
-		form.add(new TextField<Double>("rangeFrom"));
-		form.add(new TextField<Double>("rangeTo"));
+		TextField<Double> rangeFromTextField = new TextField<Double>("rangeFrom");
+		TextField<Double> rangeToTextField = new TextField<Double>("rangeTo");
+		rangeFromTextField.add(new RangeValidator<Double>(0.0, (double) Integer.MAX_VALUE));
+		rangeToTextField.add(new RangeValidator<Double>(0.0, (double) Integer.MAX_VALUE));
+		
+		form.add(rangeToTextField);
+		form.add(rangeFromTextField);
+		form.add(new PricesRangeValidator(rangeFromTextField, rangeToTextField));
 		WicketUtils.addDropDownMenu(form, "order", OrderType.values());
 
 		form.add(feedbackPanel);		
@@ -66,3 +75,49 @@ public class QueryPage extends BasePage {
 		add(queryListPanel, queryListPanel.size() != 0);	
 	}	
 }
+
+class PricesRangeValidator extends AbstractFormValidator {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1381612933564811051L;
+
+	private final TextField<Double> fromComp;
+	private final TextField<Double> toComp;
+
+	public PricesRangeValidator(TextField<Double> comp1, TextField<Double> comp2)
+	{
+		fromComp = comp1;
+		toComp = comp2;
+	}
+	
+	@Override
+	public FormComponent<?>[] getDependentFormComponents() {
+		return new FormComponent[] { fromComp, toComp };
+	}
+
+	@Override
+	public void validate(Form<?> form) {
+		String from = fromComp.getValue();
+		String to = toComp.getValue();
+		if ("".equals(from)) {
+			from = "0";
+		} else {
+			from = from.replaceAll(",", "");
+		}
+		if ("".equals(to)) { 
+			to = Integer.toString(Integer.MAX_VALUE);
+		} else {
+			to = to.replaceAll(",", "");
+		}
+		
+		if (Double.parseDouble(from) > Double.parseDouble(to)) {
+			error(fromComp);
+		}
+		
+	}
+	
+
+}
+
