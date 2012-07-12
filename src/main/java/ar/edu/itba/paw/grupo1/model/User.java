@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import ar.edu.itba.paw.grupo1.service.exception.ModelNotValidException;
+
 @Entity
 @Table(name = "users")
 public class User extends PersistentEntity{

@@ -7,6 +7,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ar.edu.itba.paw.grupo1.service.exception.ModelNotValidException;
+
 @Entity
 @Table(name = "pictures")
 public class Picture extends PersistentEntity implements Owned {

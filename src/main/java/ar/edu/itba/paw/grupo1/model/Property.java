@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import ar.edu.itba.paw.grupo1.model.PropertyState.State;
+import ar.edu.itba.paw.grupo1.service.exception.ModelNotValidException;
 
 @Entity
 @Table(name = "properties")

@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
+import ar.edu.itba.paw.grupo1.service.exception.ModelNotValidException;
+
 @Entity
 @Table(name = "rooms")
 public class Room extends PersistentEntity {

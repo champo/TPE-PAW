@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.model;
+package ar.edu.itba.paw.grupo1.service.exception;
 
 public class ModelNotValidException extends RuntimeException {
 
