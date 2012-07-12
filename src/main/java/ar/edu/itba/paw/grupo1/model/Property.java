@@ -119,6 +119,17 @@ public class Property extends PersistentEntity implements Owned {
 			String description, int antiquity, Set<Services> services,
 			User user, Currency currency) {
 		
+		int max = Integer.MAX_VALUE;
+		
+		if (address == null || address.length() > 50 || neighbourhood == null ||
+				neighbourhood.length() > 50 || price < 0 || rooms < 0 ||
+				indoorSpace < 0 || outdoorSpace < 0 || description == null ||
+				description.length() > 1000 || antiquity < 0 || price > max ||
+				rooms > max || indoorSpace > max || outdoorSpace > max ||
+				antiquity > max) {
+			throw new ModelNotValidException();
+		}
+		
 		this.propertyType = propertyType;
 		this.operationType = operationType;
 		this.address = address;
@@ -207,34 +218,58 @@ public class Property extends PersistentEntity implements Owned {
 	}
 
 	public void setAddress(String address) {
+		if (address == null || address.length() > 50) {
+			throw new ModelNotValidException();
+		}
 		this.address = address;
 	}
 
 	public void setNeighbourhood(String neighbourhood) {
+		if (neighbourhood == null || neighbourhood.length() > 50) {
+			throw new ModelNotValidException();
+		}
 		this.neighbourhood = neighbourhood;
 	}
 
 	public void setPrice(double price) {
+		if (price < 0 || price > Integer.MAX_VALUE) {
+			throw new ModelNotValidException();
+		}
 		this.price = price;
 	}
 
 	public void setNumRooms(int numRooms) {
+		if (numRooms < 0 || numRooms > Integer.MAX_VALUE) {
+			throw new ModelNotValidException();
+		}
 		this.numRooms = numRooms;
 	}
 
 	public void setIndoorSpace(double indoorSpace) {
+		if (indoorSpace < 0 || indoorSpace > Integer.MAX_VALUE) {
+			throw new ModelNotValidException();
+		}
 		this.indoorSpace = indoorSpace;
 	}
 
 	public void setOutdoorSpace(double outdoorSpace) {
+		if (outdoorSpace < 0 || outdoorSpace > Integer.MAX_VALUE) {
+			throw new ModelNotValidException();
+		}
 		this.outdoorSpace = outdoorSpace;
 	}
 
 	public void setDescription(String description) {
+		if (description == null || description.length() > 1000) {
+			throw new ModelNotValidException();
+		}
 		this.description = description;
 	}
 
 	public void setAntiquity(int antiquity) {
+		if (antiquity < 0 || antiquity > Integer.MAX_VALUE) {
+			throw new ModelNotValidException();
+		}
 		this.antiquity = antiquity;
 	}
 

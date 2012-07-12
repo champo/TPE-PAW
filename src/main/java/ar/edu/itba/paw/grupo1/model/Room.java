@@ -47,6 +47,13 @@ public class Room extends PersistentEntity {
 	}
 
 	public Room(RoomsType room, double length, double width, Property property) {
+		
+		int max = Integer.MAX_VALUE;
+		
+		if (length < 0 || length > max || width < 0 || width > max) {
+			throw new ModelNotValidException();
+		}
+		
 		this.room = room;
 		this.length = length;
 		this.width = width;

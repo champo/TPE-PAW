@@ -28,6 +28,10 @@ public class Picture extends PersistentEntity implements Owned {
 	}
 	
 	public Picture(String name, Property property, String extension, byte[] data) {
+		if (name == null || name.length() > 50 || extension == null ||
+				extension.length() > 10 || data == null) {
+			throw new ModelNotValidException();
+		}
 		this.name = name;
 		this.property = property;
 		this.extension = extension;
@@ -39,6 +43,9 @@ public class Picture extends PersistentEntity implements Owned {
 	}
 	
 	public void setName(String name) {
+		if (name == null || name.length() > 50) {
+			throw new ModelNotValidException();
+		}
 		this.name = name;
 	}
 	

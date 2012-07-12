@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.grupo1.model;
 
+import java.util.regex.Pattern;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,6 +56,19 @@ public class User extends PersistentEntity{
 	protected User(String name, String surname, String email, String phone,
 			String username, String password, UserType type, String realEstateName,
 			String logoExtension, byte[] photo) {
+		if (name == null || name.length() > 50 || surname == null || 
+				surname.length() > 50 || email == null || email.length() > 50 || 
+				!Pattern.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z]{2,}){1}$)", email) || 
+				phone == null || phone.length() > 20 ||
+				!Pattern.matches("^ *[0-9](-?[ 0-9])*[0-9] *$", phone) ||
+				username == null || username.length() > 50 || password == null || 
+				password.length() != 64 || 
+				(logoExtension != null && (logoExtension.length() > 10 || realEstateName == null || photo == null )) ||
+				(realEstateName != null && (realEstateName.length() > 50 || logoExtension == null || photo == null)) ||
+				(photo != null && (realEstateName == null || logoExtension == null))) {
+			throw new ModelNotValidException();
+		}
+		
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
