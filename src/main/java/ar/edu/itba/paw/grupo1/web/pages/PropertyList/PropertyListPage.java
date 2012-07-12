@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.PropertyList;
+package ar.edu.itba.paw.grupo1.web.pages.PropertyList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,10 +18,10 @@ import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
-import ar.edu.itba.paw.grupo1.web.AddProperty.AddPropertyPage;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
-import ar.edu.itba.paw.grupo1.web.PropertyDetail.PropertyDetailPage;
+import ar.edu.itba.paw.grupo1.web.pages.AddProperty.AddPropertyPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.EditProperty.EditPropertyPage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyDetail.PropertyDetailPage;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

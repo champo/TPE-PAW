@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Brokers;
+package ar.edu.itba.paw.grupo1.web.pages.Brokers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,8 +18,8 @@ import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Query.UserPropertiesPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Query.UserPropertiesPage;
 
 @SuppressWarnings("serial")
 public class BrokersPage extends BasePage{

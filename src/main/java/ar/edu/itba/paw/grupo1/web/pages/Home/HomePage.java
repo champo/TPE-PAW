@@ -1,11 +1,11 @@
-package ar.edu.itba.paw.grupo1.web.Home;
+package ar.edu.itba.paw.grupo1.web.pages.Home;
 
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
-import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
-import ar.edu.itba.paw.grupo1.web.Register.RegisterPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Login.LoginPage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.pages.Register.RegisterPage;
 
 @SuppressWarnings("serial")
 public class HomePage extends BasePage {

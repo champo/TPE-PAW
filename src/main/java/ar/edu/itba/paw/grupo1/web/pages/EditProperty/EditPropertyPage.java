@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.EditProperty;
+package ar.edu.itba.paw.grupo1.web.pages.EditProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,11 +32,11 @@ import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
-import ar.edu.itba.paw.grupo1.web.AddPicture.AddPicturePage;
-import ar.edu.itba.paw.grupo1.web.AddRoom.AddRoomPage;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.EditPicture.EditPicturePage;
-import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.pages.AddPicture.AddPicturePage;
+import ar.edu.itba.paw.grupo1.web.pages.AddRoom.AddRoomPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.EditPicture.EditPicturePage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Query;
+package ar.edu.itba.paw.grupo1.web.pages.Query;
 
 
 import org.apache.wicket.markup.html.form.Button;
@@ -15,7 +15,7 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery.PropertyType;
 import ar.edu.itba.paw.grupo1.model.Property.Currency;
 import ar.edu.itba.paw.grupo1.web.QueryListPanel;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 
 @SuppressWarnings("serial")
 public class QueryPage extends BasePage {

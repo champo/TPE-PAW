@@ -1,11 +1,11 @@
-package ar.edu.itba.paw.grupo1.web.Query;
+package ar.edu.itba.paw.grupo1.web.pages.Query;
 
 import org.apache.wicket.markup.html.basic.Label;
 
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.web.QueryListPanel;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 
 @SuppressWarnings("serial")
 public class UserPropertiesPage extends BasePage {

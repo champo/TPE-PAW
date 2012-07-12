@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.PropertyDetail;
+package ar.edu.itba.paw.grupo1.web.pages.PropertyDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,9 @@ import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.service.ImageResource;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Contact.ContactPage;
-import ar.edu.itba.paw.grupo1.web.Query.UserPropertiesPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Contact.ContactPage;
+import ar.edu.itba.paw.grupo1.web.pages.Query.UserPropertiesPage;
 
 @SuppressWarnings("serial")
 public class PropertyDetailPage extends BasePage {

@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Contact;
+package ar.edu.itba.paw.grupo1.web.pages.Contact;
 
 import java.security.InvalidParameterException;
 
@@ -20,9 +20,9 @@ import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.PropertyDetail.PropertyDetailPage;
-import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyDetail.PropertyDetailPage;
+import ar.edu.itba.paw.grupo1.web.pages.Query.QueryPage;
 
 @SuppressWarnings("serial")
 public class ContactPage extends BasePage {

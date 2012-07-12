@@ -13,7 +13,7 @@ import ar.edu.itba.paw.grupo1.dto.PropertyQuery;
 import ar.edu.itba.paw.grupo1.model.Property;
 import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
-import ar.edu.itba.paw.grupo1.web.PropertyDetail.PropertyDetailPage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyDetail.PropertyDetailPage;
 
 @SuppressWarnings("serial")
 public class QueryListPanel extends Panel{

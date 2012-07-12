@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Login;
+package ar.edu.itba.paw.grupo1.web.pages.Login;
 
 import javax.servlet.http.Cookie;
 
@@ -20,8 +20,8 @@ import ar.edu.itba.paw.grupo1.model.User;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.service.HashingService;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Register.RegisterPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Register.RegisterPage;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.GUEST)

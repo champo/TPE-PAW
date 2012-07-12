@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.AddRoom;
+package ar.edu.itba.paw.grupo1.web.pages.AddRoom;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Button;
@@ -14,8 +14,8 @@ import ar.edu.itba.paw.grupo1.model.support.EntityModel;
 import ar.edu.itba.paw.grupo1.service.exception.PermissionDeniedException;
 import ar.edu.itba.paw.grupo1.web.RoomFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.EditProperty.EditPropertyPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.EditProperty.EditPropertyPage;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

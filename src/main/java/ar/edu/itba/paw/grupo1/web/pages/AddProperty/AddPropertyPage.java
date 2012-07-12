@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.AddProperty;
+package ar.edu.itba.paw.grupo1.web.pages.AddProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +22,8 @@ import ar.edu.itba.paw.grupo1.model.Property.Services;
 import ar.edu.itba.paw.grupo1.repository.PropertyRepository;
 import ar.edu.itba.paw.grupo1.web.PropertyFormPanel;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
 
 @SuppressWarnings("serial")
 @AuthorizeInstantiation(WicketSession.USER)

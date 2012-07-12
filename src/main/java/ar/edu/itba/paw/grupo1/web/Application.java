@@ -14,8 +14,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
-import ar.edu.itba.paw.grupo1.web.Home.HomePage;
-import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
+import ar.edu.itba.paw.grupo1.web.pages.Home.HomePage;
+import ar.edu.itba.paw.grupo1.web.pages.Login.LoginPage;
 
 public class Application extends AuthenticatedWebApplication {
 

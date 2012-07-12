@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Register;
+package ar.edu.itba.paw.grupo1.web.pages.Register;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,8 +30,8 @@ import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository.UserAlreadyExistsException;
 import ar.edu.itba.paw.grupo1.service.HashingService;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
-import ar.edu.itba.paw.grupo1.web.Base.BasePage;
-import ar.edu.itba.paw.grupo1.web.Home.HomePage;
+import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
+import ar.edu.itba.paw.grupo1.web.pages.Home.HomePage;
 
 @AuthorizeInstantiation(WicketSession.GUEST)
 public class RegisterPage extends BasePage {

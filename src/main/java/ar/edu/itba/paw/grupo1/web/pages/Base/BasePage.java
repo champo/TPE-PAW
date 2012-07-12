@@ -1,4 +1,4 @@
-package ar.edu.itba.paw.grupo1.web.Base;
+package ar.edu.itba.paw.grupo1.web.pages.Base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +36,11 @@ import ar.edu.itba.paw.grupo1.repository.PictureRepository;
 import ar.edu.itba.paw.grupo1.repository.UserRepository;
 import ar.edu.itba.paw.grupo1.web.WicketSession;
 import ar.edu.itba.paw.grupo1.web.WicketUtils;
-import ar.edu.itba.paw.grupo1.web.Brokers.BrokersPage;
-import ar.edu.itba.paw.grupo1.web.Home.HomePage;
-import ar.edu.itba.paw.grupo1.web.Login.LoginPage;
-import ar.edu.itba.paw.grupo1.web.PropertyList.PropertyListPage;
-import ar.edu.itba.paw.grupo1.web.Query.QueryPage;
+import ar.edu.itba.paw.grupo1.web.pages.Brokers.BrokersPage;
+import ar.edu.itba.paw.grupo1.web.pages.Home.HomePage;
+import ar.edu.itba.paw.grupo1.web.pages.Login.LoginPage;
+import ar.edu.itba.paw.grupo1.web.pages.PropertyList.PropertyListPage;
+import ar.edu.itba.paw.grupo1.web.pages.Query.QueryPage;
 
 @SuppressWarnings("serial")
 public abstract class BasePage extends WebPage {
