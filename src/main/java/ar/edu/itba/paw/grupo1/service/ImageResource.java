@@ -1,6 +1,6 @@
 package ar.edu.itba.paw.grupo1.service;
 
-import java.awt.image.BufferedImage; 
+import java.awt.image.BufferedImage;
 
 import org.apache.wicket.request.resource.DynamicImageResource;
 

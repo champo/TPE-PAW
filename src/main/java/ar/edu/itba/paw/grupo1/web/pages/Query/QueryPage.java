@@ -21,17 +21,11 @@ import ar.edu.itba.paw.grupo1.web.panels.QueryListPanel;
 public class QueryPage extends BasePage {
 	
 	public QueryPage() {
-		
 		this(null);		
 	}
 	
-	public QueryPage(boolean unpublished) {
-		//show that the property is no longer published, the user cannot acces it
-	}
-
 	public QueryPage(PropertyQuery propertyQuery) {
 
-		addLabel("unpublished",false);
 		if (propertyQuery == null) {
 			propertyQuery = new PropertyQuery();
 		}

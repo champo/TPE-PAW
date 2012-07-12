@@ -22,7 +22,7 @@ import ar.edu.itba.paw.grupo1.service.EmailService;
 import ar.edu.itba.paw.grupo1.service.exception.MailingException;
 import ar.edu.itba.paw.grupo1.web.pages.Base.BasePage;
 import ar.edu.itba.paw.grupo1.web.pages.PropertyDetail.PropertyDetailPage;
-import ar.edu.itba.paw.grupo1.web.pages.Query.QueryPage;
+import ar.edu.itba.paw.grupo1.web.pages.UnpublishedProperty.UnpublishedPropertyPage;
 
 @SuppressWarnings("serial")
 public class ContactPage extends BasePage {
@@ -81,7 +81,7 @@ public class ContactPage extends BasePage {
 				} else if (getSignedInUser() != null && isMine(property)) {
 					setResponsePage(new PropertyDetailPage(property));
 				} else if (!property.isPublished()) {
-					setResponsePage(new QueryPage(true));
+					setResponsePage(new UnpublishedPropertyPage());
 				}
 
 				try {
