@@ -157,7 +157,7 @@ public class PropertyDetailPage extends BasePage {
 		
 		addLabel("sold", "property.sold", null, isMine(property) && property.isSold());
 		
-		ListView<PropertyState> states = new ListView<PropertyState>("states", property.getStates()) {
+		ListView<PropertyState> states = new ListView<PropertyState>("states", initStatesModel(model)) {
 			
 			@Override
 			protected void populateItem(ListItem<PropertyState> item) {
@@ -200,5 +200,16 @@ public class PropertyDetailPage extends BasePage {
 	
 	private User getPropertyOwner() {
 		return getProperty().getUser();
+	}
+	
+	protected IModel<List<PropertyState>> initStatesModel(final IModel<Property> model) {
+		
+		IModel<List<PropertyState>> picturesModel = new LoadableDetachableModel<List<PropertyState>>() {
+			@Override
+			protected List<PropertyState> load() {
+				return model.getObject().getStates(); 
+			}
+		};
+		return picturesModel;
 	}
 }
