@@ -6,7 +6,7 @@
 	
 	<context-param>
 		<param-name>configuration</param-name>
-		<param-value>development</param-value>
+		<param-value>deployment</param-value>
 	</context-param>
 	
 	<listener>
@@ -56,5 +56,10 @@
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
    	
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.html</location>
+	</error-page>
 
 </web-app>

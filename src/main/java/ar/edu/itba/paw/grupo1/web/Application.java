@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.mapper.CryptoMapper;
+import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,12 @@ public class Application extends AuthenticatedWebApplication {
 	@Override
 	protected void init() {
 		super.init();
+		
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		getRequestCycleListeners().add(new HibernateRequestCycleListener(sessionFactory));
 		setRootRequestMapper(new CryptoMapper(getRootRequestMapper(), this));
+		
+		getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_NO_EXCEPTION_PAGE);
 	}
 	
 	
