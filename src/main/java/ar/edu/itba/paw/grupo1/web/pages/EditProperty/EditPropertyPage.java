@@ -78,7 +78,10 @@ public class EditPropertyPage extends BasePage{
 				feedbackPanel.setVisible(true);
 			}
 		};
-		form.add(new PropertyFormPanel("propertyFormPanel", Arrays.asList(Services.values()), group));
+		PropertyFormPanel propFormPanel = new PropertyFormPanel("propertyFormPanel", Arrays.asList(Services.values()), group);
+		
+		form.add(propFormPanel);
+		form.add(propFormPanel.getTotalSpaceValidator());
 		form.add(feedbackPanel);		
 		form.add(new Button("submit", new ResourceModel("Submit")));
 		add(form);

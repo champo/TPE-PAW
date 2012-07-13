@@ -124,8 +124,8 @@ public class Property extends PersistentEntity implements Owned {
 		
 		if (address == null || address.length() > 50 || neighbourhood == null ||
 				neighbourhood.length() > 50 || price <= 0 || rooms < 0 ||
-				indoorSpace < 0 || outdoorSpace < 0 || description == null ||
-				description.length() > 1000 || antiquity < 0 || price > max ||
+				indoorSpace < 0 || outdoorSpace < 0 || (description != null &&
+				description.length() > 1000) || antiquity < 0 || price > max ||
 				rooms > max || indoorSpace > max || outdoorSpace > max ||
 				antiquity > max) {
 			throw new ModelNotValidException();
@@ -261,7 +261,7 @@ public class Property extends PersistentEntity implements Owned {
 	}
 
 	public void setDescription(String description) {
-		if (description == null || description.length() > 1000) {
+		if (description != null && description.length() > 1000) {
 			throw new ModelNotValidException();
 		}
 		this.description = description;

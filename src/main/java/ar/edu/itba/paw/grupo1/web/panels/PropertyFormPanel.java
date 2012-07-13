@@ -7,11 +7,15 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckGroup;
 import org.apache.wicket.markup.html.form.CheckGroupSelector;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -23,6 +27,8 @@ import ar.edu.itba.paw.grupo1.web.WicketUtils;
 
 @SuppressWarnings("serial")
 public class PropertyFormPanel extends Panel{
+	
+	private TotalSpaceValidator totalSpaceValidator;
 
 	public PropertyFormPanel(String id, List<Services> servicesList, CheckGroup<Services> group) {
 		super(id);
@@ -67,6 +73,8 @@ public class PropertyFormPanel extends Panel{
 		
 		add(outdoorSpaceTextField);
 		
+		totalSpaceValidator = new TotalSpaceValidator(indoorSpaceTextField, outdoorSpaceTextField);
+		
 		TextArea<String> descriptionTextField = new TextArea<String>("description");
 		descriptionTextField.setRequired(false);
 		descriptionTextField.add(StringValidator.maximumLength(1000));
@@ -95,5 +103,47 @@ public class PropertyFormPanel extends Panel{
         persons.setReuseItems(true);
         group.add(persons);
 	}
+	
+	public TotalSpaceValidator getTotalSpaceValidator() {
+		return totalSpaceValidator;
+	}
 
+}
+
+class TotalSpaceValidator extends AbstractFormValidator {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6781896989314776394L;
+	/**
+	 * 
+	 */
+
+	private final TextField<Double> firstComp;
+	private final TextField<Double> secondComp;
+
+	public TotalSpaceValidator(TextField<Double> comp1, TextField<Double> comp2)
+	{
+		firstComp = comp1;
+		secondComp = comp2;
+	}
+	
+	@Override
+	public FormComponent<?>[] getDependentFormComponents() {
+		return new FormComponent[] { firstComp, secondComp };
+	}
+
+	@Override
+	public void validate(Form<?> form) {
+		String first = firstComp.getValue();
+		String sec = secondComp.getValue();
+		first = first.replaceAll(",", "");
+		sec = sec.replaceAll(",", "");
+		
+		if ((Double.parseDouble(first) + Double.parseDouble(sec)) == 0) {
+			error(firstComp);
+		}
+		
+	}
 }
